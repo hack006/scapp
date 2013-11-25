@@ -1,0 +1,13 @@
+= simple_form_for(@variable_field_optimal_value) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :bottom_limit
+    = f.input :upper_limit
+    = f.input :source
+    = f.association :variable_field
+    = f.association :variable_field_sport
+    = f.input :variable_field_user_level
+
+  .form-actions
+    = f.button :submit

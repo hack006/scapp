@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Bottom limit:
+  = @variable_field_optimal_value.bottom_limit
+%p
+  %b Upper limit:
+  = @variable_field_optimal_value.upper_limit
+%p
+  %b Source:
+  = @variable_field_optimal_value.source
+%p
+  %b Variable field:
+  = @variable_field_optimal_value.variable_field
+%p
+  %b Variable field sport:
+  = @variable_field_optimal_value.variable_field_sport
+%p
+  %b Variable field user level:
+  = @variable_field_optimal_value.variable_field_user_level
+
+= link_to 'Edit', edit_variable_field_optimal_value_path(@variable_field_optimal_value)
+\|
+= link_to 'Back', variable_field_optimal_values_path

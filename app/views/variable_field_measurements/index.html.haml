@@ -1,0 +1,25 @@
+%h1 Listing variable_field_measurements
+
+%table
+  %tr
+    %th Measured at
+    %th Locality
+    %th String value
+    %th Int value
+    %th
+    %th
+    %th
+
+  - @variable_field_measurements.each do |variable_field_measurement|
+    %tr
+      %td= variable_field_measurement.measured_at
+      %td= variable_field_measurement.locality
+      %td= variable_field_measurement.string_value
+      %td= variable_field_measurement.int_value
+      %td= link_to 'Show', variable_field_measurement
+      %td= link_to 'Edit', edit_variable_field_measurement_path(variable_field_measurement)
+      %td= link_to 'Destroy', variable_field_measurement, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Variable field measurement', new_variable_field_measurement_path

@@ -1,0 +1,19 @@
+%h1 Listing variable_field_user_levels
+
+%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+
+  - @variable_field_user_levels.each do |variable_field_user_level|
+    %tr
+      %td= variable_field_user_level.name
+      %td= link_to 'Show', variable_field_user_level
+      %td= link_to 'Edit', edit_variable_field_user_level_path(variable_field_user_level)
+      %td= link_to 'Destroy', variable_field_user_level, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Variable field user level', new_variable_field_user_level_path

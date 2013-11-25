@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @variable_field_sport.name
+
+= link_to 'Edit', edit_variable_field_sport_path(@variable_field_sport)
+\|
+= link_to 'Back', variable_field_sports_path

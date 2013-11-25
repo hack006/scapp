@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @variable_field.name
+%p
+  %b Description:
+  = @variable_field.description
+%p
+  %b Unit:
+  = @variable_field.unit
+%p
+  %b Higher is better:
+  = @variable_field.higher_is_better
+%p
+  %b Is numeric:
+  = @variable_field.is_numeric
+%p
+  %b User:
+  = @variable_field.user
+%p
+  %b Variable field category:
+  = @variable_field.variable_field_category
+
+= link_to 'Edit', edit_variable_field_path(@variable_field)
+\|
+= link_to 'Back', variable_fields_path

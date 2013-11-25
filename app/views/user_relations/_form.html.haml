@@ -1,0 +1,10 @@
+= simple_form_for(@user_relation) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :relation
+    = f.input :from_user_status
+    = f.input :to_user_status
+
+  .form-actions
+    = f.button :submit

@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @variable_field_category.name
+%p
+  %b Rgb:
+  = @variable_field_category.rgb
+%p
+  %b Description:
+  = @variable_field_category.description
+%p
+  %b User:
+  = @variable_field_category.user
+
+= link_to 'Edit', edit_variable_field_category_path(@variable_field_category)
+\|
+= link_to 'Back', variable_field_categories_path

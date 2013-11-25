@@ -1,0 +1,29 @@
+%h1 Listing variable_field_optimal_values
+
+%table
+  %tr
+    %th Bottom limit
+    %th Upper limit
+    %th Source
+    %th Variable field
+    %th Variable field sport
+    %th Variable field user level
+    %th
+    %th
+    %th
+
+  - @variable_field_optimal_values.each do |variable_field_optimal_value|
+    %tr
+      %td= variable_field_optimal_value.bottom_limit
+      %td= variable_field_optimal_value.upper_limit
+      %td= variable_field_optimal_value.source
+      %td= variable_field_optimal_value.variable_field
+      %td= variable_field_optimal_value.variable_field_sport
+      %td= variable_field_optimal_value.variable_field_user_level
+      %td= link_to 'Show', variable_field_optimal_value
+      %td= link_to 'Edit', edit_variable_field_optimal_value_path(variable_field_optimal_value)
+      %td= link_to 'Destroy', variable_field_optimal_value, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Variable field optimal value', new_variable_field_optimal_value_path

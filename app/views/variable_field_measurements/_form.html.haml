@@ -1,0 +1,11 @@
+= simple_form_for(@variable_field_measurement) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :measured_at
+    = f.input :locality
+    = f.input :string_value
+    = f.input :int_value
+
+  .form-actions
+    = f.button :submit

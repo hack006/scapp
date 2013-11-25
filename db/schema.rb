@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131124111912) do
+ActiveRecord::Schema.define(version: 20131125154737) do
+
+  create_table "organizations", force: true do |t|
+    t.string   "name"
+    t.string   "location"
+    t.string   "description"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "organizations", ["user_id"], name: "index_organizations_on_user_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -23,6 +34,32 @@ ActiveRecord::Schema.define(version: 20131124111912) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+
+  create_table "user_groups", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "visibility"
+    t.integer  "user_id"
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_groups", ["organization_id"], name: "index_user_groups_on_organization_id", using: :btree
+  add_index "user_groups", ["user_id"], name: "index_user_groups_on_user_id", using: :btree
+
+  create_table "user_relations", force: true do |t|
+    t.string   "relation"
+    t.string   "from_user_status"
+    t.string   "to_user_status"
+    t.integer  "user_from_id_id"
+    t.integer  "user_to_id_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_relations", ["user_from_id_id"], name: "index_user_relations_on_user_from_id_id", using: :btree
+  add_index "user_relations", ["user_to_id_id"], name: "index_user_relations_on_user_to_id_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -49,5 +86,65 @@ ActiveRecord::Schema.define(version: 20131124111912) do
   end
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
+
+  create_table "variable_field_categories", force: true do |t|
+    t.string   "name"
+    t.string   "rgb"
+    t.string   "description"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "variable_field_categories", ["user_id"], name: "index_variable_field_categories_on_user_id", using: :btree
+
+  create_table "variable_field_measurements", force: true do |t|
+    t.datetime "measured_at"
+    t.string   "locality"
+    t.string   "string_value"
+    t.float    "int_value"
+  end
+
+  create_table "variable_field_optimal_values", force: true do |t|
+    t.float    "bottom_limit"
+    t.float    "upper_limit"
+    t.string   "source"
+    t.integer  "variable_field_id"
+    t.integer  "variable_field_sport_id"
+    t.integer  "variable_field_user_level_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "variable_field_optimal_values", ["variable_field_id"], name: "index_variable_field_optimal_values_on_variable_field_id", using: :btree
+  add_index "variable_field_optimal_values", ["variable_field_sport_id"], name: "index_variable_field_optimal_values_on_variable_field_sport_id", using: :btree
+  add_index "variable_field_optimal_values", ["variable_field_user_level_id"], name: "variable_field_opt_val_on_level_id", using: :btree
+
+  create_table "variable_field_sports", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "variable_field_user_levels", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "variable_fields", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "unit"
+    t.boolean  "higher_is_better"
+    t.boolean  "is_numeric"
+    t.integer  "user_id"
+    t.integer  "variable_field_category_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "variable_fields", ["user_id"], name: "index_variable_fields_on_user_id", using: :btree
+  add_index "variable_fields", ["variable_field_category_id"], name: "index_variable_fields_on_variable_field_category_id", using: :btree
 
 end

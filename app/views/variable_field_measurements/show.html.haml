@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Measured at:
+  = @variable_field_measurement.measured_at
+%p
+  %b Locality:
+  = @variable_field_measurement.locality
+%p
+  %b String value:
+  = @variable_field_measurement.string_value
+%p
+  %b Int value:
+  = @variable_field_measurement.int_value
+
+= link_to 'Edit', edit_variable_field_measurement_path(@variable_field_measurement)
+\|
+= link_to 'Back', variable_field_measurements_path

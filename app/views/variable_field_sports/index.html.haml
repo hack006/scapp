@@ -1,0 +1,19 @@
+%h1 Listing variable_field_sports
+
+%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+
+  - @variable_field_sports.each do |variable_field_sport|
+    %tr
+      %td= variable_field_sport.name
+      %td= link_to 'Show', variable_field_sport
+      %td= link_to 'Edit', edit_variable_field_sport_path(variable_field_sport)
+      %td= link_to 'Destroy', variable_field_sport, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Variable field sport', new_variable_field_sport_path

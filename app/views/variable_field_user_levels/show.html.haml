@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @variable_field_user_level.name
+
+= link_to 'Edit', edit_variable_field_user_level_path(@variable_field_user_level)
+\|
+= link_to 'Back', variable_field_user_levels_path

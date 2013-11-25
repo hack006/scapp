@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @user_group.name
+%p
+  %b Description:
+  = @user_group.description
+%p
+  %b Visibility:
+  = @user_group.visibility
+
+= link_to 'Edit', edit_user_group_path(@user_group)
+\|
+= link_to 'Back', user_groups_path

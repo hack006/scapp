@@ -1,0 +1,31 @@
+%h1 Listing variable_fields
+
+%table
+  %tr
+    %th Name
+    %th Description
+    %th Unit
+    %th Higher is better
+    %th Is numeric
+    %th User
+    %th Variable field category
+    %th
+    %th
+    %th
+
+  - @variable_fields.each do |variable_field|
+    %tr
+      %td= variable_field.name
+      %td= variable_field.description
+      %td= variable_field.unit
+      %td= variable_field.higher_is_better
+      %td= variable_field.is_numeric
+      %td= variable_field.user
+      %td= variable_field.variable_field_category
+      %td= link_to 'Show', variable_field
+      %td= link_to 'Edit', edit_variable_field_path(variable_field)
+      %td= link_to 'Destroy', variable_field, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Variable field', new_variable_field_path

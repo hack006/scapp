@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Relation:
+  = @user_relation.relation
+%p
+  %b From user status:
+  = @user_relation.from_user_status
+%p
+  %b To user status:
+  = @user_relation.to_user_status
+
+= link_to 'Edit', edit_user_relation_path(@user_relation)
+\|
+= link_to 'Back', user_relations_path

@@ -1,0 +1,25 @@
+%h1 Listing variable_field_categories
+
+%table
+  %tr
+    %th Name
+    %th Rgb
+    %th Description
+    %th User
+    %th
+    %th
+    %th
+
+  - @variable_field_categories.each do |variable_field_category|
+    %tr
+      %td= variable_field_category.name
+      %td= variable_field_category.rgb
+      %td= variable_field_category.description
+      %td= variable_field_category.user
+      %td= link_to 'Show', variable_field_category
+      %td= link_to 'Edit', edit_variable_field_category_path(variable_field_category)
+      %td= link_to 'Destroy', variable_field_category, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Variable field category', new_variable_field_category_path
