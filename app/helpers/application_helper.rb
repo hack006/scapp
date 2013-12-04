@@ -12,4 +12,10 @@ module ApplicationHelper
     html.html_safe
   end
 
+  def dash_or_value(object, field)
+    return "-" if object.blank?
+    return "-" unless object.class.attribute_names.include? field.to_s
+    object[field]
+  end
+
 end

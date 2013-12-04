@@ -2,9 +2,9 @@
 
 FactoryGirl.define do
   factory :variable_field_category do
-    name "MyString"
-    rgb "MyString"
-    description "MyString"
+    name "Example"
+    rgb "#123456"
+    description "Example category with text"
     user nil
   end
 end

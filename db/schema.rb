@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131125154737) do
+ActiveRecord::Schema.define(version: 20131203202312) do
 
   create_table "organizations", force: true do |t|
     t.string   "name"
@@ -103,7 +103,14 @@ ActiveRecord::Schema.define(version: 20131125154737) do
     t.string   "locality"
     t.string   "string_value"
     t.float    "int_value"
+    t.integer  "measured_by_id"
+    t.integer  "measured_for_id"
+    t.integer  "variable_field_id"
   end
+
+  add_index "variable_field_measurements", ["measured_by_id"], name: "index_variable_field_measurements_on_measured_by_id", using: :btree
+  add_index "variable_field_measurements", ["measured_for_id"], name: "index_variable_field_measurements_on_measured_for_id", using: :btree
+  add_index "variable_field_measurements", ["variable_field_id"], name: "index_variable_field_measurements_on_variable_field_id", using: :btree
 
   create_table "variable_field_optimal_values", force: true do |t|
     t.float    "bottom_limit"
@@ -144,6 +151,7 @@ ActiveRecord::Schema.define(version: 20131125154737) do
     t.datetime "updated_at"
   end
 
+  add_index "variable_fields", ["user_id", "name"], name: "index_variable_fields_on_user_id_and_name", unique: true, using: :btree
   add_index "variable_fields", ["user_id"], name: "index_variable_fields_on_user_id", using: :btree
   add_index "variable_fields", ["variable_field_category_id"], name: "index_variable_fields_on_variable_field_category_id", using: :btree
 

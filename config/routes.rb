@@ -1,5 +1,6 @@
 Scapp::Application.routes.draw do
   resources :variable_fields
+  post '/variable_fields/add_category', to: 'variable_fields#add_category', as: 'variable_fields_add_new_category'
 
   resources :variable_field_categories
 
