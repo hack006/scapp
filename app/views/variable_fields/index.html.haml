@@ -1,30 +1,27 @@
 %h1 Listing variable_fields
 
-%table
-  %tr
-    %th Name
-    %th Description
-    %th Unit
-    %th Higher is better
-    %th Is numeric
-    %th User
-    %th Variable field category
-    %th
-    %th
-    %th
-
-  - @variable_fields.each do |variable_field|
+%table.table
+  %thead
     %tr
-      %td= variable_field.name
-      %td= variable_field.description
-      %td= variable_field.unit
-      %td= variable_field.higher_is_better
-      %td= variable_field.is_numeric
-      %td= variable_field.user
-      %td= variable_field.variable_field_category
-      %td= link_to 'Show', variable_field
-      %td= link_to 'Edit', edit_variable_field_path(variable_field)
-      %td= link_to 'Destroy', variable_field, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %th Name
+      %th Description
+      %th User
+      %th Variable field category
+      %th
+      %th
+      %th
+  %tbody
+    - @variable_fields.each do |variable_field|
+      %tr{id: "vf_#{variable_field.id}"}
+        %td= link_to variable_field.name, variable_field
+        %td= variable_field.description
+        %td= dash_or_value variable_field.user, :name
+        %td= dash_or_value variable_field.variable_field_category, :name
+        - if variable_field.user == current_user && is_coach?
+          %td.edit= link_to 'Edit', edit_variable_field_path(variable_field)
+          %td.del= link_to 'Destroy', variable_field, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        - else
+          %td{colspan: 2}
 
 %br
 

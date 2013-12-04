@@ -6,6 +6,16 @@ class Ability
     if user.has_role? :admin
       can :manage, :all
     end
+
+    if user.has_role? :user
+      cannot :manage, :all
+      can [:index, :new, :create, :show], VariableField
+      can [:update, :delete], VariableField, {user_id: user.id}
+    end
+
+    if user.has_role? :coach
+      # extends user permissions
+    end
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

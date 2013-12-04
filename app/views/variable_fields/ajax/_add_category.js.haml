@@ -1,0 +1,4 @@
+:plain
+  jQuery("#variable_field_variable_field_category_id").append("#{escape_javascript(render partial: 'variable_fields/ajax/added_category_link')}") ;
+  jQuery("#add-new-field-category h3").after("<div class=\"error\">Successfully added. <\/div>");
+  jQuery("#variable_field_variable_field_category_id").val(#{@added_category.id});
