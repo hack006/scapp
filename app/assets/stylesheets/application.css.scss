@@ -8,6 +8,14 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
+ *= require font-awesome
+ *= require ionicons
+ *= require morris/morris
+ *= require jvectormap/jquery-jvectormap-1.2.2
+ *= require fullcalendar/fullcalendar
+ *= require daterangepicker/daterangepicker-bs3
+ *= require bootstrap-wysihtml5/bootstrap3-wysihtml5
+ *= require AdminLTE
  *= require_self
  *= require_tree .
  */

@@ -18,6 +18,9 @@ Scapp::Application.routes.draw do
 
   resources :user_groups
 
+  # static routes
+  get '/static/:action', to: 'static#:action'
+
   root :to => "home#index"
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :users

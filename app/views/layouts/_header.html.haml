@@ -1,0 +1,86 @@
+%header.header
+  %a.logo{href: "#"} ScApp
+  / Header Navbar: style can be found in header.less
+  %nav.navbar.navbar-static-top{role: "navigation"}
+    / Sidebar toggle button
+    %a.navbar-btn.sidebar-toggle{'data-toggle' => "offcanvas", role: "button"}
+      %span.sr-only Toggle nav
+      %span.icon-bar aa
+      %span.icon-bar aa
+      %span.icon-bar aa
+
+      %div.nav.navbar-right
+        %ul.nav.navbar-nav
+          / Messages: style can be found in dropdown.less
+          %li.dropdown.messages-menu
+            %a.dropdown-toggle{href: "#", "data-toggle" => "dropdown"}
+              %i.fa.fa-envelope
+              %span.label.label-success 4
+
+
+            %ul.dropdown-menu
+              %li.header You have 4 messsages
+              %li
+                %ul.menu
+                  %li
+                    %a{href: "#"}
+                      %div.pull-left
+                        %img.img-circle
+                      %h4 Header
+                      %p text
+              %li.footer
+                %a{href: "#"} See all
+
+          / Notifications: style can be found in dropdown.less
+          %li.dropdown.notifications-menu
+            %a.dropdown-toggle{href: "#", "data-toggle" => "dropdown"}
+              %i.fa.fa-warning
+              %span.label.label-warning 10
+
+            %ul.dropdown-menu
+              %li.header You have 10 not ..
+              %li
+                %ul.menu
+                  %li
+                    %a{href: "#"}
+                      %i.ion.ion-ios7-people.info 5 new members joined today
+                  %li
+                    %a{href: "#"}
+                      %i.fa.fa-warning.danger 5 new members joined today
+                  %li
+                    %a{href: "#"}
+                      %i.fa.fa-users.warning 5 new members joined today
+
+              %li.footer
+                %a{href: "#"} View all
+
+
+          / User Account: style can be found in dropdown.less
+          %li.dropdown.user.user-menu
+            %a.dropdown-toggle{href: "#", "data-toggle" => "dropdown"}
+              %i.glyphicon.glyphicon-user
+              %span
+                james
+                %i.caret
+
+            %ul.dropdown-menu
+              / User image
+              %li.user-header.bg-light-blue
+                %img.img-circle{alt: "User Image", src: "img/avatar3.png"}/
+                %p
+                  Jane Doe - Web Developer
+                  %small Member since Nov. 2012
+              / Menu Body
+              %li.user-body
+                .col-xs-4.text-center
+                  %a{href: "#"} Followers
+                .col-xs-4.text-center
+                  %a{href: "#"} Sales
+                .col-xs-4.text-center
+                  %a{href: "#"} Friends
+              / Menu Footer
+              %li.user-footer
+                .pull-left
+                  %a.btn.btn-default.btn-flat{href: "#"} Profile
+                .pull-right
+                  %a.btn.btn-default.btn-flat{href: "#"} Sign out
