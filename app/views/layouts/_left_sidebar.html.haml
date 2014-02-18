@@ -18,6 +18,7 @@
           %button#search-btn.btn.btn-flat{name: "seach", type: "submit"}
             %i.fa.fa-search
     / sidebar menu
+    = AdvancedMenu::Menu.render(current_user ? current_user.roles.map{|r| r.name.to_sym} : :guest, controller_name, action_name)
     %ul.sidebar-menu
       %li.active
         %a{href: "/"}
