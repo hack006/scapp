@@ -2,6 +2,7 @@ class VariableField < ActiveRecord::Base
   belongs_to :user
   belongs_to :variable_field_category
   has_many :variable_field_measurements, dependent: :restrict_with_exception
+  has_many :variable_field_optimal_values, dependent: :destroy
 
   attr_accessor :modification_confirmation
 

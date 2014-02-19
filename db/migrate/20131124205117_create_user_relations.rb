@@ -4,13 +4,13 @@ class CreateUserRelations < ActiveRecord::Migration
       t.string :relation
       t.string :from_user_status
       t.string :to_user_status
-      t.references :user_from_id
-      t.references :user_to_id
+      t.references :user_from
+      t.references :user_to
 
       t.timestamps
     end
 
-    add_index :user_relations, :user_from_id_id
-    add_index :user_relations, :user_to_id_id
+    add_index :user_relations, :user_from_id
+    add_index :user_relations, :user_to_id
   end
 end
