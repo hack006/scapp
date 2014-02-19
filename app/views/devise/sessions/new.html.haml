@@ -1,7 +1,30 @@
-%h2 Sign in
-= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => 'form-vertical' }) do |f|
-  = f.input :email, :autofocus => true
+-#
   = f.input :password
   = f.input :remember_me, :as => :boolean if devise_mapping.rememberable?
   = f.button :submit, "Sign in", :class => 'btn-primary'
-= render "devise/shared/links"
+
+
+#login-box.form-box
+  .header Sign In
+  = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    .body.bg-gray
+
+      .form-group
+        = f.input_field :email, :autofocus => true, placeholder: 'Email', class: 'form-control'
+      .form-group
+        = f.input_field :password, placeholder: 'Password', class: 'form-control'
+      .form-group
+        = f.input_field :remember_me, boolean_style: :inline, :as => :boolean if devise_mapping.rememberable?
+        = f.label :remember_me, 'Remember me'
+    .footer
+      %button.btn.bg-olive.btn-block{type: "submit"} Sign me in
+      = render "devise/shared/links"
+  .margin.text-center
+    %span Sign in using social networks
+    %br/
+    %button.btn.bg-light-blue.btn-circle
+      %i.fa.fa-facebook
+    %button.btn.bg-aqua.btn-circle
+      %i.fa.fa-twitter
+    %button.btn.bg-red.btn-circle
+      %i.fa.fa-google-plus
