@@ -32,5 +32,11 @@ Scapp::Application.routes.draw do
 
   end
 
-  resources :users
+  resources :users do
+    resources :variable_fields, only: [] do
+      collection do
+        get '/' => 'variable_fields#user_variable_fields'
+      end
+    end
+  end
 end

@@ -27,14 +27,22 @@
       / Content Header (Page header)
       %section.content-header
         %h1
-          Dashboard
-          %small Control panel
-        %ol.breadcrumb
-          %li
-            %a{href: "#"}
-              %i.fa.fa-dashboard
-              Home
-          %li.active Dashboard
+          -if content_for?(:heading)
+            = yield(:heading)
+          - elsif content_for?(:title)
+            = yield(:title)
+          - else
+            = t('template.main.dashboard')
+          %small= t('template.main.control_panel')
+        - if content_for? :breadcrumbs
+          = yield(:breadcrumbs)
+        - else
+          %ol.breadcrumb
+            %li
+              %a{href: "/"}
+                %i.fa.fa-dashboard
+                = t('template.main.dashboard')
+            %li.active= t('template.main.home')
       / Main content
       %section.content
         = render 'layouts/messages'

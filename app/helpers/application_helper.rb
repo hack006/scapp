@@ -12,9 +12,14 @@ module ApplicationHelper
     html.html_safe
   end
 
+  # Get _object_ value of specified _field_ or dash when _field_ not available or empty
+  #
+  # Designed especially for data retrieved as {ActiveRecord::Relation}
+  #
+  # @return [String]
   def dash_or_value(object, field)
     return "-" if object.blank?
-    return "-" unless object.class.attribute_names.include? field.to_s
+    return "-" unless object.class.attribute_names.include?(field.to_s) && !object[field].empty?
     object[field]
   end
 

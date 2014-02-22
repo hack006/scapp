@@ -1,0 +1,37 @@
+en:
+  variable_field:
+    vf_cant_be_deleted: "Variable field can't be deleted because some data relies on it!"
+    edit_confirmation: "Warning! You are changing variable which is already used. You should change fields only
+                        if you are correcting mistake or enhancing description. Please confirm by retyping:
+                        %{token}"
+    bad_confirmation: "You have entered invalid confirmation token!"
+
+  dictionary:
+    location: &location 'Location'
+    date: &date 'Date'
+    best: &best 'Best'
+    worst: &worst 'Worst'
+    value: &value 'Value'
+    description: &description 'Description'
+    measured_by: &measured_by 'Measured by'
+    home: &home 'Home'
+    dashboard: &dashboard 'Dashboard'
+    control_panel: &control_panel 'Control panel'
+
+  template:
+    main:
+      home: *home
+      dashboard: *dashboard
+      control_panel: *control_panel
+
+  vf:
+    list:
+      current_value: 'Current value'
+      location: *location
+      date: *date
+      best: *best
+      worst: *worst
+      value: *value
+      statistic_info_not_available: 'Statistic information not available'
+      description: *description
+      measured_by: *measured_by

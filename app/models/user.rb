@@ -1,5 +1,11 @@
 class User < ActiveRecord::Base
+  # Add seo ids for user
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
+  # Add roles
   rolify
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

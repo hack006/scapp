@@ -10,7 +10,39 @@ class VariableField < ActiveRecord::Base
   validates_uniqueness_of :name, scope: [:variable_field_category_id, :user_id]
   validates :variable_field_category, presence: true
 
-  scope :public_or_owned_by, ->(user_id) { where("user_id is NULL or user_id = ?", user_id) }
+  scope :public_or_owned_by, ->(user) { where("user_id is NULL or user_id = ?", user) }
+  scope :with_measurements_for, ->(user) { joins(:variable_field_measurements).where(variable_field_measurements: {measured_for_id: user}) }
+  scope :order_by_categories, -> { joins('LEFT JOIN variable_field_categories ON variable_fields.variable_field_category_id = variable_field_categories.id').order('variable_field_categories.name DESC') }
+
+  def latest_measurement(user = nil)
+    if user.kind_of? User
+      lm = self.variable_field_measurements.order(measured_at: :desc).where(measured_for_id: user).first
+    else
+      lm = self.variable_field_measurements.order(measured_at: :desc).first
+    end
+
+    lm
+  end
+
+  # Todo: include higher_is_better
+  def best_measurement(user = nil)
+    raise 'Not a numeric variable field. Can\'t take best value!' unless self.is_numeric
+
+    bm = self.variable_field_measurements.order(int_value: (self.higher_is_better? ? :desc : :asc) )
+    bm.where!(measured_for_id: user) if user.kind_of?(User)
+
+    bm.first
+  end
+
+  # Todo: include higher_is_better
+  def worst_measurement(user = nil)
+    raise 'Not a numeric variable field. Can\'t take best value!' unless self.is_numeric
+
+    bm = self.variable_field_measurements.order(int_value: (self.higher_is_better? ? :desc : :asc) )
+    bm.where!(measured_for_id: user) if user.kind_of?(User)
+
+    bm.first
+  end
 
   def has_to_confirm_edit?
     (variable_field_measurements.count > 0) ? true : false

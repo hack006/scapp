@@ -1,0 +1,107 @@
+- content_for :heading do
+  User variable fields
+
+- content_for :breadcrumbs
+
+
+- @variable_fields.each do |k, vfc|
+
+  %h2= vfc[:detail].name
+  - vfc[:items].each do |vf|
+    .nav-tabs-custom
+      / Tabs within a box
+      %ul.nav.nav-tabs.pull-right{style: "cursor: move;"}
+        %li.active
+          %a{"data-toggle" => "tab", href: "#summary-#{vf[:field].id}"} Summary
+        %li
+          %a{"data-toggle" => "tab", href: "#data-table-#{vf[:field].id}"} Latest data
+        %li
+          %a{"data-toggle" => "tab", href: "#chart-#{vf[:field].id}"} Chart
+        %li.pull-left.header
+          %i.fa.fa-inbox
+          %h3.inline= vf[:field].name
+      .tab-content
+        %div.tab-pane.active{id: "summary-#{vf[:field].id}"}
+          .row
+            .col-sm-3
+              .box.box-solid.box-info
+                .box-header
+                  %h4.box-title= t('vf.list.current_value')
+                .box-body
+                  - if vf[:field].is_numeric
+                    .bigger= "#{vf[:latest_measurement].int_value} #{vf[:field].unit}"
+                  - else
+                    = vf[:latest_measurement].string_value
+                    = vf[:field].unit
+                  %table.table
+                    %tbody
+                      %tr
+                        %th= t('vf.list.date')
+                        %td= vf[:latest_measurement].measured_at.to_date.full(locale)
+                      %tr
+                        %th= t('vf.list.location')
+                        %td= vf[:latest_measurement].locality
+
+            .col-sm-5
+              .row
+                - if vf[:field].is_numeric
+                  .col-sm-6
+                    .box.box-success
+                      .box-header
+                        %h4.box-title= t('vf.list.best')
+                      .box-body
+                        %table.table.small.condensed
+                          %tbody
+                            %tr
+                              %th= t('vf.list.value')
+                              %td
+                                %strong.bigger= vf[:best_measurement].int_value
+                            %tr
+                              %th= t('vf.list.date')
+                              %td= vf[:best_measurement].measured_at.to_date.full(locale)
+                            %tr
+                              %th= t('vf.list.location')
+                              %td= dash_or_value(vf[:best_measurement], :locality)
+                  .col-sm-6
+                    .box.box-danger
+                      .box-header
+                        %h4.box-title= t('vf.list.worst')
+                      .box-body
+                        %table.table.small.condensed
+                          %tbody
+                            %tr
+                              %th= t('vf.list.value')
+                              %td
+                                %strong.bigger= vf[:worst_measurement].int_value
+                            %tr
+                              %th= t('vf.list.date')
+                              %td= vf[:worst_measurement].measured_at.to_date.full(locale)
+                            %tr
+                              %th= t('vf.list.location')
+                              %td= dash_or_value(vf[:worst_measurement], :locality)
+                - else
+                  .alert= t('vf.list.statistic_info_not_available')
+                / Description of variable field
+            .col-sm-4
+              .box.box-info
+                .box-header
+                  %h3.box-title= t('vf.list.description')
+                .box-body
+                  =vf[:field].description
+        %div.tab-pane{id: "data-table-#{vf[:field].id}"}
+          %table.table.table-striped
+            %thead
+              %tr
+                %th #ID
+                %th= t('vf.list.location')
+                %th= t('vf.list.date')
+                %th= t('vf.list.measured_by')
+            %tbody
+              - vf[:field].variable_field_measurements.each do |vfm|
+                %tr
+                  %td= vfm.id
+                  %td= dash_or_value vfm, :locality
+                  %td= vfm.measured_at
+                  %td= dash_or_value vfm.measured_by, :name
+
+        %div.chart.tab-pane{id: "chart-#{vf[:field].id}"}

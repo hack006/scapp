@@ -1,7 +1,0 @@
-en:
-  variable_field:
-    vf_cant_be_deleted: "Variable field can't be deleted because some data relies on it!"
-    edit_confirmation: "Warning! You are changing variable which is already used. You should change fields only
-                        if you are correcting mistake or enhancing description. Please confirm by retyping:
-                        %{token}"
-    bad_confirmation: "You have entered invalid confirmation token!"

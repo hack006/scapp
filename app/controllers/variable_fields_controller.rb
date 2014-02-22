@@ -92,6 +92,10 @@ class VariableFieldsController < ApplicationController
     end
   end
 
+  # Add new category for variable fields
+  #
+  # @controller_action
+  # @ajax
   def add_category
     @added_category = VariableFieldCategory.new(params.require(:variable_field_category).permit(:name)   )
     @added_category.user_id = current_user.id
@@ -105,6 +109,55 @@ class VariableFieldsController < ApplicationController
         format.js { render partial: 'variable_fields/ajax/add_category-failed' }
       end
     end
+  end
+
+  # Show user variable fields summary
+  #
+  # Variable fields are grouped by categories for easier navigation. Only *owner*, *coach*, *partner* and *admin* can
+  # view this. Rendered as tabs with options to view (_lazy loaded by ajax_) latest data in graph or data table.
+  def user_variable_fields
+    # Todo: who can view?
+    #   - owner
+    #   - coach
+    #   - admin
+    #   - partner
+
+
+    @user = User.friendly.find(params[:user_id])
+    @variable_fields = Hash.new()
+    VariableField.with_measurements_for(@user).order_by_categories.each do |vf|
+      category = vf.variable_field_category.name unless vf.variable_field_category.blank?
+      category ||= 'Uncategorized'
+
+      @variable_fields[category] ||= { detail: nil, items: []}
+      @variable_fields[category][:detail] ||= vf.variable_field_category
+
+      variable_field = { field: vf,
+                         latest_measurement: vf.latest_measurement(@user),
+                         worst_measurement: vf.worst_measurement(@user),
+                         best_measurement: vf.best_measurement(@user)}
+      @variable_fields[category][:items] << variable_field
+    end
+
+    render 'users/variable_fields/list'
+  end
+
+  # Show detailed information for specified user variable field
+  #
+  # Enables viewing large data sets and configure data visualisation in graph.
+  #
+  # @todo Data exporting in various formats
+  # @controller_action
+  def user_variable_field_detail
+    # TODO implement
+
+  end
+
+  # Return data and initialization JS needed for rendering graph
+  #
+  # @param [int] variable_field_id
+  def user_variable_graph
+    # TODO implement
   end
 
   private
