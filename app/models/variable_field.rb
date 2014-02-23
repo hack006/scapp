@@ -29,7 +29,7 @@ class VariableField < ActiveRecord::Base
     raise 'Not a numeric variable field. Can\'t take best value!' unless self.is_numeric
 
     bm = self.variable_field_measurements.order(int_value: (self.higher_is_better? ? :desc : :asc) )
-    bm.where!(measured_for_id: user) if user.kind_of?(User)
+    bm = bm.where(measured_for_id: user) if user.kind_of?(User)
 
     bm.first
   end
@@ -38,10 +38,23 @@ class VariableField < ActiveRecord::Base
   def worst_measurement(user = nil)
     raise 'Not a numeric variable field. Can\'t take best value!' unless self.is_numeric
 
-    bm = self.variable_field_measurements.order(int_value: (self.higher_is_better? ? :desc : :asc) )
-    bm.where!(measured_for_id: user) if user.kind_of?(User)
+    bm = self.variable_field_measurements.order(int_value: (self.higher_is_better? ? :asc : :desc) )
+    bm = bm.where(measured_for_id: user) if user.kind_of?(User)
 
     bm.first
+  end
+
+  # Get latest measurements
+  #
+  # _User_ can be specified to limit result for only his records. Paging supported by combination of _page_ and _limit_.
+  #
+  # @param [int] page Page number
+  # @param [int] limit Row fetch count
+  # @param [User|int] user Limit result for records of _user_ (or user_id)
+  #
+  # @return [ActiveRecord::Relation] query result
+  def latest_measurements(page = 1, limit = 20, user = nil)
+    paged_measurements :measured_at, user, page, limit, :desc
   end
 
   def has_to_confirm_edit?
@@ -52,4 +65,21 @@ class VariableField < ActiveRecord::Base
     Digest::MD5.hexdigest(attributes.to_s).gsub(/[^[0-9]]/, "")[0..5]
   end
 
+
+  private
+
+  def paged_measurements(sort_by, user, page = 1, limit = 20, direction = :asc)
+    raise Exception, 'Column you want to sort by is not available!' unless self.variable_field_measurements.first.has_attribute?(sort_by)
+
+    # TODO: self modifying where!() seems to doesn't work :/
+    res =  self.variable_field_measurements
+    .limit(limit)
+    .offset((page - 1) * limit)
+    .order("#{sort_by}" => direction)
+    .where(measured_for_id: user)
+
+    res = res.where(measured_for_id: user) unless user.kind_of?(User) || user.kind_of?(Fixnum)
+
+    res
+  end
 end

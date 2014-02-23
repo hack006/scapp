@@ -37,6 +37,9 @@ Scapp::Application.routes.draw do
       collection do
         get '/' => 'variable_fields#user_variable_fields'
       end
+      member do
+        get 'graph' => 'variable_fields#user_variable_graph'
+      end
     end
   end
 end

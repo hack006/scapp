@@ -125,7 +125,7 @@ class VariableFieldsController < ApplicationController
 
     @user = User.friendly.find(params[:user_id])
     @variable_fields = Hash.new()
-    VariableField.with_measurements_for(@user).order_by_categories.each do |vf|
+    VariableField.with_measurements_for(@user).order_by_categories.group('variable_fields.id').each do |vf|
       category = vf.variable_field_category.name unless vf.variable_field_category.blank?
       category ||= 'Uncategorized'
 
@@ -155,9 +155,16 @@ class VariableFieldsController < ApplicationController
 
   # Return data and initialization JS needed for rendering graph
   #
-  # @param [int] variable_field_id
+  # @param [int] id Variable field id
   def user_variable_graph
-    # TODO implement
+    # TODO implement user security policy
+    # get latest 20 measurements
+    @variable_field_measurements = VariableField.find(params[:id]).latest_measurements 1, 20, current_user
+
+    respond_to do |format|
+      #format.js { render partial: 'variable_fields/ajax/summary_graph' }
+      format.js { render json: {refresh_id: "chart-#{params[:id]}", data: @variable_field_measurements}.to_json }
+    end
   end
 
   private
