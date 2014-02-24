@@ -18,6 +18,7 @@ en:
     dashboard: &dashboard 'Dashboard'
     control_panel: &control_panel 'Control panel'
 
+
   template:
     main:
       home: *home
@@ -25,6 +26,11 @@ en:
       control_panel: *control_panel
 
   vf:
+    controller:
+      date: *date
+      value: *value
+      location: *location
+      measured_by: *measured_by
     list:
       current_value: 'Current value'
       location: *location

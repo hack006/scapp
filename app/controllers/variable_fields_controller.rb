@@ -153,17 +153,41 @@ class VariableFieldsController < ApplicationController
 
   end
 
-  # Return data and initialization JS needed for rendering graph
+  # Return graph data in JSON
   #
   # @param [int] id Variable field id
   def user_variable_graph
     # TODO implement user security policy
     # get latest 20 measurements
-    @variable_field_measurements = VariableField.find(params[:id]).latest_measurements 1, 20, current_user
+    @variable_field_measurements = VariableField.find(params[:id]).latest_measurements(1, 20, current_user).map do |vfm|
+      {measured_at: vfm.measured_at.strftime('%Y-%m-%d %H:%M'), int_value: vfm.int_value, location: vfm.locality}
+    end
 
     respond_to do |format|
       #format.js { render partial: 'variable_fields/ajax/summary_graph' }
       format.js { render json: {refresh_id: "chart-#{params[:id]}", data: @variable_field_measurements}.to_json }
+    end
+  end
+
+  # Return table data in JSON
+  #
+  # @param [int] id Variable field id
+  def user_variable_table
+    # TODO implement user security policy
+    # get latest 20 measurements
+    @variable_field_measurements = VariableField.find(params[:id]).latest_measurements(1, 20, current_user).map do |vfm|
+      [ vfm.measured_at.strftime('%Y-%m-%d %H:%M'), vfm.int_value, vfm.locality, (vfm.measured_by.blank?) ? '-' : vfm.measured_by.name ]
+    end
+
+    respond_to do |format|
+      #format.js { render partial: 'variable_fields/ajax/summary_graph' }
+      format.js do
+        render json: {refresh_id: "table-#{params[:id]}",
+                      heading: [t('vf.controller.date'), t('vf.controller.value'), t('vf.controller.location'),
+                                t('vf.controller.measured_by')],
+                      data: @variable_field_measurements}.to_json
+      end
+
     end
   end
 

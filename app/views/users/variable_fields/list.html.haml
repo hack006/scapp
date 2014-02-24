@@ -14,7 +14,7 @@
         %li.active
           %a{"data-toggle" => "tab", href: "#summary-#{vf[:field].id}"} Summary
         %li
-          %a{"data-toggle" => "tab", href: "#data-table-#{vf[:field].id}"} Latest data
+          %a{"data-table" => "lvf", "data-remote" => "true", "data-type" => "json", "data-table-id" => "#{vf[:field].id}", href: table_user_variable_field_path(params[:user_id], vf[:field].id)} Latest data
         %li
           %a{"data-chart" => "lvf", "data-remote" => "true", "data-type" => "json", "data-chart-id" => "#{vf[:field].id}", href: graph_user_variable_field_path(params[:user_id], vf[:field].id)} Chart
         %li.pull-left.header
@@ -88,20 +88,6 @@
                   %h3.box-title= t('vf.list.description')
                 .box-body
                   =vf[:field].description
-        %div.tab-pane{id: "data-table-#{vf[:field].id}"}
-          %table.table.table-striped
-            %thead
-              %tr
-                %th #ID
-                %th= t('vf.list.location')
-                %th= t('vf.list.date')
-                %th= t('vf.list.measured_by')
-            %tbody
-              - vf[:field].variable_field_measurements.each do |vfm|
-                %tr
-                  %td= vfm.id
-                  %td= dash_or_value vfm, :locality
-                  %td= vfm.measured_at
-                  %td= dash_or_value vfm.measured_by, :name
+        %div.tab-pane{id: "table-#{vf[:field].id}"}
 
         %div.chart.tab-pane{id: "chart-#{vf[:field].id}"}
