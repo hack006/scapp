@@ -97,6 +97,8 @@ GEM
       activerecord (>= 4.0.0)
     gherkin (2.12.2)
       multi_json (~> 1.3)
+    gretel (3.0.5)
+      rails (>= 3.2.0)
     haml (4.1.0.alpha.2)
       tilt
     haml-rails (0.4)
@@ -271,6 +273,7 @@ DEPENDENCIES
   factory_girl_rails
   figaro
   friendly_id (~> 5.0.0)
+  gretel
   haml-rails
   html2haml
   jbuilder (~> 1.2)

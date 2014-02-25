@@ -1,7 +1,7 @@
 - content_for :heading do
-  User variable fields
+  = t('vf.list.user_variable_fields')
 
-- content_for :breadcrumbs
+- breadcrumb :user_variable_fields, @user
 
 
 - @variable_fields.each do |k, vfc|

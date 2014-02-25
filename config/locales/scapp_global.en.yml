@@ -17,7 +17,18 @@ en:
     home: &home 'Home'
     dashboard: &dashboard 'Dashboard'
     control_panel: &control_panel 'Control panel'
+    variable_field: &variable_field 'Variable field'
+    variable_fields: &variable_fields 'Variable fields'
+    user: &user 'User'
+    users: &users 'Users'
+    measurement: &measurement 'Measurement'
+    measurements: &measurements 'Measurements'
 
+  breadcrumbs:
+    home: *home
+    variable_fields: *variable_fields
+    variable_field: *variable_field
+    user: *user
 
   template:
     main:
@@ -41,3 +52,4 @@ en:
       statistic_info_not_available: 'Statistic information not available'
       description: *description
       measured_by: *measured_by
+      user_variable_fields: 'User variable fields'

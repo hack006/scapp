@@ -34,15 +34,9 @@
           - else
             = t('template.main.dashboard')
           %small= t('template.main.control_panel')
-        - if content_for? :breadcrumbs
-          = yield(:breadcrumbs)
-        - else
-          %ol.breadcrumb
-            %li
-              %a{href: "/"}
-                %i.fa.fa-dashboard
-                = t('template.main.dashboard')
-            %li.active= t('template.main.home')
+
+        = breadcrumbs pretext: 'You are here:', separator: ' &rsaquo; '
+
       / Main content
       %section.content
         = render 'layouts/messages'
