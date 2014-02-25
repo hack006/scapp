@@ -160,8 +160,11 @@ class VariableFieldsController < ApplicationController
     # TODO implement user security policy
     # get latest 20 measurements
     @variable_field_measurements = VariableField.find(params[:id]).latest_measurements(1, 20, current_user).map do |vfm|
-      {measured_at: vfm.measured_at.strftime('%Y-%m-%d %H:%M'), int_value: vfm.int_value, location: vfm.locality}
+      {measured_at: vfm.measured_at.strftime('%Y-%m-%d %H:%M'), location: vfm.locality, x: (vfm.measured_at.to_i * 1000), y: vfm.int_value}
     end
+
+    # older first for graphic library
+    @variable_field_measurements.reverse!
 
     respond_to do |format|
       #format.js { render partial: 'variable_fields/ajax/summary_graph' }

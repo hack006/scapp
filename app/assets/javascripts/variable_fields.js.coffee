@@ -50,27 +50,43 @@ jQuery(document).ready( ->
     # replace content by obtained data
     jQuery('#' + data.refresh_id).html('<div id="morris-chart-' + table_id + '"></div>')
 
-    new Morris.Line({
-      # ID of the element in which to draw the chart.
-      element: 'morris-chart-' + table_id,
-      # Chart data records -- each entry in this array corresponds to a point on
-      # the chart.
-      data: data.data,
-      # The name of the data record attribute that contains x-values.
-      xkey: 'measured_at',
-      # A list of names of data record attributes that contain y-values.
-      ykeys: ['int_value'],
-      # Labels for the ykeys -- will be displayed when you hover over the
-      # chart.
-      labels: ['Value'] ,
-      hoverCallback: (index, options, content) ->
-        row = options.data[index];
-        return "<div class=\"morris-hover-row-label\">" + row.measured_at + "</div>" +
-          "<div class=\"morris-hover-point\">Value:" + row.int_value + "</div>" +
-          "<div>Location: " + row.location + "</div>";
+    jQuery("#morris-chart-#{table_id}").highcharts({
+      chart: {
+        zoomType: 'x',
+        spacingRight: 20
+      },
+      title: {
+        text: 'Change of variable in time'
+      },
+      xAxis: {
+        type: 'datetime',
+        maxZoom: 7 * 24 * 3600000, # fourteen days
+        title: {
+          text: null
+        }
+      },
+      yAxis: {
+        title: {
+          text: 'Value'
+        }
+      },
+      tooltip: {
+        shared: true
+      },
+      legend: {
+        enabled: false
+      },
+      series: [{
+        type: 'line',
+        data: data.data
+      }],
+      tooltip: {
+        formatter: ->
+          date = new Date(this.x)
+          "<strong>Date:</strong> #{date.to_fstring()}<br/> <strong>Value:</strong> #{this.y}<br/><strong>Location:</strong> #{this.point.location}"
+      }
     });
   )
-
   # == TABLE ==
   jQuery("a[data-table=lvf]").on('ajax:send', (event, xhr) ->
     table_id = jQuery(this).attr('data-table-id')
