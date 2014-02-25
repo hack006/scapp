@@ -1,3 +1,5 @@
+require 'statsample'
+
 class VariableFieldsController < ApplicationController
   before_action :set_variable_field, only: [:show, :edit, :update, :destroy]
 
@@ -156,6 +158,7 @@ class VariableFieldsController < ApplicationController
   # Return graph data in JSON
   #
   # @param [int] id Variable field id
+  # @ajax
   def user_variable_graph
     # TODO implement user security policy
     # get latest 20 measurements
@@ -166,15 +169,23 @@ class VariableFieldsController < ApplicationController
     # older first for graphic library
     @variable_field_measurements.reverse!
 
+    # compute linear regression line
+    regress = Statsample::Regression::Simple.new_from_vectors(@variable_field_measurements.map{|v| v[:x]}.to_scale,
+                                                              @variable_field_measurements.map{|v| v[:y]}.to_scale)
+    first_x = @variable_field_measurements.first[:x]
+    last_x = @variable_field_measurements.last[:x]
+    @regression_line_points = [[first_x, regress.y(first_x)], [last_x, regress.y(last_x)]]
     respond_to do |format|
       #format.js { render partial: 'variable_fields/ajax/summary_graph' }
-      format.js { render json: {refresh_id: "chart-#{params[:id]}", data: @variable_field_measurements}.to_json }
+      format.js { render json: {refresh_id: "chart-#{params[:id]}", data: {graph: @variable_field_measurements,
+                                                                           regression: @regression_line_points}}.to_json }
     end
   end
 
   # Return table data in JSON
   #
   # @param [int] id Variable field id
+  # @ajax
   def user_variable_table
     # TODO implement user security policy
     # get latest 20 measurements

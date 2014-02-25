@@ -70,15 +70,23 @@ jQuery(document).ready( ->
           text: 'Value'
         }
       },
-      tooltip: {
-        shared: true
-      },
-      legend: {
-        enabled: false
-      },
       series: [{
         type: 'line',
-        data: data.data
+        name: 'Measured values',
+        data: data.data.graph
+      },
+      {
+        type: 'line',
+        name: 'Regression line',
+        color: '#F7CB9C',
+        earker: {
+          enabled: false
+        },
+        marker: {
+          enabled: false
+        },
+        enableMouseTracking: false,
+        data: data.data.regression
       }],
       tooltip: {
         formatter: ->
