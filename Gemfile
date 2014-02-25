@@ -1,22 +1,35 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 gem 'rails', '4.0.1'
+# CSS preprocessor
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
+# JS preprocessor
 gem 'coffee-rails', '~> 4.0.0'
+# JS jQuery library
 gem 'jquery-rails', '~>3.1.0'
+# page speedup loader - replacing only document body and changed assets
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
+# twitter bootstrap tem,plate framework
 gem 'bootstrap-sass', '>= 3.0.0.0'
+# add user permissions support for controller actions
 gem 'cancan'
+# user authentication
 gem 'devise'
+# configuration in YAML
 gem 'figaro'
+# templating engine
 gem 'haml-rails'
 gem 'mysql2'
+# user authorization - user role support
 gem 'rolify'
+# html form builder
 gem 'simple_form'
 gem 'therubyracer', :platform=>:ruby
+# seo identifiers in url
 gem 'friendly_id', '~> 5.0.0'
+# ruby statistic package
 gem 'statsample', '~> 1.3.0'
 group :development do
   gem 'better_errors'
