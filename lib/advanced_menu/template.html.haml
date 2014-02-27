@@ -10,7 +10,7 @@
         - unless h.links.empty?
           %i.fa.pull-right.fa-angle-left
       - unless h.links.empty?
-        %ul.treeview-menu
+        %ul.treeview-menu{style: "#{(h.active) ? 'display: block;' : ''}"}
           -# list all links under heading
           - h.each_permitted_link(roles) do |l|
             %li{class: "#{l.classes.empty? ? '' : l.classes.join(' ')}#{(l.active) ? ' active' : ''}"}

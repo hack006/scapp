@@ -1,6 +1,9 @@
-%h1 Listing variable_field_sports
+- content_for :heading do
+  = t('vfs.index.variable_field_sports')
 
-%table
+- breadcrumb :variable_field_sports
+
+%table.table
   %tr
     %th Name
     %th

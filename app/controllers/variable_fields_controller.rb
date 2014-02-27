@@ -16,6 +16,7 @@ class VariableFieldsController < ApplicationController
 
   # GET /variable_fields/new
   def new
+    # Todo: only admin can add global variables, more user can have vars with same name
     @variable_field = VariableField.new
     @variable_field_categories_accessible = VariableFieldCategory.owned_by_user_or_public(current_user.id)
   end
@@ -152,7 +153,9 @@ class VariableFieldsController < ApplicationController
   # @controller_action
   def user_variable_field_detail
     # TODO implement
+    @user = User.friendly.find params[:user_id]
 
+    render 'users/variable_fields/detail'
   end
 
   # Return graph data in JSON

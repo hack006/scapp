@@ -1,4 +1,7 @@
-%h1 New user_group
+- content_for :heading do
+  = t('user_groups.new.new_group')
+
+- breadcrumb :user_groups_new
 
 = render 'form'
 

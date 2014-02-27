@@ -1,6 +1,9 @@
-%h1 Listing variable_field_categories
+- content_for :heading do
+  = t('vfc.index.variable_field_categories')
 
-%table
+- breadcrumb :variable_field_categories
+
+%table.table
   %tr
     %th Name
     %th Rgb

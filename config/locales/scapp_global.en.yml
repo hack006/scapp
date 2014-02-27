@@ -23,12 +23,59 @@ en:
     users: &users 'Users'
     measurement: &measurement 'Measurement'
     measurements: &measurements 'Measurements'
+    groups: &groups 'Groups'
+    relations: &relations 'Relations'
+    user_relations: &user_relations 'User relations'
+    profile: &profile 'Profile'
+    new_user: &new_user 'New user'
+    new_group: &new_group 'New group'
+    new_variable_field: &new_variable_field 'New variable field'
+    variable_field_categories: &variable_field_categories 'VF categories'
+    new_variable_field_category: &new_variable_field_category 'New VF category'
+    variable_field_user_levels: &variable_field_user_levels 'VF user levels'
+    new_variable_field_user_level: &new_variable_field_user_level 'New VF user level'
+    variable_field_sports: &variable_field_sports 'VF sports'
+    new_variable_field_sport: &new_variable_field_sport 'New VF sport'
 
   breadcrumbs:
     home: *home
     variable_fields: *variable_fields
     variable_field: *variable_field
     user: *user
+    users: *users
+    in_groups: 'In groups'
+    user_groups: 'User groups'
+    new_group: *new_group
+    has_relations: 'Existing relations'
+    new_user: *new_user
+    variable_fields: *variable_fields
+    new_variable_field: *new_variable_field
+    variable_field_categories: *variable_field_categories
+    new_variable_field_category: *new_variable_field_category
+    variable_field_user_levels: *variable_field_user_levels
+    new_variable_field_user_level: *new_variable_field_user_level
+    variable_field_sports: *variable_field_sports
+    new_variable_field_sport: *new_variable_field_sport
+    user_relations: &user_relations
+  nav:
+    user: *user
+    new_user: *new_user
+    my_groups: 'My groups'
+    my_relations: 'My relations'
+    groups: *groups
+    new_group: *new_group
+    relations: *relations
+    variable_field: *variable_field
+    variable_fields: *variable_fields
+    my_variable_fields: 'My variable fields'
+    new_variable_field: 'New variable field'
+    variable_field_categories: *variable_field_categories
+    new_variable_field_category: *new_variable_field_category
+    variable_field_user_levels: 'VF user levels'
+    new_variable_field_user_level: 'New VF user level'
+    variable_field_sports: 'VF sports'
+    new_variable_field_sport: 'New VF sport'
+
 
   template:
     main:
@@ -42,6 +89,10 @@ en:
       value: *value
       location: *location
       measured_by: *measured_by
+    index:
+      variable_field_optimal_values: 'VF optimal values'
+      new_variable_field_optimal_value: 'New VF optimal value'
+      variable_fields: *variable_fields
     list:
       current_value: 'Current value'
       location: *location
@@ -52,4 +103,41 @@ en:
       statistic_info_not_available: 'Statistic information not available'
       description: *description
       measured_by: *measured_by
+      user_variable_field_detail: 'User variable field - detail'
       user_variable_fields: 'User variable fields'
+    new:
+      new_vf: *new_variable_field
+  vfc:
+    index:
+      variable_field_categories: 'Listing variable field categories'
+    new:
+      new_variable_field_category: 'New variable field category'
+  vful:
+    index:
+      variable_field_user_levels: 'Listing variable field user levels'
+    new:
+      new_variable_field_user_level: 'New variable field user levels'
+  vfs:
+    index:
+      variable_field_sports: 'Listing variable field sports'
+    new:
+      new_variable_field_sport: 'New variable field sport'
+  user:
+    controller:
+      user_create_success: 'User has been successfully created'
+    show:
+      profile: *profile
+    new:
+      new_user: *new_user
+  user_groups:
+    index:
+      user_groups: 'Listing user groups'
+    user_in:
+      user_assigned_in_groups: 'User assigned in groups'
+    new:
+      new_group: *new_group
+  user_relations:
+    index:
+      user_relations: 'Listing user relations'
+    user_has:
+      user_relation_connections: 'User relation connections'

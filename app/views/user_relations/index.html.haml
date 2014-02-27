@@ -1,6 +1,9 @@
-%h1 Listing user_relations
+- content_for :heading do
+  = t('user_relations.index.user_relations')
 
-%table
+- breadcrumb :user_relations
+
+%table.table
   %tr
     %th Relation
     %th From user status

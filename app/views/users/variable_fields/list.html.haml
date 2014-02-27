@@ -19,7 +19,8 @@
           %a{"data-chart" => "lvf", "data-remote" => "true", "data-type" => "json", "data-chart-id" => "#{vf[:field].id}", href: graph_user_variable_field_path(params[:user_id], vf[:field].id)} Chart
         %li.pull-left.header
           %i.fa.fa-inbox
-          %h3.inline= vf[:field].name
+          %a{href: detail_user_variable_field_path(@user, vf[:field].id) }
+            %h3.inline= vf[:field].name
       .tab-content
         %div.tab-pane.active{id: "summary-#{vf[:field].id}"}
           .row

@@ -61,6 +61,17 @@ class UserGroupsController < ApplicationController
     end
   end
 
+  # List groups user is listed in
+  #
+  # Only owner, :coach, :admin can see this
+  #
+  # @controller_action
+  def user_in
+    @user = User.friendly.find(params[:user_id])
+
+    render 'users/user_groups/in'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user_group

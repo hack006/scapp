@@ -18,42 +18,4 @@
           %button#search-btn.btn.btn-flat{name: "seach", type: "submit"}
             %i.fa.fa-search
     / sidebar menu
-    = AdvancedMenu::Menu.render(current_user ? current_user.roles.map{|r| r.name.to_sym} : :guest, controller_name, action_name)
-    %ul.sidebar-menu
-      %li.active
-        %a{href: "/"}
-          %i.fa.fa-dashboard
-          %span Dashboard
-      %li.treeview
-        %a{href: users_path}
-          %i.fa.fa-th
-          %span Users
-          %i.fa.fa-angle-left.pull-right
-          / %small.badge.pull-right.bg-green new
-        %ul.treeview-menu
-          %li
-            %a{href: user_groups_path}
-              %i.fa.fa-angle-double-right
-              Groups
-          %li
-            %a{href: user_relations_path}
-              %i.fa.fa-angle-double-right
-              Relations
-      %li.treeview
-        %a{href: "#"}
-          %i.fa.fa-bar-chart-o
-          %span Variable fields
-          %i.fa.fa-angle-left.pull-right
-        %ul.treeview-menu
-          %li
-            %a{href: variable_field_categories_path}
-              %i.fa.fa-angle-double-right
-              Categories
-          %li
-            %a{href: variable_field_sports_path}
-              %i.fa.fa-angle-double-right
-              Sports
-          %li
-            %a{href: variable_field_user_levels_path}
-              %i.fa.fa-angle-double-right
-              User levels
+    = AdvancedMenu::Menu.render(current_user, controller_name, action_name)

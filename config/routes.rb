@@ -40,7 +40,21 @@ Scapp::Application.routes.draw do
       member do
         get 'graph' => 'variable_fields#user_variable_graph'
         get 'table' => 'variable_fields#user_variable_table'
+        get 'detail' => 'variable_fields#user_variable_field_detail'
       end
     end
+
+    resources :user_groups, only: [], path: 'groups' do
+      collection do
+        get '/' => 'user_groups#user_in'
+      end
+    end
+
+    resources :user_relations, only: [], path: 'relations' do
+      collection do
+        get '/' => 'user_relations#user_has'
+      end
+    end
+
   end
 end

@@ -32,12 +32,20 @@ module AdvancedMenu
       end
     end
 
-    def self.render(roles, controller, action)
+    def self.render(logged_user, controller, action)
+      # get roles
+      roles = logged_user ? logged_user.roles.map{|r| r.name.to_sym} : :guest
+
       # activate fields based on controller and action
       @@headings.each do |h|
         h.active = true if h.controller == controller && [nil, action].include?(h.action)
+        # replace placeholders
+        replace_placeholders h.path, logged_user
 
         h.links.each do |l|
+          # replace placeholders
+          replace_placeholders l.path, logged_user
+
           if l.controller == controller && [nil, action].include?(l.action)
             l.active = true
             l.parent.active = true unless l.parent.nil?
@@ -54,6 +62,17 @@ module AdvancedMenu
       end
 
       h.render Object.new, {menu: self, roles: roles, controller: controller, action: action}
+    end
+
+    private
+
+    def self.replace_placeholders(str, user)
+      replacements = [{placeholder: '{user_slug}', replacement: user.slug}]
+
+      replacements.each do |r|
+        str.gsub! r[:placeholder], r[:replacement]
+      end
+
     end
   end
 

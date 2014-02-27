@@ -1,3 +1,8 @@
+- content_for :heading do
+  = t('user.show.profile')
+
+- breadcrumb :user, @user
+
 %h3 User
 %p
   User: #{@user.name}

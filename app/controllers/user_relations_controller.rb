@@ -61,6 +61,18 @@ class UserRelationsController < ApplicationController
     end
   end
 
+  # List relations user has
+  #
+  # Can access only owner, :coach, :admin
+  #
+  # @param [string] :user_id - friendly_id slug
+  # @controller_action
+  def user_has
+    @user = User.friendly.find(params[:user_id])
+
+    render 'users/user_relations/has'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user_relation
