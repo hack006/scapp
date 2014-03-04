@@ -8,22 +8,13 @@ def find_or_create_category(name)
   end
 end
 
-def find_or_create_category_with_user(name, description, user_id)
-  c ||= VariableFieldCategory.where(name: name, user_id: user_id ).first
-  unless c
-    c = VariableFieldCategory.create!(name: name, description: description)
-    c.user_id = user_id
-    c.save
-  end
-end
-
 Given(/^I am on the variable_field add new page$/) do
   visit '/variable_fields/new'
 end
 
 
 And(/^I have "(.*?)" role$/) do |arg1|
-  @user.add_role arg1
+  @user.add_role arg1.to_sym
 end
 
 And(/^category "(.*?)" exists$/) do |arg1|
@@ -66,10 +57,17 @@ When(/^another user owning category exists$/) do
 end
 
 When(/^following categories are available in the system$/) do |table|
-  # table is a | Strength  | Strength desc | nil       |
-  find_or_create_category_with_user(table.hashes[0]['name'], table.hashes[0]['description'], nil)
-  find_or_create_category_with_user(table.hashes[1]['name'], table.hashes[1]['description'], @user.id)
-  find_or_create_category_with_user(table.hashes[2]['name'], table.hashes[2]['description'], @user2.id)
+  # table is a | name | description | is_global | user |
+  # TODO: fix to take values from table
+  table.hashes.each do |r|
+    user = User.where(name: r[:user]).first
+
+    # test if exist
+    unless VariableFieldCategory.where(name: r[:name], user_id: user).count > 0
+      FactoryGirl.create :variable_field_category, { name: r[:name], description: r[:description],
+                                                     is_global: r[:is_global], user: user }
+    end
+  end
 end
 Then(/^As user with username "([^"]*)" I should see "([^"]*)" and "([^"]*)" but not "([^"]*)"$/) do |arg1, arg2, arg3, arg4|
       should have_content arg2
@@ -105,17 +103,20 @@ When(/^I select option add category$/) do
   click_link_or_button 'Add category'
 end
 When(/^Following variable fields exist in system$/) do |table|
-  # table is a | IQ          | inteligence quoc.   | intelligence | test1     |
+  #  | name | description | is_global | is_numeric | category | user |
+
   table.hashes.each do |r|
     # get user
-    owner = User.where(name: r[:user]).first
+    user = User.where(name: r[:user]).first
     # get category
     category = VariableFieldCategory.where(name: r[:category]).first
     # create variable field
-    var_field = VariableField.new(name: r[:name], description: r[:description])
-    var_field.variable_field_category = category
-    var_field.user = owner
-    var_field.save
+    unless VariableField.where(name: r[:name], is_global: false, user_id: user).count > 0 ||
+           VariableField.where(name: r[:name], is_global: true).count > 0
+
+      FactoryGirl.create :variable_field, { name: r[:name], description: r[:description], is_global: r[:is_global],
+                                            is_numeric: r[:is_numeric], variable_field_category: category, user: user}
+    end
   end
 end
 When(/^I am on the variable fields index page$/) do
@@ -180,24 +181,61 @@ Then(/^I should we warned that measurements exists and variable_field can't be r
   page.should have_content "field can't be deleted"
 end
 Then(/^I should see "([^"]*)" containing "([^"]*)"$/) do |element, text|
+  found  = false
   case element
     when "heading"
-      find(:css, "h1,h2,h3,h4,h5").should have_text text
+      found = exists_element_with_text? "h1,h2,h3,h4,h5,h6,h7", text
     when "paragraph"
-      find(:css, "p").should have_text text
+      found = exists_element_with_text? "p", text
     when "alert message"
-      find(:css, "div.alert").should have_text text
+      found = exists_element_with_text? "div.alert", text
     when "error message"
-      find(:css, "div.alert-danger").should have_text text
+      found = exists_element_with_text? "div.alert-danger", text
     when "warning message"
-      find(:css, "div.alert-warning").should have_text text
+      found = exists_element_with_text? "div.alert-warning", text
     when "info  message"
-      find(:css, "div.alert-info").should have_text text
+      found = exists_element_with_text? "div.alert-info", text
     when "success message"
-      find(:css, "div.alert-success").should have_text text
+      found = exists_element_with_text? "div.alert-success", text
 
   end
 
+  raise Exception, "Element: '#{element}' with text: '#{text}' wasn't found!" unless found
+end
+
+def exists_element_with_text?(selector, text)
+  found = false
+  all(:css, selector).each do |h|
+    if h.has_text? text
+      found = true
+      break
+    end
+  end
+
+  found
+end
+
+Then(/^I shouldn't see "([^"]*)" containing "([^"]*)"$/) do |element, text|
+  found  = false
+  case element
+    when "heading"
+      found = exists_element_with_text? "h1,h2,h3,h4,h5,h6,h7", text
+    when "paragraph"
+      found = exists_element_with_text? "p", text
+    when "alert message"
+      found = exists_element_with_text? "div.alert", text
+    when "error message"
+      found = exists_element_with_text? "div.alert-danger", text
+    when "warning message"
+      found = exists_element_with_text? "div.alert-warning", text
+    when "info  message"
+      found = exists_element_with_text? "div.alert-info", text
+    when "success message"
+      found = exists_element_with_text? "div.alert-success", text
+
+  end
+
+  found ? false : true
 end
 When(/^I edit variable field$/) do
   fill_in 'variable_field_name', with: "changed name"
@@ -205,4 +243,11 @@ end
 When(/^I fill in correct modification confirmation token$/) do
   modification_token = find(:css, "div.alert.alert-warning").text[/[0-9]*$/]
   fill_in "variable_field_modification_confirmation", with: modification_token
+end
+When(/^I visit variable_field view results page of "([^"]*)"$/) do |user_slug|
+  visit user_variable_fields_path(user_slug)
+end
+When(/^"([^"]*)" "([^"]*)" value should be "([^"]*)"$/) do |box, type, value|
+  container = ".vf-name-#{box} .#{type}-value-box"
+  find(:css, container).find(:css, '.bigger').should have_content value
 end

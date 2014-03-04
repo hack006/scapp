@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140221151843) do
+ActiveRecord::Schema.define(version: 20140303163910) do
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -62,17 +62,17 @@ ActiveRecord::Schema.define(version: 20140221151843) do
   add_index "user_groups", ["user_id"], name: "index_user_groups_on_user_id", using: :btree
 
   create_table "user_relations", force: true do |t|
-    t.string   "relation"
-    t.string   "from_user_status"
-    t.string   "to_user_status"
-    t.integer  "user_from_id_id"
-    t.integer  "user_to_id_id"
+    t.string   "relation",         limit: 7,                 null: false
+    t.string   "from_user_status", limit: 8, default: "new", null: false
+    t.string   "to_user_status",   limit: 8, default: "new", null: false
+    t.integer  "user_from_id"
+    t.integer  "user_to_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "user_relations", ["user_from_id_id"], name: "index_user_relations_on_user_from_id_id", using: :btree
-  add_index "user_relations", ["user_to_id_id"], name: "index_user_relations_on_user_to_id_id", using: :btree
+  add_index "user_relations", ["user_from_id"], name: "index_user_relations_on_user_from_id", using: :btree
+  add_index "user_relations", ["user_to_id"], name: "index_user_relations_on_user_to_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 20140221151843) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_global"
   end
 
   add_index "variable_field_categories", ["user_id"], name: "index_variable_field_categories_on_user_id", using: :btree
@@ -164,6 +165,7 @@ ActiveRecord::Schema.define(version: 20140221151843) do
     t.integer  "variable_field_category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_global"
   end
 
   add_index "variable_fields", ["user_id", "name"], name: "index_variable_fields_on_user_id_and_name", unique: true, using: :btree

@@ -6,5 +6,8 @@ FactoryGirl.define do
     locality "MyString"
     string_value "MyString"
     int_value 1.5
+    association :measured_for, factory: :user
+    association :measured_by, nil, factory: :user
+    association :variable_field, factory: :variable_field
   end
 end

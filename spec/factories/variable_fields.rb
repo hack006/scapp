@@ -2,11 +2,12 @@
 
 FactoryGirl.define do
   factory :variable_field do
-    name "MyString"
-    description "MyString"
-    unit "MyString"
-    higher_is_better false
-    is_numeric false
+    name "MyVariableField"
+    description "MyDescription"
+    unit "unit"
+    higher_is_better true
+    is_numeric true
+    is_global true
     user nil
     variable_field_category nil
   end

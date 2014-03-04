@@ -4,7 +4,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to new_user_session_path, :alert => exception.message + ' Please, sign in.'
+    unless request.path == root_path
+      redirect_to root_path, :alert => 'You don\'t have required permissions!'
+    else
+      redirect_to new_user_session_path, :alert => 'Please, sign in!'
+    end
   end
 
   # GLOBAL AVAILABLE HELPERS
@@ -26,4 +30,10 @@ class ApplicationController < ActionController::Base
     current_user.has_role? :admin
   end
   # =====//
+
+  private
+
+  def current_ability
+    @current_ability ||= Ability.new(current_user, request)
+  end
 end

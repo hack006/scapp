@@ -1,27 +1,77 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
-    user ||= User.new # guest user (not logged in)
+  def initialize(user, request)
 
-    # diable all
+    # disable all
     cannot :manage, :all
 
 
+    @user = user || User.new # for guest
+    @request ||= request
 
-    if user.has_role? :admin
-      can :manage, :all
+    @user.roles.each do |role|
+      send role.name if ['player', 'coach', 'admin'].include? role.name
     end
 
-    if user.has_role? :player
-      can [:index], HomeController
-      can [:index, :new, :create, :show], VariableField
-      can [:update, :delete], VariableField, {user_id: user.id}
+    if @user.roles.size == 0
+      #for guest without roles
     end
 
-    if user.has_role? :coach
-      # extends user permissions
+  end
+
+  # ===========================================
+  # PLAYER PERMISSIONS
+  # ===========================================
+  def player
+    can [:index], HomeController
+    # =============
+    # VariableField
+    # =============
+    can [:index, :new, :create, :show], VariableField
+    can [:update, :delete], VariableField do |vf|
+      # can manage only own VF
+      vf.user_id ==  @user.id
     end
+    # can only view own VF page
+    can [:user_variable_fields], VariableFieldsController if @request.params[:user_id] == @user.slug
+  end
+
+  # ===========================================
+  # COACH PERMISSIONS
+  # ===========================================
+  def coach
+    # INHERIT from :player
+    player() unless @user.has_role? :player
+
+    # =============
+    # VariableField
+    # =============
+    can [:update, :delete], VariableField do |vf|
+      # can manage only own VF
+      vf.user_id ==  @user.id
+    end
+
+    # can only VF page of users connected to him
+    if (@request.params[:user_id] == @user.slug) || @user.in_relation?(User.friendly.find(@request.params[:user_id]), 'coach')
+      can [:user_variable_fields], VariableFieldsController
+    end
+
+  end
+
+  # ===========================================
+  # ADMIN PERMISSIONS
+  # ===========================================
+  def admin
+    # INHERIT from :coach
+    coach() unless @user.has_role? :coach
+
+    # =============
+    # VariableField
+    # =============
+    can :manage, :all
+  end
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
@@ -44,5 +94,4 @@ class Ability
     #   can :update, Article, :published => true
     #
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
-  end
 end

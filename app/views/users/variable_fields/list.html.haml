@@ -8,7 +8,7 @@
 
   %h2= vfc[:detail].name
   - vfc[:items].each do |vf|
-    .nav-tabs-custom{id: "vf-#{vf[:field].id}"}
+    .nav-tabs-custom{id: "vf-#{vf[:field].id}", class: "vf-name-#{vf[:field].name}"}
       / Tabs within a box
       %ul.nav.nav-tabs.pull-right{style: "cursor: move;"}
         %li.active
@@ -24,7 +24,7 @@
       .tab-content
         %div.tab-pane.active{id: "summary-#{vf[:field].id}"}
           .row
-            .col-sm-3
+            .col-sm-3.current-value-box
               .box.box-solid.box-info
                 .box-header
                   %h4.box-title= t('vf.list.current_value')
@@ -32,8 +32,9 @@
                   - if vf[:field].is_numeric
                     .bigger= "#{vf[:latest_measurement].int_value} #{vf[:field].unit}"
                   - else
-                    = vf[:latest_measurement].string_value
-                    = vf[:field].unit
+                    .bigger
+                      = vf[:latest_measurement].string_value
+                      = vf[:field].unit
                   %table.table
                     %tbody
                       %tr
@@ -46,7 +47,7 @@
             .col-sm-5
               .row
                 - if vf[:field].is_numeric
-                  .col-sm-6
+                  .col-sm-6.best-value-box
                     .box.box-success
                       .box-header
                         %h4.box-title= t('vf.list.best')
@@ -63,7 +64,7 @@
                             %tr
                               %th= t('vf.list.location')
                               %td= dash_or_value(vf[:best_measurement], :locality)
-                  .col-sm-6
+                  .col-sm-6.worst-value-box
                     .box.box-danger
                       .box-header
                         %h4.box-title= t('vf.list.worst')
@@ -83,7 +84,7 @@
                 - else
                   .alert= t('vf.list.statistic_info_not_available')
                 / Description of variable field
-            .col-sm-4
+            .col-sm-4.info-value-box
               .box.box-info
                 .box-header
                   %h3.box-title= t('vf.list.description')

@@ -18,14 +18,14 @@ def create_unconfirmed_user
   create_visitor
   delete_user
   sign_up
-  visit '/users/sign_out'
+  visit '/signout'
 end
 
 def create_user
   if @user.blank?
     create_visitor
     delete_user
-    @user = FactoryGirl.create(:user, email: @visitor[:email], name: @visitor[:name])
+    @user = FactoryGirl.create(:player, email: @visitor[:email], name: @visitor[:name])
   end
 end
 
@@ -33,7 +33,7 @@ def create_user2
   if @user2.blank?
     create_visitor2
     delete_user2
-    @user2 = FactoryGirl.create(:user, email: @visitor2[:email], name: @visitor2[:name])
+    @user2 = FactoryGirl.create(:player, email: @visitor2[:email], name: @visitor2[:name])
   end
 end
 
@@ -59,10 +59,10 @@ def sign_up
 end
 
 def sign_in
-  visit '/users/sign_in'
+  visit '/signin'
   fill_in "Email", :with => @visitor[:email]
   fill_in "Password", :with => @visitor[:password]
-  click_button "Sign in"
+  click_button "Sign me in"
 end
 
 def add_coach_role

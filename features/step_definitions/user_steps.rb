@@ -144,3 +144,6 @@ Then /^I should see my name$/ do
   create_user
   page.should have_content @user[:name]
 end
+When(/^User test(\d+) exists$/) do |arg|
+  create_user2
+end

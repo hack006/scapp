@@ -124,7 +124,7 @@ class VariableFieldsController < ApplicationController
     #   - coach
     #   - admin
     #   - partner
-
+    authorize! :user_variable_fields, VariableFieldsController
 
     @user = User.friendly.find(params[:user_id])
     @variable_fields = Hash.new()
@@ -137,8 +137,8 @@ class VariableFieldsController < ApplicationController
 
       variable_field = { field: vf,
                          latest_measurement: vf.latest_measurement(@user),
-                         worst_measurement: vf.worst_measurement(@user),
-                         best_measurement: vf.best_measurement(@user)}
+                         worst_measurement: vf.is_numeric? ? vf.worst_measurement(@user) : nil,
+                         best_measurement: vf.is_numeric? ? vf.best_measurement(@user) : nil}
       @variable_fields[category][:items] << variable_field
     end
 
