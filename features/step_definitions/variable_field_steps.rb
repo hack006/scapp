@@ -14,7 +14,7 @@ end
 
 
 And(/^I have "(.*?)" role$/) do |arg1|
-  @user.add_role arg1.to_sym
+  @user[1].add_role arg1.to_sym
 end
 
 And(/^category "(.*?)" exists$/) do |arg1|
@@ -28,15 +28,16 @@ When(/^I fill in all necessary fields$/) do |table|
   fill_in 'variable_field_name', with: table_hash['name']
   fill_in 'variable_field_description', with: table_hash['description']
   fill_in 'variable_field_unit', with: table_hash['unit']
-  if table_hash['higher_is_better'] == true
-    check 'variable_field_higher_is_better'
-  else
-    uncheck 'variable_field_higher_is_better'
+  # terrible workaround because check and uncheck doesn't work :/
+  if table_hash['higher_is_better'] == true && !find(:css, '#variable_field_higher_is_better').find(:xpath,".//..")['class']['checked']
+    find(:css, '#variable_field_higher_is_better').find(:xpath,".//..").click
+  elsif table_hash['higher_is_better'] == false && find(:css, '#variable_field_higher_is_better').find(:xpath,".//..")['class']['checked']
+    find(:css, '#variable_field_higher_is_better').find(:xpath,".//..").click
   end
-  if table_hash['is_numeric'] == true
-    check 'variable_field_is_numeric'
-  else
-    uncheck 'variable_field_is_numeric'
+  if table_hash['is_numeric'] == true && !find(:css, '#variable_field_is_numeric').find(:xpath,".//..")['class']['checked']
+    find(:css, '#variable_field_is_numeric').find(:xpath,".//..").click
+  elsif table_hash['is_numeric'] == false && find(:css, '#variable_field_is_numeric').find(:xpath,".//..")['class']['checked']
+    find(:css, '#variable_field_is_numeric').find(:xpath,".//..").click
   end
 end
 
@@ -75,13 +76,13 @@ Then(/^As user with username "([^"]*)" I should see "([^"]*)" and "([^"]*)" but 
       should_not have_content arg4
 end
 Given(/^category "([^"]*)" doesn't exist in my scope \(user, public\)$/) do |arg|
-  vfcs = VariableFieldCategory.where(name: arg, user_id: [@user.id, nil])
+  vfcs = VariableFieldCategory.where(name: arg, user_id: [@user[1].id, nil])
   vfcs.each{|vfc| vfc.destroy}
 
   # add another username category with same name
   vfc = VariableFieldCategory.create(name: "intelligence", description: "int. desc.")
-  create_user2
-  vfc.user = @user2
+  create_user(2)
+  vfc.user = @user[2]
   vfc.save
 end
 Then(/^I shouldn't see "([^"]*)" category in the list$/) do |arg|
@@ -93,7 +94,7 @@ Then(/^I should see "([^"]*)" category selected$/) do |arg|
   page.has_select?("variable_field_variable_field_category_id", :selected => arg).should == true
 end
 When(/^category "([^"]*)" should exist in db with my username$/) do |arg|
-  VariableFieldCategory.where(name: arg, user_id: @user.id).count.should  eq(1)
+  VariableFieldCategory.where(name: arg, user_id: @user[1].id).count.should  eq(1)
 end
 When(/^I add category named "([^"]*)"$/) do |arg|
   fill_in 'variable_field_category_name', with: arg
@@ -101,6 +102,7 @@ When(/^I add category named "([^"]*)"$/) do |arg|
 end
 When(/^I select option add category$/) do
   click_link_or_button 'Add category'
+  sleep 0.5 # added because form wasn't shown before next action
 end
 When(/^Following variable fields exist in system$/) do |table|
   #  | name | description | is_global | is_numeric | category | user |

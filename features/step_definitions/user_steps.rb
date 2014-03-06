@@ -2,64 +2,64 @@ require_relative 'utility_methods'
 
 ### GIVEN ###
 Given /^I am not logged in$/ do
-  visit '/users/sign_out'
+  visit '/signout'
 end
 
 Given /^I am logged in$/ do
-  create_user
-  sign_in
+  create_user(1)
+  sign_in(1)
 end
 
 Given /^I exist as a user$/ do
-  create_user
+  create_user(1)
 end
 
 Given /^I do not exist as a user$/ do
-  create_visitor
-  delete_user
+  create_visitor(1)
+  delete_user(1)
 end
 
 Given /^I exist as an unconfirmed user$/ do
-  create_unconfirmed_user
+  create_unconfirmed_user(1)
 end
 
 ### WHEN ###
 When /^I sign in with valid credentials$/ do
-  create_visitor
-  sign_in
+  create_visitor(1)
+  sign_in(1)
 end
 
 When /^I sign out$/ do
-  visit '/users/sign_out'
+  visit '/signout'
 end
 
 When /^I sign up with valid user data$/ do
-  create_visitor
-  sign_up
+  create_visitor(1)
+  sign_up(1)
 end
 
 When /^I sign up with an invalid email$/ do
-  create_visitor
-  @visitor = @visitor.merge(:email => "notanemail")
-  sign_up
+  create_visitor(1)
+  @visitor[1] = @visitor[1].merge(:email => "notanemail")
+  sign_up(1)
 end
 
 When /^I sign up without a password confirmation$/ do
-  create_visitor
-  @visitor = @visitor.merge(:password_confirmation => "")
-  sign_up
+  create_visitor(1)
+  @visitor[1] = @visitor[1].merge(:password_confirmation => "")
+  sign_up(1)
 end
 
 When /^I sign up without a password$/ do
-  create_visitor
-  @visitor = @visitor.merge(:password => "")
-  sign_up
+  create_visitor(1)
+  @visitor[1] = @visitor[1].merge(:password => "")
+  sign_up(1)
 end
 
 When /^I sign up with a mismatched password confirmation$/ do
-  create_visitor
-  @visitor = @visitor.merge(:password_confirmation => "changeme123")
-  sign_up
+  create_visitor(1)
+  @visitor[1] = @visitor[1].merge(:password_confirmation => "changeme123")
+  sign_up(1)
 end
 
 When /^I return to the site$/ do
@@ -67,37 +67,37 @@ When /^I return to the site$/ do
 end
 
 When /^I sign in with a wrong email$/ do
-  @visitor = @visitor.merge(:email => "wrong@example.com")
-  sign_in
+  @visitor[1] = @visitor[1].merge(:email => "wrong@example.com")
+  sign_in(1)
 end
 
 When /^I sign in with a wrong password$/ do
-  @visitor = @visitor.merge(:password => "wrongpass")
-  sign_in
+  @visitor[1] = @visitor[1].merge(:password => "wrongpass")
+  sign_in(1)
 end
 
 When /^I edit my account details$/ do
-  click_link "Edit account"
+  visit '/edit_profile'
   fill_in "Name", :with => "newname"
-  fill_in "user_current_password", :with => @visitor[:password]
+  fill_in "user_current_password", :with => @visitor[1][:password]
   click_button "Update"
 end
 
 When /^I look at the list of users$/ do
-  visit '/'
+  visit '/users'
 end
 
 ### THEN ###
 Then /^I should be signed in$/ do
-  page.should have_content "Logout"
+  page.should have_content "Sign out"
   page.should_not have_content "Sign up"
   page.should_not have_content "Login"
 end
 
 Then /^I should be signed out$/ do
   page.should have_content "Sign up"
-  page.should have_content "Login"
-  page.should_not have_content "Logout"
+  page.should have_content "Sign me in"
+  page.should_not have_content "Sign out"
 end
 
 Then /^I see an unconfirmed account message$/ do
@@ -121,15 +121,15 @@ Then /^I should see a missing password message$/ do
 end
 
 Then /^I should see a missing password confirmation message$/ do
-  page.should have_content "Passworddoesn't match confirmation"
+  page.should have_content "Password confirmationdoesn't match"
 end
 
 Then /^I should see a mismatched password message$/ do
-  page.should have_content "Passworddoesn't match confirmation"
+  page.should have_content "Password confirmationdoesn't match"
 end
 
 Then /^I should see a signed out message$/ do
-  page.should have_content "Signed out successfully."
+  page.should have_content "Please, sign in!"
 end
 
 Then /^I see an invalid login message$/ do
@@ -141,9 +141,9 @@ Then /^I should see an account edited message$/ do
 end
 
 Then /^I should see my name$/ do
-  create_user
-  page.should have_content @user[:name]
+  create_user(1)
+  page.should have_content @user[1][:name]
 end
-When(/^User test(\d+) exists$/) do |arg|
-  create_user2
+When(/^User test(\d+) exists$/) do |id|
+  create_user(id.to_i)
 end

@@ -1,70 +1,59 @@
 ### UTILITY METHODS ###
 
-def create_visitor
-  @visitor ||= { :name => "test1", :email => "example@example.com",
+
+def create_visitor(id)
+  @visitor ||= Array.new
+  @visitor[id] ||= { :name => "test#{id}", :email => "example#{id}@example.com",
                  :password => "changeme", :password_confirmation => "changeme" }
 end
 
-def create_visitor2
-  @visitor2 ||= { :name => "test2", :email => "example2@example.com",
-                 :password => "changeme", :password_confirmation => "changeme" }
+def find_user(id)
+  @user ||= Array.new
+  @user[id] ||= User.first conditions: {:email => @visitor[id][:email]}
 end
 
-def find_user
-  @user ||= User.first conditions: {:email => @visitor[:email]}
-end
-
-def create_unconfirmed_user
-  create_visitor
-  delete_user
-  sign_up
+def create_unconfirmed_user(id)
+  create_visitor(id)
+  delete_user(id)
+  sign_up(id)
   visit '/signout'
 end
 
-def create_user
-  if @user.blank?
-    create_visitor
-    delete_user
-    @user = FactoryGirl.create(:player, email: @visitor[:email], name: @visitor[:name])
+def create_user(id)
+  @user ||= Array.new
+
+  if @user[id].nil?
+    create_visitor(id)
+    delete_user(id)
+    @user[id] = FactoryGirl.create(:player, email: @visitor[id][:email], name: @visitor[id][:name])
   end
 end
 
-def create_user2
-  if @user2.blank?
-    create_visitor2
-    delete_user2
-    @user2 = FactoryGirl.create(:player, email: @visitor2[:email], name: @visitor2[:name])
-  end
+def delete_user(id)
+  @visitor ||= Array.new
+  @user ||= Array.new
+  @user[id] ||= User.first conditions: {:email => @visitor[id][:email]}
+  @user[id].destroy unless @user[id].nil?
 end
 
-def delete_user
-  @user ||= User.first conditions: {:email => @visitor[:email]}
-  @user.destroy unless @user.nil?
-end
-
-def delete_user2
-  @user2 ||= User.first conditions: {:email => @visitor2[:email]}
-  @user2.destroy unless @user2.nil?
-end
-
-def sign_up
-  delete_user
-  visit '/users/sign_up'
-  fill_in "Name", :with => @visitor[:name]
-  fill_in "Email", :with => @visitor[:email]
-  fill_in "user_password", :with => @visitor[:password]
-  fill_in "user_password_confirmation", :with => @visitor[:password_confirmation]
+def sign_up(id)
+  delete_user(id)
+  visit '/signup'
+  fill_in "Name", :with => @visitor[id][:name]
+  fill_in "Email", :with => @visitor[id][:email]
+  fill_in "user_password", :with => @visitor[id][:password]
+  fill_in "user_password_confirmation", :with => @visitor[id][:password_confirmation]
   click_button "Sign up"
-  find_user
+  find_user(id)
 end
 
-def sign_in
+def sign_in(id)
   visit '/signin'
-  fill_in "Email", :with => @visitor[:email]
-  fill_in "Password", :with => @visitor[:password]
+  fill_in "Email", :with => @visitor[id][:email]
+  fill_in "Password", :with => @visitor[id][:password]
   click_button "Sign me in"
 end
 
-def add_coach_role
-  @user.add_role :coach
+def add_coach_role(id)
+  @user[id].add_role :coach
 end

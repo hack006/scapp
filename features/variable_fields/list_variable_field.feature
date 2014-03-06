@@ -7,10 +7,10 @@ Feature: List variable fields
     # as user1
     Given I am logged in
       And  I have "coach" role
-
+  @javascript
   Scenario: View list of my added and global variable fields
     Given category "intelligence" exists
-      And another user owning category exists
+      And User test2 exists
       And Following variable fields exist in system
         | name        | description         | category     | user      |
         | IQ          | inteligence quoc.   | intelligence | test1     |
@@ -21,5 +21,5 @@ Feature: List variable fields
       | IQ | orientation |
       And I shouldn't see following names in the table
         | memory |
-      And I should have edit, delete, view actions available for "IQ"
-      And I should have no actions available for "orientation"
+      And I should have "edit, delete" actions available for table row "IQ"
+      And I should have "any" actions available for table row "orientation"

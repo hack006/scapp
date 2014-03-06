@@ -2,13 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-jQuery(document).on('page:change', ->
-  # display form for adding new category
-  jQuery("#show-add-new-field-category").click ->
-    jQuery("#add-new-field-category").show(300, ->
-      jQuery("#add-new-field-category input#variable_field_category_name").focus()
-    )
-)
+
 build_table_from_json = (heading, rows, options = null) ->
   css_class = options["class"] ? ""
   build = "<table class='#{css_class}'><thead><tr>";
@@ -27,6 +21,13 @@ build_table_from_json = (heading, rows, options = null) ->
   build += "</tbody></table>"
 
 jQuery(document).ready( ->
+  # = ADD VARIABLE FIELD =
+  # ======================
+  jQuery("#show-add-new-field-category").click ->
+    jQuery("#add-new-field-category").show(300, ->
+      jQuery("#add-new-field-category input#variable_field_category_name").focus()
+    )
+
   # = LIST EVENTS =
   # ===============
 

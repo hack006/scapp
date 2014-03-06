@@ -79,13 +79,42 @@ class UserRelation < ActiveRecord::Base
                      to_user_status: to_user_status)
   end
 
-  # Get user relations with specified statuses
+  # Get user relations with specified statuses and relation type
   #
   # @param [User] user
   # @param [Array<String>, String] relation_statuses Specify statuses of relations on user side to obtain
+  # @param [Symbol] relation
+  #   @option [Symbol] :all All user relations
+  #   @option [Symbol] :friends Users who are friends with _user_
+  #   @option [Symbol] :my_coaches Users who do _user_ coach
+  #   @option [Symbol] :my_players Users who has _user_ as coach
+  #   @option [Symbol] :my_watchers Users who watch _user_
+  #   @option [Symbol] :my_wards Users who _user_ is watching
   # @return relations
-  def self.get_my_relations_with_statuses(user, relation_statuses)
-    UserRelation.where("(user_from_id = :user AND from_user_status = :status) OR (user_to_id = :user AND to_user_status = :status)",
-                       { user: user, status: relation_statuses })
+  def self.get_my_relations_with_statuses(user, relation_statuses = ['accepted'], relation = :all)
+    rel = nil
+    case relation
+      when :all
+        rel = UserRelation.where("(user_from_id = :user AND from_user_status IN (:status)) OR (user_to_id = :user AND to_user_status IN (:status))",
+                                 { user: user, status: relation_statuses })
+      when :friends
+       rel =  UserRelation.where("((user_from_id = :user AND from_user_status IN (:status)) OR (user_to_id = :user AND to_user_status IN(:status)))" +
+                           " AND relation = 'friend'",
+                           { user: user, status: relation_statuses })
+      when :my_coaches
+        rel = UserRelation.where("user_to_id = :user AND to_user_status IN (:status) AND relation = 'coach'",
+                                 { user: user, status: relation_statuses })
+      when :my_players
+        rel = UserRelation.where("user_from_id = :user AND from_user_status IN (:status) AND relation = 'coach'",
+                                 { user: user, status: relation_statuses })
+      when :my_watchers
+        rel = UserRelation.where("user_to_id = :user AND to_user_status IN (:status) AND relation = 'watcher'",
+                                 { user: user, status: relation_statuses })
+      when :my_wards
+        rel = UserRelation.where("user_from_id = :user AND from_user_status IN (:status) AND relation = 'watcher'",
+                                 { user: user, status: relation_statuses })
+    end
+
+    rel
   end
 end

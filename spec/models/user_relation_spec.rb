@@ -57,12 +57,70 @@ describe UserRelation do
     end
 
     it "should return no my refused connections if only accepted and new exists" do
+      # test records
       UserRelation.add_relation @user2, @user1, 'friend', 'accepted', 'accepted'
       UserRelation.add_relation @user1, @user2, 'coach', 'accepted', 'new'
       # test
       @user1.get_my_relations_with_statuses('refused').count().should eq 0
       @user2.get_my_relations_with_statuses('refused').count().should eq 0
     end
+
+    it "should return only confirmed friend connections if I specify it" do
+      # test records
+      UserRelation.add_relation @user1, @user2, 'friend', 'new', 'new'
+      UserRelation.add_relation @user1, @user2, 'friend', 'new', 'accepted'
+      UserRelation.add_relation @user1, @user2, 'coach', 'accepted', 'accepted'
+      UserRelation.add_relation @user2, @user1, 'friend', 'accepted', 'refused'
+      # ok record
+      UserRelation.add_relation @user1, @user2, 'friend', 'accepted', 'accepted'
+      # test
+      @user1.get_my_relations_with_statuses('accepted', :friends).count().should eq 1
+    end
+
+    it "should return only confirmed coaches if I specify it" do
+      # test records
+      UserRelation.add_relation @user1, @user2, 'coach', 'accepted', 'accepted'
+      UserRelation.add_relation @user1, @user2, 'friend', 'accepted', 'accepted'
+      UserRelation.add_relation @user2, @user1, 'coach', 'accepted', 'new'
+      # ok record
+      UserRelation.add_relation @user2, @user1, 'coach', 'accepted', 'accepted'
+      # test
+      @user1.get_my_relations_with_statuses('accepted', :my_coaches).count().should eq 1
+    end
+
+    it "should return only confirmed coached players if I specify it" do
+      # test records
+      UserRelation.add_relation @user2, @user1, 'coach', 'accepted', 'accepted'
+      UserRelation.add_relation @user2, @user1, 'friend', 'accepted', 'accepted'
+      UserRelation.add_relation @user1, @user2, 'coach', 'new', 'accepted'
+      # ok record
+      UserRelation.add_relation @user1, @user2, 'coach', 'accepted', 'accepted'
+      # test
+      @user1.get_my_relations_with_statuses('accepted', :my_players).count().should eq 1
+    end
+
+    it "should return only confirmed watchers if I specify it" do
+      # test records
+      UserRelation.add_relation @user1, @user2, 'watcher', 'accepted', 'accepted'
+      UserRelation.add_relation @user1, @user2, 'friend', 'accepted', 'accepted'
+      UserRelation.add_relation @user2, @user1, 'watcher', 'accepted', 'new'
+      # ok record
+      UserRelation.add_relation @user2, @user1, 'watcher', 'accepted', 'accepted'
+      # test
+      @user1.get_my_relations_with_statuses('accepted', :my_watchers).count().should eq 1
+    end
+
+    it "should return only confirmed wards if I specify it" do
+      # test records
+      UserRelation.add_relation @user2, @user1, 'watcher', 'accepted', 'accepted'
+      UserRelation.add_relation @user2, @user1, 'friend', 'accepted', 'accepted'
+      UserRelation.add_relation @user1, @user2, 'watcher', 'new', 'accepted'
+      # ok record
+      UserRelation.add_relation @user1, @user2, 'watcher', 'accepted', 'accepted'
+      # test
+      @user1.get_my_relations_with_statuses('accepted', :my_wards).count().should eq 1
+    end
+
   end
 
 end

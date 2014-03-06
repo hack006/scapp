@@ -23,12 +23,20 @@ Scapp::Application.routes.draw do
 
   root :to => "home#index"
 
-  devise_for :users, :controllers => {:registrations => "registrations"}, skip: :sessions
+  devise_for :users, :controllers => {:registrations => "registrations"}, skip: [:sessions, :registrations]
   as :user do
     get 'signin' => 'sessions#new', :as => :new_user_session
     post 'signin' => 'sessions#create', :as => :user_session
     delete 'signout' => 'sessions#destroy', :as => :destroy_user_session
     get 'signout' => 'sessions#destroy', :as => :destroy_user_session_get
+
+    get 'signup' => 'registrations#new', :as => :new_user_registration
+    post 'signup' => 'registrations#create', :as => :user_registration
+    get 'edit_profile' => 'registrations#edit', :as => :edit_user_registration
+    get 'cancel_profile' => 'registrations#cancel', :as => :cancel_user_registration
+    patch 'edit_profile' => 'registrations#update'
+    put 'edit_profile' => 'registrations#update'
+    delete 'edit_profile' => 'registrations#destroy'
 
   end
 

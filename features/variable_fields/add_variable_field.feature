@@ -36,7 +36,7 @@ Feature: Add variable field
     Then I should see an successfully created message
 
   Scenario: I can only see my and public categories
-    Given another user owning category exists
+    Given User test2 exists
       And following categories are available in the system
         | name      | description   | user      |
         | Strength  | Strength desc |           |

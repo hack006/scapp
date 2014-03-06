@@ -29,9 +29,19 @@ class User < ActiveRecord::Base
   # Get user relations with specified statuses
   #
   # @param [Array<String>, String] relation_statuses Specify statuses of relations on user side to obtain
+  #   @option [String] 'accepted'
+  #   @option [String] 'new' When created and no reaction from user is taken
+  #   @option [String] 'refused'
+  # @param [Symbol] relation
+  #   @option [Symbol] :all All user relations
+  #   @option [Symbol] :friends Users who are friends with _user_
+  #   @option [Symbol] :my_coaches Users who do _user_ coach
+  #   @option [Symbol] :my_players Users who has _user_ as coach
+  #   @option [Symbol] :my_watchers Users who watch _user_
+  #   @option [Symbol] :my_wards Users who _user_ is watching
   # @return relations
-  def get_my_relations_with_statuses(relation_statuses)
-    UserRelation.get_my_relations_with_statuses self, relation_statuses
+  def get_my_relations_with_statuses(relation_statuses = ['accepted'], relation = :all)
+    UserRelation.get_my_relations_with_statuses self, relation_statuses, relation
   end
 
 end

@@ -22,8 +22,8 @@
         %td= dash_or_value variable_field.user, :name
         %td= dash_or_value variable_field.variable_field_category, :name
         - if variable_field.user == current_user && is_coach?
-          %td.edit= link_to 'Edit', edit_variable_field_path(variable_field)
-          %td.del= link_to 'Destroy', variable_field, :method => :delete, :data => { :confirm => 'Are you sure?' }
+          %td.edit= link_to t('vf.index.edit'), edit_variable_field_path(variable_field)
+          %td.delete= link_to t('vf.index.delete'), variable_field, :method => :delete, :data => { :confirm => t('vf.index.are_you_sure') }
         - else
           %td{colspan: 2}
 

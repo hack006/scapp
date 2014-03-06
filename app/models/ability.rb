@@ -15,7 +15,10 @@ class Ability
     end
 
     if @user.roles.size == 0
-      #for guest without roles
+      # =======================================
+      # GUEST PERMISSIONS
+      # =======================================
+      can [:new, :create], RegistrationsController
     end
 
   end
@@ -35,6 +38,16 @@ class Ability
     end
     # can only view own VF page
     can [:user_variable_fields], VariableFieldsController if @request.params[:user_id] == @user.slug
+
+    # =============
+    # User
+    # =============
+    can [:edit, :update], User do |user|
+      user.id == @user.id
+    end
+    can [:show], User do |user|
+      (user.id == @user.id) || @user.in_relation?(user, :friend) || @user.in_relation?(user, :coach) || @user.in_relation?(user, :watcher)
+    end
   end
 
   # ===========================================
@@ -53,9 +66,15 @@ class Ability
     end
 
     # can only VF page of users connected to him
-    if (@request.params[:user_id] == @user.slug) || @user.in_relation?(User.friendly.find(@request.params[:user_id]), 'coach')
+    if @request.params.has_key?(:user_id) &&
+        ((@request.params[:user_id] == @user.slug) || @user.in_relation?(User.friendly.find(@request.params[:user_id]), 'coach'))
       can [:user_variable_fields], VariableFieldsController
     end
+
+    # =============
+    # User
+    # =============
+    can [:index], User
 
   end
 
@@ -66,10 +85,19 @@ class Ability
     # INHERIT from :coach
     coach() unless @user.has_role? :coach
 
+
+    can :manage, :all
+
     # =============
     # VariableField
     # =============
-    can :manage, :all
+    # no additional permission
+
+    # =============
+    # User
+    # =============
+    # no additional permission
+
   end
 
     # Define abilities for the passed in user here. For example:

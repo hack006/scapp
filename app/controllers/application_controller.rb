@@ -11,6 +11,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Set up redirect path after successful signin
+  def after_sign_in_path_for(resource)
+    root_path
+  end
+
   # GLOBAL AVAILABLE HELPERS
   # =====>
   helper_method :is_coach?, :is_player?, :is_admin?

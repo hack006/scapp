@@ -1,4 +1,70 @@
-%h3 Home
-- @users.each do |user|
-  %p
-    User: #{link_to user.name, user}
+- content_for :heading do
+  = t('home.index.dashboard')
+
+-# Show values for coach
+-if is_coach?
+  %h2= t('home.index.closests_trainigs_trained_by_me')
+
+  %h2= t('home.index.latest_measurement_of_my_players')
+
+-# show values for player
+-if is_player?
+  %h2= t('home.index.closests_trainings')
+
+  %h2= t('home.index.latest_measurements')
+  - @my_latest_vf_measurements.each_slice(6) do |m_row|
+    .row
+      - m_row.each do |m|
+        .col-sm-2
+          .box.vfm
+            %table.table.small
+              %tbody
+                %tr
+                  %td= t('home.index.date') + ':'
+                  %td= m.measured_at.to_date.full(locale)
+                %tr
+                  %td= t('home.index.variable_field') + ':'
+                  %td
+                    %span.label.label-info= m.variable_field.name
+                %tr
+                  %td= t('home.index.value') + ':'
+                  - if m.variable_field.is_numeric
+                    %td.value
+                      %strong= m.int_value
+                      = m.variable_field.unit
+                  - else
+                    %td.value
+                      %strong= m.string_value
+                      = m.variable_field.unit
+                %tr
+                  %td= t('home.index.location') + ':'
+                  %td= dash_or_value(m, :locality)
+
+  %h2 #{t('home.index.my_coaches')} <small>(#{@my_connected_coaches.count()})</small>
+  - @my_connected_coaches.each_slice(4) do |c_row|
+    .row
+      - c_row.each do |c|
+        .col-sm-3
+          .box.box-solid.box-primary.coach
+            .box-header
+              %h3.box-title= link_to c.from.name, user_path(c.from)
+            .box-body
+              %table.table
+                %tbody
+                  %tr
+                    %td= t('home.index.state') + ':'
+                    %td
+                      - if c.from_user_status == 'new'
+                        %span.label.label-info= t('home.index.states.new')
+                      -elsif c.from_user_status == 'accepted'
+                        %span.label.label-success= t('home.index.states.accepted')
+                      -else
+                        %span.label.label-danger= t('home.index.states.refused')
+                  %tr
+                    %td= t('home.index.created') + ':'
+                    %td= c.created_at.to_date.full(locale)
+
+
+
+
+

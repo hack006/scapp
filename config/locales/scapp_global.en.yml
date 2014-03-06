@@ -7,7 +7,15 @@ en:
     bad_confirmation: "You have entered invalid confirmation token!"
 
   dictionary:
+    new: &new 'New'
+    show: &show 'Show'
+    edit: &edit 'Edit'
+    delete: &delete 'Delete'
+    are_you_sure: &are_you_sure 'Are you sure?'
     location: &location 'Location'
+    name: &name 'Name'
+    state: &state 'State'
+    created: &created 'Created'
     date: &date 'Date'
     best: &best 'Best'
     worst: &worst 'Worst'
@@ -82,6 +90,24 @@ en:
       home: *home
       dashboard: *dashboard
       control_panel: *control_panel
+  home:
+    index:
+      dashboard: *dashboard
+      closests_trainings: 'Closest trainings'
+      closests_trainigs_trained_by_me: 'Closest trainings trained by me'
+      latest_measurements: 'Latest measurements'
+      latest_measurement_of_my_players: 'Latest measurements of my players'
+      my_coaches: 'My connected coaches'
+      location: *location
+      date: *date
+      variable_field: *variable_field
+      value: *value
+      state: *state
+      created: *created
+      states:
+        new: 'Waiting for authorization'
+        accepted: 'Connected'
+        refused: 'Rejected by other side'
 
   vf:
     controller:
@@ -93,6 +119,9 @@ en:
       variable_field_optimal_values: 'VF optimal values'
       new_variable_field_optimal_value: 'New VF optimal value'
       variable_fields: *variable_fields
+      edit: *edit
+      delete: *delete
+      are_you_sure: *are_you_sure
     list:
       current_value: 'Current value'
       location: *location

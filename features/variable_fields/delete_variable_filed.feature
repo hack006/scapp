@@ -16,7 +16,7 @@ Feature: Delete variable field
         | variable_field_name    | owner     | category      |
         | IQ                     | test1     | intelligence  |
       And I am at the "/variable_fields" page
-    When I click "Destroy" for "IQ" in table row
+    When I click "Delete" for "IQ" in table row
       And confirm dialog
     Then I shouldn't see "IQ" in the table
 
@@ -30,7 +30,7 @@ Feature: Delete variable field
       | variable_field_name  |owner   | int_value     |
       | IQ                   |test1   | 120           |
     And I am at the "/variable_fields" page
-    When I click "Destroy" for "IQ" in table row
+    When I click "Delete" for "IQ" in table row
     And confirm dialog
     Then I should we warned that measurements exists and variable_field can't be removed
 
