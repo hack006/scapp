@@ -1,8 +1,6 @@
 - content_for :heading do
-  = t('user.new.new_user')
+  = t('vf.new.new_vf')
 
-- breadcrumb :variable_fields_new
+- breadcrumb :variable_field_new
 
 = render 'form'
-
-= link_to 'Back', variable_fields_path

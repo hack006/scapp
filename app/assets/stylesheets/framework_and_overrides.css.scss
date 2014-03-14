@@ -9,6 +9,9 @@ table.table{
   &.condensed{
     td, th{ padding: 3px; }
   }
+  &.table-striped > tbody > tr:nth-child(odd) > td, &.table-striped > tbody > tr:nth-child(odd) > th{
+    background-color: #f0f0f0;
+  }
 }
 
 .nav-tabs-custom{

@@ -1,27 +1,31 @@
-%p#notice= notice
+- content_for :heading do
+  = t('vf.show.vf_detail')
 
-%p
-  %b Name:
-  = @variable_field.name
-%p
-  %b Description:
-  = @variable_field.description
-%p
-  %b Unit:
-  = @variable_field.unit
-%p
-  %b Higher is better:
-  = @variable_field.higher_is_better
-%p
-  %b Is numeric:
-  = @variable_field.is_numeric
-%p
-  %b User:
-  = @variable_field.user
-%p
-  %b Variable field category:
-  = @variable_field.variable_field_category
+- breadcrumb :variable_field
 
-= link_to 'Edit', edit_variable_field_path(@variable_field)
-\|
-= link_to 'Back', variable_fields_path
+= link_to t('dictionary.edit'), edit_variable_field_path(@variable_field), class: 'btn btn-success'
+
+%table.table
+  %tbody
+    %tr
+      %th= t('vf.show.name')
+      %td= @variable_field.name
+    %tr
+      %th= t('vf.show.description')
+      %td= @variable_field.description
+    %tr
+      %th= t('vf.show.unit')
+      %td= @variable_field.unit
+    %tr
+      %th= t('vf.show.higher_is_better')
+      %td= @variable_field.higher_is_better
+    %tr
+      %th= t('vf.show.is_numeric')
+      %td= @variable_field.is_numeric
+    %tr
+      %th= t('vf.show.is_global')
+      %td= @variable_field.is_global
+    %tr
+      %th= t('vf.show.category')
+      %td= link_to @variable_field.variable_field_category.name, variable_field_category_path(@variable_field.variable_field_category)
+

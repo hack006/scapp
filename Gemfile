@@ -33,6 +33,9 @@ gem 'friendly_id', '~> 5.0.0'
 gem 'statsample', '~> 1.3.0'
 # breadcrumb & navigation builder
 gem 'gretel'
+# model pagination
+gem 'kaminari'
+gem 'bootstrap-kaminari-views'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]

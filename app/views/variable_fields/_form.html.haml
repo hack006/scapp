@@ -7,6 +7,7 @@
     = f.input :unit
     = f.input :higher_is_better
     = f.input :is_numeric
+    = f.input :is_global if is_admin?
     = f.association :variable_field_category, collection: @variable_field_categories_accessible, prompt: "-"
 
   - if @variable_field.has_to_confirm_edit?
@@ -15,8 +16,8 @@
     = f.input :modification_confirmation
 
   .form-actions
-    = f.button :submit, 'Save'
-    %a.btn#show-add-new-field-category{href:'#'} Add category
+    = f.button :submit, t('dictionary.save'), class: 'btn-primary'
+    %a.btn#show-add-new-field-category{href:'#'}= t('vf.new.add_category')
 
 #add-new-field-category{style: "display:none"}
   %h3 Add new category

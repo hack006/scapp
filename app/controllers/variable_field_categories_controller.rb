@@ -4,7 +4,7 @@ class VariableFieldCategoriesController < ApplicationController
   # GET /variable_field_categories
   # GET /variable_field_categories.json
   def index
-    @variable_field_categories = VariableFieldCategory.all
+    @variable_field_categories = VariableFieldCategory.page(params[:page]).per(20)
   end
 
   # GET /variable_field_categories/1

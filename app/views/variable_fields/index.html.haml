@@ -4,13 +4,14 @@
 
 - breadcrumb :variable_fields
 
-%table.table
+%a.btn.btn-success{href: new_variable_field_path}= t('vf.index.new')
+
+%table.table.table-striped
   %thead
     %tr
-      %th Name
-      %th Description
-      %th User
-      %th Variable field category
+      %th= t('vf.index.name')
+      %th= t('vf.index.user')
+      %th= t('vf.index.variable_field_category')
       %th
       %th
       %th
@@ -18,15 +19,13 @@
     - @variable_fields.each do |variable_field|
       %tr{id: "vf_#{variable_field.id}"}
         %td= link_to variable_field.name, variable_field
-        %td= variable_field.description
+
         %td= dash_or_value variable_field.user, :name
         %td= dash_or_value variable_field.variable_field_category, :name
-        - if variable_field.user == current_user && is_coach?
+        - if (variable_field.user == current_user && !variable_field.is_global?) || is_admin?
           %td.edit= link_to t('vf.index.edit'), edit_variable_field_path(variable_field)
           %td.delete= link_to t('vf.index.delete'), variable_field, :method => :delete, :data => { :confirm => t('vf.index.are_you_sure') }
         - else
           %td{colspan: 2}
 
-%br
-
-= link_to 'New Variable field', new_variable_field_path
+=paginate @variable_fields, theme: 'twitter-bootstrap-3'

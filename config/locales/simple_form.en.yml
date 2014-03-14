@@ -11,16 +11,24 @@ en:
     error_notification:
       default_message: "Please review the problems below:"
     # Labels and hints examples
-    # labels:
-    #   defaults:
-    #     password: 'Password'
-    #   user:
-    #     new:
-    #       email: 'E-mail to sign in.'
-    #     edit:
-    #       email: 'E-mail.'
-    # hints:
-    #   defaults:
-    #     username: 'User name to sign in.'
-    #     password: 'No special characters, please.'
+    labels:
+      defaults:
+        password: 'Password'
+        name: 'Name'
+        description: 'Description'
+        unit: 'unit'
+      user:
+        new:
+          email: 'E-mail to sign in.'
+        edit:
+          email: 'E-mail.'
+      variable_field:
+        higher_is_better: 'Higher value is better'
+        is_numeric: 'Used for storing numeric values'
+        is_global: 'Field globally accessible'
+        variable_field_category: 'Category of VF'
+    hints:
+      defaults:
+        username: 'User name to sign in.'
+        password: 'No special characters, please.'
 

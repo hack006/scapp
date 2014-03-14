@@ -1,7 +1,7 @@
-%h1 Edit variable field
+- content_for :heading do
+  = t('vf.edit.edit_variable_field')
+
+- breadcrumb :variable_field_edit
 
 = render 'form'
 
-= link_to 'Show', @variable_field
-\|
-= link_to 'Back', variable_fields_path

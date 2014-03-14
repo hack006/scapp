@@ -2,11 +2,17 @@ require 'statsample'
 
 class VariableFieldsController < ApplicationController
   before_action :set_variable_field, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource only: [:index, :show, :new, :edit, :update, :destroy]
 
   # GET /variable_fields
   # GET /variable_fields.json
   def index
-    @variable_fields = VariableField.public_or_owned_by(current_user.id)
+    # Only admin can see everything - @4.1
+    if is_admin?
+      @variable_fields = VariableField.all.page(params[:page])
+    else
+      @variable_fields = VariableField.global_or_owned_by(current_user.id).page(params[:page])
+    end
   end
 
   # GET /variable_fields/1
@@ -23,6 +29,12 @@ class VariableFieldsController < ApplicationController
 
   # GET /variable_fields/1/edit
   def edit
+    # Global VF can edit only :admin - @4.7
+    if @variable_field.is_global? && !is_admin?
+      redirect_to variable_fields_path, alert: t('alerts.not_authorized')
+      return
+    end
+
     @variable_field_categories_accessible = VariableFieldCategory.owned_by_user_or_public(current_user.id)
     @confirmation = @variable_field.confirmation_token
   end
@@ -32,6 +44,13 @@ class VariableFieldsController < ApplicationController
   def create
     @variable_field = VariableField.new(variable_field_params)
     @variable_field.user = current_user
+
+    # only admin can create global VF
+    if is_admin? && params[:variable_field][:is_global] == '1'
+      @variable_field.is_global = true
+    else
+      @variable_field.is_global = false
+    end
 
     respond_to do |format|
       if @variable_field.save
@@ -48,6 +67,12 @@ class VariableFieldsController < ApplicationController
   # PATCH/PUT /variable_fields/1
   # PATCH/PUT /variable_fields/1.json
   def update
+    # Global VF can edit only :admin - @4.7
+    if @variable_field.is_global? && !is_admin?
+      redirect_to variable_fields_path, alert: t('alerts.not_authorized')
+      return
+    end
+
     # Check if we have to use confirmation
     if @variable_field.has_to_confirm_edit?
       unless @variable_field.confirmation_token == params[:variable_field][:modification_confirmation]
@@ -152,6 +177,7 @@ class VariableFieldsController < ApplicationController
   # @todo Data exporting in various formats
   # @controller_action
   def user_variable_field_detail
+    # TODO authorize! :user_variable_field_detail, VariableFieldsController
     # TODO implement
     @user = User.friendly.find params[:user_id]
 
@@ -163,7 +189,7 @@ class VariableFieldsController < ApplicationController
   # @param [int] id Variable field id
   # @ajax
   def user_variable_graph
-    # TODO implement user security policy
+    # TODO authorize! :user_variable_graph, VariableFieldsController
     # get latest 20 measurements
     @variable_field_measurements = VariableField.find(params[:id]).latest_measurements(1, 20, current_user).map do |vfm|
       {measured_at: vfm.measured_at.strftime('%Y-%m-%d %H:%M'), location: vfm.locality, x: (vfm.measured_at.to_i * 1000), y: vfm.int_value}
@@ -190,7 +216,7 @@ class VariableFieldsController < ApplicationController
   # @param [int] id Variable field id
   # @ajax
   def user_variable_table
-    # TODO implement user security policy
+    # TODO authorize! :user_variable_table, VariableFieldsController
     # get latest 20 measurements
     @variable_field_measurements = VariableField.find(params[:id]).latest_measurements(1, 20, current_user).map do |vfm|
       [ vfm.measured_at.strftime('%Y-%m-%d %H:%M'), vfm.int_value, vfm.locality, (vfm.measured_by.blank?) ? '-' : vfm.measured_by.name ]

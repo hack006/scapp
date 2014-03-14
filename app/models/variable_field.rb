@@ -10,7 +10,7 @@ class VariableField < ActiveRecord::Base
   validates_uniqueness_of :name, scope: [:variable_field_category_id, :user_id]
   validates :variable_field_category, presence: true
 
-  scope :public_or_owned_by, ->(user) { where("user_id is NULL or user_id = ?", user) }
+  scope :global_or_owned_by, ->(user) { where("is_global = true or user_id = ?", user) }
   scope :with_measurements_for, ->(user) { joins(:variable_field_measurements).where(variable_field_measurements: {measured_for_id: user}) }
   scope :order_by_categories, -> { joins('LEFT JOIN variable_field_categories ON variable_fields.variable_field_category_id = variable_field_categories.id').order('variable_field_categories.name DESC') }
 

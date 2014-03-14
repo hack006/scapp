@@ -3,12 +3,15 @@
 
 - breadcrumb :variable_field_categories
 
-%table.table
+-if is_coach? || is_admin?
+  %a.btn.btn-success{href: new_variable_field_category_path}= t('vfc.index.new')
+
+%table.table.table-striped
   %tr
-    %th Name
-    %th Rgb
-    %th Description
-    %th User
+    %th= t('vfc.index.name')
+    %th= t('vfc.index.rgb')
+    %th= t('vfc.index.description')
+    %th= t('vf.index.user')
     %th
     %th
     %th
@@ -18,11 +21,9 @@
       %td= variable_field_category.name
       %td= variable_field_category.rgb
       %td= variable_field_category.description
-      %td= variable_field_category.user
+      %td= dash_or_value(variable_field_category.user, 'name')
       %td= link_to 'Show', variable_field_category
       %td= link_to 'Edit', edit_variable_field_category_path(variable_field_category)
       %td= link_to 'Destroy', variable_field_category, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-%br
-
-= link_to 'New Variable field category', new_variable_field_category_path
+=paginate @variable_field_categories, theme: 'twitter-bootstrap-3'

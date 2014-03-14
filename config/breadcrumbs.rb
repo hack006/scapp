@@ -25,6 +25,16 @@ crumb :variable_fields do
   link t('breadcrumbs.variable_fields'), variable_fields_path
 end
 
+crumb :variable_field do
+  link t('breadcrumbs.variable_field_detail')
+  parent :variable_fields
+end
+
+crumb :variable_field_edit do
+  link t('breadcrumbs.edit_variable_field')
+  parent :variable_fields
+end
+
 crumb :user_variable_fields do |user|
   link t('breadcrumbs.variable_fields'), user_variable_fields_path
   parent :user, user
@@ -35,7 +45,7 @@ crumb :user_variable_field_detail do |user|
   parent :user_variable_fields, user
 end
 
-crumb :variable_fields_new do
+crumb :variable_field_new do
   link t('breadcrumbs.new_variable_field'), new_variable_field_path
   parent :variable_fields
 end

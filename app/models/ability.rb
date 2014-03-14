@@ -10,6 +10,10 @@ class Ability
     @user = user || User.new # for guest
     @request ||= request
 
+    # set not role based permissions
+    role_independent
+
+    # set role based permissions
     @user.roles.each do |role|
       send role.name if ['player', 'coach', 'admin'].include? role.name
     end
@@ -24,6 +28,26 @@ class Ability
   end
 
   # ===========================================
+  # ROLE INDEPENDENT PERMISSIONS
+  #
+  # This is used for permissions which directly
+  # don't rely on user role.
+  #
+  # ===========================================
+  def role_independent
+    # =============
+    # VariableField
+    #==============
+    # @4.3 - can only view own VF page
+    can [:user_variable_fields], VariableFieldsController if @request.params[:user_id] == @user.slug
+    can [:show, :edit, :update, :delete], VariableField do |vf|
+      # can manage only own VF - @4.2, @4.7, @4.8, @4.9, @4.10
+      vf.user_id ==  @user.id
+    end
+
+  end
+
+  # ===========================================
   # PLAYER PERMISSIONS
   # ===========================================
   def player
@@ -31,13 +55,8 @@ class Ability
     # =============
     # VariableField
     # =============
-    can [:index, :new, :create, :show], VariableField
-    can [:update, :delete], VariableField do |vf|
-      # can manage only own VF
-      vf.user_id ==  @user.id
-    end
-    # can only view own VF page
-    can [:user_variable_fields], VariableFieldsController if @request.params[:user_id] == @user.slug
+    can [:index, :new, :create, :show], VariableField # @4.1, @4.2, @4.5 - must be controlled in controller, @4.6
+
 
     # =============
     # User
@@ -52,6 +71,10 @@ class Ability
 
   # ===========================================
   # COACH PERMISSIONS
+  #
+  # Inherits all permissions from player
+  # Add or modify inherited permissions
+  #
   # ===========================================
   def coach
     # INHERIT from :player
@@ -60,11 +83,6 @@ class Ability
     # =============
     # VariableField
     # =============
-    can [:update, :delete], VariableField do |vf|
-      # can manage only own VF
-      vf.user_id ==  @user.id
-    end
-
     # can only VF page of users connected to him
     if @request.params.has_key?(:user_id) &&
         ((@request.params[:user_id] == @user.slug) || @user.in_relation?(User.friendly.find(@request.params[:user_id]), 'coach'))
@@ -80,6 +98,10 @@ class Ability
 
   # ===========================================
   # ADMIN PERMISSIONS
+  #
+  # Inherits all permissions from coach
+  # Add or modify inherited permissions
+  #
   # ===========================================
   def admin
     # INHERIT from :coach
@@ -91,7 +113,7 @@ class Ability
     # =============
     # VariableField
     # =============
-    # no additional permission
+    can :show, VariableField # @4.2
 
     # =============
     # User

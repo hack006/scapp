@@ -8,6 +8,7 @@ en:
 
   dictionary:
     new: &new 'New'
+    save: &save 'Save'
     show: &show 'Show'
     edit: &edit 'Edit'
     delete: &delete 'Delete'
@@ -20,13 +21,17 @@ en:
     best: &best 'Best'
     worst: &worst 'Worst'
     value: &value 'Value'
+    unit: &unit 'Unit'
+    category: &category 'Category'
     description: &description 'Description'
     measured_by: &measured_by 'Measured by'
     home: &home 'Home'
     dashboard: &dashboard 'Dashboard'
     control_panel: &control_panel 'Control panel'
     variable_field: &variable_field 'Variable field'
+    variable_field_detail: &variable_field_detail 'Variable field detail'
     variable_fields: &variable_fields 'Variable fields'
+    edit_variable_field: &edit_variable_field 'Edit variable field'
     user: &user 'User'
     users: &users 'Users'
     measurement: &measurement 'Measurement'
@@ -45,10 +50,15 @@ en:
     variable_field_sports: &variable_field_sports 'VF sports'
     new_variable_field_sport: &new_variable_field_sport 'New VF sport'
 
+  alerts:
+    not_authorized: 'You do not have required permissions for this action.'
+
   breadcrumbs:
     home: *home
     variable_fields: *variable_fields
     variable_field: *variable_field
+    variable_field_detail: *variable_field_detail
+    edit_variable_field: *edit_variable_field
     user: *user
     users: *users
     in_groups: 'In groups'
@@ -56,7 +66,6 @@ en:
     new_group: *new_group
     has_relations: 'Existing relations'
     new_user: *new_user
-    variable_fields: *variable_fields
     new_variable_field: *new_variable_field
     variable_field_categories: *variable_field_categories
     new_variable_field_category: *new_variable_field_category
@@ -122,6 +131,11 @@ en:
       edit: *edit
       delete: *delete
       are_you_sure: *are_you_sure
+      name: *name
+      description: *description
+      user: *user
+      variable_field_category: 'Variable field category'
+      new_vf: 'New variable field'
     list:
       current_value: 'Current value'
       location: *location
@@ -136,9 +150,27 @@ en:
       user_variable_fields: 'User variable fields'
     new:
       new_vf: *new_variable_field
+      add_category: 'Add category'
+    show:
+      name: *name
+      description: *description
+      unit: *unit
+      higher_is_better: 'Higher value is better'
+      is_numeric: 'Field is used for storing numeric values'
+      is_global: 'Field is global - shared with all users'
+      category: *category
+      vf_detail: *variable_field_detail
+    edit:
+      edit_variable_field: *edit_variable_field
+
   vfc:
     index:
       variable_field_categories: 'Listing variable field categories'
+      new: *new
+      name: *name
+      rgb: 'Color'
+      description: *description
+      user: 'Owner of category'
     new:
       new_variable_field_category: 'New variable field category'
   vful:

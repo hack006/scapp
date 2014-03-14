@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140303163910) do
+ActiveRecord::Schema.define(version: 20140313141604) do
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20140303163910) do
   create_table "user_groups", force: true do |t|
     t.string   "name"
     t.string   "description"
-    t.string   "visibility"
+    t.string   "visibility",      limit: 10, default: "owner", null: false
     t.integer  "user_id"
     t.integer  "organization_id"
     t.datetime "created_at"
