@@ -1,5 +1,7 @@
 Scapp::Application.routes.draw do
-  resources :variable_fields
+  resources :variable_fields do
+    resources :variable_field_measurements, only: [:new, :create]
+  end
   post '/variable_fields/add_category', to: 'variable_fields#add_category', as: 'variable_fields_add_new_category'
 
   resources :variable_field_categories
@@ -49,6 +51,8 @@ Scapp::Application.routes.draw do
         get 'graph' => 'variable_fields#user_variable_graph'
         get 'table' => 'variable_fields#user_variable_table'
         get 'detail' => 'variable_fields#user_variable_field_detail'
+        get 'add_measurement' => 'variable_field_measurements#new_for_user'
+        post 'add_measurement' => 'variable_field_measurements#create_for_user'
       end
     end
 

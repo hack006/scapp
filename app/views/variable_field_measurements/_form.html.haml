@@ -1,11 +1,19 @@
-= simple_form_for(@variable_field_measurement) do |f|
+= simple_form_for @variable_field_measurement do |f|
   = f.error_notification
 
   .form-inputs
-    = f.input :measured_at
+    = f.input :variable_field_id, as: :hidden
+    = f.input :measured_at, as: :datetime_picker
     = f.input :locality
-    = f.input :string_value
-    = f.input :int_value
+    - if @variable_field_measurement.variable_field.is_numeric?
+      = f.input :int_value
+    - else
+      = f.input :string_value
+    - if is_admin? || is_coach?
+      %hr
+      = f.association :measured_by, collection: User.all.order('name') if is_admin?
+      = f.association :measured_for, collection: User.all.order('name')
+
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, class: 'btn-primary'

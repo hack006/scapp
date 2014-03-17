@@ -27,6 +27,12 @@ en:
         is_numeric: 'Used for storing numeric values'
         is_global: 'Field globally accessible'
         variable_field_category: 'Category of VF'
+      variable_field_measurement:
+        measured_at: 'Time of measurement'
+        locality: 'Location'
+        int_value: 'Numeric value'
+        string_value: 'Value'
+
     hints:
       defaults:
         username: 'User name to sign in.'

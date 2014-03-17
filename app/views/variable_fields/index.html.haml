@@ -4,14 +4,18 @@
 
 - breadcrumb :variable_fields
 
-%a.btn.btn-success{href: new_variable_field_path}= t('vf.index.new')
+= link_to t('vf.index.show_variable_fields_with_measurements'), user_variable_fields_path(current_user), class: 'btn btn-info'
+= link_to t('vf.index.new'), new_variable_field_path, class: 'btn btn-success'
 
 %table.table.table-striped
   %thead
     %tr
       %th= t('vf.index.name')
-      %th= t('vf.index.user')
       %th= t('vf.index.variable_field_category')
+      %th= t('vf.index.is_numeric')
+      %th= t('vf.index.higher_is_better')
+      %th= t('vf.index.global')
+      %th
       %th
       %th
       %th
@@ -19,13 +23,16 @@
     - @variable_fields.each do |variable_field|
       %tr{id: "vf_#{variable_field.id}"}
         %td= link_to variable_field.name, variable_field
-
-        %td= dash_or_value variable_field.user, :name
         %td= dash_or_value variable_field.variable_field_category, :name
+        %td= variable_field.is_numeric
+        %td= variable_field.is_numeric? ? variable_field.higher_is_better : '-'
+        %td= variable_field.is_global
         - if (variable_field.user == current_user && !variable_field.is_global?) || is_admin?
           %td.edit= link_to t('vf.index.edit'), edit_variable_field_path(variable_field)
           %td.delete= link_to t('vf.index.delete'), variable_field, :method => :delete, :data => { :confirm => t('vf.index.are_you_sure') }
         - else
           %td{colspan: 2}
+        %td= link_to t('vf.index.add_measurement'), new_variable_field_variable_field_measurement_path(variable_field)
+        %td= link_to t('vf.index.show_detail')
 
 =paginate @variable_fields, theme: 'twitter-bootstrap-3'

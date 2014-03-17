@@ -1,5 +1,7 @@
-%h1 New variable_field_measurement
+- content_for :heading do
+  = t('vfm.new.new_vf_measurement')
+
+- breadcrumb :variable_field_measurement_new
 
 = render 'form'
 
-= link_to 'Back', variable_field_measurements_path

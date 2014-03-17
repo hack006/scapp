@@ -7,6 +7,8 @@ en:
     bad_confirmation: "You have entered invalid confirmation token!"
 
   dictionary:
+    global: &global 'Global'
+    show_detail: &show_detail 'Show detail'
     new: &new 'New'
     save: &save 'Save'
     show: &show 'Show'
@@ -43,13 +45,20 @@ en:
     new_user: &new_user 'New user'
     new_group: &new_group 'New group'
     new_variable_field: &new_variable_field 'New variable field'
+    new_variable_field_measurement: &new_variable_field_measurement 'New variable field measurement'
     variable_field_categories: &variable_field_categories 'VF categories'
     new_variable_field_category: &new_variable_field_category 'New VF category'
     variable_field_user_levels: &variable_field_user_levels 'VF user levels'
     new_variable_field_user_level: &new_variable_field_user_level 'New VF user level'
     variable_field_sports: &variable_field_sports 'VF sports'
     new_variable_field_sport: &new_variable_field_sport 'New VF sport'
-
+    vf_user_measurements: &vf_user_measurements 'VF user measurements'
+    vf_measurement_detail: &vf_measurement_detail 'VF measurement detail'
+    edit_vf_measurement: &edit_vf_measurement 'Edit variable field measurement'
+    measured_at: &measured_at 'Measured at'
+    measured_for: &measured_for 'Measured for'
+    vf_measurements: &vf_measurements 'VF measurements'
+    new_vf_measurement: &new_vf_measurement 'New VF measurement'
   alerts:
     not_authorized: 'You do not have required permissions for this action.'
 
@@ -67,13 +76,19 @@ en:
     has_relations: 'Existing relations'
     new_user: *new_user
     new_variable_field: *new_variable_field
+    new_variable_field_measurement: *new_variable_field_measurement
     variable_field_categories: *variable_field_categories
     new_variable_field_category: *new_variable_field_category
     variable_field_user_levels: *variable_field_user_levels
     new_variable_field_user_level: *new_variable_field_user_level
     variable_field_sports: *variable_field_sports
     new_variable_field_sport: *new_variable_field_sport
-    user_relations: &user_relations
+    user_relations: *user_relations
+    vf_measurement_detail: *vf_measurement_detail
+    vf_user_measurements: *vf_user_measurements
+    edit_vf_measurement: *edit_vf_measurement
+    vf_measurements: *vf_measurements
+    new_vf_measurement: *new_vf_measurement
   nav:
     user: *user
     new_user: *new_user
@@ -92,6 +107,8 @@ en:
     new_variable_field_user_level: 'New VF user level'
     variable_field_sports: 'VF sports'
     new_variable_field_sport: 'New VF sport'
+    variable_field_measurements: 'VF measurements'
+
 
 
   template:
@@ -136,6 +153,13 @@ en:
       user: *user
       variable_field_category: 'Variable field category'
       new_vf: 'New variable field'
+      is_numeric: 'Numeric value'
+      higher_is_better: 'Better higher'
+      global: *global
+      add_measurement: 'Add measurement'
+      show_detail: *show_detail
+      show_variable_fields_with_measurements: 'View my VF with measurements'
+
     list:
       current_value: 'Current value'
       location: *location
@@ -148,6 +172,8 @@ en:
       measured_by: *measured_by
       user_variable_field_detail: 'User variable field - detail'
       user_variable_fields: 'User variable fields'
+      add_new_measurement: 'Add new measurement'
+      view_all_available_fields: 'View all available VF'
     new:
       new_vf: *new_variable_field
       add_category: 'Add category'
@@ -162,7 +188,40 @@ en:
       vf_detail: *variable_field_detail
     edit:
       edit_variable_field: *edit_variable_field
-
+    vfm:
+      new:
+        new_measurement: 'New measurement'
+        add_measurement: 'Add measurement'
+  vfm:
+    controller:
+      successfully_created: 'Variable field measurement was successfully created.'
+      successfully_removed: 'Variable field measurement was successfully removed.'
+      successfully_updated: 'Variable field measurement changes were successfully saved.'
+    show:
+      measured_at: *measured_at
+      measured_by: *measured_by
+      location: *location
+      string_value: &string_value 'Value'
+      numeric_value: &numeric_value 'Numeric value'
+      edit: *edit
+      vf_measurement_detail: *vf_measurement_detail
+      vf: *variable_field
+    edit:
+      edit_vf_measurement: *edit_vf_measurement
+    index:
+      variable_field: *variable_field
+      vf_measurements: &vf_measurements
+      measured_at: *measured_at
+      location: *location
+      string_value: *string_value
+      numeric_value: *numeric_value
+      measured_for: *measured_for
+      measured_by: *measured_by
+      show: *show
+      edit: *edit
+      delete: *delete
+    new:
+      new_vf_measurement: *new_vf_measurement
   vfc:
     index:
       variable_field_categories: 'Listing variable field categories'

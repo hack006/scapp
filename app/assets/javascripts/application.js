@@ -24,4 +24,5 @@
 //= require plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min
 //= require plugins/iCheck/icheck.min
 //= require AdminLTE/app
+//= require bootstrap-datetimepicker/core
 //= require_tree .

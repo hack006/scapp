@@ -3,6 +3,7 @@
 
 - breadcrumb :user_variable_fields, @user
 
+= link_to t('vf.list.view_all_available_fields'), variable_fields_path, class: 'btn btn-info'
 
 - @variable_fields.each do |k, vfc|
 
@@ -17,10 +18,13 @@
           %a{"data-table" => "lvf", "data-remote" => "true", "data-type" => "json", "data-table-id" => "#{vf[:field].id}", href: table_user_variable_field_path(params[:user_id], vf[:field].id)} Latest data
         %li
           %a{"data-chart" => "lvf", "data-remote" => "true", "data-type" => "json", "data-chart-id" => "#{vf[:field].id}", href: graph_user_variable_field_path(params[:user_id], vf[:field].id)} Chart
+        %li
+          =link_to t('vf.list.add_new_measurement'), add_measurement_user_variable_field_path(params[:user_id], vf[:field].id), class: 'btn btn-success'
         %li.pull-left.header
           %i.fa.fa-inbox
           %a{href: detail_user_variable_field_path(@user, vf[:field].id) }
             %h3.inline= vf[:field].name
+
       .tab-content
         %div.tab-pane.active{id: "summary-#{vf[:field].id}"}
           .row

@@ -1,0 +1,13 @@
+= simple_form_for @variable_field_measurement, url: add_measurement_user_variable_field_path, method: :post do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :measured_at, as: :datetime_picker
+    = f.input :locality
+    - if @variable_field.is_numeric?
+      = f.input :int_value
+    - else
+      = f.input :string_value
+
+  .form-actions
+    = f.button :submit, t('vf.vfm.new.add_measurement'), class: 'btn-primary'

@@ -1,18 +1,32 @@
-%p#notice= notice
+- content_for :heading do
+  = t('vfm.show.vf_measurement_detail')
 
-%p
-  %b Measured at:
-  = @variable_field_measurement.measured_at
-%p
-  %b Locality:
-  = @variable_field_measurement.locality
-%p
-  %b String value:
-  = @variable_field_measurement.string_value
-%p
-  %b Int value:
-  = @variable_field_measurement.int_value
+- breadcrumb :variable_field_measurement_detail
 
-= link_to 'Edit', edit_variable_field_measurement_path(@variable_field_measurement)
-\|
-= link_to 'Back', variable_field_measurements_path
+= link_to t('vfm.show.edit'), edit_variable_field_measurement_path(@variable_field_measurement), class: 'btn btn-success'
+
+%table.table
+  %tbody
+    %tr
+      %th= t('vfm.show.vf')
+      %td
+        -if @variable_field_measurement.variable_field
+          = link_to @variable_field_measurement.variable_field.name, variable_field_path(@variable_field_measurement.variable_field)
+        -else
+          = "-"
+    %tr
+      %th= t('vfm.show.measured_at')
+      %td= @variable_field_measurement.measured_at
+    %tr
+      %th= t('vfm.show.measured_by')
+      %td= link_to @variable_field_measurement.measured_by.name, user_path(@variable_field_measurement.measured_by)
+    %tr
+      %th= t('vfm.show.location')
+      %td= @variable_field_measurement.locality
+    %tr
+      - if @variable_field_measurement.variable_field.is_numeric?
+        %th= t('vfm.show.numeric_value')
+        %td= @variable_field_measurement.int_value
+      - else
+        %th= t('vfm.show.string_value')
+        %td= @variable_field_measurement.string_value

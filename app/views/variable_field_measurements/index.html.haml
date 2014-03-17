@@ -1,25 +1,48 @@
-%h1 Listing variable_field_measurements
+- content_for :heading do
+  = t('vfm.index.vf_measurements')
 
-%table
-  %tr
-    %th Measured at
-    %th Locality
-    %th String value
-    %th Int value
-    %th
-    %th
-    %th
+- breadcrumb :variable_field_measurements
 
+%table.table.table-striped
+  %thead
+    %tr
+      %th= t('vfm.index.measured_at')
+      %th= t('vfm.index.variable_field')
+      %th= t('vfm.index.location')
+      %th= t('vfm.index.string_value')
+      %th= t('vfm.index.numeric_value')
+      %th= t('vfm.index.measured_for')
+      %th= t('vfm.index.measured_by')
+      %th
+      %th
+      %th
+  %tbody
   - @variable_field_measurements.each do |variable_field_measurement|
     %tr
-      %td= variable_field_measurement.measured_at
+      %td= variable_field_measurement.measured_at.to_date.full
+      %td= dash_or_value(variable_field_measurement.variable_field, 'name')
       %td= variable_field_measurement.locality
-      %td= variable_field_measurement.string_value
-      %td= variable_field_measurement.int_value
-      %td= link_to 'Show', variable_field_measurement
-      %td= link_to 'Edit', edit_variable_field_measurement_path(variable_field_measurement)
-      %td= link_to 'Destroy', variable_field_measurement, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td
+        = variable_field_measurement.string_value
+        = variable_field_measurement.variable_field.unit unless variable_field_measurement.variable_field.is_numeric?
+      %td
+        = variable_field_measurement.int_value
+        = variable_field_measurement.variable_field.unit if variable_field_measurement.variable_field.is_numeric?
+      %td
+        -if variable_field_measurement.measured_for
+          = link_to variable_field_measurement.measured_for.name, user_path(variable_field_measurement.measured_for)
+        - else
+          = "-"
+      %td
+        -if variable_field_measurement.measured_by
+          = link_to variable_field_measurement.measured_by.name, user_path(variable_field_measurement.measured_by)
+        - else
+          = "-"
+      %td= link_to t('vfm.index.show'), variable_field_measurement
+      - if variable_field_measurement.measured_by == current_user || is_admin?
+        %td= link_to t('vfm.index.edit'), edit_variable_field_measurement_path(variable_field_measurement)
+        %td= link_to t('vfm.index.delete'), variable_field_measurement, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      - else
+        %td{colspan: 2}
 
-%br
-
-= link_to 'New Variable field measurement', new_variable_field_measurement_path
+= paginate @variable_field_measurements, theme: 'twitter-bootstrap-3'

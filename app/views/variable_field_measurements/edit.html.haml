@@ -1,7 +1,6 @@
-%h1 Editing variable_field_measurement
+- content_for :heading do
+  = t('vfm.edit.edit_vf_measurement')
+
+- breadcrumb :variable_field_measurement_edit
 
 = render 'form'
-
-= link_to 'Show', @variable_field_measurement
-\|
-= link_to 'Back', variable_field_measurements_path

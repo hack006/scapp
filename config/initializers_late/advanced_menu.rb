@@ -16,6 +16,8 @@ AdvancedMenu::Menu.setup do |config|
     h.add_link(I18n.t('nav.my_variable_fields'), "/users/{user_slug}/variable_fields", 'variable_fields',
                'user_variable_field', %w(fa fa-bar-chart-o),[:player])
     h.add_link(I18n.t('nav.new_variable_field'), '/variable_fields/new', 'variable_fields', 'new', %w(fa fa-plus))
+    h.add_link(I18n.t('nav.variable_field_measurements'), '/variable_field_measurements', 'variable_field_measurements',
+               'index', %w('fa fa-clock-o'), [:coach, :admin])
     h.add_link(I18n.t('nav.variable_field_categories'), '/variable_field_categories', 'variable_field_categories',
                nil, %w(fa fa-folder-o))
     h.add_link(I18n.t('nav.new_variable_field_category'), '/variable_field_categories/new', 'variable_field_categories',

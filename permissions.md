@@ -57,10 +57,11 @@
 
 | ID    | Action                        | implemented?  | owner     | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
 | ----- | ----------------------------- | ------------- | --------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
-| 5.1   | Add measurement               | -             | -         | -         | (*1)      | -         | -             | -         | (2*)      | -         | Y         | *1,2 - only if VF global || owned by user
-| 5.2   | Edit measurement              | -             | Y         | -         | (*1)      | -         | -             | -         | -         | -         | Y         | *1 - only if measured_by == current_user
-| 5.3   | Delete measurement            | -             | Y         | -         | (*1)      | -         | -             | -         | -         | -         | Y         | *1 - only if measured_by == current_user
-
+| 5.1   | Add measurement               | Y             | -         | -         | (*1)      | -         | -             | -         | (2*)      | -         | Y         | *1,2 - only if VF global || owned by user
+| 5.2   | Edit measurement              | Y             | Y         | -         | (*1)      | -         | -             | -         | -         | -         | Y         | *1 - only if measured_by == current_user
+| 5.3   | Delete measurement            | Y             | Y         | -         | (*1)      | -         | -             | -         | -         | -         | Y         | *1 - only if measured_by == current_user
+| 5.4   | Show detail                   | Y             | Y (*1)    | -         | Y         | -         | -             | -         | -         | -         | Y         | *1 - owner = measured_by, (measured_for - discuss??)
+| 5.5   | List                          | Y             | -         | -         | -         | -         | -             | -         | Y (*1)    | Y (2*)    | Y         | *1 - can see only own, *2 - can only see own and measurements of his :players
 # Organization
 
 **Is postponed to next release.**

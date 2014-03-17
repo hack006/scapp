@@ -24,3 +24,15 @@ And(/^I should have "([^"]*)" actions available for table row "([^"]*)"$/) do |a
     row_text[I18n.t('dictionary.delete').downcase].should be_nil
   end
 end
+
+And(/^I click button "(.*?)"$/) do |btn_text|
+  click_button(btn_text)
+end
+
+When /^I confirm popup$/ do
+  page.driver.browser.switch_to.alert.accept
+end
+
+When /^I dismiss popup$/ do
+  page.driver.browser.switch_to.alert.dismiss
+end

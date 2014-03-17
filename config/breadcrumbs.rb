@@ -51,6 +51,37 @@ crumb :variable_field_new do
 end
 
 # ========================
+# VariableFieldMeasurement
+# ========================
+crumb :variable_field_measurements do
+  link t('breadcrumbs.vf_measurements'), variable_field_measurements_path
+end
+
+crumb :variable_field_user_measurements do |user|
+  link t('breadcrumbs.vf_user_measurements'), variable_field_measurements_path
+end
+
+crumb :variable_field_measurement_new do
+  link t('breadcrumbs.new_vf_measurement')
+  parent :variable_field_measurements
+end
+
+crumb :variable_field_new_for_user do |user|
+  link t('breadcrumbs.new_variable_field_measurement')
+  parent :user_variable_fields, user
+end
+
+crumb :variable_field_measurement_detail do |user|
+  link t('breadcrumbs.vf_measurement_detail')
+  parent :variable_field_user_measurements, user
+end
+
+crumb :variable_field_measurement_edit do |user|
+  link t('breadcrumbs.edit_vf_measurement')
+  parent :variable_field_user_measurements, user
+end
+
+# ========================
 # VariableFieldCategories
 # ========================
 crumb :variable_field_categories do

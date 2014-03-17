@@ -38,10 +38,12 @@ class Ability
     # =============
     # VariableField
     #==============
+
     # @4.3 - can only view own VF page
     can [:user_variable_fields], VariableFieldsController if @request.params[:user_id] == @user.slug
+
+    # can manage only own VF - @4.2, @4.7, @4.8, @4.9, @4.10
     can [:show, :edit, :update, :delete], VariableField do |vf|
-      # can manage only own VF - @4.2, @4.7, @4.8, @4.9, @4.10
       vf.user_id ==  @user.id
     end
 
@@ -55,8 +57,43 @@ class Ability
     # =============
     # VariableField
     # =============
-    can [:index, :new, :create, :show], VariableField # @4.1, @4.2, @4.5 - must be controlled in controller, @4.6
 
+    # @4.1, @4.2, @4.5 - must be controlled in controller, @4.6
+    can [:index, :new, :create, :show], VariableField
+
+    # =============
+    # VariableFieldMeasurement
+    # =============
+    can [:index], VariableFieldMeasurement
+
+    # @5.1 - TODO restrict only to actions not by required params
+    if @request.params[:controller] == 'variable_field_measurements' &&
+        ['new_for_user', 'create_for_user'].include?(@request.params[:action]) && @request.params[:id] && @request.params[:user_id]
+      vf = VariableField.find(@request.params[:id])
+      user = User.friendly.find(@request.params[:user_id])
+      # user must be owner or field global and add measurement for myself or has coach relation to player
+      if (vf.user == @user || vf.is_global? ) && (user == @user || @user.in_relation?(user, :coach))
+        can [:new_for_user, :create_for_user], VariableFieldMeasurement
+      end
+    end
+
+    # @5.1 - add only to myself
+    if @request.params[:controller] == 'variable_field_measurements' && ['new', 'create'].include?(@request.params[:action])
+      vf_id = @request.params[:variable_field_id]
+      vf_id ||= @request.params[:variable_field_measurement][:variable_field_id] if @request.params[:variable_field_measurement]
+      vf_id ||= @request.params[:id]
+      vf = VariableField.find(vf_id)
+      can [:new, :create], VariableFieldMeasurement if vf.is_global? || vf.user == @user
+    end
+
+    # @5.4
+    can [:show], VariableFieldMeasurement do |vfm|
+      vfm.measured_by = @user || @user.in_relation?(vfm.measured_for, :coach)
+    end
+    # @5.2
+    can [:edit, :update, :destroy], VariableFieldMeasurement do |vfm|
+      vfm.measured_by == @user
+    end
 
     # =============
     # User
@@ -90,6 +127,20 @@ class Ability
     end
 
     # =============
+    # VariableFieldMeasurement
+    # =============
+
+    # @5.1
+    if @request.params[:controller] == 'variable_field_measurements' && ['new', 'create'].include?(@request.params[:action])
+      vf_id = @request.params[:variable_field_id]
+      vf_id ||= @request.params[:variable_field_measurement][:variable_field_id] if @request.params[:variable_field_measurement]
+      vf_id ||= @request.params[:id]
+      vf = VariableField.find(vf_id)
+
+      can [:new, :create], VariableFieldMeasurement if @user.in_relation?(vf.user, :coach)
+    end
+
+    # =============
     # User
     # =============
     can [:index], User
@@ -113,7 +164,9 @@ class Ability
     # =============
     # VariableField
     # =============
-    can :show, VariableField # @4.2
+
+    # @4.2
+    can :show, VariableField
 
     # =============
     # User

@@ -36,6 +36,9 @@ gem 'gretel'
 # model pagination
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
+# datetime picker for bootstrap
+gem 'datetimepicker-rails', :require => 'datetimepicker-rails', :git => 'git://github.com/zpaulovics/datetimepicker-rails.git'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]

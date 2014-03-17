@@ -1,6 +1,6 @@
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
-  config.wrappers :bootstrap, tag: 'div', class: 'form-group', error_class: 'error' do |b|
+  config.wrappers :bootstrap, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label
@@ -44,4 +44,7 @@ SimpleForm.setup do |config|
   config.default_wrapper = :bootstrap
 
   config.input_class = 'form-control'
+
+  # CSS class to add for error notification helper.
+  config.error_notification_class = 'alert alert-danger'
 end

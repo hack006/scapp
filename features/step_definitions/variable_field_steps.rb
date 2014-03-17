@@ -149,6 +149,22 @@ Then(/^I shouldn't see "([^"]*)" in the table$/) do |text|
     page.should_not have_content text
   end
 end
+Then(/^I shouldn't see "([^"]*)" "([^"]*)" in the table$/) do |label, text|
+  within(:css, "table") do
+    page.should_not have_content text
+  end
+end
+Then(/^I should see "([^"]*)" in the table$/) do |text|
+  within(:css, "table") do
+    should have_content text
+  end
+end
+
+Then(/^I should see "([^"]*)" "([^"]*)" in the table$/) do |label, text|
+  within(:css, "table") do
+    should have_content text
+  end
+end
 When(/^I click "([^"]*)" for "([^"]*)" in table row$/) do |action_text, name|
   find(:xpath, "//tr[td[contains(.,'#{name}')]]/td/a", :text => action_text).click
 end
