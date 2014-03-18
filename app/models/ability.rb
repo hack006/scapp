@@ -98,9 +98,14 @@ class Ability
     # =============
     # User
     # =============
+    # @1.8
+    can [:index], User
+    #  @1.4
     can [:edit, :update], User do |user|
       user.id == @user.id
     end
+
+    # @1.3
     can [:show], User do |user|
       (user.id == @user.id) || @user.in_relation?(user, :friend) || @user.in_relation?(user, :coach) || @user.in_relation?(user, :watcher)
     end

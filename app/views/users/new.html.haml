@@ -3,4 +3,7 @@
 
 - breadcrumb :user_new
 
-= render 'form'
+%div.alert.alert-info
+  = t('user.new.email_with_passwd_is_going_to_be_send')
+
+= render 'users/form_new'

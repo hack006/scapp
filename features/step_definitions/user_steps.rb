@@ -147,3 +147,7 @@ end
 When(/^User test(\d+) exists$/) do |id|
   create_user(id.to_i)
 end
+
+Then(/^I click "([^"]*)"$/) do |link_text|
+  click link_text
+end

@@ -3,6 +3,9 @@ class User < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  # Mount uploader for avatar
+  mount_uploader :avatar, AvatarUploader
+
   # Add roles
   rolify
 
@@ -13,6 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :variable_fields
   has_many :variable_field_categories
+  has_many :user_relations
   has_and_belongs_to_many :user_group
 
   # Test if specified relation exists between users

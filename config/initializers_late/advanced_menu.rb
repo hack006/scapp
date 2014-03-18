@@ -2,7 +2,8 @@ require 'advanced_menu/advanced_menu'
 AdvancedMenu::Menu.setup do |config|
   config.name = 'name'
 
-  config.add_heading(I18n.t('nav.user'), '/users', 'users', nil, %w(fa fa-angle-double-right)) do |h|
+  config.add_heading(I18n.t('nav.user'), '#', 'users', nil, %w(fa fa-angle-double-right)) do |h|
+    h.add_link(I18n.t('nav.users'), '/users', 'users', 'index', %w(fa fa-users))
     h.add_link(I18n.t('nav.new_user'), '/users/new','users', 'new', %w(fa fa-plus), [:coach, :admin])
     h.add_link(I18n.t('nav.my_groups'), '/users/{user_slug}/groups', 'user_groups', 'user_in', %w(fa fa-group))
     h.add_link(I18n.t('nav.my_relations'), '/users/{user_slug}/relations', 'user_relations', 'user_has', %w(fa fa-random))

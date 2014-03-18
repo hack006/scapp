@@ -9,6 +9,7 @@
 | 1.5   | Delete _user_                 | -             | -         | -         | -         | -         | -             | -         | -         | -         | -         |
 | 1.6   | Add _user_ role               | -             | -         | -         | -         | -         | -             | -         | -         | -         | Y         |
 | 1.7   | Remove _user_ role            | -             | -         | -         | -         | -         | -             | -         | -         | -         | Y         |
+| 1.8   | List users                    | -             | -         | -         | -         | -         | -             | -         | Y         | Y         | Y         |
 
 # User groups
 

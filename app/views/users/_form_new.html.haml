@@ -1,0 +1,7 @@
+= simple_form_for(@user, :html => { :method => :post}) do |f|
+  = f.input :name, :autofocus => true
+  = f.input :email, :required => true
+  = f.input :avatar, as: :file
+  = f.input :avatar_cache, as: :hidden
+
+  = f.button :submit, t('user.new.create') , :class => 'btn btn-primary'

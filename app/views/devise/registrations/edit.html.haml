@@ -1,15 +1,14 @@
 %h2
-  Edit #{resource_name.to_s.humanize}
+  #{t('dictionary.edit')} #{resource_name.to_s.humanize}
 = simple_form_for(resource, :as => resource_name, :url => edit_profile_path, :html => { :method => :put, :class => 'form-vertical' }) do |f|
   = f.error_notification
   = display_base_errors resource
   = f.input :name, :autofocus => true
   = f.input :email, :required => true
-  = f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false
+  = f.input :password, :autocomplete => "off", :hint => t('registration.edit.leave_blank_when_not_want_change'), :required => false
   = f.input :password_confirmation, :required => false
-  = f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true
+  = f.input :current_password, :hint => t('devise.registrations.update_needs_confirmation'), :required => true
   = f.button :submit, 'Update', :class => 'btn-primary'
-%h3 Cancel my account
+%h3= t('registration.edit.cancel_account')
 %p
-  Unhappy? #{link_to "Cancel my account", cancel_user_registration_path, :data => { :confirm => "Are you sure?" }, :method => :delete}.
-= link_to "Back", :back
+  = link_to t('registration.edit.cancel_account'), cancel_user_registration_path, :data => { :confirm => t('dictionary.are_you_sure') }, :method => :delete

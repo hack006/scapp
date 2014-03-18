@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140313141604) do
+ActiveRecord::Schema.define(version: 20140318220703) do
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -61,6 +61,11 @@ ActiveRecord::Schema.define(version: 20140313141604) do
   add_index "user_groups", ["organization_id"], name: "index_user_groups_on_organization_id", using: :btree
   add_index "user_groups", ["user_id"], name: "index_user_groups_on_user_id", using: :btree
 
+  create_table "user_groups_users", force: true do |t|
+    t.integer "user_id",  null: false
+    t.integer "group_id", null: false
+  end
+
   create_table "user_relations", force: true do |t|
     t.string   "relation",         limit: 7,                 null: false
     t.string   "from_user_status", limit: 8, default: "new", null: false
@@ -89,6 +94,7 @@ ActiveRecord::Schema.define(version: 20140313141604) do
     t.datetime "updated_at"
     t.string   "name"
     t.string   "slug"
+    t.string   "avatar"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

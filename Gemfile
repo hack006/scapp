@@ -38,6 +38,9 @@ gem 'kaminari'
 gem 'bootstrap-kaminari-views'
 # datetime picker for bootstrap
 gem 'datetimepicker-rails', :require => 'datetimepicker-rails', :git => 'git://github.com/zpaulovics/datetimepicker-rails.git'
+# image upload + manipulation
+gem 'carrierwave'
+gem 'rmagick'
 
 group :development do
   gem 'better_errors'

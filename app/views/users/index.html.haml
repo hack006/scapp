@@ -1,22 +1,52 @@
-%h3 Users
-.span8
-  %table.table.table-condensed
-    %thead
+- content_for :heading do
+  = t('user.index.users')
+
+- breadcrumb :users
+
+- if is_admin?
+  = link_to t('user.index.new_user'), new_user_path, class: 'btn btn-success'
+
+%table.table.table-stripped
+  %thead
+    %tr
+      %th
+      %th= t('user.index.username')
+      %th= t('user.index.email')
+      %th= t('user.index.registered')
+      %th= t('user.index.relations')
+      - if is_admin?
+        %th= t('user.index.roles')
+      - if is_admin?
+        %th
+        %th
+        %th
+  %tbody
+    - @users.each do |user|
       %tr
-        %th Username
-        %th Email
-        %th Registered
-        %th Role
-        %th
-        %th
-    %tbody
-      - @users.each do |user|
-        %tr
-          %td= link_to user.name, user
-          %td= user.email
-          %td= user.created_at.to_date
-          %td= user.roles.first.name.titleize unless user.roles.first.nil?
+        %td
+          = image_tag user.avatar.small.url, alt: "#{user.name} avatar" unless user.avatar.small.url.blank?
+        %td= link_to user.name, user
+        %td= user.email
+        %td= user.created_at.to_date
+        %td
+          - user.get_my_relations_with_statuses([:new, :accepted, :refused]).select{|r| r.from == current_user || r.to == current_user}.each do |r|
+            - if r.relation == :coach
+              - if r.from == current_user
+                %span.label.label-info coach
+              -elsif r.to == current_user
+                %span.label.label-info player
+            - else
+              r.relation
+        - if is_admin?
           %td
-            %a.btn.btn-mini{"data-toggle" => "modal", :href => "#role-options-#{user.id}", :type => "button"} Change role
+            - user.roles.map{|r| r.name}.each do |r|
+              %span.label.label-primary= r
+        - if is_admin?
+          %td= link_to t('user.index.edit'), edit_user_path(user)
+          %td
+            %a{"data-toggle" => "modal", :href => "#role-options-#{user.id}", :type => "button"}= t('user.index.change_role')
             = render user
-          %td= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-mini') unless user == current_user
+          %td= link_to t('user.index.delete'), user_path(user), :data => { :confirm => t('dictionary.are_you_sure') },
+          :method => :delete, class: 'btn btn-danger' unless user == current_user
+
+= paginate @users, theme: 'twitter-bootstrap-3'

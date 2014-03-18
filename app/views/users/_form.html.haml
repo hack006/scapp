@@ -1,0 +1,16 @@
+= simple_form_for(@user, :html => { :method => :put}) do |f|
+  = f.input :name, :autofocus => true
+  = f.input :email, :required => true
+  = f.input :avatar, as: :file
+  = f.input :avatar_cache, as: :hidden
+  - if !@user.avatar.blank?
+    %p Preview:
+    = image_tag @user.avatar.url
+  = f.input :password, :autocomplete => "off", :hint => t('registration.edit.leave_blank_when_not_want_change'), :required => false
+  = f.input :password_confirmation, :required => false
+  = f.input :current_password, :hint => t('devise.registrations.update_needs_confirmation'), :required => true
+  = f.button :submit, 'Update', :class => 'btn-primary'
+
+%h3= t('registration.edit.cancel_account')
+%p
+  = link_to t('registration.edit.cancel_account'), cancel_user_registration_path, :data => { :confirm => t('dictionary.are_you_sure') }, :method => :delete

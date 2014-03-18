@@ -4,9 +4,9 @@
     / Sidebar user panel
     .user-panel
       .pull-left.image
-        %img.img-circle{alt: "User Image", src: "img/avatar3.png"}/
+        = image_tag current_user.avatar.small.url, class: 'img-circle', alt: "#{current_user.name} avatar img"
       .pull-left.info
-        %p Hello, User
+        %p= t('template.left_sidebar.greetings', user: current_user.name)
         %a{href: "#"}
           %i.fa.fa-circle.text-success
           Online
