@@ -1,4 +1,12 @@
-= simple_form_for @user_relation do |f|
-  = f.input_field :user
-  = f.input_field :relation_type, collection: ['friend', 'player', 'coach', 'watcher', 'ward']
-  = f.submit
+- content_for :heading do
+  = t('user_relations.new_request.new_relation')
+
+- breadcrumb :user_relations_new, current_user
+
+= simple_form_for @user_relation, url: create_request_user_relations_path do |f|
+  = f.input :second_user, input_html: { data: {'guesser' => 'email'} }
+  #email_guesses
+  = f.input :relation, as: :radio_buttons, collection: { 'I want to be FRIEND of selected user' => 'friend',
+                                                         'I want to be COACH of selected user' => 'coach',
+                                                         'I want to be WATCHER of selected user' => 'watcher' }
+  = f.submit class: 'btn btn-primary'

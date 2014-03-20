@@ -36,3 +36,19 @@ end
 When /^I dismiss popup$/ do
   page.driver.browser.switch_to.alert.dismiss
 end
+
+And(/^I should see "([^"]*)" in table "([^"]*)"$/) do |text, table_id|
+  find("##{table_id}").should have_content text
+end
+
+When(/^I visit page "([^"]*)"$/) do |page|
+  visit page
+end
+
+And(/^I shouldn't see "([^"]*)" in the table "([^"]*)"$/) do |text, table_id|
+  find("##{table_id}").should_not have_content text
+end
+
+And(/^I shouldn't see table "([^"]*)"$/) do |table_identifier|
+  page.should_not have_css("table##{table_identifier}")
+end

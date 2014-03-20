@@ -19,9 +19,13 @@ class UserRelation < ActiveRecord::Base
   belongs_to :from, class_name: User, foreign_key: 'user_from_id'
   belongs_to :to, class_name: User, foreign_key: 'user_to_id'
 
+  # accessors for "artificial" fields in form
+  attr_accessor :second_user
+
   #validates :relation, inclusion: { in: ['friend', 'coach', 'watcher'] }
   validates :from_user_status, inclusion: { in: ['new', 'accepted', 'refused'] }
   validates :to_user_status, inclusion: { in: ['new', 'accepted', 'refused'] }
+  validates :relation, presence: true
 
   # Relation getter
   #

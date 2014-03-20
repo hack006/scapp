@@ -149,5 +149,5 @@ When(/^User test(\d+) exists$/) do |id|
 end
 
 Then(/^I click "([^"]*)"$/) do |link_text|
-  click link_text
+  click_link_or_button link_text
 end

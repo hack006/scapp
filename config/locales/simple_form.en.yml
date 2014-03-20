@@ -32,9 +32,13 @@ en:
         locality: 'Location'
         int_value: 'Numeric value'
         string_value: 'Value'
+      user_relation:
+        second_user: 'Email address of user'
 
     hints:
       defaults:
         username: 'User name to sign in.'
         password: 'No special characters, please.'
+      user_relation:
+        second_user: 'Enter user whom you want to request for relation with you.'
 

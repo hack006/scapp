@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  authorize_resource except: [:update]
+  authorize_resource except: [:update, :email_hinter]
 
   def index
     @users ||= User.new
@@ -98,6 +98,17 @@ class UsersController < ApplicationController
     else
       redirect_to users_path, :notice => "Can't delete yourself."
     end
+  end
+
+  # Email hinter
+  #
+  # @param [String] email
+  # @return email hints
+  # @ajax
+  def email_hinter
+    emails = User.where('email LIKE ?', "%#{params[:email]}%").limit(20).map {|e| e.email}
+
+    render json: emails.to_json
   end
 
   private

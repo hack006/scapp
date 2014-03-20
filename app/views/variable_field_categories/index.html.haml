@@ -4,7 +4,8 @@
 - breadcrumb :variable_field_categories
 
 -if is_coach? || is_admin?
-  %a.btn.btn-success{href: new_variable_field_category_path}= t('vfc.index.new')
+  #action-box
+    %a.btn.btn-success{href: new_variable_field_category_path}= t('vfc.index.new')
 
 %table.table.table-striped
   %tr

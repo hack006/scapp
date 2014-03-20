@@ -2,3 +2,162 @@
   = t('user_relations.user_has.user_relation_connections')
 
 - breadcrumb :user_relations_user_has, @user
+
+#action-box
+  = link_to t('user_relations.user_has.new_relation'), new_request_user_relations_path, class: 'btn btn-success'
+
+/ List accepted relations
+.box.box-success
+  .box-header
+    %h2.box-title
+      = t('user_relations.user_has.active_relations')
+      %small (#{@count[:accepted]})
+  .box-body
+    - unless @relations[:accepted].empty?
+      %table#active_relations.table
+        %thead
+          %tr
+            %th
+            %th= t('user_relations.user_has.with_user')
+            %th= t('user_relations.user_has.from')
+            %th= t('user_relations.user_has.relation')
+            %th
+        %tbody
+          - @relations[:accepted].each do |r|
+            %tr
+              - if r.from == @user
+                %td
+                  = image_tag r.to.avatar.small.url, alt: "#{r.to.name}" unless r.to.avatar.small.url.blank?
+                %td
+                  = link_to r.to.name, r.to
+                  - if r.to_user_status == 'new'
+                    %small
+                      (
+                      %i.fa.fa-clock-o
+                      = t('user_relations.index.waiting_approval')
+                      )
+              -else
+                %td
+                  = image_tag r.from.avatar.small.url, alt: "#{r.from.name}" unless r.from.avatar.small.url.blank?
+                %td
+                  = link_to r.from.name, r.from
+                  - if r.from_user_status == 'new'
+                    %small
+                      (
+                      %i.fa.fa-clock-o
+                      = t('user_relations.index.waiting_approval')
+                      )
+              %td= r.created_at.to_date.short
+              %td
+                %span.label.label-primary
+                  - unless r.to == @user
+                    - if r.relation == :coach
+                      my player
+                    - elsif r.relation == :watcher
+                      my ward
+                    - else
+                      = r.relation
+                  - else
+                    = r.relation
+              %td= link_to t('user_relations.user_has.refuse_relation'), change_status_user_relation_path(r, 'refused')
+
+      = paginate @relations[:accepted], param_name: :active_rel_page, theme: 'twitter-bootstrap-3'
+    - else
+      = t('user_relations.user_has.you_have_no_relations_with_status')
+/ List pending relations
+.box.box-info
+  .box-header
+    %h2.box-title
+      = t('user_relations.user_has.pending_relations')
+      %small (#{@count[:new]})
+  .box-body
+    - unless @relations[:new].empty?
+      %table#new_relations.table
+        %thead
+          %tr
+            %th
+            %th= t('user_relations.user_has.with_user')
+            %th= t('user_relations.user_has.from')
+            %th= t('user_relations.user_has.relation')
+            %th
+            %th
+        %tbody
+          - @relations[:new].each do |r|
+            %tr
+              - if r.from == @user
+                %td
+                  = image_tag r.to.avatar.small.url, alt: "#{r.to.name}" unless r.to.avatar.small.url.blank?
+                %td= link_to r.to.name, r.to
+              -else
+                %td
+                  = image_tag r.from.avatar.small.url, alt: "#{r.from.name}" unless r.from.avatar.small.url.blank?
+                %td= link_to r.from.name, r.from
+              %td= r.created_at.to_date.short
+              %td
+                %span.label.label-primary
+                  - unless r.to == @user
+                    - if r.relation == :coach
+                      my player
+                    - elsif r.relation == :watcher
+                      my ward
+                    - else
+                      = r.relation
+                  - else
+                    = r.relation
+              - unless ([:coach, :watcher].include? r.relation) && r.from == @user
+                %td= link_to t('user_relations.user_has.accept_relation'), change_status_user_relation_path(r, 'accepted')
+                %td= link_to t('user_relations.user_has.refuse_relation'), change_status_user_relation_path(r, 'refused')
+              - else
+                %td
+                %td
+
+      = paginate @relations[:new], param_name: :new_rel_page, theme: 'twitter-bootstrap-3'
+    - else
+      = t('user_relations.user_has.you_have_no_relations_with_status')
+
+/ List refused relations
+.box.box-danger
+  .box-header
+    %h2.box-title
+      = t('user_relations.user_has.refused_relations')
+      %small (#{@count[:refused]})
+  .box-body
+    - unless @relations[:refused].empty?
+      %table#refused_relations.table
+        %thead
+          %tr
+            %th
+            %th= t('user_relations.user_has.with_user')
+            %th= t('user_relations.user_has.from')
+            %th= t('user_relations.user_has.relation')
+            %th
+        %tbody
+          - @relations[:refused].each do |r|
+            %tr
+              - if r.from == @user
+                %td
+                  = image_tag r.to.avatar.small.url, alt: "#{r.to.name}" unless r.to.avatar.small.url.blank?
+                %td= link_to r.to.name, r.to
+              -else
+                %td
+                  = image_tag r.from.avatar.small.url, alt: "#{r.from.name}" unless r.from.avatar.small.url.blank?
+                %td= link_to r.from.name, r.from
+              %td= r.created_at.to_date.short
+              %td
+                %span.label.label-primary
+                  - unless r.to == @user
+                    - if r.relation == :coach
+                      my player
+                    - elsif r.relation == :watcher
+                      my ward
+                    - else
+                      = r.relation
+                  - else
+                    = r.relation
+              %td= link_to t('user_relations.user_has.accept_relation'), change_status_user_relation_path(r, 'accepted')
+
+      = paginate @relations[:refused], param_name: :refused_rel_page, theme: 'twitter-bootstrap-3'
+    - else
+      = t('user_relations.user_has.you_have_no_relations_with_status')
+
+

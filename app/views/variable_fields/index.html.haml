@@ -4,8 +4,9 @@
 
 - breadcrumb :variable_fields
 
-= link_to t('vf.index.show_variable_fields_with_measurements'), user_variable_fields_path(current_user), class: 'btn btn-info'
-= link_to t('vf.index.new'), new_variable_field_path, class: 'btn btn-success'
+#action-box
+  = link_to t('vf.index.show_variable_fields_with_measurements'), user_variable_fields_path(current_user), class: 'btn btn-info'
+  = link_to t('vf.index.new'), new_variable_field_path, class: 'btn btn-success'
 
 %table.table.table-striped
   %thead

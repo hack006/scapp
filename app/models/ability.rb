@@ -109,6 +109,20 @@ class Ability
     can [:show], User do |user|
       (user.id == @user.id) || @user.in_relation?(user, :friend) || @user.in_relation?(user, :coach) || @user.in_relation?(user, :watcher)
     end
+
+    # =============
+    # UserRelations
+    # =============
+    # @3.1
+    if @request.params[:controller] == 'user_relations' && @request.params[:action] == 'user_has'
+      for_user = User.friendly.find(@request.params[:user_id])
+      if for_user == @user || @user.in_relation?(for_user, :watcher) || @user.in_relation?(for_user, :friend) || @user.in_relation?(for_user, :coach)
+        can :user_has, UserRelation
+      end
+    end
+    # @3.3
+    can [:new_request, :create_request], UserRelation
+
   end
 
   # ===========================================

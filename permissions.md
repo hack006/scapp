@@ -33,10 +33,11 @@
 
 | ID    | Action                        | implemented?  | owner     | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
 | ----- | ----------------------------- | ------------- | --------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
-| 3.1   | List user relations           | -             | Y         | -         | Y         | -         | Y             | -         | -         | -         | Y         |
+| 3.1   | List user relations           | Y             | Y         | -         | Y         | -         | Y             | -         | -         | -         | Y         |
 | 3.2   | Create confirmed relation     | -             | -         | -         | -         | -         | -             | -         | -         | -         | Y         |
-| 3.3   | Request relation              | -             | -         | -         | -         | -         | -             | -         | Y         | Y         | Y         |
+| 3.3   | Request relation              | Y             | -         | -         | -         | -         | -             | -         | Y         | Y         | Y         |
 | 3.4   | Confirm relation              | -             | -         | -         | -         | -         | -             | -         | Y         | Y         | Y         |
+
 
 # Variable fields
 

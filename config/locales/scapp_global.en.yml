@@ -42,6 +42,7 @@ en:
     groups: &groups 'Groups'
     relations: &relations 'Relations'
     user_relations: &user_relations 'User relations'
+    my_relations: &my_relations 'My relations'
     profile: &profile 'Profile'
     new_user: &new_user 'New user'
     new_group: &new_group 'New group'
@@ -66,6 +67,10 @@ en:
     are_you_sure: &are_you_sure 'Are you sure?'
     username: &username 'Username'
     email: &email 'Email'
+    from: &from From
+    until: &until Until
+    relation: &relation Relation
+    new_relation: &new_relation New relation
   alerts:
     not_authorized: 'You do not have required permissions for this action.'
 
@@ -81,6 +86,8 @@ en:
     user_groups: 'User groups'
     new_group: *new_group
     has_relations: 'Existing relations'
+    my_relations: *my_relations
+    new_relation: *new_relation
     new_user: *new_user
     new_variable_field: *new_variable_field
     new_variable_field_measurement: *new_variable_field_measurement
@@ -102,7 +109,7 @@ en:
     users: *users
     new_user: *new_user
     my_groups: 'My groups'
-    my_relations: 'My relations'
+    my_relations: *my_relations
     groups: *groups
     new_group: *new_group
     relations: *relations
@@ -117,6 +124,7 @@ en:
     variable_field_sports: 'VF sports'
     new_variable_field_sport: 'New VF sport'
     variable_field_measurements: 'VF measurements'
+    new_relation: *new_relation
 
   template:
     main:
@@ -302,7 +310,25 @@ en:
     new:
       new_group: *new_group
   user_relations:
+    relation_successfully_created: &relation_successfully_created 'Relation was successfully created.'
     index:
       user_relations: 'Listing user relations'
+      waiting_approval: unapproved
     user_has:
+      new_relation: *new_relation
       user_relation_connections: 'User relation connections'
+      with_user: 'With user'
+      from: *from
+      active_relations: 'Active relations'
+      pending_relations: 'Pending relations'
+      refused_relations: 'Refused relations'
+      relation: *relation
+      refuse_relation: 'Refuse relation'
+      accept_relation: 'Accept relation'
+      you_have_no_relations_with_status: 'You have no relation with this status.'
+    new_request:
+      new_relation: *new_relation
+    create_request:
+      successfully_created: *relation_successfully_created
+      not_valid_user: 'No user exists for provided email address. Please, provide correct email address.'
+      already_exists: Relation of type %{type} between you and %{user} already exists. Can not create new one!

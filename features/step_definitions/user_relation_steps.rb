@@ -33,3 +33,30 @@ And(/^"([^"]*)" has "([^"]*)" relation with user "([^"]*)"$/) do |user_from, rel
 
   UserRelation.add_relation(from, to, relation, 'accepted', 'accepted')
 end
+
+And(/^"([^"]*)" has "([^"]*)" relation with me$/) do |user_from, relation|
+  from = User.friendly.find(user_from)
+  to = @user[1]
+
+  UserRelation.add_relation(from, to, relation, 'accepted', 'accepted')
+end
+
+And(/^"([^"]*)" has "([^"]*)" "([^"]*)" relation with "([^"]*)"$/) do |user_from, relation_status, relation, user_to|
+  user_from = User.where(name: user_from).first
+  user_to = User.where(name: user_to).first
+
+  UserRelation.add_relation user_from, user_to, relation, relation_status, relation_status
+end
+
+When(/^I fill in all necessary relation fields$/) do |table|
+  # table is a table.hashes.keys # => [:to_user_mail, :relation_type]
+  fill_in 'Email address of user', with: table.hashes.first[:to_user_mail]
+  case table.hashes.first[:relation_type]
+    when 'friend'
+      choose 'I want to be FRIEND of selected user'
+    when 'coach'
+      choose 'I want to be COACH of selected user'
+    when 'watcher'
+      choose 'I want to be WATCHER of selected user'
+  end
+end

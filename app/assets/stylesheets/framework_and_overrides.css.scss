@@ -5,6 +5,16 @@
   font-size: 1.5em;
 }
 
+span.email-guess{
+  cursor: pointer !important;
+  margin: 0 3px;
+}
+
+#action-box{
+  margin: 3px 0;
+  padding: 7px 2px;
+}
+
 table.table{
   &.condensed{
     td, th{ padding: 3px; }

@@ -1,6 +1,8 @@
 class UserRelationsController < ApplicationController
   before_action :set_user_relation, only: [:show, :edit, :update, :destroy]
 
+  load_and_authorize_resource except: [:user_has, :new_request, :create_request]
+
   # GET /user_relations
   # GET /user_relations.json
   def index
@@ -68,9 +70,75 @@ class UserRelationsController < ApplicationController
   # @param [string] :user_id - friendly_id slug
   # @controller_action
   def user_has
+    authorize! :user_has, UserRelation
+
     @user = User.friendly.find(params[:user_id])
 
+    @relations ||= Hash.new
+    @relations[:accepted] = @user.get_my_relations_with_statuses('accepted', :all).page(params[:active_rel_page]).per(10)
+    @relations[:new] = @user.get_my_relations_with_statuses('new', :all).page(params[:new_rel_page]).per(10)
+    @relations[:refused] = @user.get_my_relations_with_statuses('refused', :all).page(params[:refused_rel_page]).per(10)
+
+    @count ||= Hash.new
+    @count[:accepted] = @user.get_my_relations_with_statuses('accepted', :all).count
+    @count[:new] = @user.get_my_relations_with_statuses('new', :all).count
+    @count[:refused] = @user.get_my_relations_with_statuses('refused', :all).count
+
     render 'users/user_relations/has'
+  end
+
+  # Change status of relation
+  #
+  # Changes for currently logged user, other side of relation let untouched
+  #
+  # @param [Integer] id User relation id
+  # @controller_action
+  def change_status
+
+  end
+
+  # Create new unconfirmed user relation (relation request)
+  #
+  # @controller_action
+  def new_request
+    authorize! :new_request, UserRelation
+
+    @user_relation = UserRelation.new
+  end
+
+  def create_request
+    authorize! :create_request
+
+    @user_relation ||= UserRelation.new(user_relation_params)
+    @user_relation.second_user = params[:user_relation][:second_user]
+    # test if given email address valid
+    second_user = User.where(email: params[:user_relation][:second_user]).first
+    unless @user_relation.valid? && !params[:user_relation][:second_user].blank? && second_user
+      flash[:error] = t('user_relations.create_request.not_valid_user') unless second_user
+      render action: 'new_request'
+      return
+    end
+
+    @user_relation.from = current_user
+    @user_relation.from_user_status = 'accepted'
+    @user_relation.to = second_user
+
+    # only one relation between 2 users of one relation type i permitted
+    if UserRelation.where(from: @user_relation.from, to: @user_relation.to, relation: @user_relation.relation).count > 0
+      flash[:error] = t('user_relations.create_request.already_exists', {type: @user_relation.relation, user: @user_relation.to.name})
+      render action: 'new_request'
+      return
+    end
+
+    respond_to do |format|
+      if @user_relation.save
+        format.html { redirect_to user_user_relations_path(current_user), notice: t('user_relations.create_request.successfully_created') }
+        format.json { render action: 'show', status: :created, location: @user_relation }
+      else
+        format.html { render action: 'new_request' }
+        format.json { render json: @user_relation.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private

@@ -14,7 +14,16 @@ Scapp::Application.routes.draw do
 
   resources :variable_field_measurements
 
-  resources :user_relations
+  resources :user_relations do
+    member do
+      get 'change_status/:status' => 'user_relations#change_status', :as => :change_status
+    end
+
+    collection do
+      get 'request' => 'user_relations#new_request', :as => :new_request
+      post 'request' => 'user_relations#create_request', :as => :create_request
+    end
+  end
 
   resources :organizations
 
@@ -43,6 +52,10 @@ Scapp::Application.routes.draw do
   end
 
   resources :users do
+    collection do
+      post 'email_hinter' => 'users#email_hinter'
+    end
+
     resources :variable_fields, only: [] do
       collection do
         get '/' => 'variable_fields#user_variable_fields'
