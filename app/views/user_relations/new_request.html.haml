@@ -1,0 +1,4 @@
+= simple_form_for @user_relation do |f|
+  = f.input_field :user
+  = f.input_field :relation_type, collection: ['friend', 'player', 'coach', 'watcher', 'ward']
+  = f.submit

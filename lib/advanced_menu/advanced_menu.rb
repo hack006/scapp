@@ -40,11 +40,11 @@ module AdvancedMenu
       @@headings.each do |h|
         h.active = true if h.controller == controller && [nil, action].include?(h.action)
         # replace placeholders
-        replace_placeholders h.path, logged_user
+        h.replaced_path = replace_placeholders h.path, logged_user
 
         h.links.each do |l|
           # replace placeholders
-          replace_placeholders l.path, logged_user
+          l.replaced_path = replace_placeholders l.path, logged_user
 
           if l.controller == controller && [nil, action].include?(l.action)
             l.active = true
@@ -68,16 +68,17 @@ module AdvancedMenu
 
     def self.replace_placeholders(str, user)
       replacements = [{placeholder: '{user_slug}', replacement: user.slug}]
-
+      ret = ""
       replacements.each do |r|
-        str.gsub! r[:placeholder], r[:replacement]
+        ret = str.gsub r[:placeholder], r[:replacement]
       end
 
+      ret
     end
   end
 
   class Heading
-    attr_accessor :name, :path, :icon, :active
+    attr_accessor :name, :path, :icon, :active, :replaced_path
     attr_reader :links, :classes, :only_roles, :controller, :action
 
     def initialize(name, path = nil, controller = nil, action = nil, icon = nil, only_roles = AdvancedMenu::ROLES, classes = [])
@@ -119,7 +120,7 @@ module AdvancedMenu
   end
 
   class Link
-    attr_accessor :name, :path, :icon, :active
+    attr_accessor :name, :path, :icon, :active, :replaced_path
     attr_reader :classes, :only_roles, :controller, :action, :parent
 
     def initialize(name, path = nil, controller = nil, action = nil, icon = nil, only_roles = AdvancedMenu::ROLES, classes = [])

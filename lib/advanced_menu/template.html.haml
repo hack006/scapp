@@ -3,7 +3,7 @@
   -# list all headings
   - menu.each_permitted_heading(roles) do |h|
     %li{class: "#{h.links.empty? ? '' : 'treeview'}#{(h.active) ? ' active' : ''}"}
-      %a{href: "#{h.path ? h.path : '#'}", class: h.classes.empty? ? '' : h.classes.join(' ')}
+      %a{href: "#{h.path ? h.replaced_path : '#'}", class: h.classes.empty? ? '' : h.classes.join(' ')}
         - unless h.icon.nil?
           %i{class: h.icon.join(' ')}
         %span= h.name
@@ -14,7 +14,7 @@
           -# list all links under heading
           - h.each_permitted_link(roles) do |l|
             %li{class: "#{l.classes.empty? ? '' : l.classes.join(' ')}#{(l.active) ? ' active' : ''}"}
-              %a{href: l.path ? l.path : "#"}
+              %a{href: l.path ? l.replaced_path : "#"}
                 %i.fa.fa-angle-double-right
                 - unless l.icon.nil?
                   %i{class: l.icon.join(' ')}
