@@ -3,24 +3,40 @@
 
 - breadcrumb :user_relations
 
-%table.table
-  %tr
-    %th Relation
-    %th From user status
-    %th To user status
-    %th
-    %th
-    %th
+#action-box
+  = link_to t('user_relations.index.new_relation'), new_user_relation_path, class: 'btn btn-success'
 
+%table.table.table-striped
+  %thead
+    %tr
+      %th= t('user_relations.index.relation')
+      %th= t('user_relations.index.from')
+      %th= t('user_relations.index.to')
+      %th= t('user_relations.index.created')
+      %th= t('user_relations.index.from_user_status')
+      %th= t('user_relations.index.to_user_status')
+      %th
+      %th
+      %th
+  %tbody
   - @user_relations.each do |user_relation|
     %tr
-      %td= user_relation.relation
-      %td= user_relation.from_user_status
-      %td= user_relation.to_user_status
-      %td= link_to 'Show', user_relation
-      %td= link_to 'Edit', edit_user_relation_path(user_relation)
-      %td= link_to 'Destroy', user_relation, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td!= UserRelationsHelper.labelize_relation(user_relation.relation)
+      %td
+        - if user_relation.from
+          =link_to user_relation.from.name, user_path(user_relation.from)
+        - else
+          -
+      %td
+        - if user_relation.to
+          =link_to user_relation.to.name, user_path(user_relation.to)
+        - else
+          -
+      %td= user_relation.created_at.to_date.short
+      %td!= UserRelationsHelper.labelize_relation_status(user_relation.from_user_status)
+      %td!= UserRelationsHelper.labelize_relation_status(user_relation.to_user_status)
+      %td= link_to t('dictionary.show'), user_relation
+      %td= link_to t('dictionary.edit'), edit_user_relation_path(user_relation)
+      %td= link_to t('dictionary.delete'), user_relation, :method => :delete, :data => { :confirm => t('user_relations.index.are_you_sure') }
 
-%br
-
-= link_to 'New User relation', new_user_relation_path
+= paginate @user_relations, theme: 'twitter-bootstrap-3'

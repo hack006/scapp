@@ -37,7 +37,7 @@
 | 3.2   | Create confirmed relation     | -             | -         | -         | -         | -         | -             | -         | -         | -         | Y         |
 | 3.3   | Request relation              | Y             | -         | -         | -         | -         | -             | -         | Y         | Y         | Y         |
 | 3.4   | Change my relation status     | Y             | Y (*1)    | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - must be on one relation end
-
+| 3.5   | List relations                | Y             | -         | -         | -         | -         | -             | -         | -         | -         | Y         |
 
 # Variable fields
 

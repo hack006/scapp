@@ -6,7 +6,7 @@ class UserRelationsController < ApplicationController
   # GET /user_relations
   # GET /user_relations.json
   def index
-    @user_relations = UserRelation.all
+    @user_relations = UserRelation.all.order(created_at: :desc).page(params[:page])
   end
 
   # GET /user_relations/1

@@ -68,6 +68,7 @@ en:
     username: &username 'Username'
     email: &email 'Email'
     from: &from From
+    to: &to To
     until: &until Until
     relation: &relation Relation
     new_relation: &new_relation New relation
@@ -314,6 +315,14 @@ en:
     index:
       user_relations: 'Listing user relations'
       waiting_approval: unapproved
+      from_user_status: 'Status [from]'
+      to_user_status: 'Status [to]'
+      relation: *relation
+      from: *from
+      to: *to
+      are_you_sure: *are_you_sure
+      new_relation: 'Create new relation'
+      created: *created
     user_has:
       new_relation: *new_relation
       user_relation_connections: 'User relation connections'
@@ -326,6 +335,7 @@ en:
       refuse_relation: 'Refuse relation'
       accept_relation: 'Accept relation'
       you_have_no_relations_with_status: 'You have no relation with this status.'
+
     new_request:
       new_relation: *new_relation
     create_request:
