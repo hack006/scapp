@@ -332,3 +332,7 @@ en:
       successfully_created: *relation_successfully_created
       not_valid_user: 'No user exists for provided email address. Please, provide correct email address.'
       already_exists: Relation of type %{type} between you and %{user} already exists. Can not create new one!
+    change_status:
+      not_authorized: 'You are not authorized to manipulate with this relation!'
+      successfully_changed: 'User relation status was successfully changed to: %{status}.'
+      unexpected_error: 'Unexpected error appeared while changing user relation status.'

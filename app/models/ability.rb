@@ -122,6 +122,10 @@ class Ability
     end
     # @3.3
     can [:new_request, :create_request], UserRelation
+    # @3.4
+    can [:change_status], UserRelation do |r|
+      r.from == @user || r.to == @user
+    end
 
   end
 

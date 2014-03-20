@@ -92,9 +92,35 @@ class UserRelationsController < ApplicationController
   # Changes for currently logged user, other side of relation let untouched
   #
   # @param [Integer] id User relation id
+  # @param [String] status Status to set
   # @controller_action
   def change_status
+    not_authorized = false
+    # decide which side of connection we manipulate
+    if @user_relation.from == current_user
+      @user_relation.from_user_status = params[:status]
+    elsif @user_relation.to == current_user
+      @user_relation.to_user_status = params[:status]
+    elsif is_admin?
+      # set both sides of connection
+      @user_relation.from_user_status = params[:status]
+      @user_relation.to_user_status = params[:status]
+    else
+      not_authorized = true
+    end
 
+    respond_to do |format|
+      if not_authorized
+        format.html { redirect_to @user_relation, notice: t('user_relations.change_status.not_authorized') }
+        format.json { render json: {error: t('user_relations.change_status.not_authorized')}.to_json, status: :unprocessable_entity }
+      elsif @user_relation.save
+        format.html { redirect_to user_user_relations_path(current_user), notice: t('user_relations.change_status.successfully_changed', status: params[:status]) }
+        format.json { render action: 'show', status: :created, location: @user_relation }
+      else
+        format.html { redirect_to user_user_relations_path(current_user), notice: t('user_relations.change_status.unexpected_error') }
+        format.json { render json: @user_relation.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # Create new unconfirmed user relation (relation request)
