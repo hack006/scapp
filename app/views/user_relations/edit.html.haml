@@ -1,7 +1,6 @@
-%h1 Editing user_relation
+- content_for :heading do
+  = t('user_relations.edit.edit_relation')
+
+- breadcrumb :user_relations_edit
 
 = render 'form'
-
-= link_to 'Show', @user_relation
-\|
-= link_to 'Back', user_relations_path

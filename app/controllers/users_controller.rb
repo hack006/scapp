@@ -108,7 +108,7 @@ class UsersController < ApplicationController
   def email_hinter
     emails = User.where('email LIKE ?', "%#{params[:email]}%").limit(20).map {|e| e.email}
 
-    render json: emails.to_json
+    render json: {emails: emails, input_id: params[:input_id]}.to_json
   end
 
   private

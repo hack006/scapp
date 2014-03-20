@@ -72,6 +72,7 @@ en:
     until: &until Until
     relation: &relation Relation
     new_relation: &new_relation New relation
+    edit_relation: &edit_relation Edit relation
   alerts:
     not_authorized: 'You do not have required permissions for this action.'
 
@@ -89,6 +90,7 @@ en:
     has_relations: 'Existing relations'
     my_relations: *my_relations
     new_relation: *new_relation
+    edit_relation: *edit_relation
     new_user: *new_user
     new_variable_field: *new_variable_field
     new_variable_field_measurement: *new_variable_field_measurement
@@ -126,6 +128,7 @@ en:
     new_variable_field_sport: 'New VF sport'
     variable_field_measurements: 'VF measurements'
     new_relation: *new_relation
+    edit_relation: *edit_relation
 
   template:
     main:
@@ -312,6 +315,13 @@ en:
       new_group: *new_group
   user_relations:
     relation_successfully_created: &relation_successfully_created 'Relation was successfully created.'
+    controller:
+      successfully_created: *relation_successfully_created
+      successfully_updated: 'Relation was successfully updated.'
+      successfully_removed: 'Relation was successfully removed.'
+      not_valid_user: 'No user exists for provided email address. Please, provide correct email address.'
+      already_exists: Relation of type %{type} between you and %{user} already exists. Can not create new one!
+
     index:
       user_relations: 'Listing user relations'
       waiting_approval: unapproved
@@ -335,7 +345,6 @@ en:
       refuse_relation: 'Refuse relation'
       accept_relation: 'Accept relation'
       you_have_no_relations_with_status: 'You have no relation with this status.'
-
     new_request:
       new_relation: *new_relation
     create_request:
@@ -346,3 +355,7 @@ en:
       not_authorized: 'You are not authorized to manipulate with this relation!'
       successfully_changed: 'User relation status was successfully changed to: %{status}.'
       unexpected_error: 'Unexpected error appeared while changing user relation status.'
+    new:
+      new_relation: *new_relation
+    edit:
+      edit_relation: *edit_relation

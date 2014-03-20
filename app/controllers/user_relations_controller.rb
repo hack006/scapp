@@ -1,7 +1,7 @@
 class UserRelationsController < ApplicationController
   before_action :set_user_relation, only: [:show, :edit, :update, :destroy]
 
-  load_and_authorize_resource except: [:user_has, :new_request, :create_request]
+  load_and_authorize_resource except: [:user_has, :new_request, :create_request, :create]
 
   # GET /user_relations
   # GET /user_relations.json
@@ -21,16 +21,48 @@ class UserRelationsController < ApplicationController
 
   # GET /user_relations/1/edit
   def edit
+    # fill readonly fields
+    @user_relation.first_user = @user_relation.from.email
+    @user_relation.second_user = @user_relation.to.email
   end
 
   # POST /user_relations
   # POST /user_relations.json
   def create
-    @user_relation = UserRelation.new(user_relation_params)
+    authorize! :create, UserRelation
+
+    @user_relation ||= UserRelation.new(user_relation_params)
+    @user_relation.first_user = params[:user_relation][:first_user]
+    @user_relation.second_user = params[:user_relation][:second_user]
+
+    # test if given email addresses are valid
+    first_user = User.where(email: params[:user_relation][:first_user]).first
+    unless @user_relation.valid? && !params[:user_relation][:first_user].blank? && first_user
+      flash[:error] = t('user_relations.controller.not_valid_user') unless first_user
+      render action: 'new'
+      return
+    end
+
+    second_user = User.where(email: params[:user_relation][:second_user]).first
+    unless @user_relation.valid? && !params[:user_relation][:second_user].blank? && second_user
+      flash[:error] = t('user_relations.controller.not_valid_user') unless second_user
+      render action: 'new'
+      return
+    end
+
+    @user_relation.from = first_user
+    @user_relation.to = second_user
+
+    # only one relation between 2 users of one relation type i permitted
+    if UserRelation.where(from: @user_relation.from, to: @user_relation.to, relation: @user_relation.relation).count > 0
+      flash[:error] = t('user_relations.controller.already_exists', {type: @user_relation.relation, user: @user_relation.to.name})
+      render action: 'new'
+      return
+    end
 
     respond_to do |format|
       if @user_relation.save
-        format.html { redirect_to @user_relation, notice: 'User relation was successfully created.' }
+        format.html { redirect_to user_relations_path, notice: t('user_relations.controller.successfully_created') }
         format.json { render action: 'show', status: :created, location: @user_relation }
       else
         format.html { render action: 'new' }
@@ -44,7 +76,7 @@ class UserRelationsController < ApplicationController
   def update
     respond_to do |format|
       if @user_relation.update(user_relation_params)
-        format.html { redirect_to @user_relation, notice: 'User relation was successfully updated.' }
+        format.html { redirect_to user_relations_path, notice: t('user_relations.controller.successfully_updated') }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -58,7 +90,7 @@ class UserRelationsController < ApplicationController
   def destroy
     @user_relation.destroy
     respond_to do |format|
-      format.html { redirect_to user_relations_url }
+      format.html { redirect_to user_relations_url, notice: t('user_relations.controller.successfully_removed') }
       format.json { head :no_content }
     end
   end
@@ -140,7 +172,7 @@ class UserRelationsController < ApplicationController
     # test if given email address valid
     second_user = User.where(email: params[:user_relation][:second_user]).first
     unless @user_relation.valid? && !params[:user_relation][:second_user].blank? && second_user
-      flash[:error] = t('user_relations.create_request.not_valid_user') unless second_user
+      flash[:error] = t('user_relations.controller.not_valid_user') unless second_user
       render action: 'new_request'
       return
     end
@@ -151,14 +183,14 @@ class UserRelationsController < ApplicationController
 
     # only one relation between 2 users of one relation type i permitted
     if UserRelation.where(from: @user_relation.from, to: @user_relation.to, relation: @user_relation.relation).count > 0
-      flash[:error] = t('user_relations.create_request.already_exists', {type: @user_relation.relation, user: @user_relation.to.name})
+      flash[:error] = t('user_relations.controller.already_exists', {type: @user_relation.relation, user: @user_relation.to.name})
       render action: 'new_request'
       return
     end
 
     respond_to do |format|
       if @user_relation.save
-        format.html { redirect_to user_user_relations_path(current_user), notice: t('user_relations.create_request.successfully_created') }
+        format.html { redirect_to user_user_relations_path(current_user), notice: t('user_relations.controller.successfully_created') }
         format.json { render action: 'show', status: :created, location: @user_relation }
       else
         format.html { render action: 'new_request' }

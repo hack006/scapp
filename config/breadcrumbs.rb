@@ -138,7 +138,7 @@ end
 # UserRelations
 # ==============
 crumb :user_relations do
-  link t('breadcrumbs.user_relations'), user_relations_path
+  link t('breadcrumbs.relations'), user_relations_path
 end
 
 crumb :user_relations_my do |user|
@@ -150,9 +150,19 @@ crumb :user_relations_user_has do |user|
   parent :user, user
 end
 
-crumb :user_relations_new do |user|
+crumb :user_relations_my_new do |user|
   link t('breadcrumbs.new_relation')
   parent :user_relations_my, user
+end
+
+crumb :user_relations_new do
+  link t('breadcrumbs.new_relation')
+  parent :user_relations
+end
+
+crumb :user_relations_edit do
+  link t('breadcrumbs.edit_relation')
+  parent :user_relations
 end
 
 # If you want to split your breadcrumbs configuration over multiple files, you

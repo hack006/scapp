@@ -33,6 +33,7 @@ en:
         int_value: 'Numeric value'
         string_value: 'Value'
       user_relation:
+        first_user: 'Email address of user'
         second_user: 'Email address of user'
 
     hints:
@@ -40,5 +41,6 @@ en:
         username: 'User name to sign in.'
         password: 'No special characters, please.'
       user_relation:
-        second_user: 'Enter user whom you want to request for relation with you.'
+        first_user: 'Enter user whom you want to request relation from. Start typing, guesses will be displayed.'
+        second_user: 'Enter user whom you want to request for relation with you. Start typing, guesses will be displayed.'
 

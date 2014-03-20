@@ -10,17 +10,25 @@ jQuery(document).ready( ->
       jQuery.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        data : JSON.stringify({email: this.value}),
+        data : JSON.stringify({email: this.value, input_id: "#{this.id}"}),
         dataType: "json",
         url: "/users/email_hinter"
       }).done((ret) ->
+
+        guesses_container_id = "#{ret['input_id']}_guesses"
+        input_field_id = ret['input_id']
+
+        if jQuery("##{guesses_container_id}").length == 0
+          jQuery("##{input_field_id}").after("<div id=\"#{guesses_container_id}\"></div>")
+
         # show hints
-        jQuery("#email_guesses").html("") # empty
-        for email in ret
-          jQuery("#email_guesses").append("<span class=\"label label-primary email-guess\">#{email}</span>")
+        jQuery("##{guesses_container_id}").html("") # empty
+        for email in ret['emails']
+          jQuery("##{guesses_container_id}").append("<span class=\"label label-primary email-guess\">#{email}</span>")
+
 
         jQuery("span.email-guess").on("click", ->
-          jQuery("input[data-guesser=email").val(this.innerText)
+          jQuery("##{input_field_id}").val(this.innerText)
         )
       )
   )

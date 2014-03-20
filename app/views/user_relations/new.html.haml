@@ -1,5 +1,6 @@
-%h1 New user_relation
+- content_for :heading do
+  = t('user_relations.new.new_relation')
+
+- breadcrumb :user_relations_new
 
 = render 'form'
-
-= link_to 'Back', user_relations_path

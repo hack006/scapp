@@ -2,9 +2,11 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :relation
-    = f.input :from_user_status
-    = f.input :to_user_status
+    = f.input :relation, as: :radio_buttons, collection: UserRelation::RELATION_TYPES
+    = f.input :from_user_status, as: :radio_buttons, collection: UserRelation::RELATION_STATUSES
+    = f.input :first_user, input_html: { data: {'guesser' => 'email'} }, disabled: (params[:action] == 'edit' ? true : false)
+    = f.input :to_user_status, as: :radio_buttons, collection: UserRelation::RELATION_STATUSES
+    = f.input :second_user, input_html: { data: {'guesser' => 'email'} }, disabled: (params[:action] == 'edit' ? true : false)
 
   .form-actions
     = f.button :submit

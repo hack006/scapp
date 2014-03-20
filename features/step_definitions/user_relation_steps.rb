@@ -60,3 +60,14 @@ When(/^I fill in all necessary relation fields$/) do |table|
       choose 'I want to be WATCHER of selected user'
   end
 end
+
+When(/^I fill in all necessary user relations \(all\) fields$/) do |table|
+  # table is a table.hashes.keys # => [:relation, :from_user_mail, :to_user_mail, :from_user_status, :to_user_status]
+  f = table.hashes.first
+
+  fill_in 'user_relation_first_user', with: f[:from_user_mail]
+  fill_in 'user_relation_second_user', with: f[:to_user_mail]
+  choose "user_relation_from_user_status_#{f[:from_user_status]}"
+  choose "user_relation_to_user_status_#{f[:to_user_status]}"
+  choose "user_relation_relation_#{f[:relation]}"
+end
