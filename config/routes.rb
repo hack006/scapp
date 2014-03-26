@@ -1,4 +1,6 @@
 Scapp::Application.routes.draw do
+  resources :regular_trainings
+
   resources :variable_fields do
     resources :variable_field_measurements, only: [:new, :create]
   end

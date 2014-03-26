@@ -64,6 +64,7 @@
 | 5.3   | Delete measurement            | Y             | Y         | -         | (*1)      | -         | -             | -         | -         | -         | Y         | *1 - only if measured_by == current_user
 | 5.4   | Show detail                   | Y             | Y (*1)    | -         | Y         | -         | -             | -         | -         | -         | Y         | *1 - owner = measured_by, (measured_for - discuss??)
 | 5.5   | List                          | Y             | -         | -         | -         | -         | -             | -         | Y (*1)    | Y (2*)    | Y         | *1 - can see only own, *2 - can only see own and measurements of his :players
+
 # Organization
 
 **Is postponed to next release.**
@@ -76,3 +77,21 @@
 | 6.4   | Create _organization_         | -             | -         | -         | -         | -         | -             | -         | -         | -         | Y         |
 | 6.5   | Edit _organization_           | -             | Y         | -         | -         | -         | -             | -         | -         | -         | -         |
 | 6.6   | Delete _organization_         | -             | Y         | -         | -         | -         | -             | -         | -         | -         | -         |
+
+# Regular training
+
+| ID    | Action                        | implemented?  | owner     | training_coach[R]     | training_player[R]    | :guest    | :player   | :coach    | :admin    | note  |
+| ----- | ----------------------------- | ------------- | --------- | --------------------- | --------------------- | --------- | --------- | --------- | --------- | ----- |
+| 7.1   | List trainings                | -             | -         | -                     | -                     | -         | -         | Y *       | Y         | * - view only owned trainings
+| 7.2   | Show training detail          | -             | Y         | Y                     | Y                     | -         | -         | -         | Y         |
+| 7.3   | Show public training detail   | -             | -         | -                     | -                     | Y         | Y         | Y         | Y         |
+| 7.4   | Create training               | -             | -         | -                     | -                     | -         | -         | Y         | Y         |
+| 7.5   | Edit training                 | -             | Y         | -                     | -                     | -         | -         | -         | Y         |
+| 7.6   | Delete training               | -             | Y         | -                     | -                     | -         | -         | -         | Y         |
+| 7.7   | Show player attendance        | -             | Y         | Y                     | -                     | -         | -         | -         | Y         |
+
+# Training lesson
+
+| ID    | Action                        | implemented?  | owner     | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
+| ----- | ----------------------------- | ------------- | --------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
+|

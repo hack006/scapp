@@ -1,0 +1,25 @@
+%h1 Listing regular_trainings
+
+%table
+  %tr
+    %th Name
+    %th Description
+    %th Public
+    %th User
+    %th
+    %th
+    %th
+
+  - @regular_trainings.each do |regular_training|
+    %tr
+      %td= regular_training.name
+      %td= regular_training.description
+      %td= regular_training.public
+      %td= regular_training.user
+      %td= link_to 'Show', regular_training
+      %td= link_to 'Edit', edit_regular_training_path(regular_training)
+      %td= link_to 'Destroy', regular_training, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Regular training', new_regular_training_path

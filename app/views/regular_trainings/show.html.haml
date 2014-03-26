@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @regular_training.name
+%p
+  %b Description:
+  = @regular_training.description
+%p
+  %b Public:
+  = @regular_training.public
+%p
+  %b User:
+  = @regular_training.user
+
+= link_to 'Edit', edit_regular_training_path(@regular_training)
+\|
+= link_to 'Back', regular_trainings_path
