@@ -3,3 +3,24 @@
 
 - breadcrumb :user_groups_user_in, @user
 
+%table.table.table-striped
+  %thead
+    %tr
+      %th= t('user_groups.index.name')
+      %th= t('user_groups.user_in.members')
+      %th= t('user_groups.index.description')
+      %th= t('user_groups.index.owner')
+  %tbody
+  - @user_groups.each do |user_group|
+    %tr
+      %td= link_to user_group.name, user_group
+      %td= user_group.users.count
+      %td= user_group.description
+      %td
+        - if user_group.owner
+          = link_to user_group.owner.name, user_path(user_group.owner)
+        - else
+          -
+= paginate @user_groups, theme: 'twitter-bootstrap-3'
+
+

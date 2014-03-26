@@ -43,7 +43,7 @@
                     %tbody
                       %tr
                         %th= t('vf.list.date')
-                        %td= vf[:latest_measurement].measured_at.to_date.full(locale)
+                        %td= vf[:latest_measurement].measured_at.to_datetime.full(locale)
                       %tr
                         %th= t('vf.list.location')
                         %td= vf[:latest_measurement].locality
@@ -64,7 +64,7 @@
                                 %strong.bigger= vf[:best_measurement].int_value
                             %tr
                               %th= t('vf.list.date')
-                              %td= vf[:best_measurement].measured_at.to_date.full(locale)
+                              %td= vf[:best_measurement].measured_at.to_datetime.full(locale)
                             %tr
                               %th= t('vf.list.location')
                               %td= dash_or_value(vf[:best_measurement], :locality)
@@ -81,7 +81,7 @@
                                 %strong.bigger= vf[:worst_measurement].int_value
                             %tr
                               %th= t('vf.list.date')
-                              %td= vf[:worst_measurement].measured_at.to_date.full(locale)
+                              %td= vf[:worst_measurement].measured_at.to_datetime.full(locale)
                             %tr
                               %th= t('vf.list.location')
                               %td= dash_or_value(vf[:worst_measurement], :locality)

@@ -1,15 +1,45 @@
-%p#notice= notice
+- content_for :heading do
+  #{t('user_groups.detail.group_detail')} - #{@user_group.name}
 
-%p
-  %b Name:
-  = @user_group.name
-%p
-  %b Description:
-  = @user_group.description
-%p
-  %b Visibility:
-  = @user_group.visibility
+- breadcrumb :user_groups_detail
 
-= link_to 'Edit', edit_user_group_path(@user_group)
-\|
-= link_to 'Back', user_groups_path
+%table.table
+  %tbody
+    %tr
+      %th= t('user_groups.detail.description') + ':'
+      %td= @user_group.description
+    %tr
+      %th= t('user_groups.detail.visibility') + ':'
+      %td!= UserGroupsHelper.labelize_group_visibility(@user_group.visibility)
+    %tr
+      %th= t('user_groups.detail.long_description') + ':'
+      %td= sanitize @user_group.long_description
+
+#group-members.box.box-info
+  .box-header
+    %h2.box-title
+      = t('user_groups.detail.user_members')
+      %small (#{@user_group.users.count})
+  .box-body
+
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= t('user_groups.detail.name')
+          %th
+      %tbody
+        - @user_group.users.each do |u|
+          %tr
+            %td= link_to u.name, u
+            - if current_user == @user_group.owner || is_admin?
+              %td= link_to t('dictionary.delete'), remove_user_user_group_path(@user_group, u), method: :delete
+            - else
+              %td
+
+    - if current_user == @user_group.owner || is_admin?
+      %hr
+      %h3= t('user_groups.detail.add_new_member')
+      = simple_form_for :user_group_user, url: add_user_user_group_path(@user_group) do |f|
+        = f.input :email, input_html: {data: {guesser: 'email'}}
+        = f.submit 'Add user to group', class: 'btn btn-primary'
+

@@ -1,4 +1,4 @@
-Date.class_eval do
+DateTime.class_eval do
   # Get long representation of date in specified lang format
   #
   # If _identifier_ is not available then default one is choosen.

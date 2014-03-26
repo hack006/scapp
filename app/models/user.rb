@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  USER_ROLES = ['watcher', 'player', 'coach', 'admin']
+
   # Add seo ids for user
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -17,7 +19,7 @@ class User < ActiveRecord::Base
   has_many :variable_fields
   has_many :variable_field_categories
   has_many :user_relations
-  has_and_belongs_to_many :user_group
+  has_and_belongs_to_many :user_groups
 
   # Test if specified relation exists between users
   #
@@ -48,4 +50,19 @@ class User < ActiveRecord::Base
     UserRelation.get_my_relations_with_statuses self, relation_statuses, relation
   end
 
+  def is_admin?
+    self.has_role? :admin
+  end
+
+  def is_coach?
+    self.has_role? :coach
+  end
+
+  def is_player?
+    self.has_role? :player
+  end
+
+  def is_watcher?
+    self.has_role? :watcher
+  end
 end

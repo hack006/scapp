@@ -90,6 +90,7 @@ class Ability
     can [:show], VariableFieldMeasurement do |vfm|
       vfm.measured_by = @user || @user.in_relation?(vfm.measured_for, :coach)
     end
+
     # @5.2
     can [:edit, :update, :destroy], VariableFieldMeasurement do |vfm|
       vfm.measured_by == @user
@@ -100,6 +101,7 @@ class Ability
     # =============
     # @1.8
     can [:index], User
+
     #  @1.4
     can [:edit, :update], User do |user|
       user.id == @user.id
@@ -120,11 +122,43 @@ class Ability
         can :user_has, UserRelation
       end
     end
+
     # @3.3
     can [:new_request, :create_request], UserRelation
+
     # @3.4
     can [:change_status], UserRelation do |r|
       r.from == @user || r.to == @user
+    end
+
+    # =============
+    # UserGroups
+    # =============
+    # @2.1
+    can [:index], UserGroup
+
+    # @2.2
+    can [:show], UserGroup do |g|
+      g.owner == @user || ['registered', 'public'].include?(g.visibility) || ( g.visibility == 'members' && g.user_is_in?(@user) )
+    end
+
+    # @2.3
+    if @request.params[:controller] == 'user_groups' && @request.params[:action] == 'user_in'
+      for_user = User.friendly.find(@request.params[:user_id])
+      if for_user == @user || @user.in_relation?(for_user, :coach) || @user.in_relation?(for_user, :watcher)
+        can [:user_in], UserGroup
+      end
+    end
+
+    # @2.5, @2.6, @2.8
+    can [:edit, :update, :destroy, :remove_user], UserGroup, user_id: @user.id
+
+    # @2.7
+    can [:add_user], UserGroup do |g|
+      user_to_add = User.where(email: @request.params[:user_group_user][:email]).first
+
+      g.owner == @user && ( @user.in_relation?(user_to_add, :friend) || @user.in_relation?(user_to_add, :coach) ||
+                            @user.in_relation?(user_to_add, :watcher) )
     end
 
   end
@@ -167,6 +201,12 @@ class Ability
     # User
     # =============
     can [:index], User
+
+    # =============
+    # UserGroups
+    # =============
+    # @2.4
+    can [:new, :create], UserGroup
 
   end
 

@@ -64,7 +64,7 @@
               = image_tag current_user.avatar.medium.url, class: 'img-circle', alt: "#{current_user.name} avatar img"
               %p
                 = current_user.email
-                %small= "Member since #{current_user.created_at.to_date.full(locale)}"
+                %small= "Member since #{current_user.created_at.to_datetime.full(locale)}"
             / Menu Body
             %li.user-body
               .col-xs-12.text-center

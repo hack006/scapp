@@ -3,24 +3,36 @@
 
 - breadcrumb :user_groups
 
-%table.table
-  %tr
-    %th Name
-    %th Description
-    %th Visibility
-    %th
-    %th
-    %th
+- if is_admin? || is_coach?
+  #action-box
+    = link_to t('user_groups.index.new_group'), new_user_group_path, class: 'btn btn-success'
 
+%table.table.table-striped
+  %thead
+    %tr
+      %th= t('user_groups.index.name')
+      %th= t('user_groups.index.description')
+      %th= t('user_groups.index.visibility')
+      %th= t('user_groups.index.owner')
+      %th
+      %th
+      %th
+  %tbody
   - @user_groups.each do |user_group|
     %tr
       %td= user_group.name
       %td= user_group.description
-      %td= user_group.visibility
-      %td= link_to 'Show', user_group
-      %td= link_to 'Edit', edit_user_group_path(user_group)
-      %td= link_to 'Destroy', user_group, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td!= UserGroupsHelper.labelize_group_visibility(user_group.visibility)
+      %td
+        - if user_group.owner
+          = link_to user_group.owner.name, user_path(user_group.owner)
+        - else
+          -
+      %td= link_to t('dictionary.show'), user_group
+      - if is_admin? || user_group.owner == current_user
+        %td= link_to t('dictionary.edit'), edit_user_group_path(user_group)
+        %td= link_to t('dictionary.delete'), user_group, :method => :delete, :data => { :confirm => t('dictionary.are_you_sure') }
+      - else
+        %td{colspan: 2}
 
-%br
-
-= link_to 'New User group', new_user_group_path
+= paginate @user_groups, theme: 'twitter-bootstrap-3'

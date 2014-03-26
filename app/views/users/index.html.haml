@@ -27,7 +27,7 @@
           = image_tag user.avatar.small.url, alt: "#{user.name} avatar" unless user.avatar.small.url.blank?
         %td= link_to user.name, user
         %td= user.email
-        %td= user.created_at.to_date
+        %td= user.created_at.to_datetime.full(locale)
         %td
           - user.get_my_relations_with_statuses([:new, :accepted, :refused]).select{|r| r.from == current_user || r.to == current_user}.each do |r|
             - if r.relation == :coach

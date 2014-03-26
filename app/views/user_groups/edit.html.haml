@@ -1,7 +1,7 @@
-%h1 Editing user_group
+- content_for :heading do
+  = t('user_groups.edit.edit_relation')
+
+- breadcrumb :user_groups_edit
 
 = render 'form'
 
-= link_to 'Show', @user_group
-\|
-= link_to 'Back', user_groups_path

@@ -46,6 +46,7 @@ en:
     profile: &profile 'Profile'
     new_user: &new_user 'New user'
     new_group: &new_group 'New group'
+    edit_group: &edit_group Edit group
     new_variable_field: &new_variable_field 'New variable field'
     new_variable_field_measurement: &new_variable_field_measurement 'New variable field measurement'
     variable_field_categories: &variable_field_categories 'VF categories'
@@ -69,10 +70,15 @@ en:
     email: &email 'Email'
     from: &from From
     to: &to To
+    owner: &owner Owner
     until: &until Until
     relation: &relation Relation
     new_relation: &new_relation New relation
     edit_relation: &edit_relation Edit relation
+    visibility: &visibility Visibility
+    long_description: &long_description 'Long description'
+    added: &added Added
+    members: &members Members
   alerts:
     not_authorized: 'You do not have required permissions for this action.'
 
@@ -87,6 +93,7 @@ en:
     in_groups: 'In groups'
     user_groups: 'User groups'
     new_group: *new_group
+    edit_group: *edit_group
     has_relations: 'Existing relations'
     my_relations: *my_relations
     new_relation: *new_relation
@@ -106,6 +113,7 @@ en:
     edit_vf_measurement: *edit_vf_measurement
     vf_measurements: *vf_measurements
     new_vf_measurement: *new_vf_measurement
+    group_detail: &group_detail Group detail
 
   nav:
     user: *user
@@ -129,6 +137,7 @@ en:
     variable_field_measurements: 'VF measurements'
     new_relation: *new_relation
     edit_relation: *edit_relation
+    group_detail: *group_detail
 
   template:
     main:
@@ -285,6 +294,13 @@ en:
       update_failed: 'Unable to update user profile.'
     show:
       profile: *profile
+      user: *user
+      email: *email
+      last_sign_in: Last sign in
+      member_since: Member since
+      user_metrics: 'User metrics'
+      user_groups: 'Groups user is in'
+      user_relations: 'User relations'
     index:
       users: *users
       username: *username
@@ -307,12 +323,34 @@ en:
       change_role: 'Change role'
 
   user_groups:
+    controller:
+      successfully_created: 'User group was successfully created.'
+      successfully_destroyed: 'User group was successfully destroyed.'
+      not_have_required_role: 'You do not have any required role.'
     index:
       user_groups: 'Listing user groups'
+      name: *name
+      description: *description
+      visibility: *visibility
+      owner: *owner
+      new_group: *new_group
     user_in:
       user_assigned_in_groups: 'User assigned in groups'
+      members: *members
     new:
       new_group: *new_group
+    edit:
+      edit_group: *edit_group
+    detail:
+      group_detail: *group_detail
+      description: *description
+      visibility: *visibility
+      owner: *owner
+      long_description: 'Long description'
+      user_members: *members
+      name: *name
+      added: *added
+      add_new_member: Add new member
   user_relations:
     relation_successfully_created: &relation_successfully_created 'Relation was successfully created.'
     controller:

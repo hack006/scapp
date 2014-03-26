@@ -31,7 +31,7 @@
           =link_to user_relation.to.name, user_path(user_relation.to)
         - else
           -
-      %td= user_relation.created_at.to_date.short
+      %td= user_relation.created_at.to_datetime.short(locale)
       %td!= UserRelationsHelper.labelize_relation_status(user_relation.from_user_status)
       %td!= UserRelationsHelper.labelize_relation_status(user_relation.to_user_status)
       %td= link_to t('dictionary.edit'), edit_user_relation_path(user_relation)

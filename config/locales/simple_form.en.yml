@@ -43,4 +43,5 @@ en:
       user_relation:
         first_user: 'Enter user whom you want to request relation from. Start typing, guesses will be displayed.'
         second_user: 'Enter user whom you want to request for relation with you. Start typing, guesses will be displayed.'
-
+      user_group:
+        long_description: 'Long description is visible to users who has the permission to view group detail.'

@@ -21,7 +21,7 @@
               %tbody
                 %tr
                   %td= t('home.index.date') + ':'
-                  %td= m.measured_at.to_date.full(locale)
+                  %td= m.measured_at.to_datetime.full(locale)
                 %tr
                   %td= t('home.index.variable_field') + ':'
                   %td
@@ -62,7 +62,7 @@
                         %span.label.label-danger= t('home.index.states.refused')
                   %tr
                     %td= t('home.index.created') + ':'
-                    %td= c.created_at.to_date.full(locale)
+                    %td= c.created_at.to_datetime.full(locale)
 
 
 

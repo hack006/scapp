@@ -59,8 +59,17 @@ class UserRelation < ActiveRecord::Base
   # @param [User] from_user
   # @param [User] to_user
   def self.in_relation?(from_user, to_user, relation_type)
-    UserRelation.where(user_from_id: from_user, user_to_id: to_user, relation: relation_type,
-                       to_user_status: 'accepted', from_user_status: 'accepted').count > 0
+    if relation_type == :friend
+      # check connection in both directions
+      c1 = UserRelation.where(user_from_id: from_user, user_to_id: to_user, relation: relation_type,
+                              to_user_status: 'accepted', from_user_status: 'accepted').count
+      c2 = UserRelation.where(user_from_id: to_user, user_to_id: from_user, relation: relation_type,
+                              to_user_status: 'accepted', from_user_status: 'accepted').count
+      c1 > 0 || c2 > 0
+    else
+      UserRelation.where(user_from_id: from_user, user_to_id: to_user, relation: relation_type,
+                         to_user_status: 'accepted', from_user_status: 'accepted').count > 0
+    end
   end
 
   # Create relation between 2 users

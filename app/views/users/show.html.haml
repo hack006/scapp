@@ -1,10 +1,25 @@
 - content_for :heading do
-  = t('user.show.profile')
+  = "#{@user.name} - #{t('user.show.profile').downcase}"
 
 - breadcrumb :user, @user
 
-%h3 User
-%p
-  User: #{@user.name}
-%p
-  Email: #{@user.email if @user.email}
+.row
+  .col-sm-3
+    = image_tag @user.avatar.url, alt: "#{@user.name} avatar", class: 'img-thumbnail'
+  .col-sm-6
+    %p
+      %strong= t('user.show.email') + ':'
+      = @user.email
+    %p
+      %strong= t('user.show.last_sign_in') + ':'
+      = @user.last_sign_in_at.to_datetime.full(locale) if @user.last_sign_in_at
+    %p
+      %strong= t('user.show.member_since') + ':'
+      = @user.created_at.to_datetime.full(locale)
+  .col-sm-3
+    %p
+      = link_to t('user.show.user_metrics'), user_variable_fields_path(@user), class: 'btn btn-block btn-info'
+    %p
+      = link_to t('user.show.user_groups'), user_user_groups_path(@user), class: 'btn btn-block btn-info'
+    %p
+      = link_to t('user.show.user_relations'), user_user_relations_path(@user), class: 'btn btn-block btn-info'

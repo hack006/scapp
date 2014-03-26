@@ -27,7 +27,12 @@ Scapp::Application.routes.draw do
 
   resources :organizations
 
-  resources :user_groups
+  resources :user_groups do
+    member do
+      post 'add_user' => 'user_groups#add_user', :as => :add_user
+      delete 'remove_user/:user_id' => 'user_groups#remove_user', :as => :remove_user
+    end
+  end
 
   # static routes
   get '/static/:action', to: 'static#:action'

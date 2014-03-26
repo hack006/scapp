@@ -19,7 +19,7 @@
   %tbody
   - @variable_field_measurements.each do |variable_field_measurement|
     %tr
-      %td= variable_field_measurement.measured_at.to_date.full
+      %td= variable_field_measurement.measured_at.to_datetime.full(locale)
       %td= dash_or_value(variable_field_measurement.variable_field, 'name')
       %td= variable_field_measurement.locality
       %td

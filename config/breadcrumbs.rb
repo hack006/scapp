@@ -134,6 +134,16 @@ crumb :user_groups_new do
   parent :user_groups
 end
 
+crumb :user_groups_edit do
+  link t('breadcrumbs.edit_group')
+  parent :user_groups
+end
+
+crumb :user_groups_detail do
+  link t('breadcrumbs.group_detail')
+  parent :user_groups
+end
+
 # ==============
 # UserRelations
 # ==============

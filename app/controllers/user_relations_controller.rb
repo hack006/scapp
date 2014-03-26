@@ -165,7 +165,7 @@ class UserRelationsController < ApplicationController
   end
 
   def create_request
-    authorize! :create_request
+    authorize! :create_request, UserRelation
 
     @user_relation ||= UserRelation.new(user_relation_params)
     @user_relation.second_user = params[:user_relation][:second_user]

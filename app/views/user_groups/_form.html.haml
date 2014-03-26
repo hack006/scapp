@@ -4,7 +4,8 @@
   .form-inputs
     = f.input :name
     = f.input :description
-    = f.input :visibility
+    = f.input :long_description, input_html: {class: 'textarea'}
+    = f.input :visibility, as: :radio_buttons, collection: UserGroup::GROUP_VISIBILITIES
 
   .form-actions
     = f.button :submit

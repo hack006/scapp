@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140318220703) do
+ActiveRecord::Schema.define(version: 20140320224325) do
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -51,20 +51,25 @@ ActiveRecord::Schema.define(version: 20140318220703) do
   create_table "user_groups", force: true do |t|
     t.string   "name"
     t.string   "description"
-    t.string   "visibility",      limit: 10, default: "owner", null: false
+    t.string   "visibility",       limit: 10, default: "owner", null: false
     t.integer  "user_id"
     t.integer  "organization_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "long_description"
   end
 
   add_index "user_groups", ["organization_id"], name: "index_user_groups_on_organization_id", using: :btree
   add_index "user_groups", ["user_id"], name: "index_user_groups_on_user_id", using: :btree
 
   create_table "user_groups_users", force: true do |t|
-    t.integer "user_id",  null: false
-    t.integer "group_id", null: false
+    t.integer "user_id",       null: false
+    t.integer "user_group_id", null: false
   end
+
+  add_index "user_groups_users", ["user_group_id"], name: "index_user_groups_users_on_user_group_id", using: :btree
+  add_index "user_groups_users", ["user_id", "user_group_id"], name: "index_user_groups_users_on_user_id_and_user_group_id", unique: true, using: :btree
+  add_index "user_groups_users", ["user_id"], name: "index_user_groups_users_on_user_id", using: :btree
 
   create_table "user_relations", force: true do |t|
     t.string   "relation",         limit: 7,                 null: false

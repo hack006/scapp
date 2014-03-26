@@ -7,7 +7,7 @@ AdvancedMenu::Menu.setup do |config|
     h.add_link(I18n.t('nav.new_user'), '/users/new','users', 'new', %w(fa fa-plus), [:coach, :admin])
     h.add_link(I18n.t('nav.my_groups'), '/users/{user_slug}/groups', 'user_groups', 'user_in', %w(fa fa-group))
     h.add_link(I18n.t('nav.my_relations'), '/users/{user_slug}/relations', 'user_relations', 'user_has', %w(fa fa-random))
-    h.add_link(I18n.t('nav.groups'), '/user_groups', 'user_groups', nil, %w(fa fa-users), :admin)
+    h.add_link(I18n.t('nav.groups'), '/user_groups', 'user_groups', nil, %w(fa fa-users))
     h.add_link(I18n.t('nav.new_group'), '/user_groups/new', 'user_groups', 'new', %w(fa fa-plus), [:coach, :admin])
     h.add_link(I18n.t('nav.relations'), '/user_relations', 'user_relations', nil, %w(fa fa-random), :admin)
     # h.add_link('New relation', '/relations/new', %w(fa fa-plus) :admin)

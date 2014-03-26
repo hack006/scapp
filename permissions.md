@@ -18,14 +18,14 @@
 
 | ID    | Action                        | implemented?  | owner     | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
 | ----- | ----------------------------- | ------------- | --------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
-| 2.1   | List _user groups_            | -             | -         | -         | -         | -         | -             | -         | -         | Y         | Y         |
-| 2.2   | Show detail                   | -             | Y         | -         | -         | (1*)      | -             | [V]=public| (*1)      | (*2)      | Y         | *1 - [V] != owner, *2 - [V] != owner && has coach relation to member
-| 2.3   | View user groups              | -             | Y         | -         | Y         | -         | Y             | -         | -         | Y (*)     | Y         | [V] != owner || members
-| 2.4   | Create _user group_           | -             | -         | -         | -         | -         | -             | -         | -         | Y         | Y         |
-| 2.5   | Edit _user group_             | -             | Y         | -         | -         | -         | -             | -         | -         | -         | Y         |
-| 2.6   | Delete _user group_           | -             | Y         | -         | -         | -         | -             | -         | -         | -         | Y         |
-| 2.7   | Add user to group             | -             | + coach[R]| -         | +owner    | -         | -             | -         | -         | -         | Y         |
-| 2.8   | Remove user from group        | -             | + coach[R]| -         | +owner    | -         | -             | -         | -         | -         | Y         |
+| 2.1   | List _user groups_            | Y             | -         | -         | -         | -         | -             | -         | Y         | Y         | Y         |
+| 2.2   | Show detail                   | Y             | Y         | -         | -         | -         | -             | [V]=public| (*1)      | (*2)      | Y         | *1,2 - [V] != owner && if [V] == members => I am member
+| 2.3   | View user groups              | Y             | Y         | -         | Y         | -         | Y             | -         | -         | -         | Y         |
+| 2.4   | Create _user group_           | Y             | -         | -         | -         | -         | -             | -         | -         | Y         | Y         |
+| 2.5   | Edit _user group_             | Y             | Y         | -         | -         | -         | -             | -         | -         | -         | Y         |
+| 2.6   | Delete _user group_           | Y             | Y         | -         | -         | -         | -             | -         | -         | -         | Y         |
+| 2.7   | Add user to group             | Y             | Y*        | -         | -         | -         | -             | -         | -         | -         | Y         | user can only add users with existing relation to him, :admin can all
+| 2.8   | Remove user from group        | Y             | Y         | -         | -         | -         | -             | -         | -         | -         | Y         |
 
 # User relations
 

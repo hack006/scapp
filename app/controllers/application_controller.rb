@@ -30,6 +30,11 @@ class ApplicationController < ActionController::Base
     current_user.has_role? :player
   end
 
+  def is_watcher?
+    return false if current_user.blank?
+    current_user.has_role? :watcher
+  end
+
   def is_admin?
     return false if current_user.blank?
     current_user.has_role? :admin

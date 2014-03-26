@@ -47,7 +47,7 @@
                       %i.fa.fa-clock-o
                       = t('user_relations.index.waiting_approval')
                       )
-              %td= r.created_at.to_date.short
+              %td= r.created_at.to_datetime.short(locale)
               %td
                 %span.label.label-primary
                   - unless r.to == @user
@@ -92,7 +92,7 @@
                 %td
                   = image_tag r.from.avatar.small.url, alt: "#{r.from.name}" unless r.from.avatar.small.url.blank?
                 %td= link_to r.from.name, r.from
-              %td= r.created_at.to_date.short
+              %td= r.created_at.to_datetime.short(locale)
               %td
                 %span.label.label-primary
                   - unless r.to == @user
@@ -142,7 +142,7 @@
                 %td
                   = image_tag r.from.avatar.small.url, alt: "#{r.from.name}" unless r.from.avatar.small.url.blank?
                 %td= link_to r.from.name, r.from
-              %td= r.created_at.to_date.short
+              %td= r.created_at.to_datetime.short(locale)
               %td
                 %span.label.label-primary
                   - unless r.to == @user
