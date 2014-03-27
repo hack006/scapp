@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140326143613) do
+ActiveRecord::Schema.define(version: 20140327150720) do
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -44,8 +44,11 @@ ActiveRecord::Schema.define(version: 20140326143613) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_group_id"
+    t.string   "slug"
   end
 
+  add_index "regular_trainings", ["slug"], name: "index_regular_trainings_on_slug", unique: true, using: :btree
   add_index "regular_trainings", ["user_id"], name: "index_regular_trainings_on_user_id", using: :btree
 
   create_table "roles", force: true do |t|
@@ -68,6 +71,7 @@ ActiveRecord::Schema.define(version: 20140326143613) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "long_description"
+    t.boolean  "is_global",                   default: false
   end
 
   add_index "user_groups", ["organization_id"], name: "index_user_groups_on_organization_id", using: :btree

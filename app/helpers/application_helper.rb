@@ -23,4 +23,16 @@ module ApplicationHelper
     object[field]
   end
 
+  # Wraps public status into label with specific color
+  # @param [String] label label to labelize
+  # @return [String] label wrapped in label span
+  def self.labelize_boolean(label)
+    case label
+      when true
+        return '<span class="label label-success">✓</span>'
+      when false
+        return '<span class="label label-danger">✗</span>'
+    end
+  end
+
 end

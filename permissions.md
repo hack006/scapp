@@ -82,12 +82,12 @@
 
 | ID    | Action                        | implemented?  | owner     | training_coach[R]     | training_player[R]    | :guest    | :player   | :coach    | :admin    | note  |
 | ----- | ----------------------------- | ------------- | --------- | --------------------- | --------------------- | --------- | --------- | --------- | --------- | ----- |
-| 7.1   | List trainings                | -             | -         | -                     | -                     | -         | -         | Y *       | Y         | * - view only owned trainings
+| 7.1   | List trainings                | Y             | -         | -                     | -                     | -         | -         | Y *       | Y         | * - view only owned trainings
 | 7.2   | Show training detail          | -             | Y         | Y                     | Y                     | -         | -         | -         | Y         |
 | 7.3   | Show public training detail   | -             | -         | -                     | -                     | Y         | Y         | Y         | Y         |
-| 7.4   | Create training               | -             | -         | -                     | -                     | -         | -         | Y         | Y         |
-| 7.5   | Edit training                 | -             | Y         | -                     | -                     | -         | -         | -         | Y         |
-| 7.6   | Delete training               | -             | Y         | -                     | -                     | -         | -         | -         | Y         |
+| 7.4   | Create training               | Y             | -         | -                     | -                     | -         | -         | Y         | Y         |
+| 7.5   | Edit training                 | Y             | Y         | -                     | -                     | -         | -         | -         | Y         |
+| 7.6   | Delete training               | Y             | Y         | -                     | -                     | -         | -         | -         | Y         |
 | 7.7   | Show player attendance        | -             | Y         | Y                     | -                     | -         | -         | -         | Y         |
 
 # Training lesson

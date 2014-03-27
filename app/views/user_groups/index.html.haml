@@ -12,6 +12,7 @@
     %tr
       %th= t('user_groups.index.name')
       %th= t('user_groups.index.description')
+      %th= t('user_groups.index.global')
       %th= t('user_groups.index.visibility')
       %th= t('user_groups.index.owner')
       %th
@@ -22,6 +23,7 @@
     %tr
       %td= user_group.name
       %td= user_group.description
+      %td!= ApplicationHelper.labelize_boolean user_group.is_global
       %td!= UserGroupsHelper.labelize_group_visibility(user_group.visibility)
       %td
         - if user_group.owner

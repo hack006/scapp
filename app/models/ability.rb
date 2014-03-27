@@ -161,6 +161,32 @@ class Ability
                             @user.in_relation?(user_to_add, :watcher) )
     end
 
+    # =============
+    # RegularTraining
+    # =============
+    # @7.1
+    can [:index], RegularTraining
+
+    # @7.2
+    can [:show], RegularTraining do |t|
+      c = false
+      # basic permissions check
+      c = true if t.public? || t.user == @user || t.user_group.user_is_in?(@user)
+
+      # TODO permit access for coaches
+      # chceck for existing relation to training group members
+      unless c
+        t.user_group.users.each do |u|
+          if @user.in_relation?(u, :watcher) || @user.in_relation?(u, :coach)
+            c = true
+            break
+          end
+        end
+      end
+
+      c
+    end
+
   end
 
   # ===========================================
@@ -208,6 +234,15 @@ class Ability
     # @2.4
     can [:new, :create], UserGroup
 
+    # =============
+    # RegularTraining
+    # =============
+    # @7.4
+    can [:new, :create], RegularTraining
+    # @7.5, @7.6
+    can [:edit, :update, :destroy], RegularTraining do |rt|
+      rt.user == @user
+    end
   end
 
   # ===========================================

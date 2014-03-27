@@ -9,6 +9,9 @@
       %th= t('user_groups.detail.description') + ':'
       %td= @user_group.description
     %tr
+      %th= t('user_groups.detail.global')
+      %td!= ApplicationHelper.labelize_boolean @user_group.is_global
+    %tr
       %th= t('user_groups.detail.visibility') + ':'
       %td!= UserGroupsHelper.labelize_group_visibility(@user_group.visibility)
     %tr

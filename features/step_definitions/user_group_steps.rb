@@ -1,9 +1,9 @@
 And(/^Following groups exists in the system$/) do |table|
-  # table is a table.hashes.keys # => [:name, :description, :long desc, :owner, :visibility]
+  # table is a table.hashes.keys # => [:name, :description, :long desc, :owner, :visibility, :is_global]
   table.hashes.each do |r|
     user = User.friendly.find(r[:owner])
     UserGroup.create({ name: r[:name], description: r[:description], long_description: r[:long_description],
-                     owner: user, visibility: r[:visibility]})
+                     owner: user, visibility: r[:visibility], is_global: r[:is_global]})
   end
 end
 

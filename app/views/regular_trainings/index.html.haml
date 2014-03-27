@@ -1,25 +1,35 @@
-%h1 Listing regular_trainings
+- content_for :heading do
+  = t('regular_trainings.index.regular_trainings')
 
-%table
-  %tr
-    %th Name
-    %th Description
-    %th Public
-    %th User
-    %th
-    %th
-    %th
+- breadcrumb :regular_trainings
+- if is_admin? || is_coach?
+  #action-box
+    = link_to t('regular_trainings.index.new_training'), new_regular_training_path, class: 'btn btn-success'
 
-  - @regular_trainings.each do |regular_training|
+%table.table.table-striped
+  %thead
     %tr
-      %td= regular_training.name
-      %td= regular_training.description
-      %td= regular_training.public
-      %td= regular_training.user
-      %td= link_to 'Show', regular_training
-      %td= link_to 'Edit', edit_regular_training_path(regular_training)
-      %td= link_to 'Destroy', regular_training, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %th= t('regular_trainings.index.name')
+      %th= t('regular_trainings.index.public')
+      %th= t('regular_trainings.index.owner')
+      %th
+      %th
+      %th
+  %tbody
+    - @regular_trainings.each do |regular_training|
+      %tr
+        %td= regular_training.name
+        %td!= ApplicationHelper.labelize_boolean regular_training.public
+        %td
+          - if regular_training.user
+            = link_to regular_training.user.name, regular_training.user
+        %td= link_to 'Show', regular_training
+        - if is_admin? || regular_training.user == current_user
+          %td= link_to 'Edit', edit_regular_training_path(regular_training)
+          %td= link_to 'Destroy', regular_training, :method => :delete, :data => { :confirm => t('dictionary.are_you_sure') }
+        - else
+          %td{colspan: 2}
 
-%br
+= paginate @regular_trainings, theme: 'twitter-bootstrap-3'
 
-= link_to 'New Regular training', new_regular_training_path
+

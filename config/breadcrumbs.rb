@@ -175,6 +175,28 @@ crumb :user_relations_edit do
   parent :user_relations
 end
 
+# ==============
+# RegularTrainings
+# ==============
+crumb :regular_trainings do
+  link t('breadcrumbs.trainings'), regular_trainings_path
+end
+
+crumb :regular_trainings_new do
+  link t('breadcrumbs.new_training')
+  parent :regular_trainings
+end
+
+crumb :regular_trainings_edit do
+  link t('breadcrumbs.edit_training')
+  parent :regular_trainings
+end
+
+crumb :regular_trainings_detail do
+  link t('breadcrumbs.reqular_training_detail')
+  parent :regular_trainings
+end
+
 # If you want to split your breadcrumbs configuration over multiple files, you
 # can create a folder named `config/breadcrumbs` and put your configuration
 # files there. All *.rb files (e.g. `frontend.rb` or `products.rb`) in that

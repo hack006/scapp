@@ -11,12 +11,15 @@ class UserGroup < ActiveRecord::Base
 
   has_and_belongs_to_many :users
   belongs_to :owner, class_name: User, foreign_key: 'user_id'
+  has_many :regular_trainings, dependent: :restrict_with_exception # can not be deleted if
 
   validates :name, presence: true
   validates :visibility, inclusion: {in: GROUP_VISIBILITIES}
 
   scope :owned_by, -> (user) { where('user_groups.user_id = ?', user.id) }
+  scope :global, -> { where('user_groups.is_global = 1') }
   scope :with_visibility, -> (visibilities) { where('visibility IN (?)', visibilities.to_a) }
+  scope :global_or_owned_by, -> (user) { where('user_groups.user_id = ? OR user_groups.is_global = 1', user.id) }
 
   # Test if user belongs to group
   #
@@ -36,7 +39,7 @@ class UserGroup < ActiveRecord::Base
     end
   end
 
-  #
+  # Get groups I own, I am in or groups that are :public or :registered visible
   #
   # @param [User] user for whom we find groups
   # @return [ActiveRecord::Relation] groups visible to registered used

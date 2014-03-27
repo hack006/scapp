@@ -205,6 +205,8 @@ Then(/^I should see "([^"]*)" containing "([^"]*)"$/) do |element, text|
       found = exists_element_with_text? "h1,h2,h3,h4,h5,h6,h7", text
     when "paragraph"
       found = exists_element_with_text? "p", text
+    when "link"
+      found = exists_element_with_text? "a", text
     when "alert message"
       found = exists_element_with_text? "div.alert", text
     when "error message"
@@ -240,6 +242,8 @@ Then(/^I shouldn't see "([^"]*)" containing "([^"]*)"$/) do |element, text|
       found = exists_element_with_text? "h1,h2,h3,h4,h5,h6,h7", text
     when "paragraph"
       found = exists_element_with_text? "p", text
+    when "link"
+      found = exists_element_with_text? "a", text
     when "alert message"
       found = exists_element_with_text? "div.alert", text
     when "error message"

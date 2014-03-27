@@ -41,6 +41,10 @@ class UserGroupsController < ApplicationController
     @user_group = UserGroup.new(user_group_params)
     # set owner
     @user_group.owner = current_user
+    # only admin can create global groups
+    if is_admin?
+      @user_group.is_global = params[:user_group][:is_global]
+    end
 
     authorize! :create, UserGroup
 
@@ -58,6 +62,11 @@ class UserGroupsController < ApplicationController
   # PATCH/PUT /user_groups/1
   # PATCH/PUT /user_groups/1.json
   def update
+    # only admin can create global groups
+    if is_admin?
+      @user_group.is_global = params[:user_group][:is_global]
+    end
+
     respond_to do |format|
       if @user_group.update(user_group_params)
         format.html { redirect_to @user_group, notice: 'User group was successfully updated.' }

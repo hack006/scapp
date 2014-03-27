@@ -33,4 +33,11 @@ AdvancedMenu::Menu.setup do |config|
                %w(fa fa-plus), [:admin])
   end
 
+  config.add_heading(I18n.t('nav.trainings'), 'regular_trainings', 'regular_trainings', nil, %w(fa fa-angle-double-right)) do |h|
+    h.add_link(I18n.t('nav.my_trainings'), "/users/{user_slug}/trainings", 'regular_trainings', 'user_regular_trainings',
+              %w(fa fa-table))
+    h.add_link(I18n.t('nav.regular_trainings'), '/regular_trainings', 'regular_trainings', 'index', %w(fa fa-table), [:coach, :admin])
+    h.add_link(I18n.t('nav.new_training'), '/regular_trainings/new', 'regular_trainings', 'new', %w(fa fa-plus), [:coach, :admin])
+  end
+
 end

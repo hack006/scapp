@@ -1,3 +1,45 @@
 // Place all the styles related to the RegularTrainings controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+$hour-height: 30px;
+
+table#week-timetable{
+  width: 100%;
+
+  td, th{
+    width: calc(100% / 8);
+    position: relative;
+    padding: 0;
+    border: solid 1px #f0f0f0;
+    &#day-hours{
+      background-color: #f1e7bc;
+    }
+
+    &.day-data{
+
+    }
+
+    .events-container{
+      height: calc(30px * 24);
+      width: 100%;
+      position: absolute;
+
+      .event{
+        background-color: #f0cb6f;
+        border-radius: 4px;
+        border: solid 1px #f0a41f;
+        position: absolute;
+        width: 100%;
+      }
+    }
+  }
+  .cell{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: $hour-height;
+    display: block;
+    border-bottom: solid #f0f0f0 1px;
+  }
+}

@@ -6,6 +6,8 @@
     = f.input :description
     = f.input :long_description, input_html: {class: 'textarea'}
     = f.input :visibility, as: :radio_buttons, collection: UserGroup::GROUP_VISIBILITIES
+    - if is_admin?
+      = f.input :is_global
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, class: 'btn btn-primary'

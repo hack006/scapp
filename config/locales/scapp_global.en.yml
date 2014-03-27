@@ -6,6 +6,15 @@ en:
                         %{token}"
     bad_confirmation: "You have entered invalid confirmation token!"
 
+  days:
+    monday: Monday
+    tuesday: Tuesday
+    wednesday: Wednesday
+    thursday: Thursday
+    friday: Friday
+    saturday: Saturday
+    sunday: Sunday
+
   dictionary:
     global: &global 'Global'
     show_detail: &show_detail 'Show detail'
@@ -79,6 +88,15 @@ en:
     long_description: &long_description 'Long description'
     added: &added Added
     members: &members Members
+    trainings: &trainings Trainings
+    my_trainings: &my_trainings My trainings
+    reqular_trainings: &regular_trainings Regular trainings
+    regular_training: &regular_training Regular training
+    new_training: &new_training New training
+    edit_training: &edit_training Edit training
+    training_detail: &training_detail Training detail
+    reqular_training_detail: &regular_training_detail Regular training detail
+    public: &public Public
   alerts:
     not_authorized: 'You do not have required permissions for this action.'
 
@@ -114,6 +132,14 @@ en:
     vf_measurements: *vf_measurements
     new_vf_measurement: *new_vf_measurement
     group_detail: &group_detail Group detail
+    trainings: *trainings
+    my_trainings: *my_trainings
+    regular_trainings: *regular_trainings
+    new_training: *new_training
+    edit_training: *edit_training
+    training_detail: *training_detail
+    reqular_training_detail: *regular_training_detail
+
 
   nav:
     user: *user
@@ -138,6 +164,13 @@ en:
     new_relation: *new_relation
     edit_relation: *edit_relation
     group_detail: *group_detail
+    trainings: *trainings
+    my_trainings: *my_trainings
+    regular_trainings: *regular_trainings
+    new_training: *new_training
+    edit_training: *edit_training
+    training_detail: *training_detail
+    reqular_training_detail: *regular_training_detail
 
   template:
     main:
@@ -334,6 +367,7 @@ en:
       visibility: *visibility
       owner: *owner
       new_group: *new_group
+      global: &global
     user_in:
       user_assigned_in_groups: 'User assigned in groups'
       members: *members
@@ -342,6 +376,7 @@ en:
     edit:
       edit_group: *edit_group
     detail:
+      global: &global
       group_detail: *group_detail
       description: *description
       visibility: *visibility
@@ -397,3 +432,28 @@ en:
       new_relation: *new_relation
     edit:
       edit_relation: *edit_relation
+
+  regular_trainings:
+    controller:
+      successfully_created: 'Regular training was successfully created.'
+      successfully_updated: 'Regular training was successfully updated.'
+      successfully_removed: 'Regular training was successfully removed.'
+      invalid_group_choosen: 'You have choosen invalid user group!'
+    new:
+      new_training: *new_training
+    index:
+      regular_trainings: *regular_trainings
+      name: *name
+      description: *description
+      public: *public
+      owner: *owner
+      new_training: *new_training
+    edit:
+    show:
+      reqular_training_detail: *regular_training_detail
+      description: *description
+      public: *public
+      owner: *owner
+      regular_training_coaches: Regular training coaches
+      regular_training_players: Regular training players
+      regular_training_hours: Regular training hours

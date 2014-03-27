@@ -1,18 +1,57 @@
-%p#notice= notice
+- content_for :heading do
+  = t('regular_trainings.show.reqular_training_detail') + ' - ' + @regular_training.name
 
-%p
-  %b Name:
-  = @regular_training.name
-%p
-  %b Description:
-  = @regular_training.description
-%p
-  %b Public:
-  = @regular_training.public
-%p
-  %b User:
-  = @regular_training.user
+- breadcrumb :regular_trainings_detail
 
-= link_to 'Edit', edit_regular_training_path(@regular_training)
-\|
-= link_to 'Back', regular_trainings_path
+%table.table
+  %tbody
+    %tr
+      %th= t('regular_trainings.show.description')
+      %td= @regular_training.description
+    %tr
+      %th= t('regular_trainings.show.public')
+      %td!= ApplicationHelper.labelize_boolean(@regular_training.public)
+    %tr
+      %th= t('regular_trainings.show.owner')
+      %td
+        - if @regular_training.user
+          = link_to @regular_training.user.name, @regular_training.user
+        - else
+          -
+.box.box-info
+  .box-header
+    %h2.box-title= t('regular_trainings.show.regular_training_coaches')
+  .box-body
+
+.box.box-info
+  .box-header
+    %h2.box-title= t('regular_trainings.show.regular_training_players')
+  .box-body
+
+.box.box-primary
+  .box-header
+    %h2.box-title= t('regular_trainings.show.regular_training_hours')
+  .box-body
+    %table#week-timetable
+      %tbody
+        %tr{id: 'week-headings'}
+          %th
+          %th= t('days.monday')
+          %th= t('days.tuesday')
+          %th= t('days.wednesday')
+          %th= t('days.thursday')
+          %th= t('days.friday')
+          %th= t('days.saturday')
+          %th= t('days.sunday')
+        %tr{id: 'week-data'}
+          %td#day-hours
+            - (0..23).each do |hour|
+              %div.cell{class: "hour-label-#{hour}"}= hour
+          - (1..7).each do |day|
+            %td.day-data{id: "day-#{day}"}
+              %div.events-container{id: "events-container-day-#{day}"}
+              -# todo load data
+                %div.event{style: 'top: 120px'}
+                  event data
+              - (0..23).each do |hour|
+                %div.cell{class: "hour-#{hour}"}

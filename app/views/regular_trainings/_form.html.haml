@@ -3,9 +3,12 @@
 
   .form-inputs
     = f.input :name
-    = f.input :description
+    = f.input :description, as: :text, input_html: { class: 'textarea' }
     = f.input :public
-    = f.association :user
+    - if @regular_training.user_group
+      = f.input :user_group, as: :select, collection: @groups_select, selected: @regular_training.user_group.id
+    - else
+      = f.input :user_group, as: :select, collection: @groups_select, prompt: '-'
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, class: 'btn btn-primary'
