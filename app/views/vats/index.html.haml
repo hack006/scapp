@@ -3,28 +3,29 @@
 
 - breadcrumb :vats
 
-%table.table
-  %tr
-    %th Name
-    %th Percentage value
-    %th Is time limited
-    %th Start of validity
-    %th End of validity
-    %th
-    %th
-    %th
+#action-box
+  = link_to t('vat.index.new_vat'), new_vat_path, class: 'btn btn-success'
 
+%table.table.table-striped
+  %thead
+    %tr
+      %th= t('vat.index.name')
+      %th= t('vat.index.percentage_value')
+      %th= t('vat.index.is_time_limited')
+      %th= t('vat.index.start_of_validity')
+      %th= t('vat.index.end_of_validity')
+      %th
+      %th
+
+  %tbody
   - @vats.each do |vat|
     %tr
       %td= vat.name
       %td= vat.percentage_value
-      %td= vat.is_time_limited
-      %td= vat.start_of_validity
-      %td= vat.end_of_validity
-      %td= link_to 'Show', vat
-      %td= link_to 'Edit', edit_vat_path(vat)
-      %td= link_to 'Destroy', vat, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td!= ApplicationHelper.labelize_boolean(vat.is_time_limited)
+      %td= vat.start_of_validity.to_datetime.full if vat.start_of_validity
+      %td= vat.end_of_validity.to_datetime.full if vat.end_of_validity
+      %td= link_to t('dictionary.edit'), edit_vat_path(vat)
+      %td= link_to t('dictionary.delete'), vat, :method => :delete, :data => { :confirm => t('dictionary.are_you_sure') }
 
-%br
-
-= link_to 'New Vat', new_vat_path
+= paginate @vats, theme: 'twitter-bootstrap-3'

@@ -197,6 +197,23 @@ crumb :regular_trainings_detail do
   parent :regular_trainings
 end
 
+# ==============
+# VATs
+# ==============
+crumb :vats do
+  link t('breadcrumbs.vats'), vats_path
+end
+
+crumb :vats_new do
+  link t('breadcrumbs.new_vat')
+  parent :vats
+end
+
+crumb :vats_edit do
+  link t('breadcrumbs.edit_vat')
+  parent :vats
+end
+
 # If you want to split your breadcrumbs configuration over multiple files, you
 # can create a folder named `config/breadcrumbs` and put your configuration
 # files there. All *.rb files (e.g. `frontend.rb` or `products.rb`) in that

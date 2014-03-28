@@ -95,3 +95,12 @@
 | ID    | Action                        | implemented?  | owner     | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
 | ----- | ----------------------------- | ------------- | --------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
 |
+
+#  VAT
+
+| ID    | Action                        | implemented?  | owner     | :guest    | :player   | :coach    | :admin    | note  |
+| ----- | ----------------------------- | ------------- | --------- | --------- | --------- | --------- | --------- | ----- |
+| 9.1   | List VATs                     | Y             | -         | -         | -         | -         | Y         |
+| 9.2   | Create VAT                    | Y             | -         | -         | -         | -         | Y         |
+| 9.3   | Edit VAT                      | Y             | -         | -         | -         | -         | Y         |
+| 9.4   | Delete VAT                    | Y             | -         | -         | -         | -         | Y         |

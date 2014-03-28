@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(version: 20140328095005) do
 
   create_table "vats", force: true do |t|
     t.string   "name"
+    t.string   "slug"
     t.float    "percentage_value"
     t.boolean  "is_time_limited"
     t.datetime "start_of_validity"
@@ -207,5 +208,7 @@ ActiveRecord::Schema.define(version: 20140328095005) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "vats", ["slug"], name: "index_vats_on_slug", unique: true, using: :btree
 
 end

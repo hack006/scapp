@@ -10,8 +10,8 @@ module AdvancedMenu
     @@css_class
     @@headings = Array.new()
 
-    def self.add_heading(name, path = nil, icon = nil, only_roles = AdvancedMenu::ROLES, classes = [])
-      h = Heading.new(name, path, icon, only_roles, classes)
+    def self.add_heading(name, path = nil, controller = nil, action = nil, icon = nil, only_roles = AdvancedMenu::ROLES, classes = [])
+      h = Heading.new(name, path, controller, action, icon, only_roles, classes)
       @@headings << h
 
       yield h if block_given?

@@ -97,6 +97,12 @@ en:
     training_detail: &training_detail Training detail
     reqular_training_detail: &regular_training_detail Regular training detail
     public: &public Public
+    vat: &vat VAT
+    vats: &vats VATs
+    new_vat: &new_vat New VAT
+    edit_vat: &edit_vat Edit VAT
+    datetime_mask: &datetime_mask dd/mm/yyyy hh:mm
+
   alerts:
     not_authorized: 'You do not have required permissions for this action.'
 
@@ -139,7 +145,10 @@ en:
     edit_training: *edit_training
     training_detail: *training_detail
     reqular_training_detail: *regular_training_detail
-
+    vat: *vat
+    vats: *vats
+    new_vat: *new_vat
+    edit_vat: *edit_vat
 
   nav:
     user: *user
@@ -171,6 +180,9 @@ en:
     edit_training: *edit_training
     training_detail: *training_detail
     reqular_training_detail: *regular_training_detail
+    vat: *vat
+    vats: *vats
+    new_vat: *new_vat
 
   template:
     main:
@@ -457,3 +469,23 @@ en:
       regular_training_coaches: Regular training coaches
       regular_training_players: Regular training players
       regular_training_hours: Regular training hours
+  vat:
+    vat_mask: *datetime_mask
+    vat_name_can_not_be_modified: VAT name and percentage value can not be changed in order to prevent misunderstanding by coaches and players and to prevent price calculation changes.
+    controller:
+      successfully_created: 'VAT was successfully created.'
+      successfully_updated: 'VAT was successfully updated.'
+      successfully_removed: 'VAT was successfully removed.'
+    index:
+      vats: *vats
+      new_vat: *new_vat
+      name: *name
+      percentage_value: &percentage_value Percentage value
+      is_time_limited: &is_time_limited Is time limited
+      start_of_validity: &start_of_validity Start of validity
+      end_of_validity: &end_of_validity End of validity
+    new:
+      new_vat: *new_vat
+    edit:
+      edit_vat: *edit_vat
+

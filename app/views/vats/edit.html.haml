@@ -1,7 +1,7 @@
-%h1 Editing vat
+- content_for :heading do
+  = t('vat.edit.edit_vat')
+
+- breadcrumb :vats_edit
 
 = render 'form'
 
-= link_to 'Show', @vat
-\|
-= link_to 'Back', vats_path

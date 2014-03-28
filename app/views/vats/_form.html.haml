@@ -1,12 +1,16 @@
+.alert.alert-warning
+  = t('vat.vat_name_can_not_be_modified')
+
 = simple_form_for(@vat) do |f|
   = f.error_notification
 
   .form-inputs
-    = f.input :name
-    = f.input :percentage_value
+    = f.input :name, disabled: (params[:action] == 'edit') ? true : false
+    = f.input :percentage_value, disabled: (params[:action] == 'edit') ? true : false
     = f.input :is_time_limited
-    = f.input :start_of_validity
-    = f.input :end_of_validity
+    #vat-time-validity-range
+      = f.input :start_of_validity, as: :datetime_picker, placeholder: t('vat.vat_mask')
+      = f.input :end_of_validity, as: :datetime_picker, placeholder: t('vat.vat_mask')
 
   .form-actions
     = f.button :submit

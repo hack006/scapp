@@ -1,15 +1,18 @@
 class VatsController < ApplicationController
-  before_action :set_vat, only: [:show, :edit, :update, :destroy]
+  before_action :set_vat, only: [ :edit, :update, :destroy]
+
+  load_and_authorize_resource except: [:create]
 
   # GET /vats
   # GET /vats.json
   def index
-    @vats = Vat.all
+    @vats = Vat.all.order(slug: :asc).page(params[:page])
   end
 
   # GET /vats/1
   # GET /vats/1.json
   def show
+    # only for JSON
   end
 
   # GET /vats/new
@@ -24,11 +27,13 @@ class VatsController < ApplicationController
   # POST /vats
   # POST /vats.json
   def create
+    authorize! :create, Vat
+
     @vat = Vat.new(vat_params)
 
     respond_to do |format|
       if @vat.save
-        format.html { redirect_to @vat, notice: 'Vat was successfully created.' }
+        format.html { redirect_to vats_path, notice: t('vat.controller.successfully_created') }
         format.json { render action: 'show', status: :created, location: @vat }
       else
         format.html { render action: 'new' }
@@ -41,8 +46,8 @@ class VatsController < ApplicationController
   # PATCH/PUT /vats/1.json
   def update
     respond_to do |format|
-      if @vat.update(vat_params)
-        format.html { redirect_to @vat, notice: 'Vat was successfully updated.' }
+      if @vat.update(vat_params.except(:name, :percentage_value))
+        format.html { redirect_to vats_path, notice: t('vat.controller.successfully_updated') }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -56,7 +61,7 @@ class VatsController < ApplicationController
   def destroy
     @vat.destroy
     respond_to do |format|
-      format.html { redirect_to vats_url }
+      format.html { redirect_to vats_url, notice: t('vat.controller.successfully_removed') }
       format.json { head :no_content }
     end
   end
@@ -64,7 +69,7 @@ class VatsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_vat
-      @vat = Vat.find(params[:id])
+      @vat = Vat.friendly.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

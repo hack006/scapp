@@ -2,7 +2,7 @@ require 'advanced_menu/advanced_menu'
 AdvancedMenu::Menu.setup do |config|
   config.name = 'name'
 
-  config.add_heading(I18n.t('nav.user'), '#', 'users', nil, %w(fa fa-angle-double-right)) do |h|
+  config.add_heading(I18n.t('nav.user'), '#', nil, nil, nil, AdvancedMenu::ROLES, %w(fa fa-angle-double-right)) do |h|
     h.add_link(I18n.t('nav.users'), '/users', 'users', 'index', %w(fa fa-users))
     h.add_link(I18n.t('nav.new_user'), '/users/new','users', 'new', %w(fa fa-plus), [:coach, :admin])
     h.add_link(I18n.t('nav.my_groups'), '/users/{user_slug}/groups', 'user_groups', 'user_in', %w(fa fa-group))
@@ -13,7 +13,7 @@ AdvancedMenu::Menu.setup do |config|
     # h.add_link('New relation', '/relations/new', %w(fa fa-plus) :admin)
   end
 
-  config.add_heading(I18n.t('nav.variable_fields'), '/variable_fields', 'variable_fields', nil, %w(fa fa-angle-double-right)) do |h|
+  config.add_heading(I18n.t('nav.variable_fields'), '#', nil, nil, nil, AdvancedMenu::ROLES, %w(fa fa-angle-double-right)) do |h|
     h.add_link(I18n.t('nav.my_variable_fields'), "/users/{user_slug}/variable_fields", 'variable_fields',
                'user_variable_field', %w(fa fa-bar-chart-o),[:player])
     h.add_link(I18n.t('nav.new_variable_field'), '/variable_fields/new', 'variable_fields', 'new', %w(fa fa-plus))
@@ -33,11 +33,16 @@ AdvancedMenu::Menu.setup do |config|
                %w(fa fa-plus), [:admin])
   end
 
-  config.add_heading(I18n.t('nav.trainings'), 'regular_trainings', 'regular_trainings', nil, %w(fa fa-angle-double-right)) do |h|
+  config.add_heading(I18n.t('nav.trainings'), '#', nil, nil, nil, AdvancedMenu::ROLES, %w(fa fa-angle-double-right)) do |h|
     h.add_link(I18n.t('nav.my_trainings'), "/users/{user_slug}/trainings", 'regular_trainings', 'user_regular_trainings',
               %w(fa fa-table))
     h.add_link(I18n.t('nav.regular_trainings'), '/regular_trainings', 'regular_trainings', 'index', %w(fa fa-table), [:coach, :admin])
     h.add_link(I18n.t('nav.new_training'), '/regular_trainings/new', 'regular_trainings', 'new', %w(fa fa-plus), [:coach, :admin])
+  end
+
+  config.add_heading(I18n.t('nav.vats'), '#', nil, nil, nil, [:admin], %w(fa fa-angle-double-right)) do |h|
+    h.add_link(I18n.t('nav.vats'), '/vats', 'vats', 'index', %w(fa fa-money))
+    h.add_link(I18n.t('nav.new_vat'), '/vats/new', 'vats', 'new', %w(fa fa-plus))
   end
 
 end

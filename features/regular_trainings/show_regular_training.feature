@@ -21,3 +21,8 @@ Feature: View regular training detail
     When I click "Show" for "members1" in table row
     Then I should see "heading" containing "Regular training detail"
 
+  Scenario: I want to view detail of training I am participating in
+
+  Scenario: I want to view detail of training I am coaching
+
+  Scenario: I want to view detail of any training as admin
