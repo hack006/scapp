@@ -1,4 +1,6 @@
 Scapp::Application.routes.draw do
+  resources :vats
+
   resources :regular_trainings
 
   resources :variable_fields do

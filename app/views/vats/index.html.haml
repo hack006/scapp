@@ -1,0 +1,30 @@
+- content_for :heading do
+  = t('vat.index.vats')
+
+- breadcrumb :vats
+
+%table.table
+  %tr
+    %th Name
+    %th Percentage value
+    %th Is time limited
+    %th Start of validity
+    %th End of validity
+    %th
+    %th
+    %th
+
+  - @vats.each do |vat|
+    %tr
+      %td= vat.name
+      %td= vat.percentage_value
+      %td= vat.is_time_limited
+      %td= vat.start_of_validity
+      %td= vat.end_of_validity
+      %td= link_to 'Show', vat
+      %td= link_to 'Edit', edit_vat_path(vat)
+      %td= link_to 'Destroy', vat, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Vat', new_vat_path

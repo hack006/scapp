@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140327150720) do
+ActiveRecord::Schema.define(version: 20140328095005) do
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -197,5 +197,15 @@ ActiveRecord::Schema.define(version: 20140327150720) do
   add_index "variable_fields", ["user_id", "name"], name: "index_variable_fields_on_user_id_and_name", unique: true, using: :btree
   add_index "variable_fields", ["user_id"], name: "index_variable_fields_on_user_id", using: :btree
   add_index "variable_fields", ["variable_field_category_id"], name: "index_variable_fields_on_variable_field_category_id", using: :btree
+
+  create_table "vats", force: true do |t|
+    t.string   "name"
+    t.float    "percentage_value"
+    t.boolean  "is_time_limited"
+    t.datetime "start_of_validity"
+    t.datetime "end_of_validity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

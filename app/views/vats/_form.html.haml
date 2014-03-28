@@ -1,0 +1,12 @@
+= simple_form_for(@vat) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :percentage_value
+    = f.input :is_time_limited
+    = f.input :start_of_validity
+    = f.input :end_of_validity
+
+  .form-actions
+    = f.button :submit
