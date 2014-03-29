@@ -1,0 +1,45 @@
+%p#notice= notice
+
+%p
+  %b Description:
+  = @training_lesson.description
+%p
+  %b Day:
+  = @training_lesson.day
+%p
+  %b From:
+  = @training_lesson.from
+%p
+  %b Until:
+  = @training_lesson.until
+%p
+  %b Calculation:
+  = @training_lesson.calculation
+%p
+  %b From date:
+  = @training_lesson.from_date
+%p
+  %b Until date:
+  = @training_lesson.until_date
+%p
+  %b Player price without tax:
+  = @training_lesson.player_price_without_tax
+%p
+  %b Group price without tax:
+  = @training_lesson.group_price_without_tax
+%p
+  %b Rental price without tax:
+  = @training_lesson.rental_price_without_tax
+%p
+  %b Training vat:
+  = @training_lesson.training_vat
+%p
+  %b Rental vat:
+  = @training_lesson.rental_vat
+%p
+  %b Regular training:
+  = @training_lesson.regular_training
+
+= link_to 'Edit', edit_training_lesson_path(@training_lesson)
+\|
+= link_to 'Back', training_lessons_path

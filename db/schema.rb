@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140328095005) do
+ActiveRecord::Schema.define(version: 20140329073457) do
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -61,6 +61,28 @@ ActiveRecord::Schema.define(version: 20140328095005) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+
+  create_table "training_lessons", force: true do |t|
+    t.string   "description"
+    t.string   "day"
+    t.time     "from"
+    t.time     "until"
+    t.string   "calculation",              limit: 37
+    t.datetime "from_date"
+    t.datetime "until_date"
+    t.float    "player_price_without_tax"
+    t.float    "group_price_without_tax"
+    t.float    "rental_price_without_tax"
+    t.integer  "training_vat_id"
+    t.integer  "rental_vat_id"
+    t.integer  "regular_training_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "training_lessons", ["regular_training_id"], name: "index_training_lessons_on_regular_training_id", using: :btree
+  add_index "training_lessons", ["rental_vat_id"], name: "index_training_lessons_on_rental_vat_id", using: :btree
+  add_index "training_lessons", ["training_vat_id"], name: "index_training_lessons_on_training_vat_id", using: :btree
 
   create_table "user_groups", force: true do |t|
     t.string   "name"

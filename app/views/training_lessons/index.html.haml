@@ -1,0 +1,43 @@
+%h1 Listing training_lessons
+
+%table
+  %tr
+    %th Description
+    %th Day
+    %th From
+    %th Until
+    %th Calculation
+    %th From date
+    %th Until date
+    %th Player price without tax
+    %th Group price without tax
+    %th Rental price without tax
+    %th Training vat
+    %th Rental vat
+    %th Regular training
+    %th
+    %th
+    %th
+
+  - @training_lessons.each do |training_lesson|
+    %tr
+      %td= training_lesson.description
+      %td= training_lesson.day
+      %td= training_lesson.from
+      %td= training_lesson.until
+      %td= training_lesson.calculation
+      %td= training_lesson.from_date
+      %td= training_lesson.until_date
+      %td= training_lesson.player_price_without_tax
+      %td= training_lesson.group_price_without_tax
+      %td= training_lesson.rental_price_without_tax
+      %td= training_lesson.training_vat
+      %td= training_lesson.rental_vat
+      %td= training_lesson.regular_training
+      %td= link_to 'Show', training_lesson
+      %td= link_to 'Edit', edit_training_lesson_path(training_lesson)
+      %td= link_to 'Destroy', training_lesson, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Training lesson', new_training_lesson_path

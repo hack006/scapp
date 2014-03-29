@@ -1,4 +1,6 @@
 Scapp::Application.routes.draw do
+  resources :training_lessons
+
   resources :vats
 
   resources :regular_trainings
