@@ -1,0 +1,10 @@
+= simple_form_for(@currency) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :code
+    = f.input :symbol
+
+  .form-actions
+    = f.button :submit

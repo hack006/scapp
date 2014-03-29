@@ -1,4 +1,6 @@
 Scapp::Application.routes.draw do
+  resources :currencies
+
   resources :training_lessons
 
   resources :vats

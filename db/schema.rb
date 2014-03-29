@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140329073457) do
+ActiveRecord::Schema.define(version: 20140329083036) do
+
+  create_table "currencies", force: true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.string   "symbol"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -78,8 +86,10 @@ ActiveRecord::Schema.define(version: 20140329073457) do
     t.integer  "regular_training_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "currency_id",                         null: false
   end
 
+  add_index "training_lessons", ["currency_id"], name: "index_training_lessons_on_currency_id", using: :btree
   add_index "training_lessons", ["regular_training_id"], name: "index_training_lessons_on_regular_training_id", using: :btree
   add_index "training_lessons", ["rental_vat_id"], name: "index_training_lessons_on_rental_vat_id", using: :btree
   add_index "training_lessons", ["training_vat_id"], name: "index_training_lessons_on_training_vat_id", using: :btree
