@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
 
   # Get user relations with specified statuses
   #
-  # @param [Array<String>, String] relation_statuses Specify statuses of relations on user side to obtain
+  # @param [Array<String>, String] user_relation_statuses Specify statuses of relations on user side to obtain
   #   @option [String] 'accepted'
   #   @option [String] 'new' When created and no reaction from user is taken
   #   @option [String] 'refused'
@@ -45,9 +45,23 @@ class User < ActiveRecord::Base
   #   @option [Symbol] :my_players Users who has _user_ as coach
   #   @option [Symbol] :my_watchers Users who watch _user_
   #   @option [Symbol] :my_wards Users who _user_ is watching
+  # @param [Array<String>, String] my_relation_statuses Specify statuses of relations on my side
+  #   @option [String] 'accepted'
+  #   @option [String] 'new' When created and no reaction from user is taken
+  #   @option [String] 'refused'
   # @return relations
-  def get_my_relations_with_statuses(relation_statuses = ['accepted'], relation = :all)
-    UserRelation.get_my_relations_with_statuses self, relation_statuses, relation
+  def get_my_relations_with_statuses(user_relation_statuses = ['accepted'], relation = :all, my_relation_statuses = ['new', 'accepted', 'refused'])
+    UserRelation.get_my_relations_with_statuses self, user_relation_statuses, relation, my_relation_statuses
+  end
+
+  # Get regular trainings user is assigned in as player
+  def regular_trainings_training_in
+    RegularTraining.for_player(self)
+  end
+
+  # Get regular trainings user is assigned in as coach
+  def regular_trainings_coaching
+    RegularTraining.for_coach(self)
   end
 
   def is_admin?

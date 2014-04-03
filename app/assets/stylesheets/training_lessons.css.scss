@@ -1,3 +1,26 @@
+@import "variables";
 // Place all the styles related to the TrainingLessons controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+table.week-days-widget {
+  table-layout: fixed;
+  position: relative;
+  width: 300px;
+  tbody{
+    position: relative;
+    td.week-day{
+      width: calc(100% / 7 - 6px);
+      padding: 3px;
+      text-align: center;
+      background-color: #eeeeee;
+      color: #cccccc;
+      border: solid 1px #aaaaaa;
+      &.active{
+        background-color: $widget-success-bg;
+        border-color: $widget-success-fg;
+        color: $widget-success-fg;
+      }
+    }
+  }
+}

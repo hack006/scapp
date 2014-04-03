@@ -1,8 +1,10 @@
+@import "variables";
 // Place all the styles related to the RegularTrainings controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-$hour-height: 30px;
+// do not touch this value! this value is used for computing event positions in the controller
+$hour-height: 40px;
 
 table#week-timetable{
   width: 100%;
@@ -16,12 +18,19 @@ table#week-timetable{
       background-color: #f1e7bc;
     }
 
+    &:hover{ background-color: #FAFAFA }
+
     &.day-data{
 
     }
 
+    .day-container{
+      position: relative;
+    }
+
     .events-container{
-      height: calc(30px * 24);
+      // do not touch 30px value!
+      height: calc(40px * 24);
       width: 100%;
       position: absolute;
 
@@ -31,6 +40,30 @@ table#week-timetable{
         border: solid 1px #f0a41f;
         position: absolute;
         width: 100%;
+
+        .time-wrapper{
+          text-align: right;
+        }
+
+        .time{
+          display: inline-block;
+          font-size: 1.1em;
+          background-color: #ffedb8;
+          padding: 1px 2px;
+          text-decoration: underline;
+        }
+
+        .event-content{
+          padding: 2px;
+          line-height: 0.7em;
+          position: absolute;
+          bottom: 1px;
+        }
+
+        .label{
+          font-size: 0.7em;
+          padding: 0.1em 0.4em;
+        }
       }
     }
   }
@@ -41,5 +74,21 @@ table#week-timetable{
     height: $hour-height;
     display: block;
     border-bottom: solid #f0f0f0 1px;
+  }
+}
+
+.regular-training-lessons-in-week-widget{
+  td{
+    border: solid 1px $widget-inactive-fg;
+    color: $widget-inactive-fg;
+    background-color: $widget-inactive-bg;
+    font-size: $widget-text-small;
+    padding: 1px 2px;
+
+    &.active{
+      background-color: $widget-success-bg;
+      border-color: $widget-success-fg;
+      color: $widget-success-fg;
+    }
   }
 }

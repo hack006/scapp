@@ -1,0 +1,19 @@
+= simple_form_for([@regular_training, @coach_obligation]) do |f|
+  = f.error_notification
+
+  .form-inputs
+    .row
+      .col-sm-6
+        = f.input :hourly_wage_without_vat
+      .col-sm-3
+        = f.association :vat
+      .col-sm-3
+        = f.association :currency
+    .row
+      .col-sm-8
+        = f.input :coach_email, input_html: { data: {'guesser' => 'email'} }, disabled: (params[:action] == 'edit' ? true : false)
+      .col-sm-4
+        = f.input :role, as: :select, collection: CoachObligation::ROLES
+
+  .form-actions
+    = f.button :submit, class: 'btn btn-primary'

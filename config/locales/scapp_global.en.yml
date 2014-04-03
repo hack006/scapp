@@ -48,6 +48,7 @@ en:
     users: &users 'Users'
     measurement: &measurement 'Measurement'
     measurements: &measurements 'Measurements'
+    user_group: &user_group User group
     groups: &groups 'Groups'
     relations: &relations 'Relations'
     user_relations: &user_relations 'User relations'
@@ -102,6 +103,53 @@ en:
     new_vat: &new_vat New VAT
     edit_vat: &edit_vat Edit VAT
     datetime_mask: &datetime_mask dd/mm/yyyy hh:mm
+    date_mask: &date_mask dd/mm/yyyy
+    time_mask: &time_mask hh:mm
+    training_length: &training_length Training duration
+    day: &day Day
+    odd_week: &odd_week Odd week
+    even_week: &even_week Even week
+    until_date: &until_date Until date
+    from_date: &from_date From date
+    training_lessons: &training_lessons Training lessons
+    training_lesson: &training_lesson Training lesson
+    new_training_lesson: &new_training_lesson New training lesson
+    edit_training_lesson: &edit_training_lesson Edit training lesson
+    currency: &currency Currency
+    currencies: &currencies Currencies
+    new_currency: &new_currency New currency
+    edit_currency: &edit_currency Edit currency
+    calculation: &calculation Calculation
+    player_price_without_vat: &player_price_without_vat Player price per hour without VAT
+    group_price_without_vat: &group_price_without_vat Group price per hour without VAT
+    rental_price_without_vat: &rental_price_without_vat Rental price per hour without VAT
+    training_vat: &training_vat Training prices VAT
+    rental_vat: &rental_vat Rental VAT
+    date_and_time: &date_and_time Date & Time
+    finance: &finance Finance
+    player: &player Player
+    even: &even Even
+    odd: &odd Odd
+    player_price: &player_price Player price
+    group_price: &group_price Group price
+    rental_price: &rental_price Rental price
+    vat_included: &vat_included VAT included
+    minutes: &minutes minutes
+    hours: &hours hours
+    days: &days days
+    training_coach: &training_coach Training coach
+    training_coaches: &training_coaches Training coaches
+    new_training_coach: &new_training_coach New training coach
+    edit_training_coach: &edit_training_coach Edit training coach
+    coach: &coach Coach
+    coach_role: &coach_role Coach role
+    hour_wage_without_vat: &hour_wage_without_vat Hour wage without VAT
+    hour_wage_without_vat: &hour_wage_with_vat Hour wage with VAT
+    hourly_wage: &hour_wage Hour wage
+    role: &role Role
+    trainings_overview: &trainings_overview Trainings overview
+    code: &code Code
+    symbol: &symbol Symbol
 
   alerts:
     not_authorized: 'You do not have required permissions for this action.'
@@ -149,6 +197,20 @@ en:
     vats: *vats
     new_vat: *new_vat
     edit_vat: *edit_vat
+    training_lessons: *training_lessons
+    training_lesson: *training_lesson
+    new_training_lesson: *new_training_lesson
+    edit_training_lesson: *edit_training_lesson
+    training_coach: *training_coach
+    training_coaches: *training_coaches
+    new_training_coach: *new_training_coach
+    edit_training_coach: *edit_training_coach
+    trainings_overview: *trainings_overview
+    currency: *currency
+    currencies: *currencies
+    new_currency: *new_currency
+    edit_currency: *edit_currency
+
 
   nav:
     user: *user
@@ -183,6 +245,13 @@ en:
     vat: *vat
     vats: *vats
     new_vat: *new_vat
+    training_lessons: *training_lessons
+    training_lesson: *training_lesson
+    new_training_lesson: *new_training_lesson
+    edit_training_lesson: *edit_training_lesson
+    finance: *finance
+    currencies: *currencies
+    new_currency: *new_currency
 
   template:
     main:
@@ -451,6 +520,7 @@ en:
       successfully_updated: 'Regular training was successfully updated.'
       successfully_removed: 'Regular training was successfully removed.'
       invalid_group_choosen: 'You have choosen invalid user group!'
+
     new:
       new_training: *new_training
     index:
@@ -466,9 +536,25 @@ en:
       description: *description
       public: *public
       owner: *owner
+      lessons_per_week: Lessons per week
       regular_training_coaches: Regular training coaches
       regular_training_players: Regular training players
-      regular_training_hours: Regular training hours
+      regular_training_lessons: Regular training lessons
+      list_training_lessons: List training lessons
+      add_new_training_lesson: Add new training lesson
+      edit_training: *edit_training
+      player: *player
+      no_players_yet: No players are available, yet. You have not assign group to the training or group does not contain any members!
+      for_group: For group
+      even: *even
+      odd: *odd
+      add_new_coach: Add new coach
+      coach: *coach
+      coach_role: *coach_role
+      hour_wage: *hour_wage
+      hour_wage_without_vat: *hour_wage_without_vat
+      hour_wage_without_vat: *hour_wage_with_vat
+
   vat:
     vat_mask: *datetime_mask
     vat_name_can_not_be_modified: VAT name and percentage value can not be changed in order to prevent misunderstanding by coaches and players and to prevent price calculation changes.
@@ -476,6 +562,8 @@ en:
       successfully_created: 'VAT was successfully created.'
       successfully_updated: 'VAT was successfully updated.'
       successfully_removed: 'VAT was successfully removed.'
+      dependent_exists: Can not delete. VAT is already in use!
+
     index:
       vats: *vats
       new_vat: *new_vat
@@ -488,4 +576,102 @@ en:
       new_vat: *new_vat
     edit:
       edit_vat: *edit_vat
+  currency:
+    controller:
+      dependent_exists: Can not delete. Currency is already in use!
+      successfully_removed: Currency was succesfully removed.
+    index:
+      name: *name
+      code: *code
+      symbol: *symbol
+      new_currency: *new_currency
 
+  training_lesson:
+    controller:
+      regular_training_not_found: 'Pardon, required training was not found!'
+      vat_must_be_added_firstly: 'No VAT exist, yet. You have to add any before adding training lesson.'
+      currency_must_be_added_firstly: 'No currency exist, yet. You have to add any before adding training lesson.'
+      successfully_created: 'Regular training lesson was successfully created.'
+      successfully_updated: 'Regular training lesson was successfully updated.'
+      successfully_removed: 'Regular training lesson was successfully removed.'
+      overlapping_already_existing_lesson: 'In the specified time interval another training lesson already exist!'
+
+    helper:
+      remaining_days:
+        one: "%{count} day from %{days} days elapsed"
+        other: "%{count} from %{days} days elapsed"
+    form:
+      date_and_time: *date_and_time
+      finance: *finance
+      new_currency: *new_currency
+      new_vat: *new_vat
+      are_you_sure_new_currency: Are you sure that you want to leave this page and show form for adding new currency? All unsaved data will be lost.
+      are_you_sure_new_vat: Are you sure that you want to leave this page and show form for adding new VAT? All unsaved data will be lost.
+
+    index:
+      day: *day
+      from: *from
+      until: *until
+      training_length: *training_length
+      from_date: *from_date
+      until_date: *until_date
+      odd_week: *odd_week
+      even_week: *even_week
+      back_to_training: Back to training
+    new:
+      new_training_lesson: *new_training_lesson
+    edit:
+      edit_training_lesson: *edit_training_lesson
+    show:
+      training_lesson: *training_lesson
+      description: *description
+      from: *from
+      until: *until
+      odd_week: *odd_week
+      even_week: *even_week
+      calculation: *calculation
+      from_date: *from_date
+      until_date: *until_date
+      player_price: *player_price
+      group_price: *group_price
+      rental_price: *rental_price
+      training_vat: *training_vat
+      rental_vat: *rental_vat
+      date_and_time: *date_and_time
+      day: *day
+      finance: *finance
+      finance_lesson_note: Prices are calculated for whole training!
+      edit_training_lesson: *edit_training_lesson
+      vat_included: *vat_included
+      training_length: *training_length
+
+  coach_obligation:
+    controller:
+      successfully_created: Coach obligation was successfully created.
+      successfully_updated: Coach obligation was successfully updated.
+      successfully_removed: Coach obligation was successfully removed.
+    index:
+      training_coaches: *training_coaches
+    new:
+      new_training_coach: *new_training_coach
+    create:
+      email_not_found: User with given email was not found in the system.
+    edit:
+      edit_training_coach: *edit_training_coach
+    show:
+      training_coach: *training_coach
+      hour_wage: *hour_wage
+      role: *role
+      vat: *vat
+      user: *user
+      edit_training_coach: *edit_training_coach
+  trainings:
+    user_overview:
+      trainings_overview: *trainings_overview
+      no_trainings: No trainings you are assigned in.
+      close_trainings: Close trainings
+      regular_trainings_in: Regular trainings I am in
+      regular_trainings_coaching: Regular trainings I coach
+      regular_training: *regular_training
+      user_group: *user_group
+      days: *days

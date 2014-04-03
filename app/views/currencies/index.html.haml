@@ -1,23 +1,26 @@
-%h1 Listing currencies
+- content_for :heading do
+  = t('nav.currencies')
 
-%table
-  %tr
-    %th Name
-    %th Code
-    %th Symbol
-    %th
-    %th
-    %th
+- breadcrumb :currencies
+
+#action-box
+  = link_to t('currency.index.new_currency'), new_currency_path, class: 'btn btn-success'
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th= t('currency.index.name')
+      %th= t('currency.index.code')
+      %th= t('currency.index.symbol')
+      %th
+      %th
 
   - @currencies.each do |currency|
     %tr
       %td= currency.name
       %td= currency.code
       %td= currency.symbol
-      %td= link_to 'Show', currency
-      %td= link_to 'Edit', edit_currency_path(currency)
-      %td= link_to 'Destroy', currency, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= link_to t('dictionary.edit'), edit_currency_path(currency)
+      %td= link_to t('dictionary.delete'), currency, :method => :delete, :data => { :confirm => t('dictionary.are_you_sure') }
 
-%br
-
-= link_to 'New Currency', new_currency_path
+= paginate @currencies, theme: 'twitter-bootstrap-3'

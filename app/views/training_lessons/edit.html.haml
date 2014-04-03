@@ -1,7 +1,7 @@
-%h1 Editing training_lesson
+- content_for :heading do
+  = t('training_lesson.edit.edit_training_lesson')
+
+- breadcrumb :training_lessons_edit, @regular_training
 
 = render 'form'
 
-= link_to 'Show', @training_lesson
-\|
-= link_to 'Back', training_lessons_path

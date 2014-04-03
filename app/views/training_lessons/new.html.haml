@@ -1,5 +1,7 @@
-%h1 New training_lesson
+- content_for :heading do
+  = t('training_lesson.new.new_training_lesson')
+
+- breadcrumb :training_lessons_new, @regular_training
 
 = render 'form'
 
-= link_to 'Back', training_lessons_path

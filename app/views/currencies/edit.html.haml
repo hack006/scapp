@@ -1,7 +1,6 @@
-%h1 Editing currency
+- content_for :heading do
+  = t('nav.new_currency')
+
+- breadcrumb :currencies_new
 
 = render 'form'
-
-= link_to 'Show', @currency
-\|
-= link_to 'Back', currencies_path

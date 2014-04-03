@@ -40,9 +40,11 @@ AdvancedMenu::Menu.setup do |config|
     h.add_link(I18n.t('nav.new_training'), '/regular_trainings/new', 'regular_trainings', 'new', %w(fa fa-plus), [:coach, :admin])
   end
 
-  config.add_heading(I18n.t('nav.vats'), '#', nil, nil, nil, [:admin], %w(fa fa-angle-double-right)) do |h|
+  config.add_heading(I18n.t('nav.finance'), '#', nil, nil, nil, [:admin], %w(fa fa-angle-double-right)) do |h|
     h.add_link(I18n.t('nav.vats'), '/vats', 'vats', 'index', %w(fa fa-money))
     h.add_link(I18n.t('nav.new_vat'), '/vats/new', 'vats', 'new', %w(fa fa-plus))
+    h.add_link(I18n.t('nav.currencies'), '/currencies', 'currencies', 'index', %w(fa fa-dollar))
+    h.add_link(I18n.t('nav.new_currency'), '/currencies/new', 'currencies', 'new', %w(fa fa-plus))
   end
 
 end

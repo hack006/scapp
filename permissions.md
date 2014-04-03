@@ -80,21 +80,29 @@
 
 # Regular training
 
-| ID    | Action                        | implemented?  | owner     | training_coach[R]     | training_player[R]    | :guest    | :player   | :coach    | :admin    | note  |
-| ----- | ----------------------------- | ------------- | --------- | --------------------- | --------------------- | --------- | --------- | --------- | --------- | ----- |
-| 7.1   | List trainings                | Y             | -         | -                     | -                     | -         | -         | Y *       | Y         | * - view only owned trainings
-| 7.2   | Show training detail          | -             | Y         | Y                     | Y                     | -         | -         | -         | Y         |
-| 7.3   | Show public training detail   | -             | -         | -                     | -                     | Y         | Y         | Y         | Y         |
-| 7.4   | Create training               | Y             | -         | -                     | -                     | -         | -         | Y         | Y         |
-| 7.5   | Edit training                 | Y             | Y         | -                     | -                     | -         | -         | -         | Y         |
-| 7.6   | Delete training               | Y             | Y         | -                     | -                     | -         | -         | -         | Y         |
-| 7.7   | Show player attendance        | -             | Y         | Y                     | -                     | -         | -         | -         | Y         |
+**watcher[R]** is tested against _owner_, _training players_ and _training coaches_
+
+| ID    | Action                        | implemented?  | owner     | training_coach[R]     | training_player[R]    | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
+| ----- | ----------------------------- | ------------- | --------- | --------------------- | --------------------- | ------------- | --------- | --------- | --------- | --------- | ----- |
+| 7.1   | List trainings                | Y             | -         | -                     | -                     | -             | -         | -         | Y *       | Y         | * - view only owned trainings
+| 7.2   | Show training detail          | Y             | Y         | Y                     | Y                     | Y             | -         | -         | -         | Y         |
+| 7.3   | Show public training detail   | -             | -         | -                     | -                     | -             | Y         | Y         | Y         | Y         |
+| 7.4   | Create training               | Y             | -         | -                     | -                     | -             | -         | -         | Y         | Y         |
+| 7.5   | Edit training                 | Y             | Y         | -                     | -                     | -             | -         | -         | -         | Y         |
+| 7.6   | Delete training               | Y             | Y         | -                     | -                     | -             | -         | -         | -         | Y         |
+| 7.7   | Show player attendance        | -             | Y         | Y                     | -                     | Y             | -         | -         | -         | Y         |
 
 # Training lesson
 
-| ID    | Action                        | implemented?  | owner     | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
-| ----- | ----------------------------- | ------------- | --------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
-|
+**owner** is get from wrapping regular training
+
+| ID    | Action                        | implemented?  | owner     | training_coach[R] | training_player[R]    | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
+| ----- | ----------------------------- | ------------- | --------- | ----------------- | --------------------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
+| 8.1   | List training lessons         | Y             | Y         | Y                 | Y                     | -         | -         | -         | Y (*1)        | -         | -         | -         | Y         | *1 - see regular training
+| 8.2   | Show training lesson detail   | Y             | Y         | Y (1*)            | Y (2*)                | -         | -         | -         | Y (*2)        | -         | -         | -         | Y         | *1 - view _finance_ only if :head_coach, *2 - do not view _finance_
+| 8.3   | Create training lesson        | Y             | Y         | -                 | -                     | -         | -         | -         | -             | -         | -         | -         | Y         |
+| 8.4   | Edit training lesson          | Y             | Y         | -                 | -                     | -         | -         | -         | -             | -         | -         | -         | Y         |
+| 8.5   | Delete training lesson        | Y             | Y         | -                 | -                     | -         | -         | -         | -             | -         | -         | -         | Y         |
 
 #  VAT
 
@@ -104,3 +112,24 @@
 | 9.2   | Create VAT                    | Y             | -         | -         | -         | -         | Y         |
 | 9.3   | Edit VAT                      | Y             | -         | -         | -         | -         | Y         |
 | 9.4   | Delete VAT                    | Y             | -         | -         | -         | -         | Y         |
+
+#  Currency
+
+| ID    | Action                        | implemented?  | owner     | :guest    | :player   | :coach    | :admin    | note  |
+| ----- | ----------------------------- | ------------- | --------- | --------- | --------- | --------- | --------- | ----- |
+| 9.1   | List currencies               | Y             | -         | -         | -         | -         | Y         |
+| 9.2   | Create currency               | Y             | -         | -         | -         | -         | Y         |
+| 9.3   | Edit currency                 | Y             | -         | -         | -         | -         | Y         |
+| 9.4   | Delete currency               | Y             | -         | -         | -         | -         | Y         |
+
+# Coach obligation
+
+* **obligation_coach** - user for whom obligation belongs
+* **regular_training_owner** - owner of regular training to which obligation belongs
+
+| ID    | Action                        | implemented?  | obligation_coach  | regular_training_owner    | :admin    | note  |
+| ----- | ----------------------------- | ------------- | ----------------- | ----------------------    | --------- | ----- |
+| 10.1  | Show obligation               | Y             | Y                 | Y                         | Y         |
+| 10.2  | Create obligation             | Y             | -                 | Y                         | Y         |
+| 10.3  | Edit obligation               | Y             | -                 | Y                         | Y         |
+| 10.4  | Delete obligation             | Y             | -                 | Y                         | Y         |

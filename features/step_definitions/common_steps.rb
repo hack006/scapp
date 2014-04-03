@@ -1,5 +1,5 @@
 Then(/^I should see "([^"]*)" message$/) do |message|
-  find('.alert').should have_content message
+  find('.alert #flash_notice, .alert #flash_alert').should have_content message
 end
 
 And(/^I should have "([^"]*)" actions available for table row "([^"]*)"$/) do |actions, name|
@@ -51,4 +51,12 @@ end
 
 And(/^I shouldn't see table "([^"]*)"$/) do |table_identifier|
   page.should_not have_css("table##{table_identifier}")
+end
+
+Then(/^I should see "([^"]*)" for "([^"]*)" in the table row$/) do |action, row_text|
+  find(:xpath, "//tr[td[contains(.,'#{row_text}')]]").should have_content action
+end
+
+Then(/^I shouldn't see "([^"]*)" for "([^"]*)" in the table row$/) do |action, row_text|
+  find(:xpath, "//tr[td[contains(.,'#{row_text}')]]").should_not have_content action
 end

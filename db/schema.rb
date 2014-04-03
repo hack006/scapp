@@ -11,7 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140329083036) do
+ActiveRecord::Schema.define(version: 20140402093332) do
+
+  create_table "coach_obligations", force: true do |t|
+    t.float    "hourly_wage_without_vat"
+    t.string   "role",                    limit: 10, default: "coach", null: false
+    t.integer  "vat_id",                                               null: false
+    t.integer  "currency_id",                                          null: false
+    t.integer  "user_id",                                              null: false
+    t.integer  "regular_training_id",                                  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "coach_obligations", ["currency_id"], name: "index_coach_obligations_on_currency_id", using: :btree
+  add_index "coach_obligations", ["regular_training_id"], name: "index_coach_obligations_on_regular_training_id", using: :btree
+  add_index "coach_obligations", ["user_id", "regular_training_id"], name: "index_coach_obligations_on_user_id_and_regular_training_id", unique: true, using: :btree
+  add_index "coach_obligations", ["user_id"], name: "index_coach_obligations_on_user_id", using: :btree
+  add_index "coach_obligations", ["vat_id"], name: "index_coach_obligations_on_vat_id", using: :btree
 
   create_table "currencies", force: true do |t|
     t.string   "name"
@@ -19,7 +36,10 @@ ActiveRecord::Schema.define(version: 20140329083036) do
     t.string   "symbol"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug",       null: false
   end
+
+  add_index "currencies", ["slug"], name: "index_currencies_on_slug", unique: true, using: :btree
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -71,8 +91,8 @@ ActiveRecord::Schema.define(version: 20140329083036) do
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "training_lessons", force: true do |t|
-    t.string   "description"
-    t.string   "day"
+    t.text     "description"
+    t.string   "day",                      limit: 3,                 null: false
     t.time     "from"
     t.time     "until"
     t.string   "calculation",              limit: 37
@@ -86,7 +106,9 @@ ActiveRecord::Schema.define(version: 20140329083036) do
     t.integer  "regular_training_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "currency_id",                         null: false
+    t.integer  "currency_id",                                        null: false
+    t.boolean  "even_week",                           default: true, null: false
+    t.boolean  "odd_week",                            default: true, null: false
   end
 
   add_index "training_lessons", ["currency_id"], name: "index_training_lessons_on_currency_id", using: :btree

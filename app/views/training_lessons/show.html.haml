@@ -1,45 +1,108 @@
-%p#notice= notice
+- content_for :heading do
+  = t('training_lesson.show.training_lesson')
 
-%p
-  %b Description:
-  = @training_lesson.description
-%p
-  %b Day:
-  = @training_lesson.day
-%p
-  %b From:
-  = @training_lesson.from
-%p
-  %b Until:
-  = @training_lesson.until
-%p
-  %b Calculation:
-  = @training_lesson.calculation
-%p
-  %b From date:
-  = @training_lesson.from_date
-%p
-  %b Until date:
-  = @training_lesson.until_date
-%p
-  %b Player price without tax:
-  = @training_lesson.player_price_without_tax
-%p
-  %b Group price without tax:
-  = @training_lesson.group_price_without_tax
-%p
-  %b Rental price without tax:
-  = @training_lesson.rental_price_without_tax
-%p
-  %b Training vat:
-  = @training_lesson.training_vat
-%p
-  %b Rental vat:
-  = @training_lesson.rental_vat
-%p
-  %b Regular training:
-  = @training_lesson.regular_training
+- breadcrumb :training_lessons_detail, @regular_training
 
-= link_to 'Edit', edit_training_lesson_path(@training_lesson)
-\|
-= link_to 'Back', training_lessons_path
+- if is_admin? || @regular_training.user == current_user
+  #action-box
+    = link_to t('training_lesson.show.edit_training_lesson'), edit_regular_training_training_lesson_path(@regular_training, @training_lesson), class: 'btn btn-info'
+
+#tl-date-time.box.box-info
+  .box-header
+    %h2.box-title= t('training_lesson.show.date_and_time')
+  .box-body
+    %table.table
+      %tbody
+        %tr
+          %th= t('training_lesson.show.day')
+          %td{colspan: 3}!= TrainingLessonsHelper.day_in_week_graphic_display @training_lesson.day
+        %tr
+          %th= t('training_lesson.show.odd_week')
+          %td!= ApplicationHelper.labelize_boolean @training_lesson.odd_week
+        %tr
+          %th= t('training_lesson.show.even_week')
+          %td!= ApplicationHelper.labelize_boolean @training_lesson.even_week
+        %tr
+          %th= t('training_lesson.show.from')
+          %td= @training_lesson.from.short
+        %tr
+          %th= t('training_lesson.show.until')
+          %td= @training_lesson.until.short
+        %tr
+          %th= t('training_lesson.show.training_length')
+          %td= @training_lesson.training_length.to_s + ' ' + t('dictionary.minutes')
+        %tr
+          %th= t('training_lesson.show.from_date')
+          %td
+            - if @training_lesson.from_date
+              = @training_lesson.from_date.to_date.short(locale)
+            - else
+              \-
+        - if @training_lesson.from_date && @training_lesson.until_date
+          %tr
+            %td
+            %td!= TrainingLessonsHelper.training_progress(@training_lesson.from_date, @training_lesson.until_date)
+        %tr
+          %th= t('training_lesson.show.until_date')
+          %td
+            - if @training_lesson.until_date
+              = @training_lesson.until_date.to_date.short(locale)
+            - else
+              \-
+
+.box.box-info
+  .box-header
+    %h2.box-title= t('training_lesson.show.description')
+  .box-body
+    = sanitize @training_lesson.description
+
+- if is_admin? || @regular_training.user == current_user || @regular_training.has_coach?(current_user, :head_coach) # @8.2 *1,2
+  #tl-finance.box.box-info
+    .box-header
+      %h2.box-title= t('training_lesson.show.finance')
+    .box-body
+      %table.table
+        .alert.alert-warning
+          = t('training_lesson.show.finance_lesson_note')
+        %tbody
+          %tr
+            %th= t('training_lesson.show.calculation')
+            %td
+              %span.label.label-mid-grey= @training_lesson.calculation
+          %tr
+            %th= t('training_lesson.show.player_price')
+            %td
+              - if @training_lesson.player_price_without_tax
+                = (@training_lesson.player_price_without_tax * @training_lesson.training_length(:hour, 6)).to_s + ' ' + @training_lesson.currency.symbol
+                |
+                %strong= (@training_lesson.player_price_with_tax * @training_lesson.training_length(:hour, 6)).to_s + ' ' + @training_lesson.currency.symbol + ' (' + t('training_lesson.show.vat_included') + ')'
+              - else
+                \-
+          %tr
+            %th= t('training_lesson.show.group_price')
+            %td
+              - if @training_lesson.group_price_without_tax
+                = (@training_lesson.group_price_without_tax * @training_lesson.training_length(:hour, 6)).to_s + ' ' + @training_lesson.currency.symbol
+                |
+                %strong= (@training_lesson.group_price_with_tax * @training_lesson.training_length(:hour, 6)).to_s + ' ' + @training_lesson.currency.symbol + ' (' + t('training_lesson.show.vat_included') + ')'
+              - else
+                \-
+          %tr
+            %th= t('training_lesson.show.training_vat')
+            %td= @training_lesson.training_vat.name + ' - ' + @training_lesson.training_vat.percentage_value.to_s + '%'
+          %tr
+            %th= t('training_lesson.show.rental_price')
+            %td
+              - if @training_lesson.rental_price_without_tax
+                = (@training_lesson.rental_price_without_tax * @training_lesson.training_length(:hour, 6)).to_s + ' ' + @training_lesson.currency.symbol
+                |
+                %strong= (@training_lesson.rental_price_with_tax * @training_lesson.training_length(:hour, 6)).to_s + ' ' + @training_lesson.currency.symbol + ' (' + t('training_lesson.show.vat_included') + ')'
+              - else
+                \-
+          %tr
+            %th= t('training_lesson.show.rental_vat')
+            %td
+              - if @training_lesson.rental_vat
+                = @training_lesson.rental_vat.name + ' - ' + @training_lesson.training_vat.percentage_value.to_s + '%'
+              - else
+                \-

@@ -1,0 +1,50 @@
+- content_for :heading do
+  = t('trainings.user_overview.trainings_overview')
+
+- breadcrumb :trainings_user_overview, @user
+
+.box.box-primary
+  .box-header
+    %h2.box-title= t('trainings.user_overview.close_trainings')
+  .box-body
+
+.box.box-info
+  .box-header
+    %h2.box-title= t('trainings.user_overview.regular_trainings_in')
+  .box-body
+    - unless @regular_trainings_as_player.empty?
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= t('trainings.user_overview.regular_training')
+            %th= t('trainings.user_overview.user_group')
+            %th= t('trainings.user_overview.days').to_s.capitalize
+        %tbody
+        - @regular_trainings_as_player.each do |t|
+          %tr
+            %td= link_to t.name, t
+            %td= link_to t.user_group.name, t.user_group
+            %td!= RegularTrainingsHelper.visualize_training_days(t)
+    - else
+      = t('trainings.user_overview.no_trainings')
+
+- if @user.is_admin? || @user.is_coach?
+  .box.box-info
+    .box-header
+      %h2.box-title= t('trainings.user_overview.regular_trainings_coaching')
+    .box-body
+      - unless @regular_trainings_as_coach.empty?
+        %table.table.table-striped
+          %thead
+            %tr
+              %th= t('trainings.user_overview.regular_training')
+              %th= t('trainings.user_overview.user_group')
+              %th= t('trainings.user_overview.days').to_s.capitalize
+          %tbody
+          - @regular_trainings_as_coach.each do |t|
+            %tr
+              %td= link_to t.name, t
+              %td= link_to t.user_group.name, t.user_group
+              %td!= RegularTrainingsHelper.visualize_training_days(t)
+      - else
+        = t('trainings.user_overview.no_trainings')

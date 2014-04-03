@@ -96,7 +96,7 @@ class UserRelation < ActiveRecord::Base
   # Get user relations with specified statuses and relation type
   #
   # @param [User] user
-  # @param [Array<String>, String] relation_statuses Specify statuses of relations on user side to obtain
+  # @param [Array<String>, String] user_relation_statuses Specify statuses of relations on user side to obtain
   # @param [Symbol] relation
   #   @option [Symbol] :all All user relations
   #   @option [Symbol] :friends Users who are friends with _user_
@@ -105,28 +105,28 @@ class UserRelation < ActiveRecord::Base
   #   @option [Symbol] :my_watchers Users who watch _user_
   #   @option [Symbol] :my_wards Users who _user_ is watching
   # @return relations
-  def self.get_my_relations_with_statuses(user, relation_statuses = ['accepted'], relation = :all)
+  def self.get_my_relations_with_statuses(user, user_relation_statuses = ['accepted'], relation = :all, my_side_relation_status = ['new', 'accepted', 'refused'])
     rel = nil
     case relation
       when :all
-        rel = UserRelation.where("(user_from_id = :user AND from_user_status IN (:status)) OR (user_to_id = :user AND to_user_status IN (:status))",
-                                 { user: user, status: relation_statuses })
+        rel = UserRelation.where("(user_from_id = :user AND from_user_status IN (:status) AND to_user_status IN (:my_status)) OR (user_to_id = :user AND to_user_status IN (:status) AND from_user_status IN (:my_status))",
+                                 { user: user, status: user_relation_statuses, my_status: my_side_relation_status })
       when :friends
-       rel =  UserRelation.where("((user_from_id = :user AND from_user_status IN (:status)) OR (user_to_id = :user AND to_user_status IN(:status)))" +
+       rel =  UserRelation.where("((user_from_id = :user AND from_user_status IN (:status) AND to_user_status IN (:my_status)) OR (user_to_id = :user AND to_user_status IN (:status) AND from_user_status IN (:my_status)))" +
                            " AND relation = 'friend'",
-                           { user: user, status: relation_statuses })
+                           { user: user, status: user_relation_statuses, my_status: my_side_relation_status })
       when :my_coaches
-        rel = UserRelation.where("user_to_id = :user AND to_user_status IN (:status) AND relation = 'coach'",
-                                 { user: user, status: relation_statuses })
+        rel = UserRelation.where("user_to_id = :user AND to_user_status IN (:status) AND from_user_status IN (:my_status) AND relation = 'coach'",
+                                 { user: user, status: user_relation_statuses, my_status: my_side_relation_status })
       when :my_players
-        rel = UserRelation.where("user_from_id = :user AND from_user_status IN (:status) AND relation = 'coach'",
-                                 { user: user, status: relation_statuses })
+        rel = UserRelation.where("user_from_id = :user AND from_user_status IN (:status) AND to_user_status IN (:my_status) AND relation = 'coach'",
+                                 { user: user, status: user_relation_statuses, my_status: my_side_relation_status })
       when :my_watchers
-        rel = UserRelation.where("user_to_id = :user AND to_user_status IN (:status) AND relation = 'watcher'",
-                                 { user: user, status: relation_statuses })
+        rel = UserRelation.where("user_to_id = :user AND to_user_status IN (:status) AND from_user_status IN (:my_status) AND relation = 'watcher'",
+                                 { user: user, status: user_relation_statuses, my_status: my_side_relation_status })
       when :my_wards
-        rel = UserRelation.where("user_from_id = :user AND from_user_status IN (:status) AND relation = 'watcher'",
-                                 { user: user, status: relation_statuses })
+        rel = UserRelation.where("user_from_id = :user AND from_user_status IN (:status) AND to_user_status IN (:my_status) AND relation = 'watcher'",
+                                 { user: user, status: user_relation_statuses, my_status: my_side_relation_status })
     end
 
     rel

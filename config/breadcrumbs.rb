@@ -6,7 +6,8 @@ end
 # User
 # =====
 crumb :user do |user|
-  link t('breadcrumbs.user'), user_path(user)
+  link user.name, user_path(user)
+  parent :users
 end
 
 crumb :users do
@@ -192,8 +193,8 @@ crumb :regular_trainings_edit do
   parent :regular_trainings
 end
 
-crumb :regular_trainings_detail do
-  link t('breadcrumbs.reqular_training_detail')
+crumb :regular_trainings_detail do |regular_training|
+  link regular_training.name, regular_training
   parent :regular_trainings
 end
 
@@ -212,6 +213,77 @@ end
 crumb :vats_edit do
   link t('breadcrumbs.edit_vat')
   parent :vats
+end
+
+# ==============
+# Currencies
+# ==============
+crumb :currencies do
+  link t('breadcrumbs.currencies'), currencies_path
+end
+
+crumb :currencies_new do
+  link t('breadcrumbs.new_currency')
+  parent :currencies
+end
+
+crumb :currencies_edit do
+  link t('breadcrumbs.edit_currency')
+  parent :currencies
+end
+
+# ==============
+# Training lessons
+# ==============
+crumb :training_lessons do |regular_training|
+  link t('breadcrumbs.training_lessons')
+  parent :regular_trainings_detail, regular_training
+end
+
+crumb :training_lessons_new do |regular_training|
+  link t('breadcrumbs.new_training_lesson')
+  parent :regular_trainings_detail, regular_training
+end
+
+crumb :training_lessons_edit do |regular_training|
+  link t('breadcrumbs.edit_training_lesson')
+  parent :regular_trainings_detail, regular_training
+end
+
+crumb :training_lessons_detail do |regular_training|
+  link t('breadcrumbs.training_lesson')
+  parent :regular_trainings_detail, regular_training
+end
+
+# =============
+# Coach obligations
+# =============
+crumb :training_coaches do |regular_training|
+  link t('breadcrumbs.training_coaches')
+  parent :regular_trainings_detail, regular_training
+end
+
+crumb :training_coaches_new do |regular_training|
+  link t('breadcrumbs.new_training_coach')
+  parent :regular_trainings_detail, regular_training
+end
+
+crumb :training_coaches_edit do |regular_training|
+  link t('breadcrumbs.edit_training_coach')
+  parent :regular_trainings_detail, regular_training
+end
+
+crumb :training_coaches_detail do |regular_training|
+  link t('breadcrumbs.training_coach')
+  parent :regular_trainings_detail, regular_training
+end
+
+# ============
+# Trainings
+# ============
+crumb :trainings_user_overview do |user|
+  link t('breadcrumbs.trainings_overview')
+  parent :user, user
 end
 
 # If you want to split your breadcrumbs configuration over multiple files, you

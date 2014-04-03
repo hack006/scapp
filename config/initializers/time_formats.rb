@@ -1,0 +1,1 @@
+Time::DATE_FORMATS[:time_full] = '%H:%M:%S'

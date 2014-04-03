@@ -59,10 +59,16 @@ class VatsController < ApplicationController
   # DELETE /vats/1
   # DELETE /vats/1.json
   def destroy
-    @vat.destroy
     respond_to do |format|
-      format.html { redirect_to vats_url, notice: t('vat.controller.successfully_removed') }
-      format.json { head :no_content }
+      begin
+        @vat.destroy
+        format.html { redirect_to vats_url, notice: t('vat.controller.successfully_removed') }
+        format.json { head :no_content }
+      rescue ActiveRecord::DeleteRestrictionError => e
+        format.html { redirect_to vats_url, alert: t('vat.controller.dependent_exists') }
+        format.json { render json: { error: 'Can not delete. VAT is already in use!' }.to_json, status: :unprocessable_entity }
+      end
+
     end
   end
 

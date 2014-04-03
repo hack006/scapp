@@ -1,20 +1,56 @@
-= simple_form_for(@training_lesson) do |f|
+= simple_form_for([@regular_training, @training_lesson]) do |f|
   = f.error_notification
 
   .form-inputs
-    = f.input :description
-    = f.input :day
-    = f.input :from
-    = f.input :until
-    = f.input :calculation
-    = f.input :from_date
-    = f.input :until_date
-    = f.input :player_price_without_tax
-    = f.input :group_price_without_tax
-    = f.input :rental_price_without_tax
-    = f.association :training_vat
-    = f.input :rental_vat
-    = f.association :regular_training
+    = f.input :description, input_html: { class: 'textarea' }
+    .box.box-info
+      .box-header
+        %h2.box-title= t('training_lesson.form.date_and_time')
+      .box-body
+        .row
+          .col-sm-6
+            = f.input :day, as: :select, collection: TrainingLesson::DAYS
+          .col-sm-3
+            = f.input :odd_week
+          .col-sm-3
+            = f.input :even_week
+        .row
+          .col-sm-6
+            = f.input :from, as: :time_picker, placeholder: t('dictionary.time_mask')
+          .col-sm-6
+            = f.input :until, as: :time_picker, placeholder: t('dictionary.time_mask')
+
+        .row
+          .col-sm-6
+            = f.input :from_date, as: :date_picker, placeholder: t('dictionary.date_mask')
+          .col-sm-6
+            = f.input :until_date, as: :date_picker, placeholder: t('dictionary.date_mask')
+    .box.box-success
+      .box-header
+        %h2.box-title= t('training_lesson.form.finance')
+        - if is_admin?
+          .box-tools.pull-right
+            = link_to t('training_lesson.form.new_currency'), new_currency_path, class: 'btn btn-success', :data => { :confirm => t('training_lesson.form.are_you_sure_new_currency') }
+            = link_to t('training_lesson.form.new_vat'), new_vat_path, class: 'btn btn-success', :data => { :confirm => t('training_lesson.form.are_you_sure_new_vat') }
+      .box-body
+        .row
+          .col-sm-6
+            = f.input :player_price_without_tax
+          .col-sm-6
+            = f.input :group_price_without_tax
+        .row
+          .col-sm-6
+            = f.association :currency
+          .col-sm-6
+            = f.association :training_vat
+        .row
+          .col-sm-8
+            = f.input :rental_price_without_tax
+          .col-sm-4
+            = f.association :rental_vat
+
+        = f.input :calculation, as: :radio_buttons, collection: TrainingLesson::PRICE_CALCULATIONS, select: 'fixed_player_price'
+
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, class: 'btn btn-primary'

@@ -1,0 +1,28 @@
+- content_for :heading do
+  = t('coach_obligation.show.training_coach')
+
+- breadcrumb :training_coaches_detail, @regular_training
+
+- if is_admin? || @regular_training.user == current_user
+  #action-box
+    = link_to t('coach_obligation.show.edit_training_coach'), edit_regular_training_coach_obligation_path(@regular_training, @coach_obligation), class: 'btn btn-info'
+
+%table.table
+  %tbody
+    %tr
+      %th= t('coach_obligation.show.user')
+      %td= link_to @coach_obligation.user.name, @coach_obligation.user
+    %tr
+      %th= t('coach_obligation.show.role')
+      %td
+        %span.label.label-grey= @coach_obligation.role
+    %tr
+      %th= t('coach_obligation.show.hour_wage')
+      %td
+        = @coach_obligation.hourly_wage_without_vat.to_s + ' ' + @coach_obligation.currency.symbol
+        |
+        %strong= (@coach_obligation.hourly_wage_without_vat * (1 + @coach_obligation.vat.percentage_value / 100)).to_s + ' ' + @coach_obligation.currency.symbol + ' (' + t('dictionary.vat_included') + ')'
+    %tr
+      %th= t('coach_obligation.show.vat')
+      %td= @coach_obligation.vat.name + ' - ' + @coach_obligation.vat.percentage_value.to_s + '%'
+

@@ -1,10 +1,12 @@
 class CurrenciesController < ApplicationController
   before_action :set_currency, only: [:show, :edit, :update, :destroy]
 
+  load_and_authorize_resource except: [:create]
+
   # GET /currencies
   # GET /currencies.json
   def index
-    @currencies = Currency.all
+    @currencies = Currency.all.page(params[:page])
   end
 
   # GET /currencies/1
@@ -26,9 +28,11 @@ class CurrenciesController < ApplicationController
   def create
     @currency = Currency.new(currency_params)
 
+    authorize! :create, @currency
+
     respond_to do |format|
       if @currency.save
-        format.html { redirect_to @currency, notice: 'Currency was successfully created.' }
+        format.html { redirect_to currencies_path, notice: 'Currency was successfully created.' }
         format.json { render action: 'show', status: :created, location: @currency }
       else
         format.html { render action: 'new' }
@@ -54,17 +58,23 @@ class CurrenciesController < ApplicationController
   # DELETE /currencies/1
   # DELETE /currencies/1.json
   def destroy
-    @currency.destroy
     respond_to do |format|
-      format.html { redirect_to currencies_url }
-      format.json { head :no_content }
+      begin
+        @currency.destroy
+        format.html { redirect_to currencies_url, notice: t('currency.controller.successfully_removed') }
+        format.json { head :no_content }
+      rescue ActiveRecord::DeleteRestrictionError => e
+        format.html { redirect_to currencies_url, alert: t('currency.controller.dependent_exists') }
+        format.json { render json: { error: 'Can not delete. Currency is already in use!' }.to_json, status: :unprocessable_entity }
+      end
+
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_currency
-      @currency = Currency.find(params[:id])
+      @currency = Currency.friendly.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

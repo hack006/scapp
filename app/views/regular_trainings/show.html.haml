@@ -1,13 +1,19 @@
 - content_for :heading do
   = t('regular_trainings.show.reqular_training_detail') + ' - ' + @regular_training.name
 
-- breadcrumb :regular_trainings_detail
+- breadcrumb :regular_trainings_detail, @regular_training
 
+#action-box
+  = link_to t('regular_trainings.show.list_training_lessons'), regular_training_training_lessons_path(@regular_training), class: 'btn btn-info'
+  - if is_admin? || @regular_training.user == current_user
+    = link_to t('regular_trainings.show.edit_training'), edit_regular_training_path(@regular_training), class: 'btn btn-info'
+    = link_to t('regular_trainings.show.add_new_training_lesson'), new_regular_training_training_lesson_path(@regular_training), class: 'btn btn-success'
+    = link_to t('regular_trainings.show.add_new_coach'), new_regular_training_coach_obligation_path(@regular_training), class: 'btn btn-success'
 %table.table
   %tbody
     %tr
       %th= t('regular_trainings.show.description')
-      %td= @regular_training.description
+      %td= sanitize @regular_training.description
     %tr
       %th= t('regular_trainings.show.public')
       %td!= ApplicationHelper.labelize_boolean(@regular_training.public)
@@ -18,19 +24,72 @@
           = link_to @regular_training.user.name, @regular_training.user
         - else
           -
-.box.box-info
+    %tr
+      %th= t('regular_trainings.show.for_group')
+      %td
+        - if @regular_training.user_group
+          = link_to @regular_training.user_group.name, @regular_training.user_group
+        - else
+          -
+    %tr
+      %th= t('regular_trainings.show.lessons_per_week') + ' - ' + t('dictionary.odd_week')
+      %td= @regular_training.lessons_per_week[:odd]
+    %tr
+      %th= t('regular_trainings.show.lessons_per_week') + ' - ' + t('dictionary.even_week')
+      %td= @regular_training.lessons_per_week[:even]
+#rt-coaches.box.box-info
   .box-header
     %h2.box-title= t('regular_trainings.show.regular_training_coaches')
   .box-body
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= t('regular_trainings.show.coach')
+          %th= t('regular_trainings.show.coach_role')
+          %th= t('regular_trainings.show.hour_wage')
+          %th
+          %th
+          %th
+      %tbody
+        - @regular_training.coach_obligations.each do |o|
+          %tr
+            %td= link_to o.user.name, o.user
+            %td
+              %span.label.label-grey= o.role
+            - if is_admin? || @regular_training.user == current_user || o.user == current_user
+              %td
+                = o.hourly_wage_without_vat.to_s + ' ' + o.currency.symbol
+                |
+                %strong= (o.hourly_wage_without_vat * (1 + o.vat.percentage_value / 100)).to_s + ' ' + o.currency.symbol + ' (' + t('dictionary.vat_included') + ')'
+              %td= link_to t('dictionary.show'), [@regular_training, o]
 
-.box.box-info
+            - else
+              %td{colspan: 2}
+
+            - if is_admin? || @regular_training.user == current_user
+              %td= link_to t('dictionary.edit'), edit_regular_training_coach_obligation_path(@regular_training, o)
+              %td= link_to t('dictionary.delete'), [@regular_training, o], :method => :delete, :data => { :confirm => t('dictionary.are_you_sure') }
+            - else
+              %td{colspan: 2}
+#rt-players.box.box-info
   .box-header
     %h2.box-title= t('regular_trainings.show.regular_training_players')
   .box-body
+    - if @regular_training.user_group && (@regular_training.user_group.users.count > 0)
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= t('regular_trainings.show.player')
+        %tbody
+          - @regular_training.user_group.users.each do |u|
+            %tr
+              %td= link_to u.name, u
+    - else
+      = t('regular_trainings.show.no_players_yet')
 
-.box.box-primary
+#rt-schedule.box.box-primary
   .box-header
-    %h2.box-title= t('regular_trainings.show.regular_training_hours')
+    %h2.box-title= t('regular_trainings.show.regular_training_lessons')
   .box-body
     %table#week-timetable
       %tbody
@@ -47,11 +106,18 @@
           %td#day-hours
             - (0..23).each do |hour|
               %div.cell{class: "hour-label-#{hour}"}= hour
-          - (1..7).each do |day|
+          - TrainingLesson::DAYS.each do |day|
             %td.day-data{id: "day-#{day}"}
-              %div.events-container{id: "events-container-day-#{day}"}
-              -# todo load data
-                %div.event{style: 'top: 120px'}
-                  event data
-              - (0..23).each do |hour|
-                %div.cell{class: "hour-#{hour}"}
+              %div.day-container
+                %div.events-container{id: "events-container-day-#{day}"}
+                  - @training_lessons[day].each do |l|
+                    %div.event{style: "top: #{l[:position_from_top]}px; height: #{l[:height]}px;"}
+                      %div.time-wrapper
+                        %span.time
+                          = link_to "#{l[:from]} - #{l[:until]}", regular_training_training_lesson_path(@regular_training, l[:id])
+                      .event-content
+                        %span{class: "label label-primary"}= t('regular_trainings.show.odd') if l[:odd]
+                        %span{class: "label label-primary"}= t('regular_trainings.show.even') if l[:even]
+
+                - (0..23).each do |hour|
+                  %div.cell{class: "hour-#{hour}"}

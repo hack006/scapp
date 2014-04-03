@@ -1,43 +1,51 @@
-%h1 Listing training_lessons
+- content_for :heading do
+  = t('nav.training_lessons')
 
-%table
-  %tr
-    %th Description
-    %th Day
-    %th From
-    %th Until
-    %th Calculation
-    %th From date
-    %th Until date
-    %th Player price without tax
-    %th Group price without tax
-    %th Rental price without tax
-    %th Training vat
-    %th Rental vat
-    %th Regular training
-    %th
-    %th
-    %th
+- breadcrumb :training_lessons, @regular_training
 
-  - @training_lessons.each do |training_lesson|
+#action-box
+  %a.btn.btn-default{href: regular_training_path(@regular_training)}
+    %i.fa.fa-chevron-left
+    = t('training_lesson.index.back_to_training')
+  - if is_coach? || is_admin?
+    = link_to t('nav.new_training_lesson'), new_regular_training_training_lesson_path(@regular_training), class: 'btn btn-success'
+
+%table.table.table-striped
+  %thead
     %tr
-      %td= training_lesson.description
-      %td= training_lesson.day
-      %td= training_lesson.from
-      %td= training_lesson.until
-      %td= training_lesson.calculation
-      %td= training_lesson.from_date
-      %td= training_lesson.until_date
-      %td= training_lesson.player_price_without_tax
-      %td= training_lesson.group_price_without_tax
-      %td= training_lesson.rental_price_without_tax
-      %td= training_lesson.training_vat
-      %td= training_lesson.rental_vat
-      %td= training_lesson.regular_training
-      %td= link_to 'Show', training_lesson
-      %td= link_to 'Edit', edit_training_lesson_path(training_lesson)
-      %td= link_to 'Destroy', training_lesson, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Training lesson', new_training_lesson_path
+      %th= t('training_lesson.index.day')
+      %th= t('training_lesson.index.from')
+      %th= t('training_lesson.index.until')
+      %th= t('training_lesson.index.training_length')
+      %th= t('training_lesson.index.from_date')
+      %th= t('training_lesson.index.until_date')
+      %th= t('training_lesson.index.odd_week')
+      %th= t('training_lesson.index.even_week')
+      %th
+      %th
+      %th
+  %tbody
+    - @training_lessons.each do |training_lesson|
+      %tr
+        %td= training_lesson.day
+        %td= training_lesson.from.short
+        %td= training_lesson.until.short
+        %td= training_lesson.training_length.to_s + ' ' + t('dictionary.minutes')
+        %td
+          - if training_lesson.from_date
+            = training_lesson.from_date.to_date.short(locale)
+          - else
+            \-
+        %td
+          - if training_lesson.until_date
+            = training_lesson.until_date.to_date.short(locale)
+          - else
+            \-
+        %td!= ApplicationHelper.labelize_boolean(training_lesson.odd_week)
+        %td!= ApplicationHelper.labelize_boolean(training_lesson.even_week)
+        %td= link_to t('dictionary.show'), [@regular_training, training_lesson]
+        - if is_admin? || @regular_training.user == current_user
+          %td= link_to t('dictionary.edit'), edit_regular_training_training_lesson_path(@regular_training, training_lesson)
+          %td= link_to t('dictionary.delete'), [@regular_training, training_lesson], :method => :delete, :data => { :confirm => t('dictionary.are_you_sure') }
+        - else
+          %td{colspan: 2}

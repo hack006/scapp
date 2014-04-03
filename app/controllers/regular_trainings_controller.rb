@@ -20,6 +20,16 @@ class RegularTrainingsController < ApplicationController
   # GET /regular_trainings/1
   # GET /regular_trainings/1.json
   def show
+    # Get training lessons
+    @training_lessons = { mon: [], tue: [], wed: [], thu: [], fri: [], sat: [], sun: [] }
+
+    @regular_training.training_lessons.map do |l|
+      position_from_top = (l.from.seconds_since_midnight / 3600 * 40).round
+      height = ((l.until - l.from) / 1.hour * 40).round
+
+      @training_lessons[l.day] << { id: l.id, from: l.from.short, until: l.until.short, height: height,
+                                    position_from_top: position_from_top, odd: l.odd_week, even: l.even_week }
+    end
   end
 
   # GET /regular_trainings/new
@@ -46,8 +56,13 @@ class RegularTrainingsController < ApplicationController
 
     # test if user can assign this group
     load_usable_groups
-    group = UserGroup.find(params[:regular_training][:user_group])
-    if @groups.include?(group)
+    begin
+      group = UserGroup.find(params[:regular_training][:user_group])
+    rescue
+      group = nil
+    end
+
+    if group.nil? || @groups.include?(group)
       @regular_training.user_group = group
     else
       redirect_to new_regular_training_path, alert: t('regular_trainings.controller.invalid_group_choosen')
@@ -80,7 +95,7 @@ class RegularTrainingsController < ApplicationController
 
     respond_to do |format|
       if @regular_training.update(regular_training_params)
-        format.html { redirect_to regular_trainings_path, notice: t('regular_trainings.controller.successfully_updated') }
+        format.html { redirect_to @regular_training, notice: t('regular_trainings.controller.successfully_updated') }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

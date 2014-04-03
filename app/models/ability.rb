@@ -36,15 +36,33 @@ class Ability
   # ===========================================
   def role_independent
     # =============
-    # VariableField
+    # 4) VariableField
     #==============
 
     # @4.3 - can only view own VF page
     can [:user_variable_fields], VariableFieldsController if @request.params[:user_id] == @user.slug
 
     # can manage only own VF - @4.2, @4.7, @4.8, @4.9, @4.10
-    can [:show, :edit, :update, :delete], VariableField do |vf|
+    can [:show, :edit, :update, :destroy], VariableField do |vf|
       vf.user_id ==  @user.id
+    end
+
+    # =============
+    # 8) Training lesson
+    # =============
+    # @8.1, @8.2
+    if @request.params[:controller] == 'training_lessons' && ['index', 'show'].include?(@request.params[:action])
+      # get regular training
+      regular_training = RegularTraining.friendly.find(@request.params[:regular_training_id])
+
+      if regular_training.user == @user || regular_training.has_player?(@user) || regular_training.has_coach?(@user) || regular_training.has_watcher?(@user)
+        can [:index, :show], TrainingLesson
+      end
+    end
+
+    # @8.3, @8.4, @8.5
+    can [:create, :update, :destroy], TrainingLesson do |tl|
+      tl.regular_training.user == @user
     end
 
   end
@@ -55,14 +73,14 @@ class Ability
   def player
     can [:index], HomeController
     # =============
-    # VariableField
+    # 4) VariableField
     # =============
 
     # @4.1, @4.2, @4.5 - must be controlled in controller, @4.6
     can [:index, :new, :create, :show], VariableField
 
     # =============
-    # VariableFieldMeasurement
+    # 5) VariableFieldMeasurement
     # =============
     can [:index], VariableFieldMeasurement
 
@@ -97,7 +115,7 @@ class Ability
     end
 
     # =============
-    # User
+    # 1) User
     # =============
     # @1.8
     can [:index], User
@@ -113,7 +131,7 @@ class Ability
     end
 
     # =============
-    # UserRelations
+    # 3) UserRelations
     # =============
     # @3.1
     if @request.params[:controller] == 'user_relations' && @request.params[:action] == 'user_has'
@@ -132,7 +150,7 @@ class Ability
     end
 
     # =============
-    # UserGroups
+    # 2) UserGroups
     # =============
     # @2.1
     can [:index], UserGroup
@@ -162,29 +180,14 @@ class Ability
     end
 
     # =============
-    # RegularTraining
+    # 7) RegularTraining
     # =============
     # @7.1
     can [:index], RegularTraining
 
     # @7.2
     can [:show], RegularTraining do |t|
-      c = false
-      # basic permissions check
-      c = true if t.public? || t.user == @user || t.user_group.user_is_in?(@user)
-
-      # TODO permit access for coaches
-      # chceck for existing relation to training group members
-      unless c
-        t.user_group.users.each do |u|
-          if @user.in_relation?(u, :watcher) || @user.in_relation?(u, :coach)
-            c = true
-            break
-          end
-        end
-      end
-
-      c
+      t.public? || t.user == @user || t.has_player?(@user) || t.has_coach?(@user) || t.has_watcher?(@user)
     end
 
   end
@@ -210,7 +213,7 @@ class Ability
     end
 
     # =============
-    # VariableFieldMeasurement
+    # 5) VariableFieldMeasurement
     # =============
 
     # @5.1
@@ -229,19 +232,32 @@ class Ability
     can [:index], User
 
     # =============
-    # UserGroups
+    # 2) UserGroups
     # =============
     # @2.4
     can [:new, :create], UserGroup
 
     # =============
-    # RegularTraining
+    # 7) RegularTraining
     # =============
     # @7.4
     can [:new, :create], RegularTraining
     # @7.5, @7.6
     can [:edit, :update, :destroy], RegularTraining do |rt|
       rt.user == @user
+    end
+
+    # =============
+    # 10) Coach obligation
+    # =============
+    # @10.1
+    can [:show], CoachObligation do |o|
+      o.user == @user || o.regular_training.user == @user
+    end
+
+    # @10.2, @10.3, @10.4
+    can [:create, :update, :destroy], CoachObligation do |o|
+      o.regular_training.user == @user
     end
   end
 

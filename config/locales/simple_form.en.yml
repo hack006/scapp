@@ -37,6 +37,15 @@ en:
         second_user: 'Email address of user'
       user_group:
         is_global: Global?
+      training_lesson:
+        player_price_without_tax: Player price without VAT
+        group_price_without_tax: Group price without VAT
+        rental_price_without_tax: Rental price without VAT
+        training_vat: Training VAT
+        rental_vat: Rental VAT
+      coach_obligation:
+        hourly_wage_without_vat: Hour wage without VAT
+        vat: VAT
 
     hints:
       defaults:
@@ -50,3 +59,23 @@ en:
         is_global: 'If marked global then every coach can use group for trainings. Keep in mind that :owner and :members visibility is not preserved because users participating in the training can see other members of the group in the training detail!'
       regular_training:
         public: 'If training is public then everyone can see it. Otherwise only owner, coaches and players can see the training.'
+      currency:
+        code: 'International code for currency. E.g. USD, CZK ..'
+        symbol: 'Symbol appended after value. E.g. $, € ..'
+        create: HH
+  helpers:
+    save_changes: &save_changes Save changes
+
+    submit:
+      currency:
+        create: Create currency
+        update: Save changes
+      vat:
+        create: Create VAT
+        update: Save changes
+      training_lesson:
+        create: Create training lesson
+        update: Save changes
+      coach_obligation:
+        create: Create coach obligation
+        update: Save changes

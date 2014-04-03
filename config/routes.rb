@@ -1,11 +1,12 @@
 Scapp::Application.routes.draw do
   resources :currencies
 
-  resources :training_lessons
-
   resources :vats
 
-  resources :regular_trainings
+  resources :regular_trainings do
+    resources :training_lessons
+    resources :coach_obligations
+  end
 
   resources :variable_fields do
     resources :variable_field_measurements, only: [:new, :create]
@@ -93,6 +94,8 @@ Scapp::Application.routes.draw do
         get '/' => 'user_relations#user_has'
       end
     end
+
+    get 'trainings' => 'trainings#user_overview'
 
   end
 end
