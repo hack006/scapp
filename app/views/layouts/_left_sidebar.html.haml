@@ -11,11 +11,12 @@
           %i.fa.fa-circle.text-success
           Online
     / search form
-    %form.sidebar-form{action: "#", method: "get"}
-      .input-group
-        %input.form-control{name: "q", placeholder: "Search...", type: "text"}/
-        %span.input-group-btn
-          %button#search-btn.btn.btn-flat{name: "seach", type: "submit"}
-            %i.fa.fa-search
+    -#
+      %form.sidebar-form{action: "#", method: "get"}
+        .input-group
+          %input.form-control{name: "q", placeholder: "Search...", type: "text"}/
+          %span.input-group-btn
+            %button#search-btn.btn.btn-flat{name: "seach", type: "submit"}
+              %i.fa.fa-search
     / sidebar menu
     = AdvancedMenu::Menu.render(current_user, controller_name, action_name)

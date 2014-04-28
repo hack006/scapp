@@ -33,10 +33,11 @@
                 %a{href: "#"} See all
 
         / Notifications: style can be found in dropdown.less
-        %li.dropdown.notifications-menu
-          %a.dropdown-toggle{href: "#", "data-toggle" => "dropdown"}
-            %i.fa.fa-warning
-            %span.label.label-warning 8
+        -#
+          %li.dropdown.notifications-menu
+            %a.dropdown-toggle{href: "#", "data-toggle" => "dropdown"}
+              %i.fa.fa-warning
+              %span.label.label-warning 8
         -#
           %ul.dropdown-menu
             %li.header= t('template.header.you_have_x_new_notifications', count: 8)

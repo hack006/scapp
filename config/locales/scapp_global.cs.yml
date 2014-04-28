@@ -1,8 +1,8 @@
 cs:
   variable_field:
-    vf_cant_be_deleted: "Proměnná pole nelze odstranit, protože některá data se spoléhá na to!"
-    edit_confirmation: "Varování! Chcete změnit proměnnou, která se již používá. Pole je třeba změnit pouze v případě, že se opravuje chybu nebo posílení popis. A potvrďte přepisování: % {token}"
-    bad_confirmation: "Zadali jste neplatné potvrzení token!"
+    vf_cant_be_deleted: "Metriku nelze odstranit, protože již existují její měření!"
+    edit_confirmation: "Varování! Chcete změnit metriku, která se již používá. Změnu provádějte pouze v případě, že opravujete chybu nebo popis. Potvrďte přepisem následujícího kódu: %{token}"
+    bad_confirmation: "Zadali jste neplatný potvrzovací token!"
   days:
     monday: Pondělí
     tuesday: Úterý
@@ -12,7 +12,10 @@ cs:
     saturday: Sobota
     sunday: Neděle
   times:
-    minutes: "1 minuta"
+    minutes:
+      one: "1 minuta"
+      few: "%{count} minuty"
+      other: "%{count} minut"
     hours:
       one: "1 hodina"
       few: "%{count} hodiny"
@@ -131,162 +134,162 @@ cs:
     edit_currency: "Upravit měnu"
     calculation: Výpočet
     player_price_without_vat: "Cena na hráče za hodinu bez DPH"
-    group_price_without_vat: "Skupina cena za hodinu bez DPH"
+    group_price_without_vat: "Skupinová cena za hodinu bez DPH"
     rental_price_without_vat: "Cena pronájmu za hodinu bez DPH"
-    training_vat: "Ceny školení DPH"
-    rental_vat: "Pronájem DPH"
+    training_vat: "DPH tréninku"
+    rental_vat: "DPH pronájem"
     date_and_time: "Datum & čas"
-    finance: Financí
+    finance: Finance
     player: Hráč
-    even: "A to i"
-    odd: Lichá
-    player_price: "Hráč cena"
-    group_price: "Skupina cena"
+    even: Sudý
+    odd: Lichý
+    player_price: "Cena na hráče"
+    group_price: "Cena na skupinu"
     rental_price: "Cena pronájmu"
     vat_included: DPH
     without_vat: "bez DPH"
     minutes: minuty
     hours: hodiny
     days: dny
-    training_coach: "Školení trenér"
-    training_coaches: "Školení trenérů"
-    new_training_coach: "Nový trenér vzdělávání"
-    edit_training_coach: "Upravit školení trenér"
+    training_coach: Trenér
+    training_coaches: Trenéři
+    new_training_coach: "Přidat trenéra"
+    edit_training_coach: "Upravit trenéra"
     coach: Trenér
-    coach_role: "Trenér role"
+    coach_role: "Role trenéra"
     hour_wage_without_vat: "Hodinová mzda s DPH"
     hourly_wage: "Hodinová mzda"
     role: Role
-    trainings_overview: "Školení Přehled"
+    trainings_overview: "Přehled tréninků"
     code: Kód
     symbol: Symbol
     time: Čas
     week_day: "Den týdne"
     detail: Detail
-    note: "Poznámka:"
+    note: Poznámka
     status: Stav
     salary: Plat
-    time_until_start: "Doba do zahájení"
-    participation_state: "Účast stát"
-    present: Současnost
+    time_until_start: "Čas do zahájení"
+    participation_state: Účast
+    present: Přítomen
     excused: Omluven
-    unexcused: Neomluvené
+    unexcused: Neomluven
     summary: Shrnutí
     statistics: Statistiky
     statistic: Statistika
     type: Typ
     price: Cena
-    excuse: Omluva
+    excuse: "Omluvit se"
     other: Ostatní
-    not_paid: Nezaplatil
+    not_paid: Nezaplaceno
     payment: Platba
-    sign_in_time: "Podepsat v čase"
-    excuse_time: "Omluva čas"
-    passed: Předán
+    sign_in_time: "Čas přihlášení"
+    excuse_time: "Čas omluvení"
+    passed: Uskutečněno
     remain: Zůstávají
     before: Před
     rgb: RGB
-    change_date_range: "Změnit rozsah dat"
+    change_date_range: "Upřesnit datum"
     sum: SOUČET
-    string_value: "Řetězcová hodnota"
+    string_value: "Znaková hodnota"
     int_value: "Číselná hodnota"
-    is_numeric: Numerické?
-    min: Minimální
-    max: Maximální
+    is_numeric: "Číselná hodnota?"
+    min: Minimum
+    max: Maximum
     mean: Průměr
-    count: Hrabě
-    listing: Dictionary.listing
+    count: Počet
+    listing: Výpis
   alerts:
     not_authorized: "Nemáte požadovaná oprávnění pro tuto akci."
   breadcrumbs:
-    home: Domov
-    variable_fields: "Proměnná pole"
-    variable_field: "Proměnná pole"
-    variable_field_detail: "Proměnná pole podrobností"
-    edit_variable_field: "Upravit proměnné pole"
+    home: Domů
+    variable_fields: Metriky
+    variable_field: Metrika
+    variable_field_detail: "Detail metriky"
+    edit_variable_field: "Upravit metriku"
     user: Uživatel
     users: Uživatelé
     in_groups: "Ve skupinách"
     user_groups: "Skupiny uživatelů"
     new_group: "Nová skupina"
     edit_group: "Upravit skupinu"
-    has_relations: "Stávající vztahy"
+    has_relations: "Existující vztahy"
     my_relations: "Moje vztahy"
     new_relation: "Nový vztah"
     edit_relation: "Upravit vztah"
     new_user: "Nový uživatel"
-    new_variable_field: "Nové proměnné pole"
-    new_variable_field_measurement: "Nové proměnné pole měření"
-    variable_field_categories: "VF kategorie"
-    new_variable_field_category: "Nová kategorie VF"
-    variable_field_category: "Proměnná pole kategorie"
-    edit_variable_field_category: "Upravit proměnné pole kategorie"
-    variable_field_user_levels: "VF uživatelské úrovně"
-    new_variable_field_user_level: "Nová úroveň uživatele VF"
-    variable_field_sports: "VF sport"
-    new_variable_field_sport: "Nové VF sport"
+    new_variable_field: "Nová metrika"
+    new_variable_field_measurement: "Nové měření metriky"
+    variable_field_categories: "Metrika - kategorie"
+    new_variable_field_category: "Metrika - nová kategorie"
+    variable_field_category: "Metrika - kategorie"
+    edit_variable_field_category: "Metrika - upravit kategorii"
+    variable_field_user_levels: "Metrika - uživatelské úrovně"
+    new_variable_field_user_level: "Metrika - nová uživatelská úroveň"
+    variable_field_sports: "Metrika - sporty"
+    new_variable_field_sport: "Metrika - nový sport"
     user_relations: "Vztahy uživatelů"
-    vf_measurement_detail: "VF měření detail"
-    vf_user_measurements: "VF uživatelské měření"
-    edit_vf_measurement: "Upravit proměnné pole měření"
-    vf_measurements: "VF měření"
-    new_vf_measurement: "Nové měření VF"
-    group_detail: "Skupina podrobností"
-    trainings: Školení
-    my_trainings: "Moje školení"
-    regular_trainings: "Pravidelná školení"
-    new_training: "Nové školení"
-    edit_training: "Upravit školení"
-    training_detail: "Podrobnosti školení"
-    reqular_training_detail: "Pravidelné školení detail"
-    schedule_training: "Naplánovat školení týkající se"
+    vf_measurement_detail: "Metrika - detail měření"
+    vf_user_measurements: "Metrika - hodnoty uživatele"
+    edit_vf_measurement: "Metrika - úprava měření"
+    vf_measurements: "Metrika - měření"
+    new_vf_measurement: "Metrika - nové měření"
+    group_detail: "Detail skupiny"
+    trainings: Tréninky
+    my_trainings: "Moje tréninky"
+    regular_trainings: "Moje pravidelné tréninky"
+    new_training: "Nový trénink"
+    edit_training: "Upravit trénink"
+    training_detail: "Detail tréninku"
+    reqular_training_detail: "Detail pravidelného tréninku"
+    schedule_training: "Naplánovat trénink"
     schedule_trainings: "Rozvrh tréninků"
     vat: DPH
-    vats: Kádě
+    vats: DPH
     new_vat: "Nová DPH"
     edit_vat: "Úprava DPH"
-    training_lessons: "Kondiční lekce"
-    training_lesson: Lekce
-    new_training_lesson: "Nové lekce"
-    edit_training_lesson: "Upravit lekce"
-    training_coach: "Školení trenér"
-    training_coaches: "Školení trenérů"
-    new_training_coach: "Nový trenér vzdělávání"
-    edit_training_coach: "Upravit školení trenér"
-    trainings_overview: "Školení Přehled"
+    training_lessons: "Tréninkové hodiny"
+    training_lesson: "Tréninková hodina"
+    new_training_lesson: "Nové tréninková hodina"
+    edit_training_lesson: "Upravit tréninkovou hodinu"
+    training_coach: Trenér
+    training_coaches: Trenéři
+    new_training_coach: "Nový trenér"
+    edit_training_coach: "Upravit trenéra"
+    trainings_overview: "Přehled tréninků"
     currency: Měna
     currencies: Měny
     new_currency: "Nová měna"
     edit_currency: "Upravit měnu"
-    regular_training_lesson_detail: "Plánované pravidelné školení lekce detail"
-    individual_training_lesson_detail: "Naplánováno detail lekce individuální výcvik"
-    regular_training_lesson_edit: "Upravit plánované pravidelné lekce"
-    individual_training_lesson_edit: "Upravit naplánovanou individuální lekce"
-    individual_training_lesson_new: "Nové plánované individuální lekce"
-    regular_training_lesson_new: "Nové plánované pravidelné lekce"
-    present_coaches: "Současné vozy"
-    present_coach: "Současné trenér"
-    edit_present_coach: "Úprava současné trenér"
-    new_present_coach: "Nový přítomen trenér"
-    scheduled_training_lessons: "Naplánované kondiční lekce"
-    attendence: Návštěvnosti
-    regular_training_lesson_attendance: "Pravidelné školení lekce docházka"
-    individual_training_lesson_attendance: "Docházka lekce individuální výcvik"
-    user_training_attendence: "Uživatelské školení návštěvnosti"
-    attendance_fill: "Vyplňte docházka"
-    regular_training_attendance: "Pravidelné školení docházky"
-    new_user_attendance: "Nové uživatele docházka"
-    edit_user_attendance: "Upravit uživatelské docházka"
-    new: Nové
-    edit: Úpravy
+    regular_training_lesson_detail: "Detail tréninkové hodiny"
+    individual_training_lesson_detail: "Detail individuální tréninkové hodiny"
+    regular_training_lesson_edit: "Upravit tréninkovou hodinu"
+    individual_training_lesson_edit: "Upravit individuální tréninkovou hodinu"
+    individual_training_lesson_new: "Nová individuální tréninková hodina"
+    regular_training_lesson_new: "Nová tréninková hodina"
+    present_coaches: "Přítomní trenéři"
+    present_coach: "Přítomný trenér"
+    edit_present_coach: "Upravit přítomného trenéra"
+    new_present_coach: "Nový přítomný trenér"
+    scheduled_training_lessons: "Naplánovat tréninkové hodiny"
+    attendence: Návštěvnost
+    regular_training_lesson_attendance: "Docházka na trénink"
+    individual_training_lesson_attendance: "Docházka na trénink"
+    user_training_attendence: "Docházka uživatele"
+    attendance_fill: "Vyplňit docházku"
+    regular_training_attendance: "Docházka na trénink"
+    new_user_attendance: "Nový záznam docházky uživatele"
+    edit_user_attendance: "Úprava záznamu docházky uživatele"
+    new: Nový
+    edit: Úprava
     player_price_calculation: "Kalkulace ceny hráče"
-    scheduled_training_lesson_attendance_detail: "Plánované vzdělávací lekce docházka detail"
-    trainings_help: "Školení pomůže"
-    dashboard: "Řídicí panel"
+    scheduled_training_lesson_attendance_detail: "Detail tréninkové docházky"
+    trainings_help: "Tréninky - nápověda"
+    dashboard: Nástěnka
     help: Pomoc
     set_user_roles: "Nastavit uživatelské role"
-    scheduled_lesson_add_measurements_vf_select: "Výběr proměnné pole"
-    scheduled_lesson_fill_measurement: "Vyplnit pravidelné lekce měření"
+    scheduled_lesson_add_measurements_vf_select: "Výběr metriky"
+    scheduled_lesson_fill_measurement: "Záznam měření metriky na tréninku"
   nav:
     user: Uživatel
     users: Uživatelé
@@ -296,127 +299,130 @@ cs:
     groups: Skupiny
     new_group: "Nová skupina"
     relations: Vztahy
-    variable_field: "Proměnná pole"
-    variable_fields: "Proměnná pole"
-    my_variable_fields: "Moje proměnná pole"
-    new_variable_field: "Nové proměnné pole"
-    variable_field_categories: "VF kategorie"
-    new_variable_field_category: "Nová kategorie VF"
-    variable_field_category: "Proměnná pole kategorie"
-    edit_variable_field_category: "Upravit proměnné pole kategorie"
-    variable_field_user_levels: "VF uživatelské úrovně"
-    new_variable_field_user_level: "Nová úroveň uživatele VF"
-    variable_field_sports: "VF sport"
-    new_variable_field_sport: "Nové VF sport"
-    variable_field_measurements: "VF měření"
+    variable_field: Metrika
+    variable_fields: Metriky
+    my_variable_fields: "Moje metriky"
+    new_variable_field: "Nová metrika"
+    variable_field_categories: "Kategorie metriky"
+    new_variable_field_category: "Nová kategorie metriky"
+    variable_field_category: "Metrika - kategorie"
+    edit_variable_field_category: "Metrika - upravit kategorii"
+    variable_field_user_levels: "Metrika - uživatelské úrovně"
+    new_variable_field_user_level: "Metrika - nová uživatelská úroveň"
+    variable_field_sports: "Metrika - sporty"
+    new_variable_field_sport: "Metrika - nový sport"
+    variable_field_measurements: "Metrika - měření"
     new_relation: "Nový vztah"
     edit_relation: "Upravit vztah"
-    group_detail: "Skupina podrobností"
-    trainings: Školení
+    group_detail: "Detail skupiny"
+    trainings: Tréninky
     my_trainings: "Moje školení"
-    regular_trainings: "Pravidelná školení"
-    new_training: "Nové školení"
-    edit_training: "Upravit školení"
-    training_detail: "Podrobnosti školení"
-    reqular_training_detail: "Pravidelné školení detail"
-    schedule_trainings: "Rozvrh tréninků"
-    schedule_training: "Naplánovat školení týkající se"
+    regular_trainings: "Pravidelné tréninky"
+    new_training: "Nový trénink"
+    edit_training: "Upravit trénink"
+    training_detail: "Detail tréninku"
+    reqular_training_detail: "Detail pravidelného tréninku"
+    schedule_trainings: "Naplánování tréninků"
+    schedule_training: "Naplánování tréninku"
     vat: DPH
-    vats: Kádě
+    vats: DPH
     new_vat: "Nová DPH"
-    training_lessons: "Kondiční lekce"
-    training_lesson: Lekce
-    new_training_lesson: "Nové lekce"
-    edit_training_lesson: "Upravit lekce"
-    finance: Financí
+    training_lessons: "Tréninkové hodiny"
+    training_lesson: "Tréninková hodina"
+    new_training_lesson: "Nová tréninková hodina"
+    edit_training_lesson: "Upravit tréninkovou hodinu"
+    finance: Finance
     currencies: Měny
     new_currency: "Nová měna"
-    regular_training_lesson_detail: "Plánované pravidelné školení lekce detail"
-    individual_training_lesson_detail: "Naplánováno detail lekce individuální výcvik"
-    regular_training_lesson_edit: "Upravit plánované pravidelné lekce"
+    regular_training_lesson_detail: "Detail tréninkové hodiny"
+    individual_training_lesson_detail: "Detail individuální tréninkové hodiny"
+    regular_training_lesson_edit: "Upravit tréninkovou hodinu"
     individual_training_lesson_edit: "Upravit naplánovanou individuální lekce"
-    present_coaches: "Současné vozy"
-    present_coach: "Současné trenér"
-    edit_present_coach: "Úprava současné trenér"
-    new_present_coach: "Nový přítomen trenér"
-    scheduled_training_lessons: "Naplánované kondiční lekce"
-    attendence: Návštěvnosti
-    regular_training_lesson_attendance: "Pravidelné školení lekce docházka"
-    individual_training_lesson_attendance: "Docházka lekce individuální výcvik"
-    user_training_attendence: "Uživatelské školení návštěvnosti"
-    attendance_fill: "Vyplňte docházka"
-    regular_training_attendance: "Pravidelné školení docházky"
-    new_user_attendance: "Nové uživatele docházka"
-    edit_user_attendance: "Upravit uživatelské docházka"
-    new: Nové
-    edit: Úpravy
-    individual_training_lesson_new: "Nové plánované individuální lekce"
-    regular_training_lesson_new: "Nové plánované pravidelné lekce"
+    present_coaches: "Přítomní trenéři"
+    present_coach: "Přítomný trenér"
+    edit_present_coach: "Úprava přítomného trenéra"
+    new_present_coach: "Nový přítomý trenér"
+    scheduled_training_lessons: "Naplánované tréninkové hodiny"
+    attendence: Docházka
+    regular_training_lesson_attendance: "Docházka na trénink"
+    individual_training_lesson_attendance: "Docházka na trénink"
+    user_training_attendence: "Docházka uživatele"
+    attendance_fill: "Tvorba docházky"
+    regular_training_attendance: "Docházka na trénink"
+    new_user_attendance: "Nová docházka uživatele"
+    edit_user_attendance: "Upravit uživatelskou docházku"
+    new: Nový
+    edit: Úprava
+    individual_training_lesson_new: "Nová tréninková hodina"
+    regular_training_lesson_new: "Nová tréninková hodina"
     player_price_calculation: "Kalkulace ceny hráče"
-    scheduled_training_lesson_attendance_detail: "Plánované vzdělávací lekce docházka detail"
-    trainings_help: "Školení pomůže"
-    dashboard: "Řídicí panel"
-    new_lesson: "Nová lekce"
-    help: Pomoc
+    scheduled_training_lesson_attendance_detail: "Detail tréninkové docházky"
+    trainings_help: "Tréninky - nápověda"
+    dashboard: Nástěnka
+    new_lesson: "Nová hodina"
+    help: Nápověda
     set_user_roles: "Nastavit uživatelské role"
-    scheduled_lesson_add_measurements_vf_select: "Výběr proměnné pole"
-    scheduled_lesson_fill_measurement: "Vyplnit pravidelné lekce měření"
+    scheduled_lesson_add_measurements_vf_select: "Výběr metriky"
+    scheduled_lesson_fill_measurement: "Vyplnění měření na tréninkové hodině"
   template:
     main:
-      home: Domov
-      dashboard: "Řídicí panel"
-      control_panel: "Ovládací panely"
+      home: Domů
+      dashboard: Nástěnka
+      control_panel: "Ovládací panel"
     header:
-      you_have_x_new_notifications: "Máte nové oznámení % {počet}"
+      you_have_x_new_notifications:
+        one: "Máte 1 nové oznámení"
+        few: "Máte %{count} nová oznámení"
+        other: "Máte %{count} nových oznámení"
       view_all: "Zobrazit všechna oznámení"
       sign_out: "Odhlásit se"
       sign_in: "Přihlásit se"
       profile: Profil
-      toggle_nav: "Přepnout nav"
+      toggle_nav: "Zobrazit navigaci"
     header_public:
       you_are_already_signed: "Jste již přihlášeni"
-      go_to_dashboard: "Přejít na DASHBOARD"
+      go_to_dashboard: "Přejít na nástěnku"
     left_sidebar:
-      greetings: "Dobrý den % {uživatel}"
+      greetings: "Vítejte, %{user}"
   home:
     index:
       our_public_trainings: "Naše veřejné tréninky"
-      training_lessons: "Kondiční lekce"
+      training_lessons: "Tréninkové hodiny"
       day: Den
       from: Od
-      until: "Až do"
+      until: Do
       season: Sezóna
       even_week: "Sudý týden"
       odd_week: "Lichý týden"
       not_limited: "Bez omezení"
       about_us: "O nás"
     dashboard:
-      my_closests_trainings: "Moje nejbližší školení"
-      closests_trainigs_trained_by_me: "Nejbližší školení darem"
+      my_closests_trainings: "Moje nejbližší tréninky"
+      closests_trainigs_trained_by_me: "Nejbližší školení, které trénuji"
       my_latest_measurements: "Moje nejnovější měření"
-      latest_measurement_of_my_players: "Nejnovější měření z mých hráčů"
+      latest_measurement_of_my_players: "Nejnovější měření mých hráčů"
       players_count: "Počet hráčů"
-      my_coaches: "Moje spojení autobusy"
+      my_coaches: "Moji trenéři"
       location: Umístění
       date: Datum
-      variable_field: "Proměnná pole"
+      variable_field: Metrika
       value: Hodnota
-      state: Stát
+      state: Stav
       created: Vytvořil(a)
       states:
         new: "Čekání na autorizaci"
         accepted: Připojeno
-        refused: "Odmítl další strana"
+        refused: "Odmítnuto druhou stranou"
       time: Čas
-      training: Školení
+      training: Trénink
       type: Typ
       role: Role
-      time_until_start: "Doba do zahájení"
+      time_until_start: "Čas do zahájení"
       player: Hráč
       coach: Trenér
   registration:
     edit:
-      leave_blank_when_not_want_change: "ponechejte prázdné, pokud chcete změnit"
+      leave_blank_when_not_want_change: "ponechejte prázdné, pokud nechcete změnit"
       need_passwd_to_ok_changes: "Potřebujeme vaše aktuální heslo pro potvrzení změny"
       cancel_account: "Zrušit účet"
   vf:
@@ -426,23 +432,23 @@ cs:
       location: Umístění
       measured_by: Měřeno
     index:
-      variable_field_optimal_values: "Optimální hodnoty VF"
-      new_variable_field_optimal_value: "Nová VF optimální hodnota"
-      variable_fields: "Proměnná pole"
-      edit: Úpravy
+      variable_field_optimal_values: "Optimální hodnoty metrik"
+      new_variable_field_optimal_value: "Nová optimální hodnota metriky"
+      variable_fields: Metriky
+      edit: Upravit
       delete: Odstranit
       are_you_sure: Opravdu?
       name: Jméno
       description: Popis
       user: Uživatel
-      variable_field_category: "Proměnná pole kategorie"
-      new_vf: "Nové proměnné pole"
+      variable_field_category: "Metrika - kategorie"
+      new_vf: "Nová metrika"
       is_numeric: "Číselná hodnota"
       higher_is_better: "Lepší vyšší"
       global: Globální
       add_measurement: "Přidat měření"
       show_detail: "Zobrazit detaily"
-      show_variable_fields_with_measurements: "Prohlédni moje VF s měřením"
+      show_variable_fields_with_measurements: "Zobrazit mé metriky"
     list:
       current_value: "Současná hodnota"
       location: Umístění
@@ -450,13 +456,13 @@ cs:
       best: Nejlepší
       worst: Nejhorší
       value: Hodnota
-      statistic_info_not_available: "Statistické informace není k dispozici."
+      statistic_info_not_available: "Statistické informace nejsou k dispozici."
       description: Popis
       measured_by: Měřeno
-      user_variable_field_detail: "Uživatelské proměnné pole - detail"
+      user_variable_field_detail: "Detail uživatelské metriky"
       user_variable_fields: "Uživatelské proměnné pole"
       add_new_measurement: "Přidat nové měření"
-      view_all_available_fields: "Prohlédni všechny dostupné VF"
+      view_all_available_fields: "Zobrazit přístupné metriky"
     new:
       new_vf: "Nové proměnné pole"
       add_category: "Přidat kategorii"
@@ -466,95 +472,95 @@ cs:
       unit: Jednotka
       higher_is_better: "Vyšší hodnota je lepší"
       is_numeric: "Pole slouží k uložení číselných hodnot"
-      is_global: "Pole je globální - sdílet se všemi uživateli"
+      is_global: "Pole je globální - sdíleno se všemi uživateli"
       category: Kategorie
-      vf_detail: "Proměnná pole podrobností"
+      vf_detail: "Detail metriky"
     edit:
-      edit_variable_field: "Upravit proměnné pole"
+      edit_variable_field: "Upravit metriku"
     vfm:
       new:
         new_measurement: "Nové měření"
         add_measurement: "Přidat měření"
     scheduled_lesson_vf_select:
-      select_vf: "Vyberte VF"
+      select_vf: "Vybrat metriku"
       name: Jméno
       description: Popis
       is_numeric: Numerické?
     scheduled_lesson_fill:
       location: Umístění
-      measured_at: Měřeno
-      string_value: "Řetězcová hodnota"
+      measured_at: "Datum měření"
+      string_value: "Znaková hodnota"
       int_value: "Číselná hodnota"
       player: Hráč
       value: Hodnota
-      save_measurements: "Uložení měření"
+      save_measurements: "Uložit měření"
       numeric_value_expected: "Očekává se číselná hodnota!"
-      bad_date_time: "Nesprávné datum a čas formát nebo datetime neplatný vstoupil!"
+      bad_date_time: "Chybný formát nebo zadané nevalidní datum!"
     user_vf_detail:
       from_date: "Od data"
-      until_date: "Až do data"
-      change_date_range: "Změnit rozsah dat"
+      until_date: "Do data"
+      change_date_range: "Upřesnit datum"
       statistics: Statistiky
-      vf_development: "VF rozvoj"
-      vf_distribution: "VF distribuce"
-      min: Minimální
-      max: Maximální
+      vf_development: "Vývoj metriky"
+      vf_distribution: "Distribuce metriky"
+      min: Minimum
+      max: Maximum
       mean: Průměr
       standard_deviation: "Směrodatná odchylka"
-      count: Hrabě
-      avg_interval_between_measurements: "AVG interval mezi měřeními"
-      listing: VF.user_vf_detail.listing
-      measured_at: Měřeno
+      count: Počet
+      avg_interval_between_measurements: "Průměrný časový interval mezi měřeními"
+      listing: Výpis
+      measured_at: "Datum měření"
       value: Hodnota
       measured_by: Měřeno
-      measured_at_lesson: "Měřeno na lekce"
+      measured_at_lesson: "Měřeno na tréninkové hodině"
       location: Umístění
-      lack_of_measurements: "Nedostatek měření pro kreslení tohoto grafu. Je požadováno nejméně 2."
-      data_set_empty: "Sada dat je prázdný. Statistiky nelze zobrazit."
+      lack_of_measurements: "Nedostatek dat pro vykreslení grafu. Jsou nutná minimálně 2 měření."
+      data_set_empty: "Neexistující data. Statistiky nelze zobrazit."
       add_measurement: "Přidat měření"
       measurement_date_range: "Rozsah měření"
-      vf_info: "VF informace"
+      vf_info: "Informace o metrice"
       options: Možnosti
   vfm:
     controller:
-      successfully_created: "Proměnná pole měření byl úspěšně vytvořen."
-      successfully_removed: "Měření proměnná pole byla úspěšně odebrána."
-      successfully_updated: "Proměnná pole měření změny byly úspěšně uloženy."
+      successfully_created: "Měření metriky bylo úspěšně přidáno."
+      successfully_removed: "Měření metriky bylo úspěšně odebráno."
+      successfully_updated: "Měření metriky bylo úspěšně aktualizováno."
     show:
-      measured_at: Měřeno
+      measured_at: "Datum měření"
       measured_by: Měřeno
       location: Umístění
       string_value: Hodnota
       numeric_value: "Číselná hodnota"
-      edit: Úpravy
-      vf_measurement_detail: "VF měření detail"
-      vf: "Proměnná pole"
+      edit: Upravit
+      vf_measurement_detail: "Detail měření metriky"
+      vf: Metrika
     edit:
-      edit_vf_measurement: "Upravit proměnné pole měření"
+      edit_vf_measurement: "Metrika - úprava měření"
     index:
-      variable_field: "Proměnná pole"
-      vf_measurements: VFM.index.vf_measurements
-      measured_at: Měřeno
+      variable_field: Metrika
+      vf_measurements: "Měření metrik"
+      measured_at: "Datum měření"
       location: Umístění
       string_value: Hodnota
       numeric_value: "Číselná hodnota"
       measured_for: "Měřeno pro"
       measured_by: Měřeno
       show: Zobrazit
-      edit: Úpravy
+      edit: Upravit
       delete: Odstranit
     new:
-      new_vf_measurement: "Nové měření VF"
+      new_vf_measurement: "Nové měření metriky"
   vfc:
     index:
-      variable_field_categories: "Výpis kategorie proměnné polí"
-      new: Nové
+      variable_field_categories: "Výpis kategorií metrik"
+      new: Nový
       name: Jméno
       rgb: Barva
       description: Popis
       user: "Vlastník kategorie"
     new:
-      new_variable_field_category: "Nová proměnná pole kategorie"
+      new_variable_field_category: "Nová kategorie metriky"
     show:
       name: Jméno
       rgb: RGB
@@ -562,21 +568,24 @@ cs:
       user: Uživatel
   vful:
     index:
-      variable_field_user_levels: "Výpis proměnná pole uživatelské úrovně"
+      variable_field_user_levels: "Výpis uživatelských úrovní metrik"
     new:
-      new_variable_field_user_level: "Nové proměnné pole uživatelské úrovně"
+      new_variable_field_user_level: "Nová uživatelská úroveň metriky"
   vfs:
     index:
-      variable_field_sports: "Zobrazení proměnné pole Sport"
+      variable_field_sports: "Zobrazení sportů metrik"
     new:
-      new_variable_field_sport: "Nové proměnné pole sport"
+      new_variable_field_sport: "Nový sport metriky"
   user:
+    devise:
+      send_reset_instructions: "Zaslat instrukce k nastavení nového hesla."
+      sign_up: "Zaregistrovat se"
     controller:
       user_create_success: "Uživatel byl úspěšně vytvořen"
       update_succeed: "Profil uživatele byly úspěšně aktualizovány."
       update_failed: "Nelze aktualizovat Profil uživatele."
       roles_successfully_changed: "Uživatelské role byla úspěšně aktualizována."
-      roles_change_failed: "Něco se pokazilo při pokusu změnit role uživatelů!"
+      roles_change_failed: "Došlo k neočekávané chybě během pokusu o změnu uživatelské role!"
     show:
       profile: Profil
       user: Uživatel
@@ -584,7 +593,7 @@ cs:
       last_sign_in: "Poslední přihlášení"
       member_since: "Členem od"
       user_metrics: "Uživatele metriky"
-      user_groups: "Skupiny uživatele je v"
+      user_groups: "Uživatel členem skupin"
       user_relations: "Vztahy uživatelů"
     index:
       users: Uživatelé
@@ -594,7 +603,7 @@ cs:
       roles: Role
       change_role: "Změna role"
       delete: Odstranit
-      edit: Úpravy
+      edit: Upravit
       show: "Zobrazit profil"
       relations: "Vztahy s uživateli"
       new_user: "Nový uživatel"
@@ -611,8 +620,8 @@ cs:
   user_groups:
     controller:
       successfully_created: "Skupina uživatelů byla úspěšně vytvořena."
-      successfully_destroyed: "Skupina uživatelů byla úspěšně zničena."
-      not_have_required_role: "Nemáte žádné požadované roli."
+      successfully_destroyed: "Skupina uživatelů byla úspěšně odstraněna."
+      not_have_required_role: "Nemáte žádnou požadovanou roli."
     index:
       user_groups: "Seznam skupin uživatelů"
       name: Jméno
@@ -620,17 +629,17 @@ cs:
       visibility: Viditelnost
       owner: Vlastník
       new_group: "Nová skupina"
-      global: user_groups.index.Global
+      global: Globální
     user_in:
-      user_assigned_in_groups: "Uživatel přiřazený ve skupinách"
+      user_assigned_in_groups: "Uživatel umístěn ve skupinách"
       members: Členové
     new:
       new_group: "Nová skupina"
     edit:
       edit_group: "Upravit skupinu"
     detail:
-      global: user_groups.detail.Global
-      group_detail: "Skupina podrobností"
+      global: Globální
+      group_detail: "Detail skupiny"
       description: Popis
       visibility: Viditelnost
       owner: Vlastník
@@ -645,13 +654,13 @@ cs:
       successfully_created: "Vztah byl úspěšně vytvořen."
       successfully_updated: "Vztah byl úspěšně aktualizován."
       successfully_removed: "Vztah byl úspěšně odebrán."
-      not_valid_user: "Neexistuje žádný uživatel zadané e-mailovou adresu. Zadejte správnou e-mailovou adresu."
-      already_exists: "Vztah typu % {type} mezi vámi a % {uživatel} již existuje. Nelze vytvořit novou!"
+      not_valid_user: "Neexistuje žádný uživatel se zadanou e-mailovou adresou. Zadejte správnou e-mailovou adresu."
+      already_exists: "Vztah typu %{type} mezi vámi a %{user} již existuje. Nelze vytvořit nový!"
     index:
       user_relations: "Výpis uživatelských vztahů"
       waiting_approval: neschválené
-      from_user_status: "Stav [z]"
-      to_user_status: "Stav [do]"
+      from_user_status: "Stav [od]"
+      to_user_status: "Stav [k]"
       relation: Vztah
       from: Od
       to: Do
@@ -660,12 +669,12 @@ cs:
       created: Vytvořil(a)
     user_has:
       new_relation: "Nový vztah"
-      user_relation_connections: "Připojení relace uživatele"
+      user_relation_connections: "Uživatelské vztahy"
       with_user: "S uživatelem"
       from: Od
       active_relations: "Aktivní vztahy"
-      pending_relations: "Čeká na vztahy"
-      refused_relations: "Odmítnutá vztahy"
+      pending_relations: "Vztahy čekající na schválení"
+      refused_relations: "Zamítnuté vztahy"
       relation: Vztah
       refuse_relation: "Odmítnout vztah"
       accept_relation: "Akceptovat vztah"
@@ -674,12 +683,12 @@ cs:
       new_relation: "Nový vztah"
     create_request:
       successfully_created: "Vztah byl úspěšně vytvořen."
-      not_valid_user: "Neexistuje žádný uživatel zadané e-mailovou adresu. Zadejte správnou e-mailovou adresu."
-      already_exists: "Vztah typu % {type} mezi vámi a % {uživatel} již existuje. Nelze vytvořit novou!"
+      not_valid_user: "Neexistuje žádný uživatel se zadanou e-mailovo adresou. Zadejte správnou e-mailovou adresu."
+      already_exists: "Vztah typu %{type} mezi vámi a %{user} již existuje. Nelze vytvořit nový!"
     change_status:
       not_authorized: "Nemáte oprávnění k manipulaci s tímto vztahem!"
-      successfully_changed: "Stav vztahu uživatel byl úspěšně změněn na: % {status}."
-      unexpected_error: "Neočekávané chybě se objevil při změně stavu relace uživatele."
+      successfully_changed: "Stav vztahu byl úspěšně změněn na: %{status}."
+      unexpected_error: "Při změně stavu vztahu došlo k neočekávané chybě."
     new:
       new_relation: "Nový vztah"
     edit:
@@ -688,82 +697,82 @@ cs:
     controller:
       successfully_created: "Pravidelný trénink byl úspěšně vytvořen."
       successfully_updated: "Pravidelný trénink byl úspěšně aktualizován."
-      successfully_removed: "Pravidelný trénink byl úspěšně odebrán."
-      invalid_group_choosen: "Máte vybrané neplatné uživatelské skupiny!"
-      successfully_scheduled: "Poučení bylo úspěšně naplánováno."
-      scheduling_failed: "Něco se pokazilo, při plánování. Následující chyby aktivována: % {chyby}"
-      scheduling_not_possible_before_term: "Pokusíte plán lekce na % {datum}, což je před povolené časové období (% {from_date} - {until_date}). Podívejte se na školení lekce detaily a upravit časové období, v případě potřeby."
-      scheduling_not_possible_after_term: "Pokusíte plán lekce na % {datum}, který je po časové období (% {from_date} - {until_date}). Podívejte se na školení lekce detaily a upravit časové období, v případě potřeby."
-      date_range_180d_ays_exceeded: "Byl překročen maximální plánovací období půl roku. Prosím plán pro kratší období."
+      successfully_removed: "Pravidelný trénink byl úspěšně odstraněn."
+      invalid_group_choosen: "Vybrali jste neplatnou uživatelskou skupinu!"
+      successfully_scheduled: "Tréninkové hodiny byly úspěšně naplánovány."
+      scheduling_failed: "Během plánování došlo k následujícím chybám: %{errors}"
+      scheduling_not_possible_before_term: "Snažíte se plánovat na %{date}, což je před povoleným časovým obdobím (%{from_date} - %{until_date}). Pro více informací se podívejte na detail tréninkové hodiny."
+      scheduling_not_possible_after_term: "Snažíte se plánovat na %{date}, což je po povoleným časovým obdobím (%{from_date} - %{until_date}). Pro více informací se podívejte na detail tréninkové hodiny."
+      date_range_180d_ays_exceeded: "Byl překročeno maximální plánovací období půl roku. Prosím plánujte na kratší období."
     new:
-      new_training: "Nové školení"
+      new_training: "Nový trénink"
     index:
-      regular_trainings: "Pravidelná školení"
+      regular_trainings: "Pravidelné tréninky"
       name: Jméno
       description: Popis
       public: Veřejné
       owner: Vlastník
-      new_training: "Nové školení"
-    edit: regular_trainings.Edit
+      new_training: "Nový trénink"
+    edit: Úprava
     show:
-      reqular_training_detail: "Pravidelné školení detail"
+      reqular_training_detail: "Detail pravidelného tréninku"
       description: Popis
       public: Veřejné
       owner: Vlastník
-      lessons_per_week: "Počet lekcí za týden"
-      regular_training_coaches: "Pravidelné školení trenérů"
-      regular_training_players: "Pravidelný trénink hráče"
-      regular_training_lessons: "Pravidelná kondiční lekce"
-      list_training_lessons: "Seznam kondiční lekce"
-      add_new_training_lesson: "Přidat nové lekce"
-      edit_training: "Upravit školení"
-      schedule_trainings: "Rozvrh tréninků"
+      lessons_per_week: "Počet tréninkových hodin za týden"
+      regular_training_coaches: "Zúčastnění trenéři"
+      regular_training_players: "Pravidelní hráči"
+      regular_training_lessons: "Rozvrh vypsaných tréninkových hodiny"
+      list_training_lessons: "Seznam tréninkových hodin"
+      add_new_training_lesson: "Přidat tréninkovou hodinu"
+      edit_training: "Upravit trénink"
+      schedule_trainings: "Naplánovat tréninky"
       player: Hráč
-      no_players_yet: "Dosud nejsou k dispozici, žádné hráče. Máte ani přiřadit skupinu na školení nebo skupina neobsahuje žádné členy."
+      no_players_yet: "Dosud nejsou k dispozici žádní hráče. Nepřiřadili jste tréninku žádnou uživatelskou skupinu nebo skupina neobsahuje žádné členy!"
       for_group: "Pro skupinu"
-      even: "A to i"
+      even: Sudý
       odd: Lichá
-      add_new_coach: "Přidání nového trenéra"
+      add_new_coach: "Přidat nového trenéra"
       coach: Trenér
-      coach_role: "Trenér role"
+      coach_role: "Trenérská role"
       hour_wage: "Hodinová mzda"
       hour_wage_without_vat: "Hodinová mzda s DPH"
       time: Čas
       day: Den
       date: Datum
-      time_until_start: "Doba do zahájení"
-      note: "Poznámka:"
+      time_until_start: "Čas do zahájení"
+      note: Poznámka
       status: Stav
-      closest_training_lessons: "Nejbližší kondiční lekce"
-      list_scheduled_lessons: "Seznam plánovaných lekce"
+      closest_training_lessons: "Nejbližší tréninkové hodiny"
+      list_scheduled_lessons: "Seznam plánovaných tréninkových hodin"
       detail: Detail
-      player_attendance: "Hráč docházka"
+      player_attendance: "Zobrazit docházku hráče"
       show_attendance: "Zobrazit docházku"
     schedule_trainings:
       from: Od
-      until: "Až do"
-      change_date_range: "Změnit rozsah dat"
-      schedule: Rozvrh
-      training_lesson_suggestions: "Návrhy, kondiční lekce"
+      until: Do
+      change_date_range: "Upřesnit datum"
+      schedule: Naplánovat
+      training_lesson_suggestions: "Návrhy tréninkových hodin"
       already_scheduled: "Již naplánováno"
       date: Datum
       time: Čas
       week_day: "Den týdne"
-      state: Stát
+      state: Stav
   vat:
     vat_mask: "dd/mm/rrrr hh: mm"
-    vat_name_can_not_be_modified: "DPH název a procentuální hodnotu nelze změnit, s cílem zabránit nedorozumění trenéry a hráči a zabránit změnám kalkulace ceny."
+    vat_name_can_not_be_modified: "Název a procentuální hodnotu DPH  nelze změnit z důvodu možnosti vzniku chybných kalkulací."
     controller:
-      successfully_created: "DPH byl úspěšně vytvořen."
-      successfully_updated: "DPH byl úspěšně aktualizován."
-      successfully_removed: "DPH byl úspěšně odebrán."
-      dependent_exists: "Nelze odstranit. DPH je již v provozu!"
+      successfully_created: "DPH byla úspěšně vytvořena."
+      successfully_updated: "DPH byla úspěšně aktualizována."
+      successfully_removed: "DPH byla úspěšně odebrána."
+      dependent_exists: "Nelze odstranit. DPH je již používána!"
     index:
-      vats: Kádě
+      vats: DPH
       new_vat: "Nová DPH"
       name: Jméno
       percentage_value: "Procentuální hodnota"
-      is_time_limited: "Je časově omezené"
+      is_time_limited: "Časově omezené"
       start_of_validity: "Začátek platnosti"
       end_of_validity: "Konec platnosti"
     new:
@@ -772,7 +781,7 @@ cs:
       edit_vat: "Úprava DPH"
   currency:
     controller:
-      dependent_exists: "Nelze odstranit. Měna je již v provozu!"
+      dependent_exists: "Nelze odstranit. Měna je již používána!"
       successfully_removed: "Měna byla úspěšně odstraněna."
     index:
       name: Jméno
@@ -781,243 +790,251 @@ cs:
       new_currency: "Nová měna"
   training_lesson:
     controller:
-      regular_training_not_found: "Promiňte, nebyl nalezen požadovaný výcvik!"
-      vat_must_be_added_firstly: "Zatím neexistují žádné DPH. Budete muset přidat před přidáním lekce."
-      currency_must_be_added_firstly: "Neexistují žádná měna, zatím. Budete muset přidat před přidáním lekce."
-      successfully_created: "Pravidelné lekce byla úspěšně vytvořena."
-      successfully_updated: "Pravidelné lekce byla úspěšně aktualizována."
-      successfully_removed: "Pravidelné lekce byla úspěšně odebrána."
-      overlapping_already_existing_lesson: "V zadaném časovém intervalu již existují další lekce!"
+      regular_training_not_found: "Promiňte, nebyl nalezen požadovaný trénink!"
+      vat_must_be_added_firstly: "Zatím neexistuje žádná DPH. Budete ji muset přidat před přidáním lekce."
+      currency_must_be_added_firstly: "Zatím neexistuje žádná měna. Budete ji muset přidat před přidáním lekce."
+      successfully_created: "Pravidelný trénink byl úspěšně vytvořen."
+      successfully_updated: "Pravidelný trénink byla úspěšně aktualizován."
+      successfully_removed: "Pravidelný trénink byl úspěšně odebrán."
+      overlapping_already_existing_lesson: "V zadaném časovém intervalu již existuje tréninková hodina!"
     helper:
-      remaining_days: "% {počet} den od % {dní} dní uplynulo"
+      remaining_days:
+        one: "1 den z %{days} uplynul"
+        few: "uplynuly %{count} dny z %{days}"
+        other: "uplynulo %{count} dní z %{days}"
     form:
       date_and_time: "Datum & čas"
-      finance: Financí
+      finance: Finance
       new_currency: "Nová měna"
       new_vat: "Nová DPH"
-      are_you_sure_new_currency: "Jste si jisti, že chcete opustit tuto stránku a zobrazí formulář pro přidání nové měny? Všechna neuložená data budou ztracena."
-      are_you_sure_new_vat: "Jste si jisti, že chcete opustit tuto stránku a zobrazí formulář pro přidání nového DPH? Všechna neuložená data budou ztracena."
-      before_start_excuse_time_limit: "Před začátkem omluva časový limit"
-      before_start_sign_in_time_limit: "Před začátkem znamení v časovém limitu"
+      are_you_sure_new_currency: "Jste si jisti, že chcete opustit tuto stránku a zobrazit formulář pro přidání nové měny? Všechna neuložená data budou ztracena."
+      are_you_sure_new_vat: "Jste si jisti, že chcete opustit tuto stránku a zobrazit formulář pro přidání nového DPH? Všechna neuložená data budou ztracena."
+      before_start_excuse_time_limit: "Časový limit před tréninkem pro možnost omluvy"
+      before_start_sign_in_time_limit: "Časový limit před tréninkem pro přihlášení"
       odd_week: "Lichý týden"
       even_week: "Sudý týden"
       calculation: Výpočet
     index:
       day: Den
       from: Od
-      until: "Až do"
-      training_length: "Doba trvání školení"
+      until: Do
+      training_length: "Délka tréninku"
       from_date: "Od data"
-      until_date: "Až do data"
+      until_date: "Do data"
       odd_week: "Lichý týden"
       even_week: "Sudý týden"
-      back_to_training: "Zpět na školení"
+      back_to_training: "Zpět na trénink"
     new:
-      new_training_lesson: "Nové lekce"
+      new_training_lesson: "Nová tréninková hodina"
     edit:
-      edit_training_lesson: "Upravit lekce"
+      edit_training_lesson: "Upravit tréninkovou hodinu"
     show:
-      training_lesson: Lekce
+      training_lesson: "Tréninková hodina"
       description: Popis
       from: Od
-      until: "Až do"
+      until: Do
       odd_week: "Lichý týden"
       even_week: "Sudý týden"
-      calculation: Výpočet
+      calculation: "Způsob výpočtu ceny hráče"
       from_date: "Od data"
-      until_date: "Až do data"
-      player_price: "Hráč cena"
-      group_price: "Skupina cena"
+      until_date: "Do data"
+      player_price: "Cena na hráče"
+      group_price: "Cena za skupinu"
       rental_price: "Cena pronájmu"
-      training_vat: "Ceny školení DPH"
-      rental_vat: "Pronájem DPH"
+      training_vat: "DPH tréninku"
+      rental_vat: "DPH pronájmu"
       date_and_time: "Datum & čas"
       day: Den
-      finance: Financí
-      finance_lesson_note: "Ceny jsou počítány za celé školení!"
-      edit_training_lesson: "Upravit lekce"
-      vat_included: DPH
-      training_length: "Doba trvání školení"
-      closest_training_lessons: "Nejbližší kondiční lekce"
+      finance: Finance
+      finance_lesson_note: "Vypočítané ceny jsou za celé trvání tréninkové jednotky!"
+      edit_training_lesson: "Upravit tréninkovou hodinu"
+      vat_included: "včetně DPH"
+      training_length: "Délka tréninku"
+      closest_training_lessons: "Nejbližší tréninkové hodiny"
       date: Datum
-      has_note: "Poznámka: existuje"
+      has_note: Poznámka?
       status: Stav
-      time_until_start: "Doba do zahájení"
+      time_until_start: "Čas do zahájení"
   coach_obligation:
     controller:
-      successfully_created: "Trenér závazek byl úspěšně vytvořen."
-      successfully_updated: "Trenér povinnost byla úspěšně aktualizována."
-      successfully_removed: "Trenér povinnost byla úspěšně odebrána."
+      successfully_created: "Trenérský závazek byl úspěšně vytvořen."
+      successfully_updated: "Trenérský závazek byl úspěšně aktualizován."
+      successfully_removed: "Trenérský závazek byl úspěšně odebrán."
     index:
-      training_coaches: "Školení trenérů"
+      training_coaches: Trenéři
     new:
-      new_training_coach: "Nový trenér vzdělávání"
+      new_training_coach: "Nový trenér"
     create:
-      email_not_found: "Uživatel s uvedených e-mail nebyl v systému nalezen."
+      email_not_found: "Uživatel s uvedených e-mailem nebyl v systému nalezen."
     edit:
-      edit_training_coach: "Upravit školení trenér"
+      edit_training_coach: "Upravit trenéra"
     show:
-      training_coach: "Školení trenér"
+      training_coach: Trenér
       hour_wage: "Hodinová mzda"
       role: Role
       vat: DPH
       user: Uživatel
-      edit_training_coach: "Upravit školení trenér"
+      edit_training_coach: "Upravit trenéra"
   trainings:
     user_overview:
-      trainings_overview: "Školení Přehled"
-      no_trainings: "Žádné školení, které jsou přiřazeny v."
-      close_trainings: "Uzavřít školení"
-      regular_trainings_in: "Pravidelná školení, já jsem v"
-      regular_trainings_coaching: "Pravidelné tréninky I trenér"
-      regular_training: "Pravidelná školení"
+      trainings_overview: "Přehled tréninků"
+      no_trainings: "Aktuálně nejste zařazeni v žádném tréninku."
+      close_trainings: "Uzavřít trénink"
+      regular_trainings_in: "Pravidelné tréninky, kterých se účastním"
+      regular_trainings_coaching: "Pravidelné tréninky, které trénuji"
+      regular_training: "Pravidelný trénink"
       user_group: "Skupina uživatelů"
       days: dny
       date: Datum
-      time_until_start: "Doba do zahájení"
+      time_until_start: "Čas do zahájení"
       time: Čas
       role: Role
-      new_regular_training: "Nová pravidelná školení"
-      schedule_new_lesson: "Rozvrh lekcí"
+      new_regular_training: "Nový pravidelný trénink"
+      schedule_new_lesson: "Naplánovat novou tréninkovou hodinu"
       type: Typ
-      open_trainings: "Otevřená školení, které mohou navštěvovat"
+      open_trainings: "Vypsané tréninky, kterých se mohu účastnit"
       sign_in: "Přihlásit se"
-      participating: Účast?
+      participating: "Účastním se?"
   training_realization:
     helper:
-      remain_days: "Zůstávají pouze % {počet} den"
+      remain_days:
+        one: "Zbývá pouze 1 den"
+        few: "Zbývají %{count} dny"
+        other: "Zbývá %{count} dní"
       today: Dnes
       in_the_past: "V minulosti"
     model:
-      can_not_check_calculation_different_currencies: "Nelze zkontrolovat, zda trénink je výdělečná, protože existují různé měny."
-      lesson_not_gainful: "VAROVÁNÍ! Lekce není výdělečné. Vypočtené lost je: % {amount} {měna}"
+      can_not_check_calculation_different_currencies: "Nelze zkontrolovat, zda trénink je výdělečný, protože v kalkulaci existují různé měny. Automatický přepočet není prozatím podporován."
+      lesson_not_gainful: "VAROVÁNÍ! Tréninková hodina není výdělečná. Vypočtená ztráta je: %{amount} %{currency}"
     controller:
-      successfully_closed: "Plánované lekce byla úspěšně zavřena."
-      closing_failed: "Následující chyby došlo k chybě při zavírání pravidelné lekce: % {chyby}"
-      sign_in_success: "Jste úspěšně přihlášeni naplánované lekce."
-      sign_in_not_possible: "Nemůžete se přihlásit. Plánované lekce je již uzavřena, nebo znamení v časovém limitu bylo dosaženo!"
+      successfully_closed: "Tréninková hodina byla úspěšně uzavřena."
+      closing_failed: "Během pokusu o uzavření tréninkové hodiny došlo k následujícím chybám: %{errors}"
+      sign_in_success: "Přihlášení na tréninkovou hodinu bylo úspěšné."
+      sign_in_not_possible: "Již se nelze přihlásit! Tréninková hodina byla již uzavřena a nebo byl překročen časový limit pro přihlášení! Případně zkuste kontaktovat svého trenéra, který Vás může na trénink dodatečně přihlásit."
       signed_in_already_signed: "Jste již přihlášeni!"
-      signed_in_player_limit_reached: "Školení přehrávač limitu bylo dosaženo. Nemůžete se přihlásit! Zkuste se obrátit na váš trenér vás přidali."
-      excuse_success: "Jste úspěšně omluvili z pravidelné lekce."
-      excuse_not_possible: "Nelze omluvit. Plánované lekce je již uzavřena nebo omluva časového limitu bylo dosaženo!"
-      excuse_you_are_not_signed_player: "Nejste přihlášeni k této naplánované lekce. Omlouvání není možné!"
-      excuse_after_excuse_limit: "Časový limit pro omlouvání již bylo dosaženo. Nyní mohou omluvit pouze váš trenér, vás. Prosím, kontaktujte ho / jí."
-      succesfully_canceled: "Plánované lekce úspěšně zrušena."
-      successfully_reopened: "Plánované lekce úspěšně znovu."
-      can_not_reopen_cause_not_closed: "Plánované lekce nelze otevřít, protože ještě nebyl uzavřen!"
-      successfully_created: "Plánované lekce byla úspěšně vytvořena."
-      successfully_deleted: "Plánované lekce byla úspěšně odstraněna."
-      successfully_updated: "Plánované lekce byla úspěšně aktualizována."
+      player_not_registered_as_training_player: "Nelze přihlásit! Hráč není veden na seznamu tréninku."
+      signed_in_player_limit_reached: "Již se nelze přihlásit! Bylo dosaženo maximálního počtu hráčů. Zkuste kontaktovat svého trenéra, který Vás může na trénink dodatečně přihlásit."
+      excuse_success: "Omluvení tz tréninku proběhlo úspěšně. Děkujeme, že jste nám dali včas vědět."
+      excuse_not_possible: "Již se nelze omluvit! Byl překročen časový limit pro omluvu z tréninku. Zkuste kontaktovat svého trenéra, který Vás může z tréninku dodatečně odhlásit."
+      excuse_you_are_not_signed_player: "Nejste přihlášeni na tuto tréninkovou hodinu, omluvení není tudíž možné!"
+      excuse_after_excuse_limit: "Časový limit pro omluvu z tréninku byl již překročen. Nyná Vás může omluvit pouze trenér. Zkuste ho kontaktovat."
+      succesfully_canceled: "Tréninková hodina úspěšně zrušena."
+      successfully_reopened: "Tréninková hodina úspěšně znovuotevřena."
+      can_not_reopen_cause_not_closed: "Tréninková hodina nemůže být znovuotevřena, protože doposud nebyla uzavřena!"
+      successfully_created: "Tréninková hodina byla úspěšně vytvořena."
+      successfully_deleted: "Tréninková hodina byla úspěšně odstraněna."
+      successfully_updated: "Tréninková hodina byla úspěšně aktualizována."
     new:
-      finance: Financí
+      finance: Finance
       date_and_time: "Datum & čas"
       other: Ostatní
+      values_for_whole_training_note: "Uvedený ceny jsou za celé trvání tréninkové jednotky. Nejedná se o hodinovou částku!"
     show:
       detail: Detail
       date: Datum
-      note: "Poznámka:"
-      has_note: "Poznámka:?"
-      sign_in_time: "Podepsat v čase"
-      excuse_time: "Omluva čas"
+      note: Poznámka
+      has_note: Poznámka?
+      sign_in_time: "Přihlášení možné do"
+      excuse_time: "Omluvení možné do"
       registered_players: "Registrovaní hráči"
-      registered_coaches: "Registrované vozy"
-      player_price: "Hráč cena"
-      group_price: "Skupina cena"
+      registered_coaches: "Registrovaní trenéři"
+      player_price: "Cena na hráče"
+      group_price: "Cena za skupinu"
       rental_price: "Cena pronájmu"
-      calculation: Výpočet
+      calculation: "Způsob výpočtu ceny hráče"
       status: Stav
-      edit_training_lesson: "Upravit lekce"
-      fill_attendance: "Vyplňte docházka"
-      close_lesson: "ÚZKÉ lekce"
-      cancel_lesson: "ZRUŠENÍ lekce"
-      reopen_lesson: "Znovu otevřít lekce"
+      edit_training_lesson: "Upravit tréninkovou hodinu"
+      fill_attendance: "Zaznamenat docházku"
+      close_lesson: "UZAVŘÍT hodinu"
+      cancel_lesson: "ZRUŠIT hodinu"
+      reopen_lesson: "ZNOVUOTEVŘÍT hodinu"
       name: Jméno
       salary: Plat
       price: Cena
-      participation_state: "Účast stát"
-      add_present_coach: "Přidání přítomen trenér"
-      add_present_player: "Přidání tohoto hráče"
+      participation_state: Účast
+      add_present_coach: "Přidat přítomného trenéra"
+      add_present_player: "Přidat přítomného hráče"
       sign_in: "Přihlásit se"
-      excuse: Omluva
-      is_open: "Je tu otevřené veřejné"
+      excuse: "Omluvit se"
+      is_open: "Otevřené pro veřejnost"
       max_player_count: "Max. počet hráčů"
-      new_lesson_measurement: "Nové měření"
-      vf_measured_on_this_leson: "Lekce měření"
-      lesson_note: "Poznámka: lekce"
+      new_lesson_measurement: "Nové měření metriky"
+      vf_measured_on_this_leson: "Tréninková měření"
+      lesson_note: Poznámka
       other: Ostatní
       no_note: "Žádná poznámka neexistuje"
       measured_by: Měřeno
       measured_for: "Měřeno pro"
-      variable_field: "Proměnná pole"
+      variable_field: Metrika
       value: Hodnota
-      change_to_previous: "Změnit na předchozí"
-      change_to_player_avg: "Změnit na AVG"
-      measured_at: Měřeno
-    edit: training_realization.Edit
+      change_to_previous: "Změnit proti předchozí"
+      change_to_player_avg: "Změna oproti průměrné hodnotě"
+      measured_at: "Datum měření"
+    edit: Upravit
     form:
       date_and_time: "Datum & čas"
-      finance: Financí
+      finance: Finance
       other: Ostatní
-      sign_in_time: "Podepsat v čase"
-      excuse_time: "Omluva čas"
-      calculation: Výpočet
-      is_open: "Je otevřeno?"
+      sign_in_time: "Čas přihlášení"
+      excuse_time: "Čas omluvení"
+      calculation: "Způsob výpočtu ceny hráče"
+      is_open: "Tréninková hodiná otevřená?"
       player_count_limit: "Limit počtu hráče"
       user: Uživatel
     index:
       date: Datum
       from: Od
-      until: "Až do"
+      until: Do
       status: Stav
       time_until_start: "Doba do zahájení"
   present_coach:
     validation:
-      user_already_added: "Uživatel s tímto e-mailem již přidali k této lekce."
-      no_user_found: "S tímto e-mailem nalezen žádný uživatel."
+      user_already_added: "Uživatel s tímto e-mailem již byl přidán do tréninkové hodiny."
+      no_user_found: "Uživatel se zadaným emailem nebyl nalezen."
     index:
       salary: Plat
       coach: Trenér
-      supplementation: Suplementace
-      add_present_coach: "Přidání přítomen trenér"
+      supplementation: Suplování
+      add_present_coach: "Přidat trenéra do hodiny"
     show:
       salary: Plat
       vat: DPH
       coach: Trenér
-      supplementation: Suplementace
+      supplementation: Suplování
     new:
       name: Jméno
       salary: Plat
       vat: DPH
   attendance:
     controller:
-      bad_date_format: "Chybné datum formát!"
-      successfully_created: "Docházka položka byla úspěšně vytvořena."
-      successfully_updated: "Docházka položka byla úspěšně aktualizována."
-      successfully_deleted: "Docházka položka byla úspěšně odstraněna."
+      bad_date_format: "Chybný formát datumu!"
+      successfully_created: "Záznam do docházky byl úspěšně přidán."
+      successfully_updated: "Záznam v docházce byl úspěšně změněn."
+      successfully_deleted: "Záznam docházky byl úspěšně odstraněn."
     show:
       price: Cena
       player_state_change: "Změna stavu hráče"
       user: Uživatel
       payment: Platba
-      not_paid: Nezaplatil
+      not_paid: Nezaplaceno
       status: Stav
-      show_payment: "Zobrazit platební"
-      note: "Poznámka:"
+      show_payment: "Zobrazit platbu"
+      note: Poznámka
       save_note: "Uložit poznámku"
-      back_to_scheduled_lesson: "Zpět na pravidelné lekce"
+      back_to_scheduled_lesson: "Zpět na tréninkové hodiny"
     fill:
       name: Jméno
-      present: Současnost
-      excused: Omluven
-      unexcused: Neomluvené
-      save_attendance: "Uložit návštěvnost"
-      attendance_successfully_filled: "Docházka, plné úspěšně."
-      attendance_fill_failed: "Následující chyby došlo k chybě při zpracování docházky: % {chyby}"
-      no_players_exists: "Žádný z hráčů nepřidala do tohoto školení! Nelze učinit účast."
+      present: Přítomen
+      excused: Omluveno
+      unexcused: Neomluven
+      save_attendance: "Uložit docházku"
+      attendance_successfully_filled: "Docházka úspěšně vyplněna."
+      attendance_fill_failed: "Během záznamu docházky došlo k následujícím chybám: %{errors}"
+      no_players_exists: "Tréninková hodina aktuálně neobsahuje žádné přihlášené hráče, tudíž není možné udělat docházku."
     player_attendance:
       from_date: "Od data"
-      until_date: "Až do data"
-      change_date_range: "Změnit rozsah dat"
+      until_date: "Do data"
+      change_date_range: "Upřesnit datum"
       sum: SOUČET
       summary: Shrnutí
       date: Datum
@@ -1028,36 +1045,36 @@ cs:
       statistic: Statistika
       value: Hodnota
       excused: Omluven
-      unexcused: Neomluvené
-      present: Současnost
+      unexcused: Neomluven
+      present: Přítomen
       attendance_overview: "Přehled docházky"
-      percentage_visited_realized_lessons: "Procento navštívených realizované výuky"
+      percentage_visited_realized_lessons: "Procentuální účast na uskutečněných tréninkových hodinách"
       day: Den
-      training_lesson: Lekce
-      add_present_player: "Přidání tohoto hráče"
+      training_lesson: "Tréninková hodina"
+      add_present_player: "Přidat přítomného hráče"
     index:
       statistics: Statistiky
       from_date: "Od data"
-      until_date: "Až do data"
-      change_date_range: "Změnit rozsah dat"
-      attendance_trends: "Docházka trendy"
-      finance_trends: "Příjem & náklady trendy"
+      until_date: "Do data"
+      change_date_range: "Upřesnit datum"
+      attendance_trends: "Trendy v docházce"
+      finance_trends: "Příjemy & náklady"
     calc_payment:
       hint: |
-          Výchozí ceny vypočítávají na vybrané školení lekce výpočet strategii. Volitelně můžete to změnit. Cena rovnováhu vám poskytne informace, pokud máte dělat nebo ztráty zisku.
+          Výchozí ceny jsou vypočteny na základě zvolené kalkulační strategii tréninkové hodiny. Navržené sumy lze samozřejmně upravit dle potřeby. Mějte však na paměti, že částku upravujete oproti klientovi známé strategii výpočtu ceny. Dělejte tak s rozvahou. Cenová bilance Vás informuje o ziskovosti / ztrátovosti tréninkové hodiny.
 
-          Buďte opatrní, když provedete změny - všechny ceny jsou přepočítány!!! Staré ceny jsou uvedeny pro lepší čitelnost (sloupec "Předchozí cena").
-      save_calculation: "Uložit výpočet"
+          Pozor! Při každé úpravě docházky jsou ceny nově přepočítány. Ve sloupci "Předchozí cena" proto můžete vidět starou částku, kterou je možné opět použít kliknutím na její hodnotu.
+      save_calculation: "Uložit rozpočet"
       name: Jméno
       status: Stav
-      balance: "Plánované lekce výsledek cenu bilance:"
-      can_not_manipulate_with_foreign_attendance: "CHYBA! Nelze pracovat se zahraniční účastí!"
-      updating_price_failed: "Aktualizace cen nečekaně selhal."
+      balance: "Výsledná cenová bilance tréninkové hodiny:"
+      can_not_manipulate_with_foreign_attendance: "CHYBA! Nelze manipulovat s cizím záznamem docházky!"
+      updating_price_failed: "Aktualizace cen neočekávaně selhala."
       new_prices_succuessfully_saved: "Nové ceny byly úspěšně uloženy."
       previous_price: "Předchozí cena"
-      click_to_use: "(klepněte na tlačítko použít)"
+      click_to_use: "(pro použití klikněte na cenu)"
   helps:
     controller:
-      not_found: "Požadované nápovědy soubor nebyl nalezen!"
+      not_found: "Potřebný soubor s nápovědou nebyl bohužel nalezen!"
     index:
-      trainings: "Školení, vedení lekce, lekce hráč důkazy a výpočty pomoci"
+      trainings: "Trénink, organizace tréninkové hodiny, tvorba docházky a kalkulace cen"

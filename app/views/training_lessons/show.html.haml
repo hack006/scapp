@@ -85,8 +85,6 @@
       %h2.box-title= t('training_lesson.show.finance')
     .box-body
       %table.table
-        .alert.alert-warning
-          = t('training_lesson.show.finance_lesson_note')
         %tbody
           %tr
             %th= t('training_lesson.show.calculation')
@@ -96,18 +94,18 @@
             %th= t('training_lesson.show.player_price')
             %td
               - if @training_lesson.player_price_without_tax
-                = (@training_lesson.player_price_without_tax * @training_lesson.training_length(:hour, 6)).to_s + ' ' + @training_lesson.currency.symbol
+                = @training_lesson.player_price_without_tax.to_s + ' ' + @training_lesson.currency.symbol
                 |
-                %strong= (@training_lesson.player_price_with_tax * @training_lesson.training_length(:hour, 6)).to_s + ' ' + @training_lesson.currency.symbol + ' (' + t('training_lesson.show.vat_included') + ')'
+                %strong= @training_lesson.player_price_with_tax.to_s  + ' ' + @training_lesson.currency.symbol + ' (' + t('training_lesson.show.vat_included') + ')'
               - else
                 \-
           %tr
             %th= t('training_lesson.show.group_price')
             %td
               - if @training_lesson.group_price_without_tax
-                = (@training_lesson.group_price_without_tax * @training_lesson.training_length(:hour, 6)).to_s + ' ' + @training_lesson.currency.symbol
+                = @training_lesson.group_price_without_tax.to_s + ' ' + @training_lesson.currency.symbol
                 |
-                %strong= (@training_lesson.group_price_with_tax * @training_lesson.training_length(:hour, 6)).to_s + ' ' + @training_lesson.currency.symbol + ' (' + t('training_lesson.show.vat_included') + ')'
+                %strong= @training_lesson.group_price_with_tax.to_s + ' ' + @training_lesson.currency.symbol + ' (' + t('training_lesson.show.vat_included') + ')'
               - else
                 \-
           %tr
@@ -117,9 +115,9 @@
             %th= t('training_lesson.show.rental_price')
             %td
               - if @training_lesson.rental_price_without_tax
-                = (@training_lesson.rental_price_without_tax * @training_lesson.training_length(:hour, 6)).to_s + ' ' + @training_lesson.currency.symbol
+                = @training_lesson.rental_price_without_tax.to_s + ' ' + @training_lesson.currency.symbol
                 |
-                %strong= (@training_lesson.rental_price_with_tax * @training_lesson.training_length(:hour, 6)).to_s + ' ' + @training_lesson.currency.symbol + ' (' + t('training_lesson.show.vat_included') + ')'
+                %strong= @training_lesson.rental_price_with_tax.to_s + ' ' + @training_lesson.currency.symbol + ' (' + t('training_lesson.show.vat_included') + ')'
               - else
                 \-
           %tr

@@ -226,7 +226,7 @@ class Ability
       player = User.friendly.find(@request.params[:user_id])
       regular_training = RegularTraining.friendly.find(@request.params[:regular_training_id])
 
-      player == @user || @user.in_relation?(player, 'watcher')
+      can :player_attendance, Attendance if player == @user || @user.in_relation?(player, 'watcher')
     end
 
     # @12.3
@@ -362,7 +362,7 @@ class Ability
       player = User.friendly.find(@request.params[:user_id])
       regular_training = RegularTraining.friendly.find(@request.params[:regular_training_id])
 
-      regular_training.user == @user || regular_training.has_coach?(@user)
+      can :player_attendance, Attendance if regular_training.user == @user || regular_training.has_coach?(@user)
     end
 
     # @12.3

@@ -956,6 +956,7 @@ en:
       finance: *finance
       date_and_time: *date_and_time
       other: *other
+      values_for_whole_training_note: Specified prices are per whole training!
     show:
       detail: *detail
       date: *date

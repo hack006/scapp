@@ -45,6 +45,9 @@
             = link_to t('training_lesson.form.new_currency'), new_currency_path, class: 'btn btn-success', :data => { :confirm => t('training_lesson.form.are_you_sure_new_currency') }
             = link_to t('training_lesson.form.new_vat'), new_vat_path, class: 'btn btn-success', :data => { :confirm => t('training_lesson.form.are_you_sure_new_vat') }
       .box-body
+        .alert.alert-warning
+          %i.fa.fa-exclamation
+          =t('training_realization.new.values_for_whole_training_note')
         .row
           .col-sm-6
             = f.input :player_price_without_tax

@@ -1,5 +1,5 @@
 class HelpsController < ApplicationController
-  before_action :set_locale
+  before_action :set_help_locale
 
   def index
     authorize! :index, HelpsController
@@ -53,8 +53,10 @@ class HelpsController < ApplicationController
     end
 
     # Set provided locale via url param
-    def set_locale
+    def set_help_locale
       @locale = params[:locale]
       @locale ||= 'en'
+
+      @locale
     end
 end

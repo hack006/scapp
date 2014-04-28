@@ -1,0 +1,177 @@
+cs:
+  simple_form:
+    "yes": Ano
+    "no": Ne
+    required:
+      text: "Toto pole je povinné."
+      mark: "*"
+    error_notification:
+      default_message: "Odstraňte následující problémy:"
+    labels:
+      defaults:
+        password: Heslo
+        name: Jméno
+        description: Popis
+        note: Poznámka
+        unit: jednotka
+        vat: DPH
+        currency: Měna
+        value: Hodnota
+        date: Datum
+        day: Den
+        from: Od
+        until: Do
+        from_date: "Od data"
+        until_date: "Do data"
+        player_price_without_tax: "Cena na hráče bez DPH"
+        group_price_without_tax: "Cena za skupinu bez DPH"
+        rental_price_without_tax: "Cena pronájmu bez DPH"
+        even_week: "Sudý týden"
+        odd_week: "Lichý týden"
+        status: Stav
+      user:
+        locale: "Výchozí jazyk"
+        avatar: "Profilový obrázek"
+        password: Heslo
+        password_confirmation: "Heslo znovu pro potvrzení"
+        current_password: "Současné heslo"
+        new:
+          email: "E-mail k přihlášení"
+        edit:
+          email: E-mailu.
+      variable_field:
+        higher_is_better: "Vyšší hodnota je lepší"
+        is_numeric: "Slouží k uložení číselných hodnot"
+        is_global: "Metrika globálně přístupná"
+        variable_field_category: "Kategorie metriky"
+      variable_field_category:
+        rgb: "RGB kód"
+        user: "Vlastník kategorie"
+      variable_field_measurement:
+        measured_at: "Čas měření"
+        locality: Umístění
+        int_value: "Číselná hodnota"
+        string_value: Hodnota
+        measured_by: "Měřeno uživatelem"
+        measured_for: "Měřeno pro uživatele"
+      user_relation:
+        first_user: "E-mailová adresa uživatele"
+        second_user: "E-mailová adresa uživatele"
+        relation: "Typ propojení"
+      user_group:
+        is_global: "Skupina globálně přístupná?"
+        long_description: "Rozšiřující popis"
+        visibility: "Viditelnost skupiny"
+      regular_training:
+        public: "Viditelný veřejnosti?"
+        user_group: "Pro skupinu uživatelů"
+      training_lesson:
+        calculation: "Metoda výpočtu ceny hráče"
+        training_vat: "DPH tréninku"
+        rental_vat: "DPH pronájmu"
+        sign_in_before_start_time_limit: "Časový limit před začátkem hodiny pro přihlášení"
+        excuse_before_start_time_limit: "Časový limit před začátkem hodiny pro omluvení"
+      regular_training_lesson_realization:
+        calculation: "Metoda výpočtu ceny hráče"
+        sign_in_time: "Přihlášení je možné do"
+        excuse_time: "Omluvení je možné do"
+      training_lesson_realization:
+        calculation: "Metoda výpočtu ceny hráče"
+        sign_in_time: "Přihlášení je možné do"
+        excuse_time: "Omluvení je možné do"
+        player_count_limit: "Max. počet hráčů k přihlášení"
+        is_open: "Jakýkoliv registrovaný uživatel se může přihlásit?"
+      present_coach:
+        salary_without_tax: "Plat bez DPH"
+        user_email: "Email trenéra"
+        supplementation: Suplování
+      coach_obligation:
+        hourly_wage_without_vat: "Hodinová mzda bez DPH"
+        vat: DPH
+        role: role
+        coach_email: "Email trenéra"
+      attendance:
+        participation: Účast
+        price_without_tax: "Cena bez DPH"
+        player_change: "Poslední změna provedená hráčem"
+        note: Poznámka
+        excuse_reason: "Důvod omluvení z hodiny"
+      currency:
+        code: Kód
+        symbol: Symbol
+      locale:
+        code: Kód
+      vat:
+        percentage_value: "Procentuální hodnota"
+        is_time_limited: "Omezeno na časové období?"
+    hints:
+      defaults:
+        username: "Uživatelské jméno pro přihlášení."
+        password: "Prosím, nezadávejte žádně zvláštní znaky."
+      user_relation:
+        first_user: "Zadejte email uživatele, od kterého chcete vytvořit požadovaný vztah. Začněte psát, systém Vám automaticky začne zobrazovat návrhy."
+        second_user: "Zadejte email uživatele, ke kterému chcete vytvořit požadovaný vztah. Začněte psát, systém Vám automaticky začne zobrazovat návrhy."
+      user_group:
+        long_description: "Dlouhý popis je viditelný pouze uživatelům, kteří mají oprávnění prohlížet detail skupiny."
+        is_global: "Je-li označen jako globální, pak každý trenér může použít skupinu pro trénink. Upozorňujeme, že nastavená viditelnost skupiny :owner a :members nebude zcela zachována, protože uživatelé účastnící se tréninku uvidí zbylé členy skupiny!"
+      variable_field_category:
+        user: "Pouze vlastník ji může vidět a používat. Nevyplňujte pro vytvoření globální skupiny."
+      regular_training:
+        public: "Je-li trénink označen jako veřejný, pak bude viditelný komukoliv, včetně nepřihlášených uživatelů. Taktéž bude zobrazen na hlavní stránce ve výpisu volně přístupných tréninků. V opačném případě je trénink viditelný pouze vlastníkovi, tréninkovým trenérům, tréninkovým hráčům a jejich pozorovatelům."
+      individual_training_lesson_realization:
+        sign_in_time: "Před tímto datem se uživatel může přihlásit na hodinu. Ponechte prázdné pro použití času zahájení lekce."
+        excuse_time: "Před tímto datem se uživatel může omluvit z hodiny. Ponechte prázdné pro použití času zahájení lekce, to ale z praktických důvodů nedoporučujeme."
+        is_open: "Je-li zaškrtnuto, pak každý registrovaný uživatel se může přihlásit a účastnit."
+        player_count_limit: "Maximální počet hráčů, kteří se mohou zúčastnit tréninku."
+      regular_training_lesson_realization:
+        sign_in_time: "Před tímto datem se uživatel může přihlásit na hodinu. Ponechte prázdné pro použití času zahájení lekce."
+        excuse_time: "Před tímto datem se uživatel může omluvit z hodiny. Ponechte prázdné pro použití času zahájení lekce."
+      currency:
+        code: "Mezinárodní kód pro měnu. Například USD, CZK..."
+        symbol: "Symbol měny. Např. $, €, ..."
+        create: HH
+      vat:
+        percentage_value: "Příklad: Pro 15 % daň vyplňte 15."
+        is_time_limited: "Zaškrtněte pokud DPH je pouze v určitém časovém pásmu."
+  helpers:
+    save_changes: "Uložit změny"
+    submit:
+      variable_field_measurement:
+        create: "Uložit měření metriky"
+        update: "Uložit změny"
+      attendance:
+        create: "Uložit docházku"
+        update: "Uložit změny"
+      currency:
+        create: "Vytvořit měnu"
+        update: "Uložit změny"
+      vat:
+        create: "Vytvořit DPH"
+        update: "Uložit změny"
+      regular_training:
+        create: "Vytvořit pravidelný trénink"
+        update: "Uložit změny"
+      training_lesson:
+        create: "Vytvořit tréninkovou hodinu"
+        update: "Uložit změny"
+      coach_obligation:
+        create: "Vytvořit trenérský úvazek"
+        update: "Uložit změny"
+      present_coach:
+        create: "Přidat přítomného trenéra"
+        update: "Uložit změny"
+      regular_training_lesson_realization:
+        create: "Přidat pravidelnou tréninkovou hodinu"
+        update: "Uložit změny"
+      individual_training_lesson_realization:
+        create: "Vytvořit tréninkovou hodinu"
+        update: "Uložit změny"
+      training_lesson_realization:
+        create: "Vytvořit tréninkovou hodinu"
+        update: "Uložit změny"
+      user_relation:
+        create: "Vytvořit uživatelský vztah"
+        update: "Uložit změny"
+      user_group:
+        create: "Vytvořit skupinu uživatelů"
+        update: "Uložit změny"

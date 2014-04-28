@@ -3,5 +3,5 @@
     .modal-header
       %button{type: "button", class: "close", 'data-dismiss' => "modal", 'aria-hidden' => "true"} ×
       %h4.modal-title= content_for?(:modal_header) ? yield(:modal_header) : ''
-
-    = yield
+    .modal-body
+      = yield
