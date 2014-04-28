@@ -1,0 +1,17 @@
+%header.header
+  %a.logo{href: root_path}= ENV['APP_NAME']
+  / Header Navbar: style can be found in header.less
+  %nav.navbar.navbar-static-top{role: "navigation"}
+
+    %div.nav.navbar-right
+      %ul.nav.navbar-nav
+        - unless signed_in?
+          %li= link_to t('dictionary.sign_in'), new_user_session_path
+        - else
+          %li= link_to t('template.header_public.go_to_dashboard'), dashboard_path
+
+    - if signed_in?
+      %span.pull-right= t('template.header_public.you_are_already_signed')
+
+
+

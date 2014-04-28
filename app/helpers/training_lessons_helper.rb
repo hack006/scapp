@@ -10,11 +10,20 @@ module TrainingLessonsHelper
   #   @option :fri
   #   @option :sat
   #   @option :sun
+  # @param [Symbol] size size of widget
+  #   @option :default
+  #   @option :smaller
   # @return [String] graphic output - table based
-  def self.day_in_week_graphic_display(day)
+  def self.day_in_week_graphic_display(day, size = :default)
   days = TrainingLesson::DAYS
 
-  widget = '<table class="week-days-widget"><tbody><tr>'
+  case size
+    when :smaller
+      widget = '<table class="week-days-widget smaller"><tbody><tr>'
+    else
+      widget = '<table class="week-days-widget"><tbody><tr>'
+  end
+
   days.each do |d|
     if d == day
       widget += "<td class=\"week-day active\">#{d.to_s.upcase}</td>"

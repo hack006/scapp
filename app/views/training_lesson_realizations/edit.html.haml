@@ -1,0 +1,4 @@
+- if @training_lesson_realization.is_individual?
+  = render 'form_individual'
+- elsif @training_lesson_realization.is_regular?
+  = render 'form_regular'

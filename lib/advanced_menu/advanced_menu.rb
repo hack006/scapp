@@ -67,10 +67,10 @@ module AdvancedMenu
     private
 
     def self.replace_placeholders(str, user)
-      replacements = [{placeholder: '{user_slug}', replacement: user.slug}]
-      ret = ""
+      replacements = [{ placeholder: '{user_slug}', replacement: user.slug }, { placeholder: '{locale}', replacement: I18n.locale.to_s }]
+      ret ||= str
       replacements.each do |r|
-        ret = str.gsub r[:placeholder], r[:replacement]
+        ret = ret.gsub r[:placeholder], r[:replacement]
       end
 
       ret

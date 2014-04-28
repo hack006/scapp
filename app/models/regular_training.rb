@@ -11,6 +11,8 @@ class RegularTraining < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: true
 
+  scope :public, -> { where(public: true) }
+
   # Get training lessons count per week
   #
   # @param [Hash]
@@ -21,6 +23,54 @@ class RegularTraining < ActiveRecord::Base
     lessons_per_even_week = self.training_lessons.where(even_week: true).count
 
     { odd: lessons_per_odd_week, even: lessons_per_even_week }
+  end
+
+  def get_possible_lessons_between_dates(start_date, end_date)
+    # todo ADD from-date, until-date limit
+    day_abbreviation_map = { 1 => :mon, 2 => :tue, 3 => :wed, 4 => :thu, 5 => :fri, 6 => :sat, 0 => :sun }
+    trainings = []
+
+    start_date.step(end_date, 1).each do |day|
+      day_of_week_abbrev = day_abbreviation_map[day.wday]
+      week_in_year = day.strftime('%W').to_i
+      odd_week = (week_in_year % 2) == 1
+
+      # try to get regular training lessons for current day & even / odd week
+      conditions = { day: day_of_week_abbrev }
+      conditions[:odd_week] =  true if odd_week
+      conditions[:even_week] = true unless odd_week
+      self.training_lessons.where(conditions).each do |l|
+        # add lesson for current day
+        training_id = "#{l.id}\##{day.short}"
+        # check if not already added
+        unless RegularTrainingLessonRealization.where(training_lesson_id: training_id, date: day).empty?
+          state = :scheduled
+        else
+          state = :unscheduled
+        end
+
+        # guess only training lessons which are in specified date range
+        # TODO - later better to implement this into sql query ;)
+        if ( l.from_date.blank? || (day - l.from_date.to_date) > 0) && (l.until_date.blank? || (day - l.until_date.to_date) < 0)
+          trainings << { id: training_id, date: day, from: l.from, until: l.until, day: day_of_week_abbrev, state: state}
+        end
+      end
+
+      # todo keep in mind that even and odd week makes difference!
+
+    end
+
+    trainings
+  end
+
+  # Get closest training lessons realizations by date
+  #
+  # @param [Integer] count number of trainings
+  def closest_lessons(count = 5)
+    regular_lessons_ids = self.training_lessons.map{ |l| l.id }
+
+    RegularTrainingLessonRealization.where('training_lesson_id IN(:rtl_ids) AND date >= :date',
+                                           rtl_ids: regular_lessons_ids, date: Date.current).limit(count)
   end
 
   # Get regular trainings for specified player

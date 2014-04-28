@@ -50,3 +50,25 @@ h1,h2,h3,h4,h5,h6{
   clear: both;
 }
 
+.box .box-header {
+  h1,h2,h3{ clear: right}
+}
+
+dl.dl-help dd{
+  margin-bottom: 0.7em;
+}
+
+.rotate90{
+  -moz-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+
+span.positive{ color: #139833
+}
+span.negative{ color: #d11802
+}
+span.neutral{ color: darkgray }

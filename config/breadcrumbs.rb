@@ -1,5 +1,5 @@
 crumb :root do
-  link t('breadcrumbs.home'), root_path
+  link t('breadcrumbs.home'), dashboard_path
 end
 
 # =====
@@ -91,6 +91,16 @@ end
 
 crumb :variable_field_categories_new do
   link t('breadcrumbs.new_variable_field_category'), new_variable_field_category_path
+  parent :variable_field_categories
+end
+
+crumb :variable_field_categories_detail do
+  link t('breadcrumbs.variable_field_category')
+  parent :variable_field_categories
+end
+
+crumb :variable_field_categories_edit do
+  link t('breadcrumbs.edit_variable_field_category')
   parent :variable_field_categories
 end
 
@@ -250,9 +260,9 @@ crumb :training_lessons_edit do |regular_training|
   parent :regular_trainings_detail, regular_training
 end
 
-crumb :training_lessons_detail do |regular_training|
-  link t('breadcrumbs.training_lesson')
-  parent :regular_trainings_detail, regular_training
+crumb :training_lessons_detail do |training_lesson|
+  link t('breadcrumbs.training_lesson'), regular_training_training_lesson_path(training_lesson.regular_training, training_lesson)
+  parent :regular_trainings_detail, training_lesson.regular_training
 end
 
 # =============
@@ -282,8 +292,115 @@ end
 # Trainings
 # ============
 crumb :trainings_user_overview do |user|
-  link t('breadcrumbs.trainings_overview')
+  link t('breadcrumbs.trainings_overview'), user_trainings_path(user)
   parent :user, user
+end
+
+# ============
+# Training lesson
+# ============
+crumb :schedule_regular_lessons do |regular_training|
+  link t('breadcrumbs.schedule_training')
+  parent :regular_trainings_detail, regular_training
+end
+
+# =============
+# Training lesson realization
+# =============
+crumb :regular_training_lesson_realizations do |regular_training|
+  link t('breadcrumbs.scheduled_training_lessons')
+  parent :regular_trainings_detail, regular_training
+end
+
+crumb :regular_training_lesson_realizations_detail do |regular_training_lesson|
+  link t('breadcrumbs.regular_training_lesson_detail'), [regular_training_lesson.regular_training, regular_training_lesson]
+  parent :training_lessons_detail, regular_training_lesson
+end
+
+crumb :individual_training_lesson_realizations_detail do |individual_training_lesson|
+  link t('breadcrumbs.individual_training_lesson_detail'), individual_training_lesson
+  parent :trainings_user_overview, individual_training_lesson.user
+end
+
+crumb :regular_training_lesson_realizations_edit do |regular_training_lesson|
+  link t('breadcrumbs.regular_training_lesson_edit')
+  parent :training_lessons_detail, regular_training_lesson
+end
+
+crumb :individual_training_lesson_realizations_edit do |individual_training_lesson|
+  link t('dictionary.edit')
+  parent :individual_training_lesson_realizations_detail, individual_training_lesson
+end
+
+# ============
+# Present coach
+# ============
+crumb :present_coaches do |training_lesson_realization|
+  if training_lesson_realization.is_regular?
+    link t('nav.present_coaches'), regular_training_lesson_realization_present_coaches_path(training_lesson_realization)
+    parent :regular_training_lesson_realizations_detail, training_lesson_realization.training_lesson
+  elsif training_lesson_realization.is_individual?
+    link t('nav.present_coaches')
+    parent :individual_training_lesson_realizations_detail, training_lesson_realization
+  end
+end
+
+crumb :present_coaches_detail do |present_coach|
+  link present_coach.user.name
+  parent :present_coaches, present_coach.training_lesson_realization
+end
+
+crumb :present_coaches_new do |training_lesson_realization|
+  link t('breadcrumbs.new_present_coach')
+  parent :present_coaches, training_lesson_realization
+end
+
+crumb :present_coaches_edit do |present_coach|
+  link "#{t('dictionary.edit')} - #{present_coach.user.name}"
+  parent :present_coaches, present_coach.training_lesson_realization
+end
+
+# ============
+# Attendance
+# ============
+crumb :attendances do |training_lesson_realization|
+  if training_lesson_realization.is_regular?
+    link t('breadcrumbs.attendence'), regular_training_attendances_path(training_lesson_realization.training_lesson.regular_training)
+    parent :regular_training_lesson_realizations_detail, training_lesson_realization.training_lesson
+  elsif training_lesson_realization.is_individual?
+    link t('breadcrumbs.attendence')
+    parent :individual_training_lesson_realizations_detail, training_lesson_realization
+  end
+end
+
+crumb :attendances_new do |training_lesson_realization|
+  link t('breadcrumbs.new')
+  parent :attendances, training_lesson_realization
+end
+
+crumb :attendances_player do |regular_training, user|
+  link "#{user.name} #{t('breadcrumbs.user_training_attendence').to_s.downcase}"
+  parent :regular_trainings_detail, regular_training
+end
+
+crumb :attendances_training do |regular_training|
+  link t('breadcrumbs.regular_training_attendance')
+  parent :regular_trainings_detail, regular_training
+end
+
+crumb :attendances_fill do |training_lesson_realization|
+  link t('breadcrumbs.attendance_fill')
+  parent :attendances, training_lesson_realization
+end
+
+crumb :attendances_calc_payment do |training_lesson_realization|
+  link t('breadcrumbs.player_price_calculation')
+  parent :attendances, training_lesson_realization
+end
+
+crumb :attendances_detail do |training_lesson_realization|
+  link t('breadcrumbs.scheduled_training_lesson_attendance_detail')
+  parent :attendances, training_lesson_realization
 end
 
 # If you want to split your breadcrumbs configuration over multiple files, you

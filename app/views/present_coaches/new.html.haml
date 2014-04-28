@@ -1,0 +1,31 @@
+- content_for :heading do
+  = t('nav.new_present_coach')
+
+- breadcrumb :present_coaches_new, @training_lesson_realization
+
+- if @training_lesson_realization.is_regular?
+  .box
+    .box-header
+      %h2.box-title Regular training coaches
+    .box-body
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= t('present_coach.new.name')
+            %th= t('present_coach.new.salary')
+            %th= t('present_coach.new.vat')
+            %th
+        %tbody
+          - @regular_training_obligations.each do |key, o|
+            %tr
+              %td= o[:name]
+              %td #{o[:hourly_wage_without_tax]} #{o[:currency_symbol]} (#{t('dictionary.without_vat')})
+              %td= o[:vat_name]
+              %td
+                %a{'data-load-coach-form' => "#{key}"} LOAD
+
+:javascript
+  regular_coaches = #{@regular_training_obligations.to_json}
+
+= render 'form'
+

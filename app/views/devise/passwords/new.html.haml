@@ -1,0 +1,10 @@
+
+#login-box.form-box
+  .header
+    %h2 Forgot your password?
+  = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+    .body.bg-gray
+      = f.input :email, autofocus: true
+    .footer
+      %button.btn.bg-olive.btn-block{type: "submit"}= t('user.devise.send_reset_instructions')
+      = render "devise/shared/links"

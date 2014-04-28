@@ -12,13 +12,17 @@ class TrainingsController < ApplicationController
   def user_overview
     # TODO permissions + implement
 
+    # closest trainings for user
+    @closest_training_lessons = TrainingLessonRealization.closest_lesson_realizations(@user)
+    @closest_training_lessons = @closest_training_lessons.includes(:attendances)
+
     # regular trainings I am in as player
     @regular_trainings_as_player = @user.regular_trainings_training_in
 
     # regular trainings I coach
     @regular_trainings_as_coach = @user.regular_trainings_coaching
 
-    # TODO closest trainings - TrainingLessonRealization
+    @closest_open_training_lessons = TrainingLessonRealization.closest_open_lesson_realizations
 
     respond_to do |format|
       format.html{ render 'users/trainings/overview' }

@@ -1,0 +1,44 @@
+- content_for :heading do
+  = t('nav.scheduled_lesson_fill_measurement')
+
+- if @measurement_errors
+  .alert.alert-danger
+    - @measurement_errors.each do |m|
+      %p= m
+
+= form_tag fill_measurements_training_lesson_realization_variable_field_path(@training_lesson_realization, @variable_field), method: :post do
+  .box.box-default
+    .box-header
+    .box-body
+      .row
+        .col-sm-6
+          .form-group
+            = label_tag "locality", t('vf.scheduled_lesson_fill.location'), class: 'control-label'
+            = text_field_tag "locality", @location, class: 'form-control'
+        .col-sm-6
+          .form-group
+            = label_tag "measured_at", t('vf.scheduled_lesson_fill.measured_at'), class: 'control-label'
+            .input-group.input-append.datetimepicker
+              = text_field_tag "measured_at", (@measured_at.nil? ? '' : @measured_at.to_datetime.full), class: 'form-control datetime_picker', 'data-format' => "dd/MM/yyyy hh:mm"
+              .input-group-addon.add-on
+                %i.fa.fa-calendar{'data-date-icon' => "fa fa-calendar", 'data-time-icon' => "fa fa-clock-o"}
+
+  .box.box-success
+    .box-header
+    .box-body
+      %table.table
+        %thead
+          %tr
+            %th= t('vf.scheduled_lesson_fill.player')
+            %th= t('vf.scheduled_lesson_fill.value')
+        %tbody
+          - @variable_field_measurements.each do |key, measurement|
+            %tr
+              %td= measurement[:attendance].user.name
+              %td
+                - if @variable_field.is_numeric?
+                  = text_field_tag "measurements[#{key}][int_value]", @user_values[key],  class: 'form-control'
+                - else
+                  = text_field_tag "measurements[#{key}][string_value]", @user_values[key], class: 'form-control'
+
+  = submit_tag t('vf.scheduled_lesson_fill.save_measurements'), class: 'btn btn-primary'

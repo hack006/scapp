@@ -1,70 +1,39 @@
-- content_for :heading do
-  = t('home.index.dashboard')
+%h1 Sport training club
 
--# Show values for coach
--if is_coach?
-  %h2= t('home.index.closests_trainigs_trained_by_me')
+.box.box-default
+  .box-header
+    %h3.box-title= t('home.index.about_us')
+  .box-body
+    Some short story about us and over club ..
 
-  %h2= t('home.index.latest_measurement_of_my_players')
+%h2.page-header= t('home.index.our_public_trainings')
 
--# show values for player
--if is_player?
-  %h2= t('home.index.closests_trainings')
-
-  %h2= t('home.index.latest_measurements')
-  - @my_latest_vf_measurements.each_slice(6) do |m_row|
-    .row
-      - m_row.each do |m|
-        .col-sm-2
-          .box.vfm
-            %table.table.small
-              %tbody
-                %tr
-                  %td= t('home.index.date') + ':'
-                  %td= m.measured_at.to_datetime.full(locale)
-                %tr
-                  %td= t('home.index.variable_field') + ':'
-                  %td
-                    %span.label.label-info= m.variable_field.name
-                %tr
-                  %td= t('home.index.value') + ':'
-                  - if m.variable_field.is_numeric
-                    %td.value
-                      %strong= m.int_value
-                      = m.variable_field.unit
-                  - else
-                    %td.value
-                      %strong= m.string_value
-                      = m.variable_field.unit
-                %tr
-                  %td= t('home.index.location') + ':'
-                  %td= dash_or_value(m, :locality)
-
-  %h2 #{t('home.index.my_coaches')} <small>(#{@my_connected_coaches.count()})</small>
-  - @my_connected_coaches.each_slice(4) do |c_row|
-    .row
-      - c_row.each do |c|
-        .col-sm-3
-          .box.box-solid.box-primary.coach
-            .box-header
-              %h3.box-title= link_to c.from.name, user_path(c.from)
-            .box-body
-              %table.table
-                %tbody
-                  %tr
-                    %td= t('home.index.state') + ':'
-                    %td
-                      - if c.from_user_status == 'new'
-                        %span.label.label-info= t('home.index.states.new')
-                      -elsif c.from_user_status == 'accepted'
-                        %span.label.label-success= t('home.index.states.accepted')
-                      -else
-                        %span.label.label-danger= t('home.index.states.refused')
-                  %tr
-                    %td= t('home.index.created') + ':'
-                    %td= c.created_at.to_datetime.full(locale)
-
-
-
-
-
+- @regular_trainings.each do |t|
+  .box.box-info
+    .box-header
+      %h3.box-title= t.name
+    .box-body
+      = sanitize t.description
+      %h4.page-header= t('home.index.training_lessons')
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= t('home.index.day')
+            %th= t('home.index.from')
+            %th= t('home.index.until')
+            %th= t('home.index.season')
+            %th= t('home.index.even_week')
+            %th= t('home.index.odd_week')
+        %tbody
+          - t.training_lessons.each do |l|
+            %tr
+              %td!= TrainingLessonsHelper.day_in_week_graphic_display l.day
+              %td= l.from.short
+              %td= l.until.short
+              %td
+                - if !l.from_date.nil? && !l.until_date.nil?
+                  #{l.from_date} - #{l.until_date}
+                - else
+                  = t('home.index.not_limited')
+              %td!= ApplicationHelper.labelize_boolean l.even_week
+              %td!= ApplicationHelper.labelize_boolean l.odd_week

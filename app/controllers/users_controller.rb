@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :set_roles, :set_roles_save]
   authorize_resource except: [:update, :email_hinter]
 
   def index
@@ -79,24 +79,39 @@ class UsersController < ApplicationController
       if is_admin?
         redirect_to users_path, :notice => t('user.controller.update_succeed')
       else
-        redirect_to root_path, :notice => t('user.controller.update_succeed')
+        redirect_to dashboard_path, :notice => t('user.controller.update_succeed')
       end
     else
       if is_admin?
         redirect_to users_path, :alert => t('user.controller.update_failed')
       else
-        redirect_to root_path, :alert => t('user.controller.update_failed')
+        redirect_to dashboard_path, :alert => t('user.controller.update_failed')
       end
     end
   end
     
   def destroy
-    user = User.friendly.find(params[:id])
-    unless user == current_user
-      user.destroy
+    unless @user == current_user
+      @user.destroy
       redirect_to users_path, :notice => "User deleted."
     else
       redirect_to users_path, :notice => "Can't delete yourself."
+    end
+  end
+
+  def set_roles
+    authorize! :set_roles, User
+  end
+
+  def set_roles_save
+    authorize! :set_roles_save, User
+
+    @user.roles = Role.where(id: params[:user][:role_ids]);
+
+    if @user.save
+      redirect_to users_path, notice: t('user.controller.roles_successfully_changed')
+    else
+      redirect_to users_path, alert: t('user.controller.roles_change_failed')
     end
   end
 
@@ -119,6 +134,6 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :avatar)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :avatar, :locale_id)
   end
 end

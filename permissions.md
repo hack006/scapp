@@ -57,13 +57,15 @@
 
 # Variable field measurements
 
-| ID    | Action                        | implemented?  | owner     | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
-| ----- | ----------------------------- | ------------- | --------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
-| 5.1   | Add measurement               | Y             | -         | -         | (*1)      | -         | -             | -         | (2*)      | -         | Y         | *1,2 - only if VF global || owned by user
-| 5.2   | Edit measurement              | Y             | Y         | -         | (*1)      | -         | -             | -         | -         | -         | Y         | *1 - only if measured_by == current_user
-| 5.3   | Delete measurement            | Y             | Y         | -         | (*1)      | -         | -             | -         | -         | -         | Y         | *1 - only if measured_by == current_user
-| 5.4   | Show detail                   | Y             | Y (*1)    | -         | Y         | -         | -             | -         | -         | -         | Y         | *1 - owner = measured_by, (measured_for - discuss??)
-| 5.5   | List                          | Y             | -         | -         | -         | -         | -             | -         | Y (*1)    | Y (2*)    | Y         | *1 - can see only own, *2 - can only see own and measurements of his :players
+| ID    | Action                        | implemented?  | owner     | training_owner [R]    | training_coach[R] | training_player[R]    | suplementation    | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
+| ----- | ----------------------------- | ------------- | --------- | --------------------- | ----------------- | --------------------- |------------------ | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
+| 5.1   | Add measurement               | Y             | -         | -                     | -                 | -                     | -                 | -         | (*1)      | -         | -             | -         | (2*)      | -         | Y         | *1,2 - only if VF global || owned by user
+| 5.2   | Edit measurement              | Y             | Y         | -                     | -                 | -                     | -                 | -         | (*1)      | -         | -             | -         | -         | -         | Y         | *1 - only if measured_by == current_user
+| 5.3   | Delete measurement            | Y             | Y         | -                     | -                 | -                     | -                 | -         | (*1)      | -         | -             | -         | -         | -         | Y         | *1 - only if measured_by == current_user
+| 5.4   | Show detail                   | Y             | Y (*1)    | -                     | -                 | -                     | -                 | -         | Y         | -         | -             | -         | -         | -         | Y         | *1 - owner = measured_by, (measured_for - discuss??)
+| 5.5   | List                          | Y             | -         | -                     | -                 | -                     | -                 | -         | -         | -         | -             | -         | Y (*1)    | Y (2*)    | Y         | *1 - can see only own, *2 - can only see own and measurements of his :players
+| 5.6   | Add VF training measurements  | -             | -         | Y                     | Y                 | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only own measurement and measurements of :friends
+| 5.7   | List VF training measurements | -             | -         | Y                     | Y                 | Y (*1)                | Y                 | Y (*2)    | Y (*3)    | -         | Y (*4)        | -         | -         | -         | Y         | *1 - only own measurements, *2 - see only friend user, *3 - see only coached user, *4 - *2 - see only watched user
 
 # Organization
 
@@ -133,3 +135,41 @@
 | 10.2  | Create obligation             | Y             | -                 | Y                         | Y         |
 | 10.3  | Edit obligation               | Y             | -                 | Y                         | Y         |
 | 10.4  | Delete obligation             | Y             | -                 | Y                         | Y         |
+
+# Training lesson realization
+
+* **owner** - user owning regular training
+
+| ID    | Action                        | implemented?  | owner     | training_coach[R] | training_player[R]    | suplementation    | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
+| ----- | ----------------------------- | ------------- | --------- | ----------------- | --------------------- | ----------------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
+| 11.1  | List scheduled lessons        | ?             | Y         | Y                 | Y                     | -                 | -         | -         | -         | Y *1          | -         | -         | -         | Y         | *1 - only watchers of training players
+| 11.2  | Show scheduled lesson         | Y             | Y         | Y                 | Y                     | -                 | -         | -         | -         | Y *1          | -         | Y *2      | -         | Y         | *1 - only watchers of training players, *2 - training public or with open signing
+| 11.3  | Create scheduled individual l.| Y             |           | -                 | -                     | -                 | -         | -         | -         | -             | -         | -         | Y         | Y         |
+| 11.4  | Edit scheduled lesson         | Y             | Y         | Y *1              | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 11.5  | Delete scheduled lesson       | Y             | Y         | Y *1              | -                     | -                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 11.6  | Close scheduled lesson        | Y             | Y         | Y *1              | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 11.7  | Cancel scheduled lesson       | Y             | Y         | Y *1              | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 11.8  | Reopen scheduled lesson       | Y             | Y         | Y *1              | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 11.9  | Sign in                       | Y             |           | -                 | Y                     | -                 | -         | -         | -         | Y *1          | -         | - *2      | -         | -         | *1 - only watcher of signing in player, *2 - only for public trainings
+| 11.10 | Excuse                        | Y             |           | -                 | Y                     | -                 | -         | -         | -         | Y *1          | -         | - *2      | -         | -         | *1 - only watcher of signing in player, *2 - only for public trainings
+
+# Attendance
+
+| ID    | Action                                | implemented?  | owner     | training_owner [R]    | training_coach[R] | training_player[R]    | suplementation    | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
+| ----- | ------------------------------------- | ------------- | --------- | --------------------- | ----------------- | --------------------- | ----------------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
+| 12.1  | List scheduled lesson attendances     | Y             | -         | Y                     | Y                 | -                     | -                 | -         | -         | -         | -             | -         | -         | -         | Y         |
+| 12.2  | List sched. lesson player attendance  | Y             | -         | Y                     | Y                 | Y *1                  | -                 | -         | -         | -         | Y             | -         | -         | -         | Y         | *1 - only own
+| 12.3  | Show attendance                       | Y             | Y         | Y                     | Y                 | Y *1                  | -                 | -         | -         | -         | Y *2          | -         | -         | -         | Y         | *1 - only own, *2 - watcher of player attendance
+| 12.4  | Create attendance                     | Y             | -         | Y                     | Y *1              | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 12.5  | Edit attendance                       | Y             | -         | Y                     | Y *1              | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 12.6  | Delete attendance                     | Y             | -         | Y                     | Y *1              | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 12.7  | Fill scheduled lesson attendance      | Y             | -         | Y                     | Y *1              | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 12.8  | Calc scheduled lesson payment         | Y             | -         | Y                     | Y *1              | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+
+# Help
+
+| ID    | Action                            | implemented?  | :player   | :coach    | :admin    | note  |
+| ----- | --------------------------------- | ------------- | ----------| --------- | --------- | ----- |
+| 13.1  | List help themes in spec. locale  | Y             | Y         | Y         | Y         |
+| 13.2  | Show help                         | Y             | Y         | Y         | Y         |
+| 13.3  | Show modal help                   | Y             | Y         | Y         | Y         |

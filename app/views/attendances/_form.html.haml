@@ -1,0 +1,12 @@
+= simple_form_for([@training_lesson_realization, @attendance]) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :user_email, input_html: { data: { guesser: 'email' } }
+    - unless action_name == 'new'
+      = f.input :participation, collection: Attendance::PARTICIPATION_STATES
+    - if action_name != 'new' || @training_lesson_realization.is_individual?
+      = f.input :price_without_tax
+
+  .form-actions
+    = f.button :submit, class: 'btn btn-primary'

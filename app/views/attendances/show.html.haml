@@ -1,0 +1,46 @@
+- content_for :heading do
+  = t('nav.scheduled_training_lesson_attendance_detail')
+
+- breadcrumb :attendances_detail, @training_lesson_realization
+
+#action-box
+  = link_to @training_lesson_realization, class: 'btn btn-default' do
+    %i.fa.fa-angle-double-left
+    = t('attendance.show.back_to_scheduled_lesson')
+
+%table.table
+  %tbody
+    %tr
+      %th= t('attendance.show.user')
+      %td= link_to @attendance.user.name, @attendance.user
+    %tr
+      %th= t('attendance.show.price')
+      %td
+        #{@attendance.price_without_tax} #{@training_lesson_realization.currency.symbol}
+        |
+        %strong #{@attendance.price_with_tax} #{@training_lesson_realization.currency.symbol} (#{t('dictionary.vat_included')})
+    %tr
+      %th= t('attendance.show.payment')
+      %td
+        - unless @attendance.payment.blank?
+          = link_to t('attendance.show.show_payment'), @attendance.payment
+        - else
+          = t('attendance.show.not_paid')
+    %tr
+      %th= t('attendance.show.status')
+      %td!= AttendancesHelper.labelize_participation_state @attendance.participation
+    %tr
+      %th= t('attendance.show.player_state_change')
+      %td
+        - unless @attendance.player_change.blank?
+          = @attendance.player_change.to_datetime.full
+        - else
+          \-
+
+.box.box-info
+  .box-header
+    %h2.box-title= t('attendance.show.note')
+  .box-body
+    = simple_form_for @attendance, url: training_lesson_realization_attendance_path(@training_lesson_realization, @attendance), method: :patch do |f|
+      = f.input :note, as: :text, input_html: { class: 'textarea', rows: 10 }
+      = f.submit t('attendance.show.save_note'), class: 'btn btn-primary'

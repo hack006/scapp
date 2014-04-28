@@ -1,0 +1,32 @@
+- content_for :heading do
+  = t('nav.scheduled_training_lessons')
+
+- breadcrumb :regular_training_lesson_realizations, @regular_training
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th= t('training_realization.index.date')
+      %th= t('training_realization.index.time_until_start')
+      %th= t('training_realization.index.from')
+      %th= t('training_realization.index.until')
+      %th= t('training_realization.index.status')
+      %th
+      %th
+      %th
+  %tbody
+    - @training_lesson_realizations.each do |training_lesson_realization|
+      %tr{class: training_lesson_realization.date.past? ? 'lesson-over' : '' }
+        %td= training_lesson_realization.date.short(locale)
+        %td!= TrainingLessonRealizationsHelper.days_until_start training_lesson_realization.date
+        %td= training_lesson_realization.from.short
+        %td= training_lesson_realization.until.short
+        %td!= TrainingLessonRealizationsHelper.labelize_status training_lesson_realization.status
+        %td= link_to t('dictionary.show'), training_lesson_realization
+        - if training_lesson_realization.not_closed?
+          %td= link_to t('dictionary.edit'), edit_training_lesson_realization_path(training_lesson_realization)
+          %td= link_to t('dictionary.delete'), training_lesson_realization, :method => :delete, :data => { :confirm => t('dictionary.are_you_sure') }
+        - else
+          %td{colspan: 2}
+
+= paginate @training_lesson_realizations, theme: 'twitter-bootstrap-3'

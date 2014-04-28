@@ -1,0 +1,59 @@
+- content_for :heading do
+  = t('nav.schedule_training')
+
+- breadcrumb :schedule_regular_lessons, @regular_training
+
+.box.box-default
+  .box-body
+    = form_tag({ controller: 'regular_trainings', action: 'schedule_trainings' }, { method: :get }) do
+      .row
+        .col-sm-6
+          .form-group.date_picker
+            = label_tag 'daterange[from_date]', t('regular_trainings.schedule_trainings.from')
+            .input-group.input-append.date.datepicker
+              = text_field_tag 'daterange[from_date]', @from_date.short(:default), class: 'form-control', data: {format: 'dd/MM/yyyy'}
+              .input-group-addon.add-on
+                %i.fa.fa-calendar{'data-date-icon' => "fa fa-calendar", 'data-time-icon' => "fa fa-clock-o"}
+        .col-sm-6
+          .form-group.date_picker
+            = label_tag 'daterange[until_date]', t('regular_trainings.schedule_trainings.until')
+            .input-group.input-append.date.datepicker
+              = text_field_tag 'daterange[until_date]', @until_date.short(:default), class: 'form-control', data: {format: 'dd/MM/yyyy'}
+              .input-group-addon.add-on
+                %i.fa.fa-calendar{'data-date-icon' => "fa fa-calendar", 'data-time-icon' => "fa fa-clock-o"}
+      = submit_tag t('regular_trainings.schedule_trainings.change_date_range'), class: 'btn btn-primary'
+
+.box.box-info
+  .box-header
+    %h2.box-title= t('regular_trainings.schedule_trainings.training_lesson_suggestions')
+  .box-body
+    = form_tag save_scheduled_trainings_regular_training_path(@regular_training) do
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= t('regular_trainings.schedule_trainings.date')
+            %th= t('regular_trainings.schedule_trainings.time')
+            %th= t('regular_trainings.schedule_trainings.week_day')
+            %th{colspan: 2}= t('regular_trainings.schedule_trainings.state')
+        %tbody
+          - @trainings.each do |t|
+            %tr
+              %td #{t[:date].short}
+              %td #{t[:from].short} - #{t[:until].short}
+              %td!= TrainingLessonsHelper.day_in_week_graphic_display t[:day], :smaller
+              - if t[:state] == :unscheduled
+                %td
+                  = label_tag "trainings[#{t[:id]}][status]", 'Scheduled'
+                  = radio_button_tag "trainings[#{t[:id]}][status]", 'scheduled', true
+                %td
+                  = label_tag "trainings[#{t[:id]}][status]", 'Canceled'
+                  = radio_button_tag "trainings[#{t[:id]}][status]", 'canceled'
+                %td
+                  - all_coach_ids = @regular_training.coach_obligations.map{ |o| o.user.id}
+                  = select_tag "trainings[#{t[:id]}][present_coaches]",
+                    options_from_collection_for_select(@regular_training.coach_obligations.map{ |o| [o.user.id, o.user.name]},
+                                                       :first, :last, all_coach_ids), multiple: true
+              - else
+                %td{colspan: 3}
+                  %span.label.label-warning= t('regular_trainings.schedule_trainings.already_scheduled')
+      = submit_tag t('regular_trainings.schedule_trainings.schedule'), class: 'btn btn-primary'

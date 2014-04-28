@@ -33,6 +33,8 @@ class VariableFieldMeasurementsController < ApplicationController
     @variable_field_measurement.variable_field = variable_field
     @variable_field_measurement.measured_for = current_user
     @variable_field_measurement.measured_by = current_user
+    # todo timezone problems
+    @variable_field_measurement.measured_at = DateTime.current
   end
 
   # GET /users/{user_id}/variable_field/{variable_field_id}/add_measurement
@@ -44,6 +46,8 @@ class VariableFieldMeasurementsController < ApplicationController
     @variable_field = VariableField.find(params[:id])
     @variable_field_measurement = VariableFieldMeasurement.new
     @variable_field_measurement.measured_for = @for_user
+    # todo timezone problems
+    @variable_field_measurement.measured_at = DateTime.current
 
     render 'users/variable_fields/measurements/new'
   end
@@ -62,14 +66,14 @@ class VariableFieldMeasurementsController < ApplicationController
     @variable_field_measurement.variable_field = vf
 
     # only :admin and :coach can assign for whom is the measurement
-    if (is_admin? || is_coach?) && params[:variable_field_measurement][:measured_for]
-      @variable_field_measurement.measured_for = User.find(params[:variable_field_measurement][:measured_for])
+    if (is_admin? || is_coach?) && params[:variable_field_measurement][:measured_for_id]
+      @variable_field_measurement.measured_for = User.find(params[:variable_field_measurement][:measured_for_id])
     else
       @variable_field_measurement.measured_for = current_user
     end
     # only :admin can set who has made the measurement
-    if is_admin? && params[:variable_field_measurement][:measured_by]
-      @variable_field_measurement.measured_by = User.find(params[:variable_field_measurement][:measured_by])
+    if is_admin? && params[:variable_field_measurement][:measured_by_id]
+      @variable_field_measurement.measured_by = User.find(params[:variable_field_measurement][:measured_by_id])
     else
       @variable_field_measurement.measured_by = current_user
     end

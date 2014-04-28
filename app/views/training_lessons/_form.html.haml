@@ -5,15 +5,18 @@
     = f.input :description, input_html: { class: 'textarea' }
     .box.box-info
       .box-header
+        %i.fa.fa-clock-o
         %h2.box-title= t('training_lesson.form.date_and_time')
       .box-body
         .row
           .col-sm-6
             = f.input :day, as: :select, collection: TrainingLesson::DAYS
           .col-sm-3
-            = f.input :odd_week
+            = f.input :odd_week,
+              label: "#{t('training_lesson.form.odd_week')} #{ApplicationHelper.link_modal_help('trainings', 'odd_week', locale)}"
           .col-sm-3
-            = f.input :even_week
+            = f.input :even_week,
+              label: "#{t('training_lesson.form.even_week')} #{ApplicationHelper.link_modal_help('trainings', 'even_week', locale)}"
         .row
           .col-sm-6
             = f.input :from, as: :time_picker, placeholder: t('dictionary.time_mask')
@@ -25,8 +28,17 @@
             = f.input :from_date, as: :date_picker, placeholder: t('dictionary.date_mask')
           .col-sm-6
             = f.input :until_date, as: :date_picker, placeholder: t('dictionary.date_mask')
+        .row
+          .col-sm-6
+            = f.input :sign_in_before_start_time_limit, as: :time_picker, placeholder: t('dictionary.time_mask'),
+              label: "#{t('training_lesson.form.before_start_sign_in_time_limit')} #{ApplicationHelper.link_modal_help('trainings', 'before_start_sign_in_time_limit', locale)}"
+          .col-sm-6
+            = f.input :excuse_before_start_time_limit, as: :time_picker, placeholder: t('dictionary.time_mask'),
+              label: "#{t('training_lesson.form.before_start_excuse_time_limit')} #{ApplicationHelper.link_modal_help('trainings', 'before_start_excuse_time_limit', locale)}"
+
     .box.box-success
       .box-header
+        %i.fa.fa-money
         %h2.box-title= t('training_lesson.form.finance')
         - if is_admin?
           .box-tools.pull-right
@@ -49,8 +61,10 @@
           .col-sm-4
             = f.association :rental_vat
 
-        = f.input :calculation, as: :radio_buttons, collection: TrainingLesson::PRICE_CALCULATIONS, select: 'fixed_player_price'
-
+        = f.input :calculation, as: :radio_buttons, collection: TrainingLesson::PRICE_CALCULATIONS, select: 'fixed_player_price',
+          label: "#{t('training_lesson.form.calculation')} #{ApplicationHelper.link_modal_help('trainings', 'calculation', locale)}"
 
   .form-actions
     = f.button :submit, class: 'btn btn-primary'
+
+#modal-help.modal.fade{role: 'dialog', 'aria-hidden' => true}

@@ -1,0 +1,11 @@
+- content_for :content do
+  %body.skin-blue
+
+    / header logo: style can be found in header.less
+    = render 'layouts/header_public'
+
+    .wrapper.row-offcanvas.row-offcanvas-left
+      .container
+        = yield
+
+= render template: 'layouts/application_plain'

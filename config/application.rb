@@ -5,6 +5,8 @@ require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "sprockets/railtie"
+require 'devise'
+
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -39,7 +41,11 @@ module Scapp
 
     # Set plain layout for Sessions controller
     config.to_prepare do
-      Devise::SessionsController.layout "application_plain"
+      #Devise::SessionsController.layout "application_plain"
+      #Devise::PasswordsController.layout "application_plain"
     end
+
+    # Set default url options for url_helpers
+    config.action_mailer.default_url_options = { :host => ENV['URL'] }
   end
 end

@@ -1,0 +1,7 @@
+- content_for :heading do
+  = t('nav.help')
+
+%ol
+  - @help_files.each do |h|
+    %li
+      = link_to t('helps.index.' + h), show_help_path(@locale, h)

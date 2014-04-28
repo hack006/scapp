@@ -41,6 +41,9 @@ gem 'datetimepicker-rails', :require => 'datetimepicker-rails', :git => 'git://g
 # image upload + manipulation
 gem 'carrierwave'
 gem 'rmagick'
+# handling foreign keys
+gem 'foreigner', '~>1.4.2'
+gem 'immigrant'
 
 group :development do
   gem 'better_errors'

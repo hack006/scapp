@@ -15,6 +15,23 @@ en:
     saturday: Saturday
     sunday: Sunday
 
+  times:
+    minutes:
+      one: 1 minute
+      other: "%{count} minutes"
+    hours:
+      one: 1 hour
+      other: "%{count} hours"
+    days:
+      one: 1 day
+      other: "%{count} days"
+
+  errors:
+    coach_obligation_not_exist_error: 'ERROR: Coach obligation not exist!'
+    present_coach_already_exist_error: 'ERROR: Coach already added for current training lesson! Can not have more than 1 wage per training :)'
+    user_not_exist_error: "ERROR User does not exist!"
+    attendance_player_already_exist_error: "ERROR User[%{user_id}] already exist in attendance!"
+
   dictionary:
     global: &global 'Global'
     show_detail: &show_detail 'Show detail'
@@ -89,6 +106,7 @@ en:
     long_description: &long_description 'Long description'
     added: &added Added
     members: &members Members
+    training: &training Training
     trainings: &trainings Trainings
     my_trainings: &my_trainings My trainings
     reqular_trainings: &regular_trainings Regular trainings
@@ -134,6 +152,7 @@ en:
     group_price: &group_price Group price
     rental_price: &rental_price Rental price
     vat_included: &vat_included VAT included
+    without_vat: &without_vat without VAT
     minutes: &minutes minutes
     hours: &hours hours
     days: &days days
@@ -150,6 +169,43 @@ en:
     trainings_overview: &trainings_overview Trainings overview
     code: &code Code
     symbol: &symbol Symbol
+    state: &state State
+    time: &time Time
+    week_day: &week_day Week day
+    detail: &detail Detail
+    note: &note Note
+    status: &status Status
+    salary: &salary Salary
+    time_until_start: &time_until_start Time until start
+    participation_state: &participation_state Participation state
+    present: &present Present
+    excused: &excused Excused
+    unexcused: &unexcused Unexcused
+    summary: &summary Summary
+    statistics: &statistics Statistics
+    statistic: &statistic Statistic
+    type: &type Type
+    price: &price Price
+    excuse: &excuse Excuse
+    other: &other Other
+    not_paid: &not_paid Not paid
+    payment: &payment Payment
+    sign_in_time: &sign_in_time Sign in time
+    excuse_time: &excuse_time Excuse time
+    passed: &passed Passed
+    remain: &remain Remain
+    before: &before Before
+    rgb: &rgb Rgb
+    change_date_range: &change_date_range Change date range
+    sum: &sum SUM
+    string_value: &string_value String value
+    int_value: &int_value Numeric value
+    is_numeric: &is_numeric Numeric?
+    min: &min Minimum
+    max: &max Maximum
+    mean: &mean Mean
+    count: &count Count
+    listing: &listing
 
   alerts:
     not_authorized: 'You do not have required permissions for this action.'
@@ -175,6 +231,8 @@ en:
     new_variable_field_measurement: *new_variable_field_measurement
     variable_field_categories: *variable_field_categories
     new_variable_field_category: *new_variable_field_category
+    variable_field_category: &variable_field_category Variable field category
+    edit_variable_field_category: &edit_variable_field_category Edit variable field category
     variable_field_user_levels: *variable_field_user_levels
     new_variable_field_user_level: *new_variable_field_user_level
     variable_field_sports: *variable_field_sports
@@ -193,6 +251,8 @@ en:
     edit_training: *edit_training
     training_detail: *training_detail
     reqular_training_detail: *regular_training_detail
+    schedule_training: &schedule_training Schedule training
+    schedule_trainings: &schedule_trainings Schedule trainings
     vat: *vat
     vats: *vats
     new_vat: *new_vat
@@ -210,8 +270,35 @@ en:
     currencies: *currencies
     new_currency: *new_currency
     edit_currency: *edit_currency
-
-
+    regular_training_lesson_detail: &regular_training_lesson_detail Scheduled regular training lesson detail
+    individual_training_lesson_detail: &individual_training_lesson_detail Scheduled individual training lesson detail
+    regular_training_lesson_edit: &regular_training_lesson_edit Edit scheduled regular training lesson
+    individual_training_lesson_edit: &individual_training_lesson_edit Edit scheduled individual training lesson
+    individual_training_lesson_new: &individual_training_lesson_new New scheduled individual training lesson
+    regular_training_lesson_new: &regular_training_lesson_new New scheduled regular training lesson
+    present_coaches: &present_coaches Present coaches
+    present_coach: &present_coach Present coach
+    edit_present_coach: &edit_present_coach Edit present coach
+    new_present_coach: &new_present_coach New present coach
+    scheduled_training_lessons: &scheduled_training_lessons Scheduled training lessons
+    attendence: &attendence Attendence
+    regular_training_lesson_attendance: &regular_training_lesson_attendance Regular training lesson attendance
+    individual_training_lesson_attendance: &individual_training_lesson_attendance Individual training lesson attendance
+    user_training_attendence: &user_training_attendence User training attendence
+    attendance_fill: &attendance_fill Fill attendance
+    regular_training_attendance: &regular_training_attendance Regular training attendance
+    new_user_attendance: &new_user_attendance New user attendance
+    edit_user_attendance: &edit_user_attendance Edit user attendance
+    new: *new
+    edit: *edit
+    player_price_calculation: &player_price_calculation Player price calculation
+    scheduled_training_lesson_attendance_detail: &scheduled_training_lesson_attendance_detail Scheduled training lesson attendance detail
+    trainings_help: &trainings_help Trainings help
+    dashboard: &dashboard Dashboard
+    help: &help Help
+    set_user_roles: &set_user_roles Set user roles
+    scheduled_lesson_add_measurements_vf_select: &scheduled_lesson_add_measurements_vf_select Variable field select
+    scheduled_lesson_fill_measurement: &scheduled_lesson_fill_measurement Fill scheduled lesson measurement
   nav:
     user: *user
     users: *users
@@ -227,6 +314,8 @@ en:
     new_variable_field: 'New variable field'
     variable_field_categories: *variable_field_categories
     new_variable_field_category: *new_variable_field_category
+    variable_field_category: *variable_field_category
+    edit_variable_field_category: *edit_variable_field_category
     variable_field_user_levels: 'VF user levels'
     new_variable_field_user_level: 'New VF user level'
     variable_field_sports: 'VF sports'
@@ -242,6 +331,8 @@ en:
     edit_training: *edit_training
     training_detail: *training_detail
     reqular_training_detail: *regular_training_detail
+    schedule_trainings: *schedule_trainings
+    schedule_training: *schedule_training
     vat: *vat
     vats: *vats
     new_vat: *new_vat
@@ -252,6 +343,36 @@ en:
     finance: *finance
     currencies: *currencies
     new_currency: *new_currency
+    regular_training_lesson_detail: *regular_training_lesson_detail
+    individual_training_lesson_detail: *individual_training_lesson_detail
+    regular_training_lesson_edit: *regular_training_lesson_edit
+    individual_training_lesson_edit: *individual_training_lesson_edit
+    present_coaches: *present_coaches
+    present_coach: *present_coach
+    edit_present_coach: *edit_present_coach
+    new_present_coach: *new_present_coach
+    scheduled_training_lessons: *scheduled_training_lessons
+    attendence: &attendence Attendence
+    regular_training_lesson_attendance: *regular_training_lesson_attendance
+    individual_training_lesson_attendance: *individual_training_lesson_attendance
+    user_training_attendence: *user_training_attendence
+    attendance_fill: *attendance_fill
+    regular_training_attendance: *regular_training_attendance
+    new_user_attendance: *new_user_attendance
+    edit_user_attendance: *edit_user_attendance
+    new: *new
+    edit: *edit
+    individual_training_lesson_new: *individual_training_lesson_new
+    regular_training_lesson_new: *regular_training_lesson_new
+    player_price_calculation: *player_price_calculation
+    scheduled_training_lesson_attendance_detail: *scheduled_training_lesson_attendance_detail
+    trainings_help: *trainings_help
+    dashboard: *dashboard
+    new_lesson: New lesson
+    help: *help
+    set_user_roles: *set_user_roles
+    scheduled_lesson_add_measurements_vf_select: *scheduled_lesson_add_measurements_vf_select
+    scheduled_lesson_fill_measurement: &scheduled_lesson_fill_measurement Fill scheduled lesson measurement
 
   template:
     main:
@@ -267,15 +388,30 @@ en:
       sign_in: *sign_in
       profile: *profile
       toggle_nav: 'Toggle nav'
+    header_public:
+      you_are_already_signed: You are already signed in
+      go_to_dashboard: Go to DASHBOARD
     left_sidebar:
       greetings: Hello, %{user}
   home:
     index:
-      dashboard: *dashboard
-      closests_trainings: 'Closest trainings'
+      our_public_trainings: Our public trainings
+      training_lessons: *training_lessons
+      day: *day
+      from: *from
+      until: *until
+      season: Season
+      even_week: *even_week
+      odd_week: *odd_week
+      not_limited: Not limited
+      about_us: About us
+
+    dashboard:
+      my_closests_trainings: 'My closest trainings'
       closests_trainigs_trained_by_me: 'Closest trainings trained by me'
-      latest_measurements: 'Latest measurements'
+      my_latest_measurements: 'My latest measurements'
       latest_measurement_of_my_players: 'Latest measurements of my players'
+      players_count: Players count
       my_coaches: 'My connected coaches'
       location: *location
       date: *date
@@ -287,6 +423,16 @@ en:
         new: 'Waiting for authorization'
         accepted: 'Connected'
         refused: 'Rejected by other side'
+      date: *date
+      time: *time
+      training: *training
+      type: *type
+      role: *role
+      state: *state
+      time_until_start: *time_until_start
+      player: *player
+      coach: *coach
+
 
   registration:
     edit:
@@ -351,6 +497,46 @@ en:
       new:
         new_measurement: 'New measurement'
         add_measurement: 'Add measurement'
+    scheduled_lesson_vf_select:
+      select_vf: Select VF
+      name: *name
+      description: *description
+      is_numeric: *is_numeric
+    scheduled_lesson_fill:
+      location: *location
+      measured_at: *measured_at
+      string_value: *string_value
+      int_value: *int_value
+      player: *player
+      value: *value
+      save_measurements: Save measurements
+      numeric_value_expected: Numeric value is expected!
+      bad_date_time: Wrong datetime format or invalid datetime entered!
+    user_vf_detail:
+      from_date: *from_date
+      until_date: *until_date
+      change_date_range: *change_date_range
+      statistics: *statistics
+      vf_development: VF development
+      vf_distribution: VF distribution
+      min: *min
+      max: *max
+      mean: *mean
+      standard_deviation: Standard deviation
+      count: *count
+      avg_interval_between_measurements: AVG interval between measurements
+      listing: *listing
+      measured_at: *measured_at
+      value: *value
+      measured_by: *measured_by
+      measured_at_lesson: Measured at lesson
+      location: *location
+      lack_of_measurements: Lack of measurements for plotting this graph. Minimum of 2 is required.
+      data_set_empty: Data set is empty. Statistics can not be shown.
+      add_measurement: Add measurement
+      measurement_date_range: Date range of measurements
+      vf_info: VF information
+      options: Options
   vfm:
     controller:
       successfully_created: 'Variable field measurement was successfully created.'
@@ -391,6 +577,11 @@ en:
       user: 'Owner of category'
     new:
       new_variable_field_category: 'New variable field category'
+    show:
+      name: *name
+      rgb: *rgb
+      description: *description
+      user: *user
   vful:
     index:
       variable_field_user_levels: 'Listing variable field user levels'
@@ -402,10 +593,15 @@ en:
     new:
       new_variable_field_sport: 'New variable field sport'
   user:
+    devise:
+      send_reset_instructions: Send me reset password instructions
+      sign_up: Sign me up
     controller:
       user_create_success: 'User has been successfully created'
       update_succeed: 'User profile successfully updated.'
       update_failed: 'Unable to update user profile.'
+      roles_successfully_changed: 'User roles was successfully updated.'
+      roles_change_failed: Something went wrong while trying to change user roles!
     show:
       profile: *profile
       user: *user
@@ -433,6 +629,8 @@ en:
       email_with_passwd_is_going_to_be_send: 'Initial password is generated by system and sent on the provided email.'
     edit:
       edit_profile: 'Edit profile'
+    set_roles:
+      change_roles: Change roles
     modal:
       change_role: 'Change role'
 
@@ -520,7 +718,11 @@ en:
       successfully_updated: 'Regular training was successfully updated.'
       successfully_removed: 'Regular training was successfully removed.'
       invalid_group_choosen: 'You have choosen invalid user group!'
-
+      successfully_scheduled: 'Lessons were successfully scheduled.'
+      scheduling_failed: "Something went wrong when scheduling. Following errors raised: %{errors}"
+      scheduling_not_possible_before_term: You try schedule lesson on %{date} which is before allowed date range (%{from_date} - %{until_date}). Look at training lesson detail and edit date range if required.
+      scheduling_not_possible_after_term: You try schedule lesson on %{date} which is after allowed date range (%{from_date} - %{until_date}). Look at training lesson detail and edit date range if required.
+      date_range_180d_ays_exceeded: 'Maximum planning date range of half a year was exceeded. Please plan for the shorter period.'
     new:
       new_training: *new_training
     index:
@@ -543,6 +745,7 @@ en:
       list_training_lessons: List training lessons
       add_new_training_lesson: Add new training lesson
       edit_training: *edit_training
+      schedule_trainings: *schedule_trainings
       player: *player
       no_players_yet: No players are available, yet. You have not assign group to the training or group does not contain any members!
       for_group: For group
@@ -554,7 +757,29 @@ en:
       hour_wage: *hour_wage
       hour_wage_without_vat: *hour_wage_without_vat
       hour_wage_without_vat: *hour_wage_with_vat
+      time: *time
+      day: *day
+      date: *date
+      time_until_start: *time_until_start
+      note: *note
+      status: *status
+      closest_training_lessons: Closest training lessons
+      list_scheduled_lessons: List scheduled lessons
+      detail: *detail
+      player_attendance: Player attendance
+      show_attendance: Show attendance
 
+    schedule_trainings:
+      from: *from
+      until: *until
+      change_date_range: Change date range
+      schedule: Schedule
+      training_lesson_suggestions: Suggestions of training lessons
+      already_scheduled: Already scheduled
+      date: *date
+      time: *time
+      week_day: *week_day
+      state: *state
   vat:
     vat_mask: *datetime_mask
     vat_name_can_not_be_modified: VAT name and percentage value can not be changed in order to prevent misunderstanding by coaches and players and to prevent price calculation changes.
@@ -607,6 +832,11 @@ en:
       new_vat: *new_vat
       are_you_sure_new_currency: Are you sure that you want to leave this page and show form for adding new currency? All unsaved data will be lost.
       are_you_sure_new_vat: Are you sure that you want to leave this page and show form for adding new VAT? All unsaved data will be lost.
+      before_start_excuse_time_limit: Before start excuse time limit
+      before_start_sign_in_time_limit: Before start sign in time limit
+      odd_week: *odd_week
+      even_week: *even_week
+      calculation: *calculation
 
     index:
       day: *day
@@ -644,6 +874,11 @@ en:
       edit_training_lesson: *edit_training_lesson
       vat_included: *vat_included
       training_length: *training_length
+      closest_training_lessons: Closest training lessons
+      date: *date
+      has_note: Note exists
+      status: *status
+      time_until_start: *time_until_start
 
   coach_obligation:
     controller:
@@ -675,3 +910,201 @@ en:
       regular_training: *regular_training
       user_group: *user_group
       days: *days
+      date: *date
+      time_until_start: *time_until_start
+      time: *time
+      role: *role
+      new_regular_training: New regular training
+      schedule_new_lesson: Schedule new lesson
+      type: *type
+      open_trainings: Open trainings I can attend
+      regular_training: *regular_training
+      sign_in: *sign_in
+      participating: Participating?
+
+
+  training_realization:
+    helper:
+      remain_days:
+        one: Remain only %{count} day
+        other: Remain %{count} days
+      today: Today
+      in_the_past: In the past
+    model:
+      can_not_check_calculation_different_currencies: Can not check if training is gainful because there exist different currencies.
+      lesson_not_gainful: "WARNING! Training lesson is not gainful. Calculated lost is: %{amount} %{currency}"
+    controller:
+      successfully_closed: Scheduled lesson was successfully closed.
+      closing_failed: "Following errors occured while closing scheduled lesson: %{errors}"
+      sign_in_success: You were successfully signed in scheduled training lesson.
+      sign_in_not_possible: You can not sign in. Scheduled lesson is already closed or sign in time limit has been reached!
+      signed_in_already_signed: You are already signed in!
+      player_not_registered_as_training_player: Player is not registered to this training lesson. Can not be sign in!
+      signed_in_player_limit_reached: Training player limit has been reached. You can not sign in! Try to contact your coach to add you.
+      excuse_success: You were successfully excused from scheduled training lesson.
+      excuse_not_possible: You can not excuse. Scheduled lesson is already closed or excuse time limit has been reached!
+      excuse_you_are_not_signed_player: You are not signed to this scheduled training lesson. Excusing is not possible!
+      excuse_after_excuse_limit: Time limit for excusing has already been reached. Now only your coach can excuse you. Please, contact him / her.
+      succesfully_canceled: Scheduled training lesson successfully canceled.
+      successfully_reopened: Scheduled training lesson successfully reopened.
+      successfully_closed: Scheduled lesson was successfully closed.
+      can_not_reopen_cause_not_closed: Scheduled training lesson can not be reopened because has not been closed, yet!
+      successfully_created: Scheduled lesson was successfully created.
+      successfully_deleted: Scheduled lesson was successfully deleted.
+      successfully_updated: Scheduled lesson was successfully updated.
+    new:
+      finance: *finance
+      date_and_time: *date_and_time
+      other: *other
+    show:
+      detail: *detail
+      date: *date
+      note: *note
+      has_note: Note?
+      detail: *detail
+      sign_in_time: *sign_in_time
+      excuse_time: *excuse_time
+      registered_players: Registered players
+      registered_coaches: Registered coaches
+      player_price: *player_price
+      group_price: *group_price
+      rental_price: *rental_price
+      calculation: *calculation
+      status: *status
+      edit_training_lesson: Edit training lesson
+      fill_attendance: Fill attendance
+      close_lesson: CLOSE lesson
+      cancel_lesson: CANCEL lesson
+      reopen_lesson: REOPEN lesson
+      name: *name
+      salary: *salary
+      price: *price
+      participation_state: *participation_state
+      add_present_coach: &add_present_coach Add present coach
+      add_present_player: &add_present_player Add present player
+      sign_in: *sign_in
+      excuse: *excuse
+      is_open: Is open tu public
+      max_player_count: Max. number of players
+      new_lesson_measurement: New measurement
+      vf_measured_on_this_leson: Lesson measurements
+      lesson_note: Lesson note
+      other: *other
+      no_note: No note exists
+      measured_by: *measured_by
+      measured_for: *measured_for
+      variable_field: *variable_field
+      value: *value
+      change_to_previous: Change to previous
+      change_to_player_avg: Change to AVG
+      measured_at: *measured_at
+      detail: *detail
+    edit:
+    form:
+      date_and_time: *date_and_time
+      finance: *finance
+      other: *other
+      sign_in_time: &sign_in_time Sign in time
+      excuse_time: &excuse_time Excuse time
+      calculation: *calculation
+      is_open: Is open?
+      player_count_limit: Player count limit
+      user: *user
+    index:
+      date: *date
+      from: *from
+      until: *until
+      status: *status
+      time_until_start: *time_until_start
+
+  present_coach:
+    validation:
+      user_already_added: User with this email already added for this training lesson.
+      no_user_found: No user with this email found.
+    index:
+      salary: *salary
+      coach: *coach
+      supplementation: &supplementation Supplementation
+      add_present_coach: *add_present_coach
+    show:
+      salary: *salary
+      vat: *vat
+      coach: *coach
+      supplementation: *supplementation
+    new:
+      name: *name
+      salary: *salary
+      vat: *vat
+  attendance:
+    controller:
+       bad_date_format: Bad date format!
+       successfully_created: Attendance entry was successfully created.
+       successfully_updated: Attendance entry was successfully updated.
+       successfully_deleted: Attendance entry was successfully deleted.
+    show:
+      price: *price
+      player_state_change: Player state change
+      user: *user
+      payment: *payment
+      not_paid: *not_paid
+      status: *status
+      show_payment: Show payment
+      note: *note
+      save_note: Save note
+      back_to_scheduled_lesson: Back to scheduled lesson
+    fill:
+      name: *name
+      present: *present
+      excused: *excused
+      unexcused: *unexcused
+      save_attendance: Save attendance
+      attendance_successfully_filled: Attendance successfully filled.
+      attendance_fill_failed: "Following errors occured while processing attendance: %{errors}"
+      no_players_exists: Oh, no players added to this training! You can not make attendance.
+    player_attendance:
+      from_date: *from_date
+      until_date: *until_date
+      change_date_range: *change_date_range
+      sum: *sum
+      summary: *summary
+      date: *date
+      time: *time
+      status: *status
+      price: *price
+      statistics: *statistics
+      statistic: *statistic
+      value: *value
+      excused: *excused
+      unexcused: *unexcused
+      present: *present
+      attendance_overview: &attendance_overview Attendance overview
+      percentage_visited_realized_lessons: &percentage_visited_realized_lessons Percentage of visited realized lessons
+      day: *day
+      training_lesson: *training_lesson
+      add_present_player: *add_present_player
+    index:
+      statistics: *statistics
+      from_date: *from_date
+      until_date: *until_date
+      change_date_range: *change_date_range
+      attendance_trends: Attendance trends
+      finance_trends: Income & costs trends
+    calc_payment:
+      hint: |
+        Default prices are calculated based on selected training lesson calculation strategy. You can optionally modify this. Price balance gives you information if you are making or loosing the profit.
+
+        Be careful when you make changes - all prices are recalculated!!! Old prices are shown for better readability (column "Previous price").
+      save_calculation: Save calculation
+      name: *name
+      status: *status
+      balance: "Scheduled lesson result price balance:"
+      can_not_manipulate_with_foreign_attendance: ERROR! You can not manipulate with foreign attendance!
+      updating_price_failed: Updating price unexpectedly failed.
+      new_prices_succuessfully_saved: New prices were successfully saved.
+      previous_price: Previous price
+      click_to_use: (click to use)
+  helps:
+    controller:
+      not_found: Required help file was not found!
+    index:
+      trainings: Training, lesson management, lessons player evidence and calculations help

@@ -1,0 +1,46 @@
+- content_for :heading do
+  = t('nav.player_price_calculation')
+
+- breadcrumb :attendances_calc_payment, @training_lesson_realization
+
+.alert.alert-info
+  = simple_format t('attendance.calc_payment.hint')
+= form_tag do
+  %table.table.attendance-payments
+    %thead
+      %tr
+        %th= t('attendance.calc_payment.name')
+        %th= t('attendance.calc_payment.status')
+        %th= t('dictionary.without_vat')
+        %th= t('attendance.calc_payment.previous_price')
+        %th= t('dictionary.vat_included')
+    %tbody
+    - @attendances.each do |a|
+      %tr
+        %td= a.user.name
+        %td!= AttendancesHelper.labelize_participation_state a.participation
+        %td
+          = text_field_tag "attendance_payment[#{a.id}]", @player_payment[:player_price_without_vat], class: 'form-control price-without-vat'
+        %td
+          - if a.price_without_tax != @player_payment[:player_price_without_vat]
+            %i.fa.fa-exclamation-circle
+            %a{'data-set-old-player-price' => a.price_without_tax} #{a.price_without_tax} #{@training_lesson_realization.currency.symbol}
+            %small= t('attendance.calc_payment.click_to_use')
+        %td
+          = text_field_tag "attendance_payment_with_vat[#{a.id}]", "#{@player_payment_with_vat} #{@training_lesson_realization.currency.symbol}",
+            class: 'form-control price-with-vat', disabled: true
+
+  - unless @player_payment[:warning_message].blank?
+    .alert.alert-danger
+      = @player_payment[:warning_message]
+  #balance
+    = t('attendance.calc_payment.balance')
+    %span.price{class: (@player_payment[:balance] < 0) ? 'negative' : 'positive'}
+      #{@player_payment[:balance]} #{@training_lesson_realization.currency.symbol}
+
+  = submit_tag t('attendance.calc_payment.save_calculation'), class: 'btn btn-primary'
+
+:javascript
+  var total_lesson_costs = #{@total_lesson_costs};
+  var currency = "#{@training_lesson_realization.currency.symbol}";
+  var vat_multiplier = #{ 1 + @training_lesson_realization.training_vat.percentage_value / 100 }

@@ -2,3 +2,147 @@
   = t('vf.list.user_variable_field_detail')
 
 - breadcrumb :user_variable_field_detail, @user
+
+- if is_admin? || @variable_field.user == current_user || current_user.in_relation?(@user, :coach)
+  #action-box
+    = link_to t('vf.user_vf_detail.add_measurement'), add_measurement_user_variable_field_path(@user, @variable_field), class: 'btn btn-success'
+
+.nav-tabs-custom
+  %ul.nav.nav-tabs.pull-right
+    %li
+      %a{href: "#vf-info", 'data-toggle' => 'tab'}= t('vf.user_vf_detail.vf_info')
+    %li.active
+      %a{href: "#date-range", 'data-toggle' => 'tab'}= t('vf.user_vf_detail.measurement_date_range')
+
+    %li.pull-left.header
+      %i.fa.fa-th
+      = t('vf.user_vf_detail.options')
+  .tab-content
+    .tab-pane.active#date-range
+      = form_tag nil, method: :get do
+        .row
+          .col-sm-6
+            .form-group
+              = label_tag 'from_date', t('vf.user_vf_detail.from_date'), class: 'control-label'
+              .input-group.input-append.datepicker
+                = text_field_tag 'from_date', params[:from_date], class: 'form-control date_picker', 'data-format' => "dd/MM/yyyy"
+                .input-group-addon.add-on
+                  %i.fa.fa-calendar{'data-date-icon' => "fa fa-calendar", 'data-time-icon' => "fa fa-clock-o"}
+          .col-sm-6
+            .form-group
+              = label_tag 'until_date', t('vf.user_vf_detail.until_date')
+              .input-group.input-append.datepicker
+                = text_field_tag 'until_date', params[:until_date], class: 'form-control date_picker', 'data-format' => "dd/MM/yyyy"
+                .input-group-addon.add-on
+                  %i.fa.fa-calendar{'data-date-icon' => "fa fa-calendar", 'data-time-icon' => "fa fa-clock-o"}
+        = submit_tag t('vf.user_vf_detail.change_date_range'), class: 'btn btn-default'
+    .tab-pane#vf-info
+      %table.table
+        %tbody
+          %tr
+            %th= t('vf.show.name')
+            %td= link_to @variable_field.name, @variable_field
+          %tr
+            %th= t('vf.show.description')
+            %td= @variable_field.description
+          %tr
+            %th= t('vf.show.unit')
+            %td= @variable_field.unit
+          %tr
+            %th= t('vf.show.higher_is_better')
+            %td!= ApplicationHelper.labelize_boolean @variable_field.higher_is_better
+          %tr
+            %th= t('vf.show.is_numeric')
+            %td!= ApplicationHelper.labelize_boolean @variable_field.is_numeric
+          %tr
+            %th= t('vf.show.is_global')
+            %td!= ApplicationHelper.labelize_boolean @variable_field.is_global
+          %tr
+            %th= t('vf.show.category')
+            %td= link_to @variable_field.variable_field_category.name, variable_field_category_path(@variable_field.variable_field_category)
+
+.box
+  .box-header
+    %h2.box-title= t('vf.user_vf_detail.statistics')
+  .box-body
+    - unless !@user_vfm_values_vector.nil? && @user_vfm_values_vector.size == 0
+      %table.table
+        %tbody
+          - if @variable_field.is_numeric?
+            %tr
+              %th= t('vf.user_vf_detail.min')
+              %td #{@user_vfm_values_vector.min.round(3)} #{@variable_field.unit}
+            %tr
+              %th= t('vf.user_vf_detail.max')
+              %td #{@user_vfm_values_vector.max.round(3)}  #{@variable_field.unit}
+            %tr
+              %th= t('vf.user_vf_detail.mean')
+              %td #{@user_vfm_values_vector.mean.round(3)}  #{@variable_field.unit}
+            %tr
+              %th= t('vf.user_vf_detail.standard_deviation')
+              %td #{@user_vfm_values_vector.sd.round(3)}  #{@variable_field.unit}
+            %tr
+              %th= t('vf.user_vf_detail.count')
+              %td= @user_vfm_values_vector.size
+          %tr
+            %th= t('vf.user_vf_detail.avg_interval_between_measurements')
+            %td= t('times.days', count: @avg_interval_days)
+
+      - if @variable_field.is_numeric?
+        .box.box-solid.box-primary
+          .box-header
+            %h3.box-title= t('vf.user_vf_detail.vf_development')
+          .box-body
+            #morris-chart-vfm-development
+        .box.box-solid.box-primary
+          .box-header
+            %h3.box-title= t('vf.user_vf_detail.vf_distribution')
+          .box-body
+            - if @histogram_possible
+              #morris-chart-vfm-distribution
+            - else
+              = t('vf.user_vf_detail.lack_of_measurements')
+    - else
+      .alert.alert-warning= t('vf.user_vf_detail.data_set_empty')
+
+.box.box-success
+  .box-header
+    %h2.box-title= t('vf.user_vf_detail.listing')
+  .box-body
+    %table.table
+      %thead
+        %tr
+          %th= t('vf.user_vf_detail.measured_at')
+          %th= t('vf.user_vf_detail.value')
+          %th= t('vf.user_vf_detail.location')
+          %th= t('vf.user_vf_detail.measured_by')
+          %th= t('vf.user_vf_detail.measured_at_lesson')
+      %tbody
+        - @user_vfm_paged.each do |vfm|
+          %tr
+            %td= vfm.measured_at.to_datetime.full
+            %td
+              - if @variable_field.is_numeric?
+                = vfm.int_value
+                = vfm.variable_field.unit
+              - else
+                = vfm.string_value
+            %td= vfm.locality
+            %td
+              - if vfm.measured_by
+                = link_to vfm.measured_by.name, vfm.measured_by
+              - else
+                \-
+            %td
+              - if vfm.training_lesson_realization
+                = link_to vfm.training_lesson_realization.slug, vfm.training_lesson_realization
+              - else
+                \-
+    = paginate @user_vfm_paged, theme: 'twitter-bootstrap-3'
+
+
+  :javascript
+    var graph_data = #{@graph_data.to_json}
+    var linear_regression_data = #{@regression_line_points.to_json}
+    var graph_data_histogram_names = #{@graph_data_histogram_names.to_json}
+    var graph_data_histogram_values = #{@graph_data_histogram_values.to_json}

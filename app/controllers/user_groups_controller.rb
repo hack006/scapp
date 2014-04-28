@@ -16,7 +16,7 @@ class UserGroupsController < ApplicationController
     elsif is_coach? || is_player? || is_watcher?
       @user_groups = UserGroup.registered_visible(current_user).page(params[:page])
     else
-      redirect_to root_path, alert: t('user_groups.controller.not_have_required_role')
+      redirect_to dashboard_path, alert: t('user_groups.controller.not_have_required_role')
     end
   end
 

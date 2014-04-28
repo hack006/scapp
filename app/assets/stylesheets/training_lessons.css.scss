@@ -23,4 +23,9 @@ table.week-days-widget {
       }
     }
   }
+
+  &.smaller{
+    width: 200px;
+    font-size: 0.7em;
+  }
 }

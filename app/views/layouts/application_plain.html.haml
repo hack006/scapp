@@ -2,7 +2,13 @@
 %html
   %head
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"}
-    %title= content_for?(:title) ? yield(:title) : 'Scapp'
+    %title
+      - if content_for?(:title)
+        = yield(:title)
+      - elsif content_for?(:heading)
+        = yield(:heading)
+      - else
+        Scapp
     %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Scapp'}"}
     = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "application", "data-turbolinks-track" => true
@@ -15,6 +21,9 @@
     = javascript_include_tag "https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"
     = javascript_include_tag "https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"
 
-  %body.bg-black
-    = render 'layouts/messages'
-    = yield
+  - if content_for?(:content)
+    = yield :content
+  - else
+    %body.bg-black
+      = render 'layouts/messages'
+      = yield

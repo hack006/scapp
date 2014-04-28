@@ -118,6 +118,82 @@ jQuery(document).ready( ->
 
   )
 
+  # VF detail - development graph
+  if jQuery("#morris-chart-vfm-development").size() > 0
+    jQuery("#morris-chart-vfm-development").highcharts({
+      chart: {
+        zoomType: 'x',
+        spacingRight: 20
+      },
+      title: {
+        text: ''
+      },
+      xAxis: {
+        type: 'datetime',
+        maxZoom: 7 * 24 * 3600000, # week
+        title: {
+          text: null
+        }
+      },
+      yAxis: {
+        title: {
+          text: 'Value'
+        }
+      },
+      series: [
+        {
+          type: 'line',
+          name: 'Measured values',
+          data: graph_data
+        },
+        {
+          type: 'line',
+          name: 'Regression line',
+          color: '#F7CB9C',
+          marker: {
+            enabled: false
+          },
+          marker: {
+            enabled: false
+          },
+          enableMouseTracking: false,
+          data: linear_regression_data
+        }],
+      tooltip: {
+        formatter: ->
+          date = new Date(this.x)
+          "<strong>Date:</strong> #{date.to_fstring()}<br/> <strong>Value:</strong> #{this.y}<br/><strong>Location:</strong> #{this.point.location}"
+      }
+    });
+
+  # VF detail - development graph
+  if jQuery("#morris-chart-vfm-distribution").size() > 0
+    jQuery("#morris-chart-vfm-distribution").highcharts({
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: ''
+      },
+      xAxis: {
+        title: {
+          text: null
+        } ,
+        categories:graph_data_histogram_names
+      },
+      yAxis: {
+        title: {
+          text: 'Value'
+        }
+      },
+      series: [
+        {
+          name: 'Measured values',
+          data: graph_data_histogram_values
+        }
+      ]
+    });
+
     # TODO: change tab to normal one - prevent repetable loading
 
 )

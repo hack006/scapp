@@ -42,3 +42,9 @@ DateTime.class_eval do
     end
   end
 end
+
+DateTime.instance_eval do
+  def from_date_and_time(date, time)
+    DateTime.new(date.year, date.month, date.day, time.hour, time.min, time.sec)
+  end
+end

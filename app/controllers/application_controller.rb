@@ -3,9 +3,11 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  before_action :set_locale
+
   rescue_from CanCan::AccessDenied do |exception|
-    unless request.path == root_path
-      redirect_to root_path, :alert => 'You don\'t have required permissions!'
+    unless request.path == dashboard_path
+      redirect_to dashboard_path, :alert => 'You don\'t have required permissions!'
     else
       redirect_to new_user_session_path, :alert => 'Please, sign in!'
     end
@@ -13,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   # Set up redirect path after successful signin
   def after_sign_in_path_for(resource)
-    root_path
+    dashboard_path
   end
 
   # GLOBAL AVAILABLE HELPERS
@@ -45,5 +47,16 @@ class ApplicationController < ActionController::Base
 
   def current_ability
     @current_ability ||= Ability.new(current_user, request)
+  end
+
+  def set_locale
+    I18n.locale = current_user.locale.code unless current_user.blank?
+    I18n.locale = params[:locale] unless params[:locale].blank?
+  end
+
+  # Set default url options for url_helpers
+  #   - can be overridden by passing params to link_to or form_for
+  def default_url_options
+    { host: ENV['URL'] }
   end
 end

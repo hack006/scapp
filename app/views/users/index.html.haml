@@ -32,20 +32,18 @@
           - user.get_my_relations_with_statuses([:new, :accepted, :refused]).select{|r| r.from == current_user || r.to == current_user}.each do |r|
             - if r.relation == :coach
               - if r.from == current_user
-                %span.label.label-info coach
+                != UserRelationsHelper.labelize_relation :player
               -elsif r.to == current_user
-                %span.label.label-info player
+                != UserRelationsHelper.labelize_relation :coach
             - else
-              r.relation
+              != UserRelationsHelper.labelize_relation r.relation
         - if is_admin?
           %td
             - user.roles.map{|r| r.name}.each do |r|
               %span.label.label-primary= r
         - if is_admin?
           %td= link_to t('user.index.edit'), edit_user_path(user)
-          %td
-            %a{"data-toggle" => "modal", :href => "#role-options-#{user.id}", :type => "button"}= t('user.index.change_role')
-            = render user
+          %td= link_to 'change role', set_roles_user_path(user)
           %td= link_to t('user.index.delete'), user_path(user), :data => { :confirm => t('dictionary.are_you_sure') },
           :method => :delete, class: 'btn btn-danger' unless user == current_user
 

@@ -1,11 +1,13 @@
 - content_for :heading do
   = t('training_lesson.show.training_lesson')
 
-- breadcrumb :training_lessons_detail, @regular_training
+- breadcrumb :training_lessons_detail, @training_lesson
 
 - if is_admin? || @regular_training.user == current_user
   #action-box
-    = link_to t('training_lesson.show.edit_training_lesson'), edit_regular_training_training_lesson_path(@regular_training, @training_lesson), class: 'btn btn-info'
+    = link_to edit_regular_training_training_lesson_path(@regular_training, @training_lesson), class: 'btn btn-info' do
+      %i.fa.fa-pencil
+      = t('training_lesson.show.edit_training_lesson')
 
 #tl-date-time.box.box-info
   .box-header
@@ -50,14 +52,35 @@
             - else
               \-
 
-.box.box-info
+.box.box-default
   .box-header
     %h2.box-title= t('training_lesson.show.description')
   .box-body
     = sanitize @training_lesson.description
 
+.box.box-success
+  .box-header
+    %h2.box-title= t('training_lesson.show.closest_training_lessons')
+  .box-body
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= t('training_lesson.show.date')
+          %th= t('training_lesson.show.time_until_start')
+          %th= t('training_lesson.show.status')
+          %th= t('training_lesson.show.has_note')
+          %th
+      %tbody
+        - @training_lesson.closest_lessons.each do |l|
+          %tr
+            %td= l.date
+            %td!= TrainingLessonRealizationsHelper.days_until_start(l.date)
+            %td!= TrainingLessonRealizationsHelper.labelize_status l.status
+            %td!= ApplicationHelper.labelize_boolean !l.note.blank?
+            %td= link_to t('dictionary.show'), l
+
 - if is_admin? || @regular_training.user == current_user || @regular_training.has_coach?(current_user, :head_coach) # @8.2 *1,2
-  #tl-finance.box.box-info
+  #tl-finance.box.box-primary
     .box-header
       %h2.box-title= t('training_lesson.show.finance')
     .box-body

@@ -1,0 +1,22 @@
+- content_for :heading do
+  = t('nav.scheduled_lesson_add_measurements_vf_select')
+
+- unless @variable_fields.empty?
+  - actual_category = @variable_fields.first.variable_field_category.id
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th= t('vf.scheduled_lesson_vf_select.name')
+      %th= t('vf.scheduled_lesson_vf_select.description')
+      %th= t('vf.scheduled_lesson_vf_select.is_numeric')
+      %th
+  %tbody
+    - @variable_fields.each do |vf|
+      - actual_category = vf.variable_field_category.id
+      %tr
+        %td= vf.name
+        %td= vf.description
+        %td!= ApplicationHelper.labelize_boolean vf.is_numeric
+        %td= link_to t('vf.scheduled_lesson_vf_select.select_vf'), fill_measurements_training_lesson_realization_variable_field_path(@training_lesson_realization, vf)
+

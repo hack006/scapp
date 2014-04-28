@@ -4,43 +4,94 @@
 - breadcrumb :regular_trainings_detail, @regular_training
 
 #action-box
-  = link_to t('regular_trainings.show.list_training_lessons'), regular_training_training_lessons_path(@regular_training), class: 'btn btn-info'
+  = link_to regular_training_training_lessons_path(@regular_training), class: 'btn btn-info' do
+    %i.fa.fa-bars
+    = t('regular_trainings.show.list_training_lessons')
+  - if is_admin? || @regular_training.user == current_user || @regular_training.has_coach?(current_user, 'head_coach')
+    = link_to regular_training_attendances_path(@regular_training), class: 'btn btn-info' do
+      %i.fa.fa-calendar
+      = t('regular_trainings.show.show_attendance')
   - if is_admin? || @regular_training.user == current_user
-    = link_to t('regular_trainings.show.edit_training'), edit_regular_training_path(@regular_training), class: 'btn btn-info'
-    = link_to t('regular_trainings.show.add_new_training_lesson'), new_regular_training_training_lesson_path(@regular_training), class: 'btn btn-success'
-    = link_to t('regular_trainings.show.add_new_coach'), new_regular_training_coach_obligation_path(@regular_training), class: 'btn btn-success'
-%table.table
-  %tbody
-    %tr
-      %th= t('regular_trainings.show.description')
-      %td= sanitize @regular_training.description
-    %tr
-      %th= t('regular_trainings.show.public')
-      %td!= ApplicationHelper.labelize_boolean(@regular_training.public)
-    %tr
-      %th= t('regular_trainings.show.owner')
-      %td
-        - if @regular_training.user
-          = link_to @regular_training.user.name, @regular_training.user
-        - else
-          -
-    %tr
-      %th= t('regular_trainings.show.for_group')
-      %td
-        - if @regular_training.user_group
-          = link_to @regular_training.user_group.name, @regular_training.user_group
-        - else
-          -
-    %tr
-      %th= t('regular_trainings.show.lessons_per_week') + ' - ' + t('dictionary.odd_week')
-      %td= @regular_training.lessons_per_week[:odd]
-    %tr
-      %th= t('regular_trainings.show.lessons_per_week') + ' - ' + t('dictionary.even_week')
-      %td= @regular_training.lessons_per_week[:even]
-#rt-coaches.box.box-info
+    = link_to edit_regular_training_path(@regular_training), class: 'btn btn-info' do
+      %i.fa.fa-pencil
+      = t('dictionary.edit')
+
+.box.box-info
+  .box-header
+    %h2.box-title= t('regular_trainings.show.detail')
+  .box-body
+    %table.table
+      %tbody
+        %tr
+          %th= t('regular_trainings.show.public')
+          %td!= ApplicationHelper.labelize_boolean(@regular_training.public)
+        %tr
+          %th= t('regular_trainings.show.owner')
+          %td
+            - if @regular_training.user
+              = link_to @regular_training.user.name, @regular_training.user
+            - else
+              -
+        %tr
+          %th= t('regular_trainings.show.for_group')
+          %td
+            - if @regular_training.user_group
+              = link_to @regular_training.user_group.name, @regular_training.user_group
+            - else
+              -
+        %tr
+          %th= t('regular_trainings.show.lessons_per_week') + ' - ' + t('dictionary.odd_week')
+          %td= @regular_training.lessons_per_week[:odd]
+        %tr
+          %th= t('regular_trainings.show.lessons_per_week') + ' - ' + t('dictionary.even_week')
+          %td= @regular_training.lessons_per_week[:even]
+
+.box.box-default
+  .box-header
+    %h2.box-title= t('regular_trainings.show.description')
+  .box-body= sanitize @regular_training.description
+
+#rt-training-realizations.box.box-success
+  .box-header
+    %h2.box-title= t('regular_trainings.show.closest_training_lessons')
+  .box-body
+    - if is_admin? || @regular_training.user == current_user
+      = link_to t('regular_trainings.show.add_new_training_lesson'), new_regular_training_training_lesson_path(@regular_training), class: 'btn btn-success'
+      = link_to regular_training_training_lesson_realizations_path(@regular_training), class: 'btn btn-info' do
+        %i.fa.fa-calendar-o
+        = t('regular_trainings.show.list_scheduled_lessons')
+      = link_to schedule_trainings_regular_training_path(@regular_training), class: 'btn btn-info' do
+        %i.fa.fa-calendar
+        = t('regular_trainings.show.schedule_trainings')
+
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= t('regular_trainings.show.date')
+          %th= t('regular_trainings.show.day')
+          %th= t('regular_trainings.show.time_until_start')
+          %th= t('regular_trainings.show.time')
+          %th= t('regular_trainings.show.status')
+          %th= t('regular_trainings.show.note')
+          %th
+      %tbody
+        - @regular_training_realizations.each do |r|
+          %tr
+            %td= r.date.short(locale)
+            %td
+              %span.label.label-grey= r.day.to_s.upcase
+            %td!= TrainingLessonRealizationsHelper.days_until_start r.date
+            %td #{r.from.short} - #{r.until.short}
+            %td!= TrainingLessonRealizationsHelper.labelize_status r.status
+            %td!= ApplicationHelper.labelize_boolean !r.note.blank?
+            %td= link_to t('dictionary.show'), r
+#rt-coaches.box.box-success
   .box-header
     %h2.box-title= t('regular_trainings.show.regular_training_coaches')
   .box-body
+    - if is_admin? || @regular_training.user == current_user
+      = link_to t('regular_trainings.show.add_new_coach'), new_regular_training_coach_obligation_path(@regular_training), class: 'btn btn-success'
+
     %table.table.table-striped
       %thead
         %tr
@@ -71,7 +122,7 @@
               %td= link_to t('dictionary.delete'), [@regular_training, o], :method => :delete, :data => { :confirm => t('dictionary.are_you_sure') }
             - else
               %td{colspan: 2}
-#rt-players.box.box-info
+#rt-players.box.box-success
   .box-header
     %h2.box-title= t('regular_trainings.show.regular_training_players')
   .box-body
@@ -81,9 +132,12 @@
           %tr
             %th= t('regular_trainings.show.player')
         %tbody
+          - # TODO show players also to others when training is public??
           - @regular_training.user_group.users.each do |u|
             %tr
               %td= link_to u.name, u
+              %td
+                = link_to t('regular_trainings.show.player_attendance'), player_regular_training_attendances_path(@regular_training, u)
     - else
       = t('regular_trainings.show.no_players_yet')
 

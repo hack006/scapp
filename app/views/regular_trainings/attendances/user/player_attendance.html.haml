@@ -1,0 +1,103 @@
+- content_for :heading do
+  = t('nav.user_training_attendence')
+
+- breadcrumb :attendances_player, [@regular_training, @player]
+
+.box
+  .box-header
+  .box-body
+    = form_tag nil, method: :get do
+      .row
+        .col-sm-6
+          .form-group
+            = label_tag 'from_date', t('attendance.player_attendance.from_date'), class: 'control-label'
+            .input-group.input-append.datepicker
+              = text_field_tag 'from_date', params[:from_date], class: 'form-control date_picker', 'data-format' => "dd/MM/yyyy"
+              .input-group-addon.add-on
+                %i.fa.fa-calendar{'data-date-icon' => "fa fa-calendar", 'data-time-icon' => "fa fa-clock-o"}
+        .col-sm-6
+          .form-group
+            = label_tag 'until_date', t('attendance.player_attendance.until_date')
+            .input-group.input-append.datepicker
+              = text_field_tag 'until_date', params[:until_date], class: 'form-control date_picker', 'data-format' => "dd/MM/yyyy"
+              .input-group-addon.add-on
+                %i.fa.fa-calendar{'data-date-icon' => "fa fa-calendar", 'data-time-icon' => "fa fa-clock-o"}
+      = submit_tag t('attendance.player_attendance.change_date_range'), class: 'btn btn-default'
+
+.box.box-info
+  .box-header
+    %h2.box-title= t('attendance.player_attendance.summary')
+  .box-body
+    %table.table
+      %thead
+        %tr
+          %th= t('attendance.player_attendance.date')
+          %th= t('attendance.player_attendance.day')
+          %th= t('attendance.player_attendance.time')
+          %th= t('attendance.player_attendance.training_lesson')
+          %th= t('attendance.player_attendance.status')
+          %th= t('attendance.player_attendance.price')
+      %tbody
+        - @paged_attendances.each do |a|
+          %tr{class: "state-#{a.participation}"}
+            %td= a.training_lesson_realization.date.short(locale)
+            %td
+              %span.label.label-grey= a.training_lesson_realization.training_lesson.day.upcase
+            %td #{a.training_lesson_realization.from.short} - #{a.training_lesson_realization.until.short}
+            %td= link_to "##{a.training_lesson_realization.training_lesson_id}", [@regular_training, a.training_lesson_realization.training_lesson]
+            %td!= AttendancesHelper.labelize_participation_state a.participation
+            %td
+              - if is_admin? || @regular_training.user == current_user || @player == current_user || @regular_training.has_coach?(current_user, 'head_coach')
+                #{a.price_without_tax} #{a.training_lesson_realization.currency.symbol}
+                |
+                %strong #{a.price_with_tax} #{a.training_lesson_realization.currency.symbol} (#{t('dictionary.vat_included')})
+              - else
+                NA
+
+      - if is_admin? || @regular_training.user == current_user || @player == current_user || @regular_training.has_coach?(current_user, 'head_coach')
+        %tfoot
+          %tr
+            %td{colspan: 5}= t('attendance.player_attendance.sum')
+            %td
+              - @sum_price.each do |currency, prices|
+                %div
+                  #{prices[:without_vat][:sum]} #{prices[:without_vat][:currency_symbol]}
+                  #{prices[:with_vat][:sum]} #{prices[:with_vat][:currency_symbol]}
+
+    = paginate @paged_attendances, theme: 'twitter-bootstrap-3'
+
+.box.box-primary
+  .box-header
+    %h2.box-title= t('attendance.player_attendance.statistics')
+  .box-body
+    %table.table
+      %thead
+        %tr
+          %th= t('attendance.player_attendance.statistic')
+          %th= t('attendance.player_attendance.value')
+      %tbody
+        %tr.state-present
+          %td= t('attendance.player_attendance.present')
+          %td #{@participation[:present][:count]} (#{@participation[:present][:percentage].round(2)}%)
+        %tr.state-excused
+          %td= t('attendance.player_attendance.excused')
+          %td #{@participation[:excused][:count]} (#{@participation[:excused][:percentage].round(2)}%)
+        %tr.state-unexcused
+          %td= t('attendance.player_attendance.unexcused')
+          %td  #{@participation[:unexcused][:count]} (#{@participation[:unexcused][:percentage].round(2)}%)
+        %tr
+          %td= t('attendance.player_attendance.attendance_overview')
+          %td
+            .progress
+              .progress-bar.progress-bar-success{style: "width: #{@participation[:present][:percentage]}%"}
+                %span #{@participation[:present][:percentage].round(2)} %
+              .progress-bar.progress-bar-warning{style: "width: #{@participation[:excused][:percentage]}%"}
+                %span #{@participation[:excused][:percentage].round(2)} %
+              .progress-bar.progress-bar-danger{style: "width: #{@participation[:unexcused][:percentage]}%"}
+                %span #{@participation[:unexcused][:percentage].round(2)} %
+        %tr
+          %td= t('attendance.player_attendance.percentage_visited_realized_lessons')
+          %td #{@participation_percentage.round(2)} %
+
+
+

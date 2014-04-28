@@ -11,7 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140402093332) do
+ActiveRecord::Schema.define(version: 20140425152815) do
+
+  create_table "attendances", force: true do |t|
+    t.string   "participation",                  limit: 9
+    t.float    "price_without_tax"
+    t.datetime "player_change"
+    t.integer  "training_lesson_realization_id"
+    t.integer  "user_id"
+    t.integer  "payment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "note"
+    t.string   "excuse_reason"
+  end
+
+  add_index "attendances", ["payment_id"], name: "index_attendances_on_payment_id", using: :btree
+  add_index "attendances", ["training_lesson_realization_id"], name: "index_attendances_on_training_lesson_realization_id", using: :btree
+  add_index "attendances", ["user_id"], name: "index_attendances_on_user_id", using: :btree
 
   create_table "coach_obligations", force: true do |t|
     t.float    "hourly_wage_without_vat"
@@ -54,6 +71,11 @@ ActiveRecord::Schema.define(version: 20140402093332) do
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
+  create_table "locales", force: true do |t|
+    t.string "name", null: false
+    t.string "code", null: false
+  end
+
   create_table "organizations", force: true do |t|
     t.string   "name"
     t.string   "location"
@@ -64,6 +86,34 @@ ActiveRecord::Schema.define(version: 20140402093332) do
   end
 
   add_index "organizations", ["user_id"], name: "index_organizations_on_user_id", using: :btree
+
+  create_table "payments", force: true do |t|
+    t.float    "amount"
+    t.string   "status",         limit: 15, default: "waiting_payment", null: false
+    t.integer  "currency_id",                                           null: false
+    t.integer  "received_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "payments", ["currency_id"], name: "index_payments_on_currency_id", using: :btree
+  add_index "payments", ["received_by_id"], name: "index_payments_on_received_by_id", using: :btree
+
+  create_table "present_coaches", force: true do |t|
+    t.float    "salary_without_tax"
+    t.integer  "vat_id"
+    t.integer  "currency_id"
+    t.integer  "user_id"
+    t.integer  "training_lesson_realization_id"
+    t.boolean  "supplementation",                default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "present_coaches", ["currency_id"], name: "index_present_coaches_on_currency_id", using: :btree
+  add_index "present_coaches", ["training_lesson_realization_id"], name: "index_present_coaches_on_training_lesson_realization_id", using: :btree
+  add_index "present_coaches", ["user_id"], name: "index_present_coaches_on_user_id", using: :btree
+  add_index "present_coaches", ["vat_id"], name: "index_present_coaches_on_vat_id", using: :btree
 
   create_table "regular_trainings", force: true do |t|
     t.string   "name"
@@ -77,6 +127,7 @@ ActiveRecord::Schema.define(version: 20140402093332) do
   end
 
   add_index "regular_trainings", ["slug"], name: "index_regular_trainings_on_slug", unique: true, using: :btree
+  add_index "regular_trainings", ["user_group_id"], name: "regular_trainings_fo_user_group_id_fk", using: :btree
   add_index "regular_trainings", ["user_id"], name: "index_regular_trainings_on_user_id", using: :btree
 
   create_table "roles", force: true do |t|
@@ -90,12 +141,45 @@ ActiveRecord::Schema.define(version: 20140402093332) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
-  create_table "training_lessons", force: true do |t|
-    t.text     "description"
-    t.string   "day",                      limit: 3,                 null: false
+  create_table "training_lesson_realizations", force: true do |t|
+    t.string   "slug"
+    t.date     "date"
     t.time     "from"
     t.time     "until"
-    t.string   "calculation",              limit: 37
+    t.float    "player_price_without_tax"
+    t.float    "group_price_without_tax"
+    t.float    "rental_price_without_tax"
+    t.string   "calculation"
+    t.string   "status"
+    t.text     "note"
+    t.integer  "training_vat_id"
+    t.integer  "rental_vat_id"
+    t.integer  "currency_id"
+    t.integer  "training_lesson_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "training_type",            limit: 35
+    t.datetime "sign_in_time"
+    t.datetime "excuse_time"
+    t.integer  "player_count_limit"
+    t.boolean  "is_open"
+  end
+
+  add_index "training_lesson_realizations", ["currency_id"], name: "index_training_lesson_realizations_on_currency_id", using: :btree
+  add_index "training_lesson_realizations", ["rental_vat_id"], name: "index_training_lesson_realizations_on_rental_vat_id", using: :btree
+  add_index "training_lesson_realizations", ["slug"], name: "index_training_lesson_realizations_on_slug", unique: true, using: :btree
+  add_index "training_lesson_realizations", ["training_lesson_id"], name: "index_training_lesson_realizations_on_training_lesson_id", using: :btree
+  add_index "training_lesson_realizations", ["training_type"], name: "index_training_lesson_realizations_on_training_type", using: :btree
+  add_index "training_lesson_realizations", ["training_vat_id"], name: "index_training_lesson_realizations_on_training_vat_id", using: :btree
+  add_index "training_lesson_realizations", ["user_id"], name: "index_training_lesson_realizations_on_user_id", using: :btree
+
+  create_table "training_lessons", force: true do |t|
+    t.text     "description"
+    t.string   "day",                             limit: 3,                                  null: false
+    t.time     "from"
+    t.time     "until"
+    t.string   "calculation",                     limit: 37
     t.datetime "from_date"
     t.datetime "until_date"
     t.float    "player_price_without_tax"
@@ -106,9 +190,11 @@ ActiveRecord::Schema.define(version: 20140402093332) do
     t.integer  "regular_training_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "currency_id",                                        null: false
-    t.boolean  "even_week",                           default: true, null: false
-    t.boolean  "odd_week",                            default: true, null: false
+    t.integer  "currency_id",                                                                null: false
+    t.boolean  "even_week",                                  default: true,                  null: false
+    t.boolean  "odd_week",                                   default: true,                  null: false
+    t.time     "sign_in_before_start_time_limit",            default: '2000-01-01 00:00:00', null: false
+    t.time     "excuse_before_start_time_limit",             default: '2000-01-01 00:00:00', null: false
   end
 
   add_index "training_lessons", ["currency_id"], name: "index_training_lessons_on_currency_id", using: :btree
@@ -169,9 +255,11 @@ ActiveRecord::Schema.define(version: 20140402093332) do
     t.string   "name"
     t.string   "slug"
     t.string   "avatar"
+    t.integer  "locale_id",                           null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["locale_id"], name: "index_users_on_locale_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
@@ -180,6 +268,7 @@ ActiveRecord::Schema.define(version: 20140402093332) do
     t.integer "role_id"
   end
 
+  add_index "users_roles", ["role_id"], name: "users_roles_role_id_fk", using: :btree
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
   create_table "variable_field_categories", force: true do |t|
@@ -202,10 +291,12 @@ ActiveRecord::Schema.define(version: 20140402093332) do
     t.integer  "measured_by_id"
     t.integer  "measured_for_id"
     t.integer  "variable_field_id"
+    t.integer  "training_lesson_realization_id"
   end
 
   add_index "variable_field_measurements", ["measured_by_id"], name: "index_variable_field_measurements_on_measured_by_id", using: :btree
   add_index "variable_field_measurements", ["measured_for_id"], name: "index_variable_field_measurements_on_measured_for_id", using: :btree
+  add_index "variable_field_measurements", ["training_lesson_realization_id"], name: "tlr_id", using: :btree
   add_index "variable_field_measurements", ["variable_field_id"], name: "index_variable_field_measurements_on_variable_field_id", using: :btree
 
   create_table "variable_field_optimal_values", force: true do |t|
@@ -264,5 +355,62 @@ ActiveRecord::Schema.define(version: 20140402093332) do
   end
 
   add_index "vats", ["slug"], name: "index_vats_on_slug", unique: true, using: :btree
+
+  add_foreign_key "attendances", "payments", :name => "attendances_payment_id_fk", :dependent => :nullify
+  add_foreign_key "attendances", "training_lesson_realizations", :name => "attendances_training_lesson_realization_id_fk", :dependent => :delete
+  add_foreign_key "attendances", "users", :name => "attendances_for_user_id_fk"
+
+  add_foreign_key "coach_obligations", "currencies", :name => "coach_obligations_currency_id_fk"
+  add_foreign_key "coach_obligations", "regular_trainings", :name => "coach_obligations_regular_training_id_fk", :dependent => :delete
+  add_foreign_key "coach_obligations", "users", :name => "coach_obligations_user_id_fk"
+  add_foreign_key "coach_obligations", "vats", :name => "coach_obligations_vat_id_fk"
+
+  add_foreign_key "payments", "currencies", :name => "payments_currency_id_fk"
+
+  add_foreign_key "present_coaches", "currencies", :name => "present_coaches_salary_currency_id_fk"
+  add_foreign_key "present_coaches", "training_lesson_realizations", :name => "present_coaches_training_lesson_realization_id_fk", :dependent => :delete
+  add_foreign_key "present_coaches", "users", :name => "present_coaches_user_id_fk"
+  add_foreign_key "present_coaches", "vats", :name => "present_coaches_vat_id_fk"
+
+  add_foreign_key "regular_trainings", "user_groups", :name => "regular_trainings_fo_user_group_id_fk", :dependent => :nullify
+  add_foreign_key "regular_trainings", "users", :name => "regular_trainings_owner_user_id_fk"
+
+  add_foreign_key "training_lesson_realizations", "currencies", :name => "training_lesson_realizations_currency_id_fk"
+  add_foreign_key "training_lesson_realizations", "training_lessons", :name => "training_lesson_realizations_training_lesson_id_fk"
+  add_foreign_key "training_lesson_realizations", "users", :name => "training_lesson_realizations_owner_user_id_fk"
+  add_foreign_key "training_lesson_realizations", "vats", :name => "training_lesson_realizations_rental_vat_id_fk", :column => "rental_vat_id"
+  add_foreign_key "training_lesson_realizations", "vats", :name => "training_lesson_realizations_training_vat_id_fk", :column => "training_vat_id"
+
+  add_foreign_key "training_lessons", "currencies", :name => "training_lessons_currency_id_fk"
+  add_foreign_key "training_lessons", "regular_trainings", :name => "training_lessons_regular_training_id_fk", :dependent => :delete
+  add_foreign_key "training_lessons", "vats", :name => "training_lessons_rental_vat_id_fk", :column => "rental_vat_id"
+  add_foreign_key "training_lessons", "vats", :name => "training_lessons_training_vat_id_fk", :column => "training_vat_id"
+
+  add_foreign_key "user_groups", "users", :name => "user_groups_owner_user_id_fk"
+
+  add_foreign_key "user_groups_users", "user_groups", :name => "user_groups_users_user_group_id_fk", :dependent => :delete
+  add_foreign_key "user_groups_users", "users", :name => "user_groups_users_user_id_fk", :dependent => :delete
+
+  add_foreign_key "user_relations", "users", :name => "user_relations_user_from_id_fk", :column => "user_from_id", :dependent => :delete
+  add_foreign_key "user_relations", "users", :name => "user_relations_user_to_id_fk", :column => "user_to_id", :dependent => :delete
+
+  add_foreign_key "users", "locales", :name => "users_locale_id_fk"
+
+  add_foreign_key "users_roles", "roles", :name => "users_roles_role_id_fk"
+  add_foreign_key "users_roles", "users", :name => "users_roles_user_id_fk", :dependent => :delete
+
+  add_foreign_key "variable_field_categories", "users", :name => "variable_field_categories_owner_user_id_fk"
+
+  add_foreign_key "variable_field_measurements", "training_lesson_realizations", :name => "vfm_measured_on_training_lesson_realization_id_fk", :dependent => :nullify
+  add_foreign_key "variable_field_measurements", "users", :name => "variable_field_measurements_measured_by_id_fk", :column => "measured_by_id"
+  add_foreign_key "variable_field_measurements", "users", :name => "variable_field_measurements_measured_for_id_fk", :column => "measured_for_id", :dependent => :delete
+  add_foreign_key "variable_field_measurements", "variable_fields", :name => "variable_field_measurements_variable_field_id_fk"
+
+  add_foreign_key "variable_field_optimal_values", "variable_field_sports", :name => "variable_field_optimal_values_variable_field_sport_id_fk", :dependent => :delete
+  add_foreign_key "variable_field_optimal_values", "variable_field_user_levels", :name => "variable_field_optimal_values_variable_field_user_level_id_fk", :dependent => :delete
+  add_foreign_key "variable_field_optimal_values", "variable_fields", :name => "variable_field_optimal_values_variable_field_id_fk", :dependent => :delete
+
+  add_foreign_key "variable_fields", "users", :name => "variable_fields_owner_user_id_fk"
+  add_foreign_key "variable_fields", "variable_field_categories", :name => "variable_fields_belongs_to_variable_field_category_id_fk", :dependent => :nullify
 
 end

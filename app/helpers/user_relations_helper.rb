@@ -27,6 +27,8 @@ module UserRelationsHelper
         return '<span class="label label-mid-grey">friend</span>'
       when :coach
         return '<span class="label label-grey">coach</span>'
+      when :player
+        return '<span class="label label-dark-grey">player</span>'
       else
         return label
     end

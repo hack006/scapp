@@ -1,0 +1,13 @@
+= simple_form_for([@training_lesson_realization, @present_coach]) do |f|
+  = f.error_notification
+
+  .form-inputs
+    -# TODO add some hint based on frequently used coaches?
+    = f.input :user_email, input_html: { data: { guesser: 'email' } }, disabled: (params[:action] == 'edit') ? true : false
+    = f.input :salary_without_tax
+    = f.association :vat
+    = f.association :currency
+    = f.input :supplementation
+
+  .form-actions
+    = f.button :submit, class: 'btn btn-primary'

@@ -1,0 +1,69 @@
+- content_for :heading do
+  = t('nav.regular_training_attendance')
+
+- breadcrumb :attendances_training, @regular_training
+
+.box
+  .box-header
+  .box-body
+    = form_tag nil, method: :get do
+      .row
+        .col-sm-6
+          .form-group
+            = label_tag 'from_date', t('attendance.index.from_date'), class: 'control-label'
+            .input-group.input-append.datepicker
+              = text_field_tag 'from_date', params[:from_date], class: 'form-control date_picker', 'data-format' => "dd/MM/yyyy"
+              .input-group-addon.add-on
+                %i.fa.fa-calendar{'data-date-icon' => "fa fa-calendar", 'data-time-icon' => "fa fa-clock-o"}
+        .col-sm-6
+          .form-group
+            = label_tag 'until_date', t('attendance.index.until_date')
+            .input-group.input-append.datepicker
+              = text_field_tag 'until_date', params[:until_date], class: 'form-control date_picker', 'data-format' => "dd/MM/yyyy"
+              .input-group-addon.add-on
+                %i.fa.fa-calendar{'data-date-icon' => "fa fa-calendar", 'data-time-icon' => "fa fa-clock-o"}
+      = submit_tag t('attendance.index.change_date_range'), class: 'btn btn-default'
+
+%table.table
+  %thead
+    %tr
+      %th
+      - @closed_scheduled_lessons_paginated.each do |l|
+        %th
+          - char_cnt = 1
+          - l.date.short.split('/').each do |char|
+            %div
+              = char + ((char_cnt < 3) ? '.' : '')
+            - char_cnt = char_cnt + 1
+  %tbody
+    - @user_attendances.each do |key, u|
+      %tr
+        %td= link_to u[:user].name, player_regular_training_attendances_path(@regular_training, u[:user])
+        - @closed_scheduled_lessons_paginated.each do |l|
+          - unless u[l.slug].nil?
+            %td{class: "#{u[l.slug].participation}"}= u[l.slug].participation
+          - else
+            %td NA
+
+= paginate @closed_scheduled_lessons_paginated, theme: 'twitter-bootstrap-3'
+
+.box.box-default
+  .box-header
+    %h2.box-title= t('attendance.index.statistics')
+  .box-body
+    .box.box-solid.box-primary
+      .box-header
+        %h3.box-title= t('attendance.index.attendance_trends')
+      .box-body
+        #morris-chart-attendance-summary
+  - if is_admin? || @regular_training.user == current_user || @regular_training.has_coach?(current_user, 'head_coach')
+    .box.box-solid.box-primary
+      .box-header
+        %h3.box-title= t('attendance.index.finance_trends')
+      .box-body
+        #morris-chart-attendance-finance
+
+
+:javascript
+  var attendance_graph_data = #{@attendance_graph_data_arr.to_json}
+  var currency_symbol = #{(@currency.nil? ? '?' : @currency.symbol).to_json}

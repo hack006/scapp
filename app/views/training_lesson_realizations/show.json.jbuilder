@@ -1,0 +1,1 @@
+json.extract! @training_lesson_realization, :date, :from, :until, :player_price_without_tax, :group_price_without_tax, :rental_price_without_tax, :calculation, :status, :note, :training_vat_id, :rental_vat_id, :currency_id, :training_lesson_id, :user_id, :created_at, :updated_at

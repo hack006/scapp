@@ -1,0 +1,35 @@
+- content_for :heading do
+  = t('nav.present_coaches')
+
+- breadcrumb :present_coaches, @training_lesson_realization
+
+#action-box
+  = link_to t('present_coach.index.add_present_coach'), new_regular_training_lesson_realization_present_coach_path(@training_lesson_realization), class: 'btn btn-success'
+
+%table.table
+  %thead
+    %tr
+      %th= t('present_coach.index.coach')
+      %th= t('present_coach.index.salary')
+      %th= t('present_coach.index.supplementation')
+      %th
+      %th
+      %th
+
+  - @present_coaches.each do |present_coach|
+    %tr
+      %td= link_to present_coach.user.name, present_coach.user
+      %td
+        = present_coach.salary_without_tax.to_s + ' ' + present_coach.currency.symbol
+        |
+        %strong= (present_coach.salary_without_tax * (1 + present_coach.vat.percentage_value / 100)).to_s + ' ' + present_coach.currency.symbol + '(' + t('dictionary.vat_included') + ')'
+      %td!= ApplicationHelper.labelize_boolean present_coach.supplementation
+      %td= link_to t('dictionary.show'), [@training_lesson_realization, present_coach]
+      - if @training_lesson_realization.is_regular?
+        %td= link_to t('dictionary.edit'), edit_regular_training_lesson_realization_present_coach_path(@training_lesson_realization, present_coach)
+      - elsif @training_lesson_realization.is_individual?
+        %td= link_to t('dictionary.edit'), edit_individual_training_lesson_realization_present_coach_path(@training_lesson_realization, present_coach)
+
+      %td= link_to t('dictionary.delete'), [@training_lesson_realization, present_coach], :method => :delete, :data => { :confirm => t('dictionary.are_you_sure') }
+
+%br

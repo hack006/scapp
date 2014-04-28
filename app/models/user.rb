@@ -20,6 +20,9 @@ class User < ActiveRecord::Base
   has_many :variable_field_categories
   has_many :user_relations
   has_and_belongs_to_many :user_groups
+  belongs_to :locale
+
+  validates :locale_id, presence: true
 
   # Test if specified relation exists between users
   #

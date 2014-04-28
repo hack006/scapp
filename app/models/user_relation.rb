@@ -109,24 +109,24 @@ class UserRelation < ActiveRecord::Base
     rel = nil
     case relation
       when :all
-        rel = UserRelation.where("(user_from_id = :user AND from_user_status IN (:status) AND to_user_status IN (:my_status)) OR (user_to_id = :user AND to_user_status IN (:status) AND from_user_status IN (:my_status))",
-                                 { user: user, status: user_relation_statuses, my_status: my_side_relation_status })
+        rel = UserRelation.where("(user_from_id = :user_id AND from_user_status IN (:status) AND to_user_status IN (:my_status)) OR (user_to_id = :user_id AND to_user_status IN (:status) AND from_user_status IN (:my_status))",
+                                 { user_id: user.id, status: user_relation_statuses, my_status: my_side_relation_status })
       when :friends
-       rel =  UserRelation.where("((user_from_id = :user AND from_user_status IN (:status) AND to_user_status IN (:my_status)) OR (user_to_id = :user AND to_user_status IN (:status) AND from_user_status IN (:my_status)))" +
+       rel =  UserRelation.where("((user_from_id = :user_id AND from_user_status IN (:status) AND to_user_status IN (:my_status)) OR (user_to_id = :user_id AND to_user_status IN (:status) AND from_user_status IN (:my_status)))" +
                            " AND relation = 'friend'",
-                           { user: user, status: user_relation_statuses, my_status: my_side_relation_status })
+                           { user_id: user.id, status: user_relation_statuses, my_status: my_side_relation_status })
       when :my_coaches
-        rel = UserRelation.where("user_to_id = :user AND to_user_status IN (:status) AND from_user_status IN (:my_status) AND relation = 'coach'",
-                                 { user: user, status: user_relation_statuses, my_status: my_side_relation_status })
+        rel = UserRelation.where("user_to_id = :user_id AND to_user_status IN (:status) AND from_user_status IN (:my_status) AND relation = 'coach'",
+                                 { user_id: user.id, status: user_relation_statuses, my_status: my_side_relation_status })
       when :my_players
-        rel = UserRelation.where("user_from_id = :user AND from_user_status IN (:status) AND to_user_status IN (:my_status) AND relation = 'coach'",
-                                 { user: user, status: user_relation_statuses, my_status: my_side_relation_status })
+        rel = UserRelation.where("user_from_id = :user_id AND from_user_status IN (:status) AND to_user_status IN (:my_status) AND relation = 'coach'",
+                                 { user_id: user.id, status: user_relation_statuses, my_status: my_side_relation_status })
       when :my_watchers
-        rel = UserRelation.where("user_to_id = :user AND to_user_status IN (:status) AND from_user_status IN (:my_status) AND relation = 'watcher'",
-                                 { user: user, status: user_relation_statuses, my_status: my_side_relation_status })
+        rel = UserRelation.where("user_to_id = :user_id AND to_user_status IN (:status) AND from_user_status IN (:my_status) AND relation = 'watcher'",
+                                 { user_id: user.id, status: user_relation_statuses, my_status: my_side_relation_status })
       when :my_wards
-        rel = UserRelation.where("user_from_id = :user AND from_user_status IN (:status) AND to_user_status IN (:my_status) AND relation = 'watcher'",
-                                 { user: user, status: user_relation_statuses, my_status: my_side_relation_status })
+        rel = UserRelation.where("user_from_id = :user_id AND from_user_status IN (:status) AND to_user_status IN (:my_status) AND relation = 'watcher'",
+                                 { user_id: user.id, status: user_relation_statuses, my_status: my_side_relation_status })
     end
 
     rel

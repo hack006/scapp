@@ -1,0 +1,278 @@
+- if @training_lesson_realization.is_regular?
+  - content_for :heading do
+    = t('nav.regular_training_lesson_detail')
+
+  - breadcrumb :regular_training_lesson_realizations_detail, @training_lesson_realization.training_lesson
+
+- else
+  - content_for :heading do
+    = t('nav.individual_training_lesson_detail')
+
+  - breadcrumb :individual_training_lesson_realizations_detail, @training_lesson_realization
+
+- # TODO some action may be done by coaches
+- if is_admin? || @training_lesson_realization.is_owned_by?(current_user) || @training_lesson_realization.has_coach?(current_user, supplementation: true) || @training_lesson_realization.has_coach?(current_user, role: 'head_coach')
+  #action-box
+    - if @training_lesson_realization.not_closed?
+      = link_to edit_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-info' do
+        %i.fa.fa-pencil
+        = t('training_realization.show.edit_training_lesson')
+      = link_to t('training_realization.show.fill_attendance'), fill_training_lesson_realization_attendances_path(@training_lesson_realization), class: 'btn btn-info'
+      = link_to close_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-warning' do
+        %i.fa.fa-check
+        = t('training_realization.show.close_lesson')
+      = link_to cancel_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-warning' do
+        %i.fa.fa-times
+        = t('training_realization.show.cancel_lesson')
+      = link_to new_measurement_vf_select_training_lesson_realization_variable_field_index_path(@training_lesson_realization), class: 'btn btn-success' do
+        = t('training_realization.show.new_lesson_measurement')
+    - elsif @training_lesson_realization.closed?
+      = link_to reopen_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-danger' do
+        %i.fa.fa-exclamation-circle
+        = t('training_realization.show.reopen_lesson')
+- else
+  #action-box
+    - unless @training_lesson_realization.attendances.where(user: current_user, participation: [:invited, :signed, :unexcused]).any?
+      = link_to t('training_realization.show.sign_in'), sign_in_training_lesson_realization_path, class: 'btn btn-success'
+    - unless @training_lesson_realization.attendances.where(user: current_user, participation: :excused).any?
+      = link_to t('training_realization.show.excuse'), excuse_training_lesson_realization_path, class: 'btn btn-warning'
+
+
+.box.box-info
+  .box-header
+    %h2.box-title= t('training_realization.show.detail')
+  .box-body
+    %table.table
+      %tbody
+        %tr
+          %th= t('training_realization.show.date')
+          %td #{@training_lesson_realization.date.short} (#{@training_lesson_realization.from.short} - #{@training_lesson_realization.until.short})
+        %tr
+          %th= t('training_realization.show.status')
+          %td!= TrainingLessonRealizationsHelper.labelize_status @training_lesson_realization.status
+        %tr
+          %th= t('training_realization.show.sign_in_time')
+          %td
+            - if @training_lesson_realization.sign_in_time.nil?
+              #{@training_lesson_realization.date.short} #{@training_lesson_realization.from.short}
+            - else
+              = @training_lesson_realization.sign_in_time.to_datetime.full(locale)
+              |
+              != ApplicationHelper.labelize_time_remain(@training_lesson_realization.sign_in_time.to_datetime)
+        %tr
+          %th= t('training_realization.show.excuse_time')
+          %td
+            - if @training_lesson_realization.excuse_time.nil?
+              #{@training_lesson_realization.date.short} #{@training_lesson_realization.from.short}
+            - else
+              = @training_lesson_realization.excuse_time.to_datetime.full(locale)
+              |
+              != ApplicationHelper.labelize_time_remain(@training_lesson_realization.excuse_time.to_datetime)
+
+        - if is_admin? || @training_lesson_realization.has_coach?(current_user, role: 'head_coach') || (@training_lesson_realization.is_regular? && @training_lesson_realization.training_lesson.regular_training.user == current_user) || (@training_lesson_realization.is_individual? && @training_lesson_realization.user == current_user)
+          %tr
+            %th= t('training_realization.show.player_price')
+            %td
+              - unless @training_lesson_realization.player_price_without_tax.blank?
+                #{@training_lesson_realization.player_price_without_tax} #{@training_lesson_realization.currency.symbol}
+                |
+                %strong #{@training_lesson_realization.player_price_with_tax} #{@training_lesson_realization.currency.symbol} (#{t('dictionary.vat_included')})
+              - else
+                \-
+          %tr
+            %th= t('training_realization.show.group_price')
+            %td
+              - unless @training_lesson_realization.group_price_without_tax.blank?
+                #{@training_lesson_realization.group_price_without_tax} #{@training_lesson_realization.currency.symbol}
+                |
+                %strong #{@training_lesson_realization.group_price_with_tax} #{@training_lesson_realization.currency.symbol} (#{t('dictionary.vat_included')})
+              - else
+                \-
+          %tr
+            %th= t('training_realization.show.rental_price')
+            %td
+              - unless @training_lesson_realization.rental_price_without_tax.blank?
+                #{@training_lesson_realization.rental_price_without_tax} #{@training_lesson_realization.currency.symbol}
+                |
+                %strong #{@training_lesson_realization.rental_price_with_tax} #{@training_lesson_realization.currency.symbol} (#{t('dictionary.vat_included')})
+              - else
+                \-
+          %tr
+            %th= t('training_realization.show.calculation')
+            %td
+              %span.label.label-grey= @training_lesson_realization.calculation
+          - if @training_lesson_realization.is_individual?
+            %tr
+              %th= t('training_realization.show.is_open')
+              %td!= ApplicationHelper.labelize_boolean @training_lesson_realization.is_open
+          %tr
+            %th= t('training_realization.show.max_player_count')
+            %td
+              - unless @training_lesson_realization.player_count_limit.blank?
+                = @training_lesson_realization.player_count_limit
+              - else
+                \-
+
+- unless @training_lesson_realization.note.blank?
+  .box.box-default
+    .box-header
+      %h2.box-title= t('training_realization.show.note')
+    .box-body
+      = sanitize @training_lesson_realization.note
+
+.box.box-success
+  .box-header
+    %i.fa.fa-users
+    %h2.box-title= t('training_realization.show.registered_players')
+  .box-body
+    - if @training_lesson_realization.not_closed? && (is_admin? || @training_lesson_realization.is_owned_by?(current_user)) || @training_lesson_realization.has_coach?(current_user, role: 'head_coach')
+      - if @training_lesson_realization.is_regular?
+        = link_to t('training_realization.show.add_present_player'), new_training_lesson_realization_attendance_path(@training_lesson_realization), class: 'btn btn-success'
+      - elsif @training_lesson_realization.is_individual?
+        = link_to t('training_realization.show.add_present_player'), new_training_lesson_realization_attendance_path(@training_lesson_realization), class: 'btn btn-success'
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= t('training_realization.show.name')
+          %th= t('training_realization.show.participation_state')
+          %th= t('training_realization.show.price')
+          %th= t('training_realization.show.has_note')
+          %th{colspan: 3}
+      %tbody
+        - @training_lesson_realization.attendances.each do |a|
+          %tr
+            %td= a.user.name
+            - if (is_admin? || @training_lesson_realization.is_owned_by?(current_user) || a.user == current_user || @training_lesson_realization.has_coach?(current_user, role: 'head_coach') || @training_lesson_realization.has_coach?(current_user, supplementation: true))
+              %td!= AttendancesHelper.labelize_participation_state a.participation
+              %td
+                #{a.price_without_tax} #{a.training_lesson_realization.currency.symbol}
+                |
+                #{a.price_without_tax * (1 + a.training_lesson_realization.training_vat.percentage_value / 100)} #{a.training_lesson_realization.currency.symbol} (#{t('dictionary.vat_included')})
+              %td!= ApplicationHelper.labelize_boolean !a.note.blank?
+              %td= link_to t('training_realization.show.detail'), training_lesson_realization_attendance_path(@training_lesson_realization, a)
+            - else
+              %td{colspan: 3}
+
+            - if @training_lesson_realization.not_closed? && (is_admin? || @training_lesson_realization.is_owned_by?(current_user)) || @training_lesson_realization.has_coach?(current_user, role: 'head_coach')
+              - if @training_lesson_realization.is_regular?
+                %td
+                  = link_to t('dictionary.delete'), training_lesson_realization_attendance_path(@training_lesson_realization, a), method: :delete, :data => { :confirm => t('dictionary.are_you_sure') }
+
+              - if @training_lesson_realization.is_individual?
+                %td
+                  = link_to t('dictionary.delete'), training_lesson_realization_attendance_path(@training_lesson_realization, a), method: :delete, :data => { :confirm => t('dictionary.are_you_sure') }
+            - else
+              %td{colspan: 2}
+
+            - if true
+              %td
+                -# TODO add signed in player possibility manipulate his record state (signed, excused ..)
+            - else
+              %td
+
+.box.box-success
+  .box-header
+    %i.fa.fa-user
+    %h2.box-title= t('training_realization.show.registered_coaches')
+  .box-body
+    - if @training_lesson_realization.not_closed? && (is_admin? || @training_lesson_realization.is_owned_by?(current_user)) || @training_lesson_realization.has_coach?(current_user, role: 'head_coach')
+      - if @training_lesson_realization.is_regular?
+        = link_to t('training_realization.show.add_present_coach'), new_regular_training_lesson_realization_present_coach_path(@training_lesson_realization), class: 'btn btn-success'
+      - elsif @training_lesson_realization.is_individual?
+        = link_to t('training_realization.show.add_present_coach'), new_regular_training_lesson_realization_present_coach_path(@training_lesson_realization), class: 'btn btn-success'
+
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= t('training_realization.show.name')
+          %th= t('training_realization.show.salary')
+          %th{colspan: 3}
+      %tbody
+        - @training_lesson_realization.present_coaches.each do |c|
+          %tr
+            %td= c.user.name
+            - if is_admin? || c.user == current_user || @training_lesson_realization.is_owned_by?(current_user) || @training_lesson_realization.has_coach?(current_user, role: 'head_coach')
+              %td
+                = c.salary_without_tax.to_s + ' ' + c.currency.symbol
+                |
+                %strong= (c.salary_without_tax * (1 + c.vat.percentage_value / 100)).to_s + ' ' + c.currency.symbol + '(' + t('dictionary.vat_included') + ')'
+              - if @training_lesson_realization.not_closed? && @training_lesson_realization.is_regular?
+                %td
+                  = link_to t('dictionary.show'), regular_training_lesson_realization_present_coach_path(@training_lesson_realization, c)
+                %td
+                  = link_to t('dictionary.edit'), edit_regular_training_lesson_realization_present_coach_path(@training_lesson_realization, c)
+                %td
+                  = link_to t('dictionary.delete'), regular_training_lesson_realization_present_coach_path(@training_lesson_realization, c), method: :delete, :data => { :confirm => t('dictionary.are_you_sure') }
+
+              - if @training_lesson_realization.not_closed? && @training_lesson_realization.is_individual?
+                %td
+                  = link_to t('dictionary.show'), individual_training_lesson_realization_present_coach_path(@training_lesson_realization, c)
+                %td
+                  = link_to t('dictionary.edit'), edit_individual_training_lesson_realization_present_coach_path(@training_lesson_realization, c)
+                %td
+                  = link_to t('dictionary.delete'), individual_training_lesson_realization_present_coach_path(@training_lesson_realization, c), method: :delete, :data => { :confirm => t('dictionary.are_you_sure') }
+
+              - if @training_lesson_realization.closed?
+                %td{colspan: 3}
+
+            - else
+              %td{colspan: 2}
+
+.nav-tabs-custom
+  %ul.nav.nav-tabs.pull-right
+    %li
+      %a{href: "#lesson-realization-measurements", 'data-toggle' => 'tab'}
+        = t('training_realization.show.vf_measured_on_this_leson')
+        %span.badge.label-light-grey= @training_lesson_realization.variable_field_measurements.count
+    %li.active
+      %a{href: "#lesson-realization-note", 'data-toggle' => 'tab'}= t('training_realization.show.lesson_note')
+    %li.pull-left.header
+      %i.fa.fa-th
+      = t('training_realization.show.other')
+
+  .tab-content
+    .tab-pane.active#lesson-realization-note
+      - if @training_lesson_realization.note.blank?
+        = t('training_realization.show.no_note')
+      - else
+        = sanitize @training_lesson_realization
+
+    .tab-pane#lesson-realization-measurements
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= t('training_realization.show.measured_at')
+            %th= t('training_realization.show.measured_by')
+            %th= t('training_realization.show.measured_for')
+            %th= t('training_realization.show.variable_field')
+            %th= t('training_realization.show.value')
+            %th= t('training_realization.show.change_to_previous')
+            %th= t('training_realization.show.change_to_player_avg')
+            %th
+        %tbody
+          - @training_lesson_realization.variable_field_measurements.order(variable_field_id: :asc, measured_at: :desc, int_value: :desc).each do |m|
+            - if is_admin? || @training_lesson_realization.is_owned_by?(current_user) || @training_lesson_realization.has_coach?(current_user) || m.measured_for == current_user
+              %tr
+                %td= m.measured_at.strftime('%H:%M')
+                %td= m.measured_by.name
+                %td= m.measured_for.name
+                %td= link_to m.variable_field.name, m.variable_field
+                %td
+                  - if m.variable_field.is_numeric?
+                    = m.int_value
+                  - else
+                    = m.string_value
+                  = m.variable_field.unit
+                %td
+                  - if m.variable_field.is_numeric?
+                    != ApplicationHelper.colorize_negative_positive("#{m.stats_to_the_history[:change_to_previous].round(2)} (#{m.stats_to_the_history[:change_to_previous_percentage].round(2)}%)",
+                      m.stats_to_the_history[:change_to_previous])
+                  - else
+                    \-
+                %td
+                  - if m.variable_field.is_numeric?
+                    != ApplicationHelper.colorize_negative_positive("#{m.stats_to_the_history[:change_to_average].round(2)} (#{m.stats_to_the_history[:change_to_average_percentage].round(2)}%)",
+                      m.stats_to_the_history[:change_to_average])
+                  - else
+                    \-
+                %td= link_to t('training_realization.show.detail'), detail_user_variable_field_path(m.measured_for, m.variable_field)

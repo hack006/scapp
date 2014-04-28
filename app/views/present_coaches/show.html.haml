@@ -1,0 +1,30 @@
+- content_for :heading do
+  = t('nav.present_coach')
+
+- breadcrumb :present_coaches_detail, @present_coach
+
+#action-box
+  - if @training_lesson_realization.is_regular?
+    = link_to t('dictionary.edit'), edit_regular_training_lesson_realization_present_coach_path(@training_lesson_realization, @present_coach), class: 'btn btn-info'
+  - elsif @training_lesson_realization.is_individual?
+    = link_to t('dictionary.edit'), edit_individual_training_lesson_realization_present_coach_path(@training_lesson_realization, @present_coach), class: 'btn btn-info'
+
+
+%table.table
+  %tbody
+    %tr
+      %th= t('present_coach.show.salary')
+      %td
+        = @present_coach.salary_without_tax.to_s + ' ' + @present_coach.currency.symbol
+        |
+        %strong= (@present_coach.salary_without_tax * (1 + @present_coach.vat.percentage_value / 100)).to_s + ' ' + @present_coach.currency.symbol + '(' + t('dictionary.vat_included') + ')'
+    %tr
+      %th= t('present_coach.show.vat')
+      %td= link_to @present_coach.vat.name, @present_coach.vat
+    %tr
+      %th= t('present_coach.show.user')
+      %td= link_to @present_coach.user.name, @present_coach.user
+    %tr
+      %th= t('present_coach.show.supplementation')
+      %td!= ApplicationHelper.labelize_boolean @present_coach.supplementation
+

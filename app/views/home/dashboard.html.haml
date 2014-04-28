@@ -1,0 +1,168 @@
+- content_for :heading do
+  = t('nav.dashboard')
+
+
+.box.box-info
+  .box-header
+    %i.fa.fa-calendar
+    %h3.box-title= t('home.dashboard.my_closests_trainings')
+  .box-body
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= t('home.dashboard.date')
+          %th= t('home.dashboard.time')
+          %th= t('home.dashboard.training')
+          %th= t('home.dashboard.type')
+          %th= t('home.dashboard.role')
+          %th= t('home.dashboard.state')
+          %th= t('home.dashboard.time_until_start')
+          %th
+      %tbody
+        - @closest_training_lessons.each do |l|
+          %tr
+            %td= l.date.short(locale)
+            %td #{l.from.short} - #{l.until.short}
+            - if l.is_regular?
+              %td= link_to l.training_lesson.regular_training.name, l.training_lesson.regular_training
+              %td
+                %span.label.label-grey regular
+              %td!= TrainingLessonRealizationsHelper.get_regular_lesson_role(l.training_lesson, current_user)
+            - if l.is_individual?
+              %td -
+              %td
+                %span.label.label-light-grey individual
+              %td!= TrainingLessonRealizationsHelper.get_individual_lesson_role(l, current_user)
+
+            %td
+              - if l.attendances.where(user: current_user).any?
+                != AttendancesHelper.labelize_participation_state l.attendances.where(user: current_user).first.participation
+              - else
+                \-
+            %td!= TrainingLessonRealizationsHelper.days_until_start(l.date)
+            %td= link_to t('dictionary.show'), l
+
+-# Show values for coach
+-if is_coach?
+  .box.box-primary
+    .box-header
+      %i.fa.fa-calendar
+      %h3.box-title= t('home.dashboard.closests_trainigs_trained_by_me')
+    .box-body
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= t('home.dashboard.date')
+            %th= t('home.dashboard.time')
+            %th= t('home.dashboard.training')
+            %th= t('home.dashboard.type')
+            %th= t('home.dashboard.state')
+            %th= t('home.dashboard.time_until_start')
+            %th= t('home.dashboard.players_count')
+            %th
+        %tbody
+          - @closest_trained_by_me.each do |l|
+            %tr
+              %td= l.date.short(locale)
+              %td #{l.from.short} - #{l.until.short}
+              - if l.is_regular?
+                %td= link_to l.training_lesson.regular_training.name, l.training_lesson.regular_training
+                %td
+                  %span.label.label-grey regular
+              - if l.is_individual?
+                %td -
+                %td
+                  %span.label.label-light-grey individual
+              %td= l.status
+              %td!= TrainingLessonRealizationsHelper.days_until_start(l.date)
+              %td= l.attendances.count
+              %td= link_to t('dictionary.show'), l
+
+  .box.box-primary
+    .box-header
+      %i.fa.fa-tasks
+      %h3.box-title= t('home.dashboard.latest_measurement_of_my_players')
+    .box-body
+      %table.table.table-striped.small
+        %thead
+          %tr
+            %th
+            %th{colspan: 2}= t('home.dashboard.date')
+            %th= t('home.dashboard.player')
+            %th= t('home.dashboard.variable_field')
+            %th= t('home.dashboard.value')
+            %th= t('home.dashboard.location')
+            %th
+        %tbody
+          - @latest_measurements_of_my_players.each do |m|
+            %tr
+              %td= image_tag m.measured_for.avatar.small
+              %td= m.measured_at.to_datetime.full(locale)
+              %td!= VariableFieldMeasurementHelper.labelize_measurement_old m.measured_at
+              %td= link_to m.measured_for.name, m.measured_for
+              %td
+                %span.label.label-info= m.variable_field.name
+              - if m.variable_field.is_numeric
+                %td.value
+                  %strong= m.int_value
+                  = m.variable_field.unit
+              - else
+                %td.value
+                  %strong= m.string_value
+                  = m.variable_field.unit
+              %td= dash_or_value(m, :locality)
+              %td= link_to t('dictionary.show'), detail_user_variable_field_path(m.measured_for, m.variable_field)
+
+-# show values for player
+-if is_player?
+  .box.box-info
+    .box-header
+      %i.fa.fa-tasks
+      %h2.box-title= t('home.dashboard.my_latest_measurements')
+    .box-body
+      %table.table.table-striped.small
+        %thead
+          %tr
+            %th= t('home.dashboard.date')
+            %th
+            %th= t('home.dashboard.variable_field')
+            %th= t('home.dashboard.value')
+            %th= t('home.dashboard.location')
+            %th
+        %tbody
+        - @my_latest_vf_measurements.each do |m|
+          %tr
+            %td= m.measured_at.to_datetime.full(locale)
+            %td!= VariableFieldMeasurementHelper.labelize_measurement_old m.measured_at
+            %td
+              %span.label.label-info= m.variable_field.name
+            - if m.variable_field.is_numeric
+              %td.value
+                %strong= m.int_value
+                = m.variable_field.unit
+            - else
+              %td.value
+                %strong= m.string_value
+                = m.variable_field.unit
+            %td= dash_or_value(m, :locality)
+            %td= link_to t('dictionary.show'), detail_user_variable_field_path(m.measured_for, m.variable_field)
+
+  .box.box-info
+    .box-header
+      %i.fa.fa-group
+      %h2.box-title #{t('home.dashboard.my_coaches')} <small>(#{@my_connected_coaches.count()})</small>
+    .box-body
+      %table.table.table-striped
+        %thead
+          %tr
+            %th
+            %th= t('home.dashboard.coach')
+            %th= t('home.dashboard.state')
+            %th= t('home.dashboard.date')
+        %tbody
+          - @my_connected_coaches.each do |c|
+            %tr
+              %td= image_tag c.from.avatar.small.url
+              %td= link_to c.from.name, user_path(c.from)
+              %td!= UserRelationsHelper.labelize_relation_status c.from_user_status
+              %td= c.created_at.to_datetime.full(locale)

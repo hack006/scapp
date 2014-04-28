@@ -1,0 +1,6 @@
+- content_for :heading do
+  = t('nav.set_user_roles')
+
+= simple_form_for @user, url: set_roles_user_path(@user) do |f|
+  = f.association :roles
+  = f.submit t('user.set_roles.change_roles'), class: 'btn btn-primary'

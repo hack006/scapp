@@ -1,18 +1,24 @@
-%p#notice= notice
+- content_for :heading do
+  = t('nav.variable_field_category')
 
-%p
-  %b Name:
-  = @variable_field_category.name
-%p
-  %b Rgb:
-  = @variable_field_category.rgb
-%p
-  %b Description:
-  = @variable_field_category.description
-%p
-  %b User:
-  = @variable_field_category.user
+- breadcrumb :variable_field_categories_detail
 
-= link_to 'Edit', edit_variable_field_category_path(@variable_field_category)
-\|
-= link_to 'Back', variable_field_categories_path
+%table.table
+  %tbody
+    %tr
+      %th= t('vfc.show.name')
+      %td= @variable_field_category.name
+    %tr
+      %th= t('vfc.show.rgb')
+      %td= @variable_field_category.rgb
+    %tr
+      %th= t('vfc.show.description')
+      %td= @variable_field_category.description
+    %tr
+      %th= t('vfc.show.user')
+      %td
+        - unless @variable_field_category.user.nil?
+          = link_to @variable_field_category.user.name, @variable_field_category.user
+        - else
+          \-
+

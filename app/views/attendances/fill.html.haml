@@ -1,0 +1,31 @@
+- content_for :heading do
+  = t('nav.attendance_fill')
+
+- breadcrumb :attendances_fill, @training_lesson_realization
+
+= form_for fill_training_lesson_realization_attendances_path(@training_lesson_realization), method: :post do
+  - unless @attendances.empty?
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= t('attendance.fill.name')
+          %th= t('attendance.fill.unexcused')
+          %th= t('attendance.fill.excused')
+          %th= t('attendance.fill.present')
+      %tbody
+        - @attendances.each do |a|
+          %tr{class: (!a.participation.nil?) ? "state-#{a.participation}" : ''}
+            %td= a.user.name
+            %td.attendance-state.unexcused
+              = radio_button_tag "attendances[#{a.id}][status]", 'unexcused', (a.participation == :unexcused) ? true : false
+            %td.attendance-state.excused
+              = radio_button_tag "attendances[#{a.id}][status]", 'excused', (a.participation == :excused) ? true : false
+            %td.attendance-state.present
+              = radio_button_tag "attendances[#{a.id}][status]", 'present',  (a.participation == :present) ? true : false
+
+    = submit_tag t('attendance.fill.save_attendance'), class: 'btn btn-primary'
+
+  - else
+    .alert.alert-warning= t('attendance.fill.no_players_exists')
+
+    = link_to t('attendance.player_attendance.add_present_player'), new_training_lesson_realization_attendance_path(@training_lesson_realization), class: 'btn btn-success'

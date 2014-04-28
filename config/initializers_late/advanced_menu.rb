@@ -23,14 +23,15 @@ AdvancedMenu::Menu.setup do |config|
                nil, %w(fa fa-folder-o))
     h.add_link(I18n.t('nav.new_variable_field_category'), '/variable_field_categories/new', 'variable_field_categories',
                'new', %w(fa fa-plus))
-    h.add_link(I18n.t('nav.variable_field_user_levels'), '/variable_field_user_levels', 'variable_field_user_levels',
-               nil, %w(fa fa-signal), [:coach, :admin])
-    h.add_link(I18n.t('nav.new_variable_field_user_level'), '/variable_field_user_levels/new',
-               'variable_field_user_level', 'new', %w(fa fa-plus), [:admin])
-    h.add_link(I18n.t('nav.variable_field_sports'), '/variable_field_sports', 'variable_field_sports', nil,
-               %w(fa fa-heart-o), [:coach, :admin])
-    h.add_link(I18n.t('nav.new_variable_field_sport'), '/variable_field_sports', 'variable_field_sports', 'new',
-               %w(fa fa-plus), [:admin])
+    # TODO implement
+    # h.add_link(I18n.t('nav.variable_field_user_levels'), '/variable_field_user_levels', 'variable_field_user_levels',
+    #            nil, %w(fa fa-signal), [:coach, :admin])
+    # h.add_link(I18n.t('nav.new_variable_field_user_level'), '/variable_field_user_levels/new',
+    #            'variable_field_user_level', 'new', %w(fa fa-plus), [:admin])
+    # h.add_link(I18n.t('nav.variable_field_sports'), '/variable_field_sports', 'variable_field_sports', nil,
+    #            %w(fa fa-heart-o), [:coach, :admin])
+    # h.add_link(I18n.t('nav.new_variable_field_sport'), '/variable_field_sports', 'variable_field_sports', 'new',
+    #            %w(fa fa-plus), [:admin])
   end
 
   config.add_heading(I18n.t('nav.trainings'), '#', nil, nil, nil, AdvancedMenu::ROLES, %w(fa fa-angle-double-right)) do |h|
@@ -38,6 +39,8 @@ AdvancedMenu::Menu.setup do |config|
               %w(fa fa-table))
     h.add_link(I18n.t('nav.regular_trainings'), '/regular_trainings', 'regular_trainings', 'index', %w(fa fa-table), [:coach, :admin])
     h.add_link(I18n.t('nav.new_training'), '/regular_trainings/new', 'regular_trainings', 'new', %w(fa fa-plus), [:coach, :admin])
+    h.add_link(I18n.t('nav.new_lesson'), '/scheduled_lessons/new', 'training_lesson_realization', 'new', %w(fa fa-plus), [:coach, :admin])
+
   end
 
   config.add_heading(I18n.t('nav.finance'), '#', nil, nil, nil, [:admin], %w(fa fa-angle-double-right)) do |h|
@@ -45,6 +48,9 @@ AdvancedMenu::Menu.setup do |config|
     h.add_link(I18n.t('nav.new_vat'), '/vats/new', 'vats', 'new', %w(fa fa-plus))
     h.add_link(I18n.t('nav.currencies'), '/currencies', 'currencies', 'index', %w(fa fa-dollar))
     h.add_link(I18n.t('nav.new_currency'), '/currencies/new', 'currencies', 'new', %w(fa fa-plus))
+  end
+
+  config.add_heading(I18n.t('nav.help'), '/help/{locale}/index', 'helps', 'index', nil, AdvancedMenu::ROLES, %w(fa fa-question)) do |h|
   end
 
 end

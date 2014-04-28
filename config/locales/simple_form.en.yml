@@ -59,6 +59,14 @@ en:
         is_global: 'If marked global then every coach can use group for trainings. Keep in mind that :owner and :members visibility is not preserved because users participating in the training can see other members of the group in the training detail!'
       regular_training:
         public: 'If training is public then everyone can see it. Otherwise only owner, coaches and players can see the training.'
+      individual_training_lesson_realization:
+        sign_in_time: Before this date and time user can sign in. Leave blank to use lesson start time.
+        excuse_time: Before this date and time user can excuse. Leave blank to use lesson start time.
+        is_open: If checked then any registered user can sign in and participate.
+        player_count_limit: Maximal number of players that can participate in training lesson.
+      regular_training_lesson_realization:
+        sign_in_time: Before this date and time user can sign in. Leave blank to use training lesson defaults.
+        excuse_time: Before this date and time user can excuse. Leave blank to use training lesson defaults.
       currency:
         code: 'International code for currency. E.g. USD, CZK ..'
         symbol: 'Symbol appended after value. E.g. $, € ..'
@@ -78,4 +86,10 @@ en:
         update: Save changes
       coach_obligation:
         create: Create coach obligation
+        update: Save changes
+      regular_training_lesson_realization:
+        create: Create new regular training lesson
+        update: Save changes
+      individual_training_lesson_realization:
+        create: Create new individual training lesson
         update: Save changes

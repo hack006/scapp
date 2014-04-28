@@ -20,14 +20,16 @@ class TrainingLessonsController < ApplicationController
   def new
     @training_lesson = TrainingLesson.new
     @training_lesson.regular_training = @regular_training
+    @training_lesson.sign_in_before_start_time_limit = Time.new(0)
+    @training_lesson.excuse_before_start_time_limit = Time.new(0)
 
     authorize! :new, @training_lesson
 
 
     # Some VAT has to exist in the system
-    redirect_to is_admin? ? new_vat_path : root_path, alert: t('training_lesson.controller.vat_must_be_added_firstly') if Vat.count == 0
+    redirect_to is_admin? ? new_vat_path : dashboard_path, alert: t('training_lesson.controller.vat_must_be_added_firstly') if Vat.count == 0
     # Some currency has to exist in the system
-    redirect_to is_admin? ? new_currency_path : root_path, alert: t('training_lesson.controller.currency_must_be_added_firstly') if Currency.count == 0
+    redirect_to is_admin? ? new_currency_path : dashboard_path, alert: t('training_lesson.controller.currency_must_be_added_firstly') if Currency.count == 0
 
   end
 
@@ -40,6 +42,7 @@ class TrainingLessonsController < ApplicationController
   def create
     @training_lesson = TrainingLesson.new(training_lesson_params)
     @training_lesson.regular_training = @regular_training
+
 
     authorize! :create, @training_lesson
 

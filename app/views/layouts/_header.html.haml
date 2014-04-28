@@ -1,5 +1,5 @@
 %header.header
-  %a.logo{href: "#"} ScApp
+  %a.logo{href: dashboard_path}= ENV['APP_NAME']
   / Header Navbar: style can be found in header.less
   %nav.navbar.navbar-static-top{role: "navigation"}
     / Sidebar toggle button
@@ -37,7 +37,7 @@
           %a.dropdown-toggle{href: "#", "data-toggle" => "dropdown"}
             %i.fa.fa-warning
             %span.label.label-warning 8
-
+        -#
           %ul.dropdown-menu
             %li.header= t('template.header.you_have_x_new_notifications', count: 8)
             %li

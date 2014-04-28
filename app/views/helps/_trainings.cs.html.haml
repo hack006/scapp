@@ -1,0 +1,49 @@
+- content_for :modal_header do
+  Nápověda k oblasti tréninků
+%dl.dl-help
+  #sign_in_time
+    %dt Sign in time
+    %dd This is deadline for signing in to the training. After this time only coach can sign players for scheduled training.
+
+  #excuse_time
+    %dt Excuse time
+    %dd This is deadline for excusing from training. After this time only coach can excuse player.
+
+  #calculation
+    %dt Calculation
+    %dd
+      Calculation is made after the attendance fill in process. In this step there is a possibility to modify automatically calculated prices.
+      %ul
+        %li <b>fixed_player_price</b> - To each player will be automatically set <i>"player price without tax"</i> price.
+        %li
+          <b>split_the_costs</b> - <i>Group price without tax</i> will be divided by <b>present</b> and <b>unexcused</b> players.
+          This price part is automatically assigned to each of previously listed players.
+        %li <b>fixed_player_price_or_split_the_costs</b> From previous methods the one that has higher player price is selected.
+
+  #is_open
+    %dt Is open
+    %dd If open then any user can sign in to this scheduled lesson.
+
+  #player_count_limit
+    %dt Player count limit
+    %dd Maximal number of players that can sign in to the scheduled lesson. After reaching this limit only coach can add more players.
+
+  #scheduled_lesson_user
+    %dt User
+    %dd The owner of scheduled lesson. As <i>administrator</i> you can specify the owner :)
+
+  #odd_week
+    %dt Odd week
+    %dd
+
+  #odd_week
+    %dt Even week
+    %dd
+
+  #before_start_sign_in_time_limit
+    %dt Before start sign in time limit
+    %dd
+
+  #before_start_excuse_time_limit
+    %dt Before start excuse time limit
+    %dd

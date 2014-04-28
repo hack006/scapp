@@ -1,0 +1,87 @@
+- if action_name == 'new' || action_name == 'create'
+  - content_for :heading do
+    = t('nav.individual_training_lesson_new')
+
+  -# breadcrumb :individual_training_lesson_realizations_edit, @training_lesson_realization
+
+- if action_name == 'edit'
+  - content_for :heading do
+    = t('nav.individual_training_lesson_edit')
+
+  - breadcrumb :individual_training_lesson_realizations_edit, @training_lesson_realization
+
+= simple_form_for(@training_lesson_realization, url: ((params[:action] == 'new' || params[:action] == 'create' ) ? individual_training_lesson_realization_index_path : individual_training_lesson_realization_path )) do |f|
+  = f.error_notification
+
+  .form-inputs
+    .box.box-info
+      .box-header
+        %i.fa.fa-clock-o
+        %h2.box-title= t('training_realization.new.date_and_time')
+      .box-body
+        .row
+          .col-sm-4
+            = f.input :date, as: :date_picker
+          .col-sm-4
+            = f.input :from, as: :time_picker
+          .col-sm-4
+            = f.input :until, as: :time_picker
+
+        .row
+          .col-sm-6
+            = f.input :sign_in_time, as: :datetime_picker,
+              label: "#{t('training_realization.form.sign_in_time')} #{ApplicationHelper.link_modal_help('trainings', 'sign_in_time', locale)}"
+          .col-sm-6
+            = f.input :excuse_time, as: :datetime_picker,
+              label: "#{t('training_realization.form.excuse_time')} #{ApplicationHelper.link_modal_help('trainings', 'excuse_time', locale)}"
+    .box.box-info
+      .box-header
+        %i.fa.fa-money
+        %h2.box-title= t('training_realization.new.finance')
+      .box-body
+        .row
+          .col-sm-6
+            = f.input :calculation, collection: TrainingLessonRealization::PRICE_CALCULATIONS,
+              label: "#{t('training_realization.form.calculation')} #{ApplicationHelper.link_modal_help('trainings', 'calculation', locale)}"
+          .col-sm-6
+            = f.input :status, disabled: true
+        .row
+          .col-sm-4
+            = f.input :player_price_without_tax
+          .col-sm-4
+            = f.input :group_price_without_tax
+          .col-sm-4
+            = f.association :training_vat
+        .row
+          .col-sm-4
+            = f.input :rental_price_without_tax
+          .col-sm-4
+            = f.association :rental_vat
+          .col-sm-4
+            = f.association :currency
+
+    .box.fox-default
+      .box-header
+        %h2.box-title= t('training_realization.new.other')
+      .box-body
+        .row
+          .col-sm-6
+            = f.input :is_open,
+              label: "#{t('training_realization.form.is_open')} #{ApplicationHelper.link_modal_help('trainings', 'is_open', locale)}"
+
+          .col-sm-6
+            = f.input :player_count_limit,
+              label: "#{t('training_realization.form.player_count_limit')} #{ApplicationHelper.link_modal_help('trainings', 'player_count_limit', locale)}"
+
+        = f.input :note, input_html: { class: 'textarea' }
+        - if is_admin?
+          .alert.alert-danger
+            %i.fa.fa-warning
+            = f.association :user,
+              label: "#{t('training_realization.form.user')} #{ApplicationHelper.link_modal_help('trainings', 'scheduled_lesson_user', locale)}"
+
+
+  .form-actions
+    = f.button :submit, class: 'btn btn-primary'
+
+#modal-help.modal.fade{role: 'dialog', 'aria-hidden' => true}

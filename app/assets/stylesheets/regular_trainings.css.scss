@@ -6,6 +6,12 @@
 // do not touch this value! this value is used for computing event positions in the controller
 $hour-height: 40px;
 
+table.table.table-striped tr {
+  &:nth-child(odd).lesson-over td{ background-color: #ffcbb5
+  }
+  &.lesson-over td{ background-color: #ffd6c6 }
+}
+
 table#week-timetable{
   width: 100%;
 

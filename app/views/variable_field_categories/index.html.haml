@@ -22,7 +22,11 @@
       %td= variable_field_category.name
       %td= variable_field_category.rgb
       %td= variable_field_category.description
-      %td= dash_or_value(variable_field_category.user, 'name')
+      %td
+        - unless variable_field_category.user.blank?
+          = link_to variable_field_category.user.name, variable_field_category.user
+        - else
+          \-
       %td= link_to 'Show', variable_field_category
       %td= link_to 'Edit', edit_variable_field_category_path(variable_field_category)
       %td= link_to 'Destroy', variable_field_category, :method => :delete, :data => { :confirm => 'Are you sure?' }
