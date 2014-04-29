@@ -2,44 +2,51 @@ module AdvancedMenu
   ROLES = [:admin, :coach, :player]
 
   class Menu
-    cattr_accessor :name
-    cattr_accessor :css_class
-    cattr_reader :headings
+    attr_accessor :name
+    attr_accessor :css_class
+    attr_reader :headings
 
-    @@name
-    @@css_class
-    @@headings = Array.new()
+    @@init_config
 
-    def self.add_heading(name, path = nil, controller = nil, action = nil, icon = nil, only_roles = AdvancedMenu::ROLES, classes = [])
+    def add_heading(name, path = nil, controller = nil, action = nil, icon = nil, only_roles = AdvancedMenu::ROLES, classes = [], &block)
       h = Heading.new(name, path, controller, action, icon, only_roles, classes)
-      @@headings << h
+      @headings << h
 
-      yield h if block_given?
+      block.call(h) if block_given?
     end
 
-    def self.setup
-      yield self
+    def self.setup(&block)
+      @@init_config = block
     end
 
-    def self.each_permitted_heading(permitted_roles)
+    def initialize
+      @name = ''
+      @css_class = ''
+      @headings = Array.new()
+
+      self.instance_eval(&@@init_config)
+    end
+
+    def each_permitted_heading(permitted_roles)
       raise Exception, 'Role/s must be provided!' unless permitted_roles || permitted_roles.kind_of?(Array) || permitted_roles.kind_of?(Symbol)
       roles = permitted_roles.kind_of?(Symbol) ? [permitted_roles] : permitted_roles
 
-      @@headings.each_with_index do |h, index|
+      @headings.each_with_index do |h, index|
         unless (h.only_roles & roles).empty?
           yield h
         end
       end
     end
 
-    def self.render(logged_user, controller, action)
+    def render(logged_user, controller, action)
       # get roles
       roles = logged_user ? logged_user.roles.map{|r| r.name.to_sym} : :guest
 
       # activate fields based on controller and action
-      @@headings.each do |h|
+      @headings.each do |h|
         h.active = true if h.controller == controller && [nil, action].include?(h.action)
         # replace placeholders
+
         h.replaced_path = replace_placeholders h.path, logged_user
 
         h.links.each do |l|
@@ -66,7 +73,7 @@ module AdvancedMenu
 
     private
 
-    def self.replace_placeholders(str, user)
+    def replace_placeholders(str, user)
       replacements = [{ placeholder: '{user_slug}', replacement: user.slug }, { placeholder: '{locale}', replacement: I18n.locale.to_s }]
       ret ||= str
       replacements.each do |r|

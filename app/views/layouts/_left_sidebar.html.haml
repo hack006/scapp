@@ -26,4 +26,5 @@
             %button#search-btn.btn.btn-flat{name: "seach", type: "submit"}
               %i.fa.fa-search
     / sidebar menu
-    = AdvancedMenu::Menu.render(current_user, controller_name, action_name)
+    -#= AdvancedMenu::Menu.render(current_user, controller_name, action_name)
+    = @menu.render(current_user, controller_name, action_name)

@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :set_locale
+  before_action :build_menu
 
   rescue_from CanCan::AccessDenied do |exception|
     unless request.path == dashboard_path
@@ -52,6 +53,10 @@ class ApplicationController < ActionController::Base
   def set_locale
     I18n.locale = current_user.locale.code unless current_user.blank?
     I18n.locale = params[:locale] unless params[:locale].blank?
+  end
+
+  def build_menu
+    @menu = AdvancedMenu::Menu.new()
   end
 
   # Set default url options for url_helpers
