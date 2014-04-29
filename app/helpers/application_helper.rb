@@ -19,7 +19,7 @@ module ApplicationHelper
   # @return [String]
   def dash_or_value(object, field)
     return "-" if object.blank?
-    return "-" unless object.class.attribute_names.include?(field.to_s) && !object[field].empty?
+    return "-" unless object.class.attribute_names.include?(field.to_s) && (!object[field].blank?)
     object[field]
   end
 

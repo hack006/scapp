@@ -62,14 +62,23 @@
           %ul.dropdown-menu
             / User image
             %li.user-header.bg-light-blue
-              = image_tag current_user.avatar.medium.url, class: 'img-circle', alt: "#{current_user.name} avatar img"
+              - unless current_user.avatar.url.blank?
+                = image_tag current_user.avatar.medium.url, alt: "#{current_user.name} avatar img", class: 'img-circle'
+              - else
+                - unless current_user.sex.blank?
+                  = image_tag "/public/defaults/#{current_user.sex.to_s}_no_avatar_medium.png", alt: "#{current_user.name} no avatar img", class: 'img-circle'
+                - else
+                  = image_tag "/public/defaults/no_sex_no_avatar_medium.png", alt: "#{current_user.name} no avatar img", class: 'img-circle'
+
               %p
                 = current_user.email
                 %small= "Member since #{current_user.created_at.to_datetime.full(locale)}"
             / Menu Body
             %li.user-body
               .col-xs-12.text-center
-                My roles: #{current_user.roles.map{|r| r.name}.join(', ')}
+                My roles:
+                - current_user.roles.each do |r|
+                  != UserHelper::labelize_user_role(r)
             / Menu Footer
             %li.user-footer
               .pull-left

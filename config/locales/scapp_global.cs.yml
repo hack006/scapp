@@ -24,6 +24,10 @@ cs:
       one: "1 den"
       few: "%{count} dny"
       other: "%{count} dnů"
+    years:
+      one: "1 rok"
+      few: "%{count} roky"
+      other: "%{count} roků"
   errors:
     coach_obligation_not_exist_error: "Chyba: Trenérský úvazek neexistuje!"
     present_coach_already_exist_error: "Chyba: Trenér již přidán do aktuální lekce! Není možné mít více úvazků na jeden trénink."
@@ -379,6 +383,7 @@ cs:
       sign_in: "Přihlásit se"
       profile: Profil
       toggle_nav: "Zobrazit navigaci"
+      my_roles: "Moje uživatelské role"
     header_public:
       you_are_already_signed: "Jste již přihlášeni"
       go_to_dashboard: "Přejít na nástěnku"
@@ -586,7 +591,12 @@ cs:
       update_failed: "Nelze aktualizovat Profil uživatele."
       roles_successfully_changed: "Uživatelské role byla úspěšně aktualizována."
       roles_change_failed: "Došlo k neočekávané chybě během pokusu o změnu uživatelské role!"
+    form:
+      additional_information: "Další osobní údaje"
     show:
+      basic_information: "Základní profilové údaje"
+      additional_information: "Další osobní údaje"
+      about_me: "O mně"
       profile: Profil
       user: Uživatel
       email: E-mail
@@ -595,6 +605,15 @@ cs:
       user_metrics: "Uživatele metriky"
       user_groups: "Uživatel členem skupin"
       user_relations: "Vztahy uživatelů"
+      first_name: "Křestní jméno"
+      last_name: Příjmení
+      sex: Pohlaví
+      handedness: "Domininantní ruka"
+      birthday: "Datum narození"
+      phone: Telefon
+      city: Město
+      street: Ulice
+      post_code: "Poštovní směrovací číslo"
     index:
       users: Uživatelé
       username: "Uživatelské jméno"

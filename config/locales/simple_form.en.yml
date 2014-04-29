@@ -35,11 +35,22 @@ en:
         status: 'Status'
 
       user:
+        additional_information: Additional personal information
         locale: Default language
         avatar: Avatar
         password: Password
         password_confirmation: Retype password to confirmation
         current_password: Current password
+        first_name: First name
+        last_name: Last name
+        sex: Sex
+        handedness: Handedness
+        birthday: Birthday
+        phone: Phone
+        about_me: About me
+        city: City
+        street: Street
+        post_code: Post code
         new:
           email: 'E-mail to sign in.'
         edit:
@@ -124,6 +135,16 @@ en:
       vat:
         percentage_value: Percentage value
         is_time_limited: Limited to time period?
+
+    options:
+      user:
+        sex:
+          male: Male
+          female: Female
+        handedness:
+          right_handed: Right-handed
+          left_handed: Left-handed
+          universal: Mixed handedness
 
     hints:
       defaults:

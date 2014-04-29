@@ -3,23 +3,82 @@
 
 - breadcrumb :user, @user
 
+#action-box
+  = link_to user_variable_fields_path(@user), class: 'btn btn-info' do
+    %i.fa.fa-bar-chart-o
+    = t('user.show.user_metrics')
+  = link_to user_user_groups_path(@user), class: 'btn btn-info' do
+    %i.fa.fa-users
+    = t('user.show.user_groups')
+  = link_to user_user_relations_path(@user), class: 'btn btn-info' do
+    %i.fa.fa-random
+    = t('user.show.user_relations')
+
 .row
-  .col-sm-3
-    = image_tag @user.avatar.url, alt: "#{@user.name} avatar", class: 'img-thumbnail'
-  .col-sm-6
-    %p
-      %strong= t('user.show.email') + ':'
-      = @user.email
-    %p
-      %strong= t('user.show.last_sign_in') + ':'
-      = @user.last_sign_in_at.to_datetime.full(locale) if @user.last_sign_in_at
-    %p
-      %strong= t('user.show.member_since') + ':'
-      = @user.created_at.to_datetime.full(locale)
-  .col-sm-3
-    %p
-      = link_to t('user.show.user_metrics'), user_variable_fields_path(@user), class: 'btn btn-block btn-info'
-    %p
-      = link_to t('user.show.user_groups'), user_user_groups_path(@user), class: 'btn btn-block btn-info'
-    %p
-      = link_to t('user.show.user_relations'), user_user_relations_path(@user), class: 'btn btn-block btn-info'
+  .col-sm-8
+    .box.box-primary
+      .box-header
+        %h2.box-title= t('user.show.basic_information')
+      .box-body
+        .row
+          .col-sm-3
+            - unless @user.avatar.url.blank?
+              = image_tag @user.avatar.url, alt: "#{@user.name} avatar", class: 'img-thumbnail'
+            - else
+              - unless @user.sex.blank?
+                = image_tag "/public/defaults/#{@user.sex.to_s}_no_avatar_big.png", alt: "#{@user.name} no avatar", class: 'img-thumbnail'
+              - else
+                = image_tag "/public/defaults/no_sex_no_avatar_big.png", alt: "#{@user.name} no avatar", class: 'img-thumbnail'
+
+          .col-sm-9
+            %table.table
+              %tbody
+                %tr
+                  %th= t('user.show.first_name')
+                  %td= dash_or_value(@user, :first_name)
+                %tr
+                  %th= t('user.show.last_name')
+                  %td= dash_or_value(@user, :last_name)
+                %tr
+                  %th= t('user.show.email')
+                  %td= @user.email
+                %tr
+                  %th= t('user.show.last_sign_in')
+                  %td
+                    - if @user.last_sign_in_at
+                      = @user.last_sign_in_at.to_datetime.full(locale)
+                      |
+                      != VariableFieldMeasurementHelper.labelize_measurement_old(@user.last_sign_in_at.to_datetime.full(locale)) if @user.last_sign_in_at
+                %tr
+                  %th= t('user.show.member_since')
+                  %td= @user.created_at.to_datetime.full(locale)
+
+  .col-sm-4
+    .box.box-info
+      .box-header
+        %h2.box-title= t('user.show.additional_information')
+      .box-body
+        %table.table
+          %tbody
+            %tr
+              %th= t('user.show.sex')
+              %td= dash_or_value(@user, :sex)
+            %tr
+              %th= t('user.show.handedness')
+              %td= dash_or_value(@user, :handedness)
+            %tr
+              %th= t('user.show.birthday')
+              %td
+                = dash_or_value(@user, :birthday)
+                |
+                != UserHelper.labelize_user_old(@user)
+            %tr
+              %th= t('user.show.phone')
+              %td= dash_or_value(@user, :phone)
+
+- unless @user.about_me.blank?
+  .box.box-info
+    .box-header
+      %h2.box-title= t('user.show.about_me')
+    .box-body
+      = sanitize(@user.about_me)

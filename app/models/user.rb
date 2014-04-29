@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   USER_ROLES = ['watcher', 'player', 'coach', 'admin']
+  HANDEDNESS = [:left_handed, :right_handed, :universal]
+  SEX = [:male, :female]
 
+  # =================== EXTENSIONS ===================================
   # Add seo ids for user
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -16,13 +19,50 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  # =================== ASSOCIATIONS =================================
   has_many :variable_fields
   has_many :variable_field_categories
   has_many :user_relations
   has_and_belongs_to_many :user_groups
   belongs_to :locale
 
+  # =================== VALIDATIONS ==================================
   validates :locale_id, presence: true
+  validates :sex, inclusion: { in: SEX, allow_nil: true }
+  validates :handedness, inclusion: { in: HANDEDNESS, allow_nil: true }
+
+  # =================== GETTERS / SETTERS ============================
+  # Read sex
+  # @return [Symbol] sex
+  def sex
+    read_attribute(:sex).to_sym unless read_attribute(:sex).blank?
+  end
+
+  # Set sex
+  #
+  # @param sex
+  #   @option :male
+  #   @option :female
+  def sex=(sex)
+    write_attribute(:sex, sex.to_s) unless sex.blank?
+  end
+
+  # Read handedness
+  def handedness
+    read_attribute(:handedness).to_sym unless read_attribute(:handedness).blank?
+  end
+
+  # Set handednesss
+  #
+  # @param handedness
+  #   @option :left_handed
+  #   @option :right_handed
+  #   @option :universal
+  def handedness=(handedness)
+    write_attribute(:handedness, handedness.to_s) unless handedness.blank?
+  end
+
+  # =================== METHODS ======================================
 
   # Test if specified relation exists between users
   #
@@ -66,6 +106,8 @@ class User < ActiveRecord::Base
   def regular_trainings_coaching
     RegularTraining.for_coach(self)
   end
+
+  # =================== HELPERS ======================================
 
   def is_admin?
     self.has_role? :admin

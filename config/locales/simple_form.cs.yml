@@ -30,11 +30,22 @@ cs:
         odd_week: "Lichý týden"
         status: Stav
       user:
+        additional_information: "Další osobní údaje"
         locale: "Výchozí jazyk"
         avatar: "Profilový obrázek"
         password: Heslo
         password_confirmation: "Heslo znovu pro potvrzení"
         current_password: "Současné heslo"
+        first_name: "Křestní jméno"
+        last_name: Příjmení
+        sex: Pohlaví
+        handedness: "Domininantní ruka"
+        birthday: "Datum narození"
+        phone: Telefon
+        about_me: "O mně"
+        city: Město
+        street: Ulice
+        post_code: "Poštovní směrovací číslo"
         new:
           email: "E-mail k přihlášení"
         edit:
@@ -104,6 +115,15 @@ cs:
       vat:
         percentage_value: "Procentuální hodnota"
         is_time_limited: "Omezeno na časové období?"
+    options:
+      user:
+        sex:
+          male: Muž
+          female: Žena
+        handedness:
+          right_handed: Pravá
+          left_handed: Levá
+          universal: Obojí
     hints:
       defaults:
         username: "Uživatelské jméno pro přihlášení."

@@ -25,6 +25,9 @@ en:
     days:
       one: 1 day
       other: "%{count} days"
+    years:
+      one: 1 year
+      other: "%{count} years"
 
   errors:
     coach_obligation_not_exist_error: 'ERROR: Coach obligation not exist!'
@@ -388,6 +391,7 @@ en:
       sign_in: *sign_in
       profile: *profile
       toggle_nav: 'Toggle nav'
+      my_roles: My user roles
     header_public:
       you_are_already_signed: You are already signed in
       go_to_dashboard: Go to DASHBOARD
@@ -602,7 +606,12 @@ en:
       update_failed: 'Unable to update user profile.'
       roles_successfully_changed: 'User roles was successfully updated.'
       roles_change_failed: Something went wrong while trying to change user roles!
+    form:
+      additional_information: Additional personal information
     show:
+      basic_information: Basic profile information
+      additional_information: Additional personal information
+      about_me: Some words about me
       profile: *profile
       user: *user
       email: *email
@@ -611,6 +620,16 @@ en:
       user_metrics: 'User metrics'
       user_groups: 'Groups user is in'
       user_relations: 'User relations'
+      first_name: First name
+      last_name: Last name
+      sex: Sex
+      handedness: Handedness
+      birthday: Birthday
+      phone: Phone
+      about_me: About me
+      city: City
+      street: Street
+      post_code: Post code
     index:
       users: *users
       username: *username

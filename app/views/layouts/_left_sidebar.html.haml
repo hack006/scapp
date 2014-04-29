@@ -4,9 +4,16 @@
     / Sidebar user panel
     .user-panel
       .pull-left.image
-        = image_tag current_user.avatar.small.url, class: 'img-circle', alt: "#{current_user.name} avatar img"
+        - unless current_user.avatar.url.blank?
+          = image_tag current_user.avatar.small.url, alt: "#{current_user.name} avatar img", class: 'img-circle'
+        - else
+          - unless current_user.sex.blank?
+            = image_tag "/public/defaults/#{current_user.sex.to_s}_no_avatar_small.png", alt: "#{current_user.name} no avatar img", class: 'img-circle'
+          - else
+            = image_tag "/public/defaults/no_sex_no_avatar_small.png", alt: "#{current_user.name} no avatar img", class: 'img-circle'
+
       .pull-left.info
-        %p= t('template.left_sidebar.greetings', user: current_user.name)
+        %p= link_to t('template.left_sidebar.greetings', user: current_user.name), current_user
         %a{href: "#"}
           %i.fa.fa-circle.text-success
           Online

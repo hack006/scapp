@@ -83,9 +83,11 @@ class UsersController < ApplicationController
       end
     else
       if is_admin?
-        redirect_to users_path, :alert => t('user.controller.update_failed')
+        flash[:error] = t('user.controller.update_failed')
+        render 'edit'
       else
-        redirect_to dashboard_path, :alert => t('user.controller.update_failed')
+        flash[:error] = t('user.controller.update_failed')
+        render 'edit'
       end
     end
   end
@@ -134,6 +136,7 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :avatar, :locale_id)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :avatar, :locale_id, :first_name,
+                                 :last_name, :sex, :handedness, :birthday, :phone, :about_me, :city, :street, :post_code)
   end
 end

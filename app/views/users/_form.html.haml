@@ -1,12 +1,44 @@
 = simple_form_for(@user, :html => { :method => :put}) do |f|
-  = f.input :name, :autofocus => true
-  = f.input :email, :required => true
-  = f.association :locale
+  .box.box-danger
+    .box-body
+      .row
+      = f.input :name, :autofocus => true
+      = f.input :email, :required => true
+      = f.association :locale
+
+  .box
+    .box-header
+      %h2.box-title= t('user.form.additional_information')
+    .box-body
+      .row
+        .col-sm-5
+          = f.input :first_name
+        .col-sm-5
+          = f.input :last_name
+        .col-sm-2
+          = f.input :sex, as: :select, collection: User::SEX
+      .row
+        .col-sm-5
+          = f.input :city
+        .col-sm-5
+          = f.input :street
+        .col-sm-2
+          = f.input :post_code
+      .row
+        .col-sm-4
+          = f.input :handedness, as: :select, collection: User::HANDEDNESS
+        .col-sm-4
+          = f.input :birthday, as: :date_picker
+        .col-sm-4
+          = f.input :phone
+      = f.input :about_me, as: :text, input_html: { class: 'textarea' }
+
   = f.input :avatar, as: :file
   = f.input :avatar_cache, as: :hidden
   - if !@user.avatar.blank?
     %p Preview:
     = image_tag @user.avatar.url
+
   = f.input :password, :autocomplete => "off", :hint => t('registration.edit.leave_blank_when_not_want_change'), :required => false
   = f.input :password_confirmation, :required => false
   = f.input :current_password, :hint => t('devise.registrations.update_needs_confirmation'), :required => true
