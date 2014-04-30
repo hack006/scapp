@@ -14,6 +14,22 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  rescue_from Mysql2::Error do |exception|
+    logger.error "Mysql error occured: #{exception.message}." +
+                 " [controller: #{controller_name}, action: #{action_name}, user_id: #{current_user.nil? ? '-' : current_user.id}]"
+    redirect_to dashboard_path, :alert => t('errors.mysql_error')
+  end
+
+  if Rails.env == :production
+    # Handle other unexpected ERRORS to prevent complete app crash
+    rescue_from StandardError do |exception|
+      # TODO send notification to admin
+      logger.error "Following error raised: #{exception.message}." +
+                   " [controller: #{controller_name}, action: #{action_name}, user_id: #{current_user.nil? ? '-' : current_user.id}]"
+      redirect_to dashboard_path, :alert => t('errors.critical_error')
+    end
+  end
+
   # Set up redirect path after successful signin
   def after_sign_in_path_for(resource)
     dashboard_path

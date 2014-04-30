@@ -145,6 +145,15 @@ en:
           right_handed: Right-handed
           left_handed: Left-handed
           universal: Mixed handedness
+      training_lesson:
+        day:
+          mon: Monday
+          tue: Tuesday
+          wed: Wednesday
+          thu: Thursday
+          fri: Friday
+          sat: Saturday
+          sun: Sunday
 
     hints:
       defaults:

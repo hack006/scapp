@@ -38,6 +38,6 @@
         - else
           %td{colspan: 2}
         %td= link_to t('vf.index.add_measurement'), new_variable_field_variable_field_measurement_path(variable_field)
-        %td= link_to t('vf.index.show_detail')
+        %td= link_to t('vf.index.show_detail'), detail_user_variable_field_path(current_user, variable_field)
 
 =paginate @variable_fields, theme: 'twitter-bootstrap-3'

@@ -34,6 +34,7 @@ class HelpsController < ApplicationController
     authorize! :show_ajax, HelpsController
 
     get_template_file
+    @highlighted_id = params[:key]
 
     unless @help_filename.blank?
       render @help_filename, layout: 'layouts/modal'

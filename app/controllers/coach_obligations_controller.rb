@@ -2,7 +2,7 @@ class CoachObligationsController < ApplicationController
   before_action :set_coach_obligation, only: [:show, :edit, :update, :destroy]
   before_action :set_regular_training
 
-  load_and_authorize_resource except: [:create]
+  load_and_authorize_resource except: [:new, :create]
 
   # GET /coach_obligations.json
   def index

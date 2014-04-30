@@ -5,3 +5,9 @@
       %h4.modal-title= content_for?(:modal_header) ? yield(:modal_header) : ''
     .modal-body
       = yield
+
+      :javascript
+        jQuery("##{@highlighted_id}").parent().find("div").css("background-color", "#E9E9E9")
+        jQuery("##{@highlighted_id}").find("dt, dd").show()
+        jQuery("##{@highlighted_id}").css("border", "2px dashed red").css("background-color", "#FFF")
+        jQuery(".modal").scrollTo("##{@highlighted_id}")

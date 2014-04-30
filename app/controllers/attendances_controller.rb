@@ -24,8 +24,7 @@ class AttendancesController < ApplicationController
         joins(:attendances).
         where(training_lesson_id: @regular_training_lessons, status: :done).
         order(date: :desc).uniq
-    # paginated version to secure good view results
-    @closed_scheduled_lessons_paginated = @closed_scheduled_lessons.page(params[:page]).per(10)
+
 
     # if date range filter active, then use it
     begin
@@ -37,6 +36,9 @@ class AttendancesController < ApplicationController
 
     @closed_scheduled_lessons = @closed_scheduled_lessons.where('date >= ?', @from_date) if @from_date
     @closed_scheduled_lessons = @closed_scheduled_lessons.where('date <= ?', @until_date) if @until_date
+
+    # paginated version to secure good view results
+    @closed_scheduled_lessons_paginated = @closed_scheduled_lessons.page(params[:page]).per(10)
 
     # populate graph stat
     @closed_scheduled_lessons.each do |l|
@@ -285,7 +287,7 @@ class AttendancesController < ApplicationController
       user_present_realized_lessons = RegularTrainingLessonRealization.
           where(training_lesson_id: @regular_training_lessons, status: [:done]).
           joins(:attendances).
-          where('attendances.user_id = ?', @player.id)
+          where('attendances.user_id = ? AND attendances.participation = "present"', @player.id)
       @participation_percentage = user_present_realized_lessons.count / realized_lessons.count.to_f * 100
     else
       @participation_percentage = 0

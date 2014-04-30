@@ -34,6 +34,9 @@ en:
     present_coach_already_exist_error: 'ERROR: Coach already added for current training lesson! Can not have more than 1 wage per training :)'
     user_not_exist_error: "ERROR User does not exist!"
     attendance_player_already_exist_error: "ERROR User[%{user_id}] already exist in attendance!"
+    critical_error: "Critical error occured. Incident has been logged. If problem continues, please, contact the administrator."
+    mysql_error: "Something went wrong on database level. Incident has been logged. If problem continues, please, contact the administrator."
+
 
   dictionary:
     global: &global 'Global'
@@ -214,6 +217,7 @@ en:
     not_authorized: 'You do not have required permissions for this action.'
 
   breadcrumbs:
+    you_are_here: "You are here"
     home: *home
     variable_fields: *variable_fields
     variable_field: *variable_field
@@ -597,6 +601,13 @@ en:
     new:
       new_variable_field_sport: 'New variable field sport'
   user:
+    sex:
+      male: Male
+      female: Female
+    handedness:
+      right_handed: Righ-handed
+      left_handed: Left-handed
+      universal: Mixed-handed
     devise:
       send_reset_instructions: Send me reset password instructions
       sign_up: Sign me up
@@ -900,6 +911,9 @@ en:
       time_until_start: *time_until_start
 
   coach_obligation:
+    role:
+      coach: Coach
+      head_coach: Head coach
     controller:
       successfully_created: Coach obligation was successfully created.
       successfully_updated: Coach obligation was successfully updated.
@@ -943,6 +957,14 @@ en:
 
 
   training_realization:
+    role:
+      coach: coach
+      player: player
+      owner: owner
+    status:
+      scheduled: scheduled
+      canceled: canceled
+      done: done
     helper:
       remain_days:
         one: Remain only %{count} day
@@ -1056,6 +1078,12 @@ en:
       salary: *salary
       vat: *vat
   attendance:
+    participation:
+      invited: invited
+      signed: signed
+      present: present
+      excused: excused
+      unexcused: unexcused
     controller:
        bad_date_format: Bad date format!
        successfully_created: Attendance entry was successfully created.

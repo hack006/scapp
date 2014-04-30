@@ -249,6 +249,7 @@
             %th= t('training_realization.show.change_to_previous')
             %th= t('training_realization.show.change_to_player_avg')
             %th
+            %th
         %tbody
           - @training_lesson_realization.variable_field_measurements.order(variable_field_id: :asc, measured_at: :desc, int_value: :desc).each do |m|
             - if is_admin? || @training_lesson_realization.is_owned_by?(current_user) || @training_lesson_realization.has_coach?(current_user) || m.measured_for == current_user
@@ -276,3 +277,7 @@
                   - else
                     \-
                 %td= link_to t('training_realization.show.detail'), detail_user_variable_field_path(m.measured_for, m.variable_field)
+                %td
+                  - if is_admin? || @training_lesson_realization.is_owned_by?(current_user) || @training_lesson_realization.has_coach?(current_user, supplementation: true) || @training_lesson_realization.has_coach?(current_user, role: :head_coach)
+                    -# TODO AJAXify
+                    = link_to t('dictionary.delete'), m, method: :delete

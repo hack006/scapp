@@ -33,6 +33,8 @@ cs:
     present_coach_already_exist_error: "Chyba: Trenér již přidán do aktuální lekce! Není možné mít více úvazků na jeden trénink."
     user_not_exist_error: "Chyba uživatel neexistuje!"
     attendance_player_already_exist_error: "Chyba uživatele [%{user_id}] již existuje záznam v docházce!"
+    critical_error: "Došlo k závažné chybě. Problém byl zalogován. V případě přetrvávání problému, prosíme, kontaktujte administrátora."
+    mysql_error: "Něco se pokazilo na úrovně databáze. Problém byl zalogován. V případě přetrvání problému, prosíme, kontaktujte administrátora."
   dictionary:
     global: Globální
     show_detail: "Zobrazit detaily"
@@ -206,6 +208,7 @@ cs:
   alerts:
     not_authorized: "Nemáte požadovaná oprávnění pro tuto akci."
   breadcrumbs:
+    you_are_here: "Nacházíte se"
     home: Domů
     variable_fields: Metriky
     variable_field: Metrika
@@ -320,7 +323,7 @@ cs:
     edit_relation: "Upravit vztah"
     group_detail: "Detail skupiny"
     trainings: Tréninky
-    my_trainings: "Moje školení"
+    my_trainings: "Moje tréninky"
     regular_trainings: "Pravidelné tréninky"
     new_training: "Nový trénink"
     edit_training: "Upravit trénink"
@@ -403,7 +406,7 @@ cs:
       about_us: "O nás"
     dashboard:
       my_closests_trainings: "Moje nejbližší tréninky"
-      closests_trainigs_trained_by_me: "Nejbližší školení, které trénuji"
+      closests_trainigs_trained_by_me: "Nejbližší tréninky, které trénuji"
       my_latest_measurements: "Moje nejnovější měření"
       latest_measurement_of_my_players: "Nejnovější měření mých hráčů"
       players_count: "Počet hráčů"
@@ -582,6 +585,13 @@ cs:
     new:
       new_variable_field_sport: "Nový sport metriky"
   user:
+    sex:
+      male: Muž
+      female: Žena
+    handedness:
+      right_handed: pravá
+      left_handed: levá
+      universal: obojí
     devise:
       send_reset_instructions: "Zaslat instrukce k nastavení nového hesla."
       sign_up: "Zaregistrovat se"
@@ -602,9 +612,9 @@ cs:
       email: E-mail
       last_sign_in: "Poslední přihlášení"
       member_since: "Členem od"
-      user_metrics: "Uživatele metriky"
+      user_metrics: "Metriky uživatele"
       user_groups: "Uživatel členem skupin"
-      user_relations: "Vztahy uživatelů"
+      user_relations: "Vztahy uživatele"
       first_name: "Křestní jméno"
       last_name: Příjmení
       sex: Pohlaví
@@ -875,6 +885,9 @@ cs:
       status: Stav
       time_until_start: "Čas do zahájení"
   coach_obligation:
+    role:
+      coach: trenér
+      head_coach: šéftrenér
     controller:
       successfully_created: "Trenérský závazek byl úspěšně vytvořen."
       successfully_updated: "Trenérský závazek byl úspěšně aktualizován."
@@ -898,7 +911,7 @@ cs:
     user_overview:
       trainings_overview: "Přehled tréninků"
       no_trainings: "Aktuálně nejste zařazeni v žádném tréninku."
-      close_trainings: "Uzavřít trénink"
+      close_trainings: "Nejbližší tréninky"
       regular_trainings_in: "Pravidelné tréninky, kterých se účastním"
       regular_trainings_coaching: "Pravidelné tréninky, které trénuji"
       regular_training: "Pravidelný trénink"
@@ -915,6 +928,14 @@ cs:
       sign_in: "Přihlásit se"
       participating: "Účastním se?"
   training_realization:
+    role:
+      coach: trenér
+      player: hráč
+      owner: vlastník
+    status:
+      scheduled: naplánováno
+      canceled: zrušeno
+      done: hotovo
     helper:
       remain_days:
         one: "Zbývá pouze 1 den"
@@ -1025,6 +1046,12 @@ cs:
       salary: Plat
       vat: DPH
   attendance:
+    participation:
+      invited: pozván
+      signed: přihlášen
+      present: přítomen
+      excused: omluven
+      unexcused: neomluven
     controller:
       bad_date_format: "Chybný formát datumu!"
       successfully_created: "Záznam do docházky byl úspěšně přidán."

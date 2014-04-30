@@ -124,6 +124,15 @@ cs:
           right_handed: Pravá
           left_handed: Levá
           universal: Obojí
+      training_lesson:
+        day:
+          mon: Pondělí
+          tue: Úterý
+          wed: Středa
+          thu: Čtvrtek
+          fri: Pátek
+          sat: Sobota
+          sun: Neděle
     hints:
       defaults:
         username: "Uživatelské jméno pro přihlášení."

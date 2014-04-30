@@ -62,10 +62,18 @@
           %tbody
             %tr
               %th= t('user.show.sex')
-              %td= dash_or_value(@user, :sex)
+              %td
+                - unless @user.sex.blank?
+                  = t("user.sex.#{@user.sex.to_s}").to_s.downcase
+                - else
+                  \-
             %tr
               %th= t('user.show.handedness')
-              %td= dash_or_value(@user, :handedness)
+              %td
+                - unless @user.handedness.blank?
+                  = t("user.handedness.#{@user.handedness.to_s}").to_s.downcase
+                - else
+                  \-
             %tr
               %th= t('user.show.birthday')
               %td

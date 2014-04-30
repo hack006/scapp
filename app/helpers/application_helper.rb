@@ -79,7 +79,7 @@ module ApplicationHelper
   # @param [String] locale specify language version of help file to pick up
   # @return [String] html snippet required to fetch help and display it to modal window
   def self.link_modal_help(theme, keyword, locale = 'en')
-    "(<a href=\"#{Rails.application.routes.url_helpers.show_modal_help_path(locale, theme)}\" data-toggle=\"modal\" data-target=\"#modal-help\">
+    "(<a href=\"#{Rails.application.routes.url_helpers.show_modal_help_path(locale, theme, key: keyword)}\" data-toggle=\"modal\" data-target=\"#modal-help\">
       <i class=\"fa fa-question-circle\"></i><span> help</span>
     </a>)"
   end

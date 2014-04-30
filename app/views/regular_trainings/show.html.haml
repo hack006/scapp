@@ -15,6 +15,9 @@
     = link_to edit_regular_training_path(@regular_training), class: 'btn btn-info' do
       %i.fa.fa-pencil
       = t('dictionary.edit')
+    = link_to new_regular_training_training_lesson_path(@regular_training), class: 'btn btn-success' do
+      %i.fa-plus.fa
+      = t('regular_trainings.show.add_new_training_lesson')
 
 .box.box-info
   .box-header
@@ -56,7 +59,6 @@
     %h2.box-title= t('regular_trainings.show.closest_training_lessons')
   .box-body
     - if is_admin? || @regular_training.user == current_user
-      = link_to t('regular_trainings.show.add_new_training_lesson'), new_regular_training_training_lesson_path(@regular_training), class: 'btn btn-success'
       = link_to regular_training_training_lesson_realizations_path(@regular_training), class: 'btn btn-info' do
         %i.fa.fa-calendar-o
         = t('regular_trainings.show.list_scheduled_lessons')
@@ -106,7 +108,7 @@
           %tr
             %td= link_to o.user.name, o.user
             %td
-              %span.label.label-grey= o.role
+              != CoachObligationsHelper.labelize_coach_role(o.role)
             - if is_admin? || @regular_training.user == current_user || o.user == current_user
               %td
                 = o.hourly_wage_without_vat.to_s + ' ' + o.currency.symbol

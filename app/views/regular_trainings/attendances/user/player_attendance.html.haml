@@ -96,8 +96,9 @@
               .progress-bar.progress-bar-danger{style: "width: #{@participation[:unexcused][:percentage]}%"}
                 %span #{@participation[:unexcused][:percentage].round(2)} %
         %tr
-          %td= t('attendance.player_attendance.percentage_visited_realized_lessons')
+          %td
+            = t('attendance.player_attendance.percentage_visited_realized_lessons')
+            != ApplicationHelper.link_modal_help('trainings', 'percentage_of_presence_realized_lessons', locale)
           %td #{@participation_percentage.round(2)} %
 
-
-
+#modal-help.modal.fade{role: 'dialog', 'aria-hidden' => true}

@@ -8,6 +8,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 # JS jQuery library
 gem 'jquery-rails', '~>3.1.0'
+gem 'jquery-scrollto-rails'
 # page speedup loader - replacing only document body and changed assets
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'

@@ -15,6 +15,7 @@
 // require turbolinks
 //= require bootstrap
 //= require jquery-ui-1.10.3
+//= require jquery.scrollTo
 // special template plugins
 //= require plugins/sparkline/jquery.sparkline.min
 //= require plugins/highcharts/highcharts
@@ -25,4 +26,5 @@
 //= require plugins/iCheck/icheck.min
 //= require AdminLTE/app
 //= require bootstrap-datetimepicker/core
+//= require bootstrap-datetimepicker/locales/bootstrap-datetimepicker.cs
 //= require_tree .

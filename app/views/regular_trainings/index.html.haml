@@ -23,10 +23,10 @@
         %td
           - if regular_training.user
             = link_to regular_training.user.name, regular_training.user
-        %td= link_to 'Show', regular_training
+        %td= link_to t('dictionary.show'), regular_training
         - if is_admin? || regular_training.user == current_user
-          %td= link_to 'Edit', edit_regular_training_path(regular_training)
-          %td= link_to 'Destroy', regular_training, :method => :delete, :data => { :confirm => t('dictionary.are_you_sure') }
+          %td= link_to t('dictionary.edit'), edit_regular_training_path(regular_training)
+          %td= link_to t('dictionary.delete'), regular_training, :method => :delete, :data => { :confirm => t('dictionary.are_you_sure') }
         - else
           %td{colspan: 2}
 
