@@ -1,0 +1,8 @@
+ROLES: [admin, player, coach, watcher]
+
+APP_NAME: 'Example'
+URL: 'http://example.com'
+DEFAULT_LOCALE: 'en'
+EMAIL: 'club@example.com'
+EMAIL_REGISTRATION: 'register@example.com'
+EMAIL_NO_REPLY: 'no_reply@example.com'

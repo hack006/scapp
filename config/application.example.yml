@@ -1,5 +1,0 @@
-scapp:
-  url: 'example.com'
-  email:
-    registration: 'register'
-    no_reply: 'no_reply'
