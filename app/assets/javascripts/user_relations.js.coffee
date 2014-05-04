@@ -4,7 +4,7 @@
 
 jQuery(document).ready( ->
   # Hook ajax email gueser
-  jQuery("input[data-guesser=email").on("keyup", ->
+  jQuery("*[data-guesser=\"email\"]").on("keyup", ->
     if this.value.length > 2
       # ajax request
       jQuery.ajax({

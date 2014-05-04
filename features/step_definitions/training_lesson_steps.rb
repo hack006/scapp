@@ -18,10 +18,10 @@ When(/^I fill in all necessary training lesson fields$/) do |table|
   f = table.hashes.first
 
   select f[:day], from: 'Day'
-  check 'Odd week' if f[:odd]
-  uncheck 'Odd week' unless f[:odd]
-  check 'Even week' if f[:even]
-  uncheck 'Even week' unless f[:even_week]
+  check 'training_lesson_odd_week' if f[:odd]
+  uncheck 'training_lesson_odd_week' unless f[:odd]
+  check 'training_lesson_even_week' if f[:even]
+  uncheck 'training_lesson_even_week' unless f[:even_week]
   fill_in 'training_lesson_from', with: f[:from]
   fill_in 'training_lesson_until', with: f[:until]
   fill_in 'Player price without VAT', with: f[:player_price_wt]

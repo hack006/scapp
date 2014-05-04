@@ -14,10 +14,10 @@
     %dd
       Výpočet je proveden po doplnění docházky hráčů na tréninku. Vypočtené částky je možné dodatečně upravit.
       %ul
-        %li <b>fixed_player_price</b> - Každému hráči bude počítána částka z pole <i>"Cena hráče bez DPH"</i> + příslušná daň.
+        %li <b>#{t('simple_form.options.training_lesson.calculation.fixed_player_price')}</b> - Každému hráči bude počítána částka z pole <i>"Cena hráče bez DPH"</i> + příslušná daň.
         %li
-          <b>split_the_costs</b> - <i>Cena za skupinu bez DPH</i> + příslušná daň bude rozdělena mezi hráče se stavem docházky <b>:present</b> a <b>:unexcused</b>.
-        %li <b>fixed_player_price_or_split_the_costs</b> Zvolí se vyšší částka z předchozích 2 metod kalkulace.
+          <b>#{t('simple_form.options.training_lesson.calculation.split_the_costs')}</b> - <i>Cena za skupinu bez DPH</i> + příslušná daň bude rozdělena mezi hráče se stavem docházky <b>:present</b> a <b>:unexcused</b>.
+        %li <b>#{t('simple_form.options.training_lesson.calculation.fixed_player_price_or_split_the_costs')}</b> Zvolí se vyšší částka z předchozích 2 metod kalkulace.
 
   #is_open
     %dt Jakýkoliv registrovaný uživatel se může přihlásit?

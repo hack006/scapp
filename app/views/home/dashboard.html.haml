@@ -83,7 +83,7 @@
       %i.fa.fa-tasks
       %h3.box-title= t('home.dashboard.latest_measurement_of_my_players')
     .box-body
-      %table.table.table-striped.small
+      %table.table.table-striped.small.vfm
         %thead
           %tr
             %th
@@ -120,7 +120,7 @@
       %i.fa.fa-tasks
       %h2.box-title= t('home.dashboard.my_latest_measurements')
     .box-body
-      %table.table.table-striped.small
+      %table.table.table-striped.small.vfm
         %thead
           %tr
             %th= t('home.dashboard.date')
@@ -147,7 +147,7 @@
             %td= dash_or_value(m, :locality)
             %td= link_to t('dictionary.show'), detail_user_variable_field_path(m.measured_for, m.variable_field)
 
-  .box.box-info
+  #connected-coaches.box.box-info
     .box-header
       %i.fa.fa-group
       %h2.box-title #{t('home.dashboard.my_coaches')} <small>(#{@my_connected_coaches.count()})</small>

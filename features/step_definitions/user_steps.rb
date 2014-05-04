@@ -151,3 +151,19 @@ end
 Then(/^I click "([^"]*)"$/) do |link_text|
   click_link_or_button link_text
 end
+
+
+And(/^I fill in all required user fields$/) do |table|
+  # table is a table.hashes.keys # => [:name, :email, :locale]
+  values = table.hashes.first
+
+  fill_in 'user_name', with: values[:name]
+  fill_in 'user_email', with: values[:email]
+  select values[:locale], from: 'user_locale_id'
+end
+
+When(/^I click New user button$/) do
+  within find('#action-box') do
+    click_link 'New user'
+  end
+end

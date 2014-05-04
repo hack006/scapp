@@ -210,9 +210,9 @@ class RegularTrainingsController < ApplicationController
     def get_groups_for_select
       @groups.map do|g|
         if g.is_global?
-          [ "#{g.name} [GLOBAL]", "#{g.id}" ]
+          [ "#{g.name} #{t("regular_trainings.controller.global")}", "#{g.id}" ]
         elsif g.owner == current_user
-          [ "#{g.name} [OWNED]", "#{g.id}" ]
+          [ "#{g.name} #{t("regular_trainings.controller.owned")}", "#{g.id}" ]
         else
           [ "#{g.name}", "#{g.id}" ]
         end

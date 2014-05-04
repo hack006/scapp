@@ -14,11 +14,11 @@
     %dd
       Calculation is made after the attendance fill in process. In this step there is a possibility to modify automatically calculated prices.
       %ul
-        %li <b>fixed_player_price</b> - To each player will be automatically set <i>"player price without tax"</i> price.
+        %li <b>#{t('simple_form.options.training_lesson.calculation.fixed_player_price')}</b> - To each player will be automatically set <i>"player price without tax"</i> price.
         %li
-          <b>split_the_costs</b> - <i>Group price without tax</i> will be divided by <b>present</b> and <b>unexcused</b> players.
+          <b>#{t('simple_form.options.training_lesson.calculation.split_the_costs')}</b> - <i>Group price without tax</i> will be divided by <b>present</b> and <b>unexcused</b> players.
           This price part is automatically assigned to each of previously listed players.
-        %li <b>fixed_player_price_or_split_the_costs</b> From previous methods the one that has higher player price is selected.
+        %li <b>#{t('simple_form.options.training_lesson.calculation.fixed_player_price_or_split_the_costs')}</b> From previous methods the one that has higher player price is selected.
 
   #is_open
     %dt Any registered user can sign in?

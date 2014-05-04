@@ -99,8 +99,7 @@
                 \-
           %tr
             %th= t('training_realization.show.calculation')
-            %td
-              %span.label.label-grey= @training_lesson_realization.calculation
+            %td!= TrainingLessonRealizationsHelper.labelize_calculation(@training_lesson_realization.calculation)
           - if @training_lesson_realization.is_individual?
             %tr
               %th= t('training_realization.show.is_open')
@@ -235,7 +234,7 @@
       - if @training_lesson_realization.note.blank?
         = t('training_realization.show.no_note')
       - else
-        = sanitize @training_lesson_realization
+        = sanitize @training_lesson_realization.note
 
     .tab-pane#lesson-realization-measurements
       %table.table.table-striped

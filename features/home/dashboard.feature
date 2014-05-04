@@ -25,9 +25,9 @@ Feature: Show dashboard with latest and most important data
     Given I have "player" role
       And "test2" has "coach" relation with user "test1"
       And "test1" has "coach" relation with user "test2"
-    When I am at the "/" page
-    Then I should see "heading" containing "Closest trainings"
-      And I should see "heading" containing "Latest measurements"
+    When I am at the "/dashboard" page
+    Then I should see "heading" containing "My closest trainings"
+      And I should see "heading" containing "My latest measurements"
         And I should see measurement with value "12"
         And I should see measurement with value "15"
         And I should see measurement with value "good"
@@ -39,7 +39,7 @@ Feature: Show dashboard with latest and most important data
 
   Scenario: As a coach I want to see most important and latest data of my players
     Given I have "coach" role
-    When I am at the "/" page
+    When I am at the "/dashboard" page
     Then I should see "heading" containing "Closest trainings trained by me"
       And I should see "heading" containing "Latest measurements of my players"
 

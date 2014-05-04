@@ -11,6 +11,10 @@ module TrainingLessonRealizationsHelper
     end
   end
 
+  def self.labelize_calculation(calculation)
+    "<span class=\"label label-primary\">#{I18n.t("training_realization.calculation.#{calculation.to_s}")}</span>"
+  end
+
   def self.days_until_start(date)
     remain_days = [-1, date - Date.current].max.to_int
     case remain_days

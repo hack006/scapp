@@ -154,7 +154,21 @@ en:
           fri: Friday
           sat: Saturday
           sun: Sunday
-
+        calculation:
+          fixed_player_price: Fixed player price (FPP)
+          split_the_costs: Split the costs (STC)
+          fixed_player_price_or_split_the_costs: Higher one from FPP and STC
+      individual_training_lesson_realization:
+        calculation:
+          fixed_player_price: Fixed player price (FPP)
+          split_the_costs: Split the costs (STC)
+          fixed_player_price_or_split_the_costs: Higher one from FPP and STC
+      user_group:
+        visibility:
+          public: Public
+          registered: Registered users
+          members: Members  of group
+          owner: Only owner
     hints:
       defaults:
         username: 'User name to sign in.'

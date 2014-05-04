@@ -4,7 +4,8 @@
 - breadcrumb :users
 
 - if is_admin?
-  = link_to t('user.index.new_user'), new_user_path, class: 'btn btn-success'
+  #action-box
+    = link_to t('user.index.new_user'), new_user_path, class: 'btn btn-success'
 
 %table.table.table-stripped
   %thead

@@ -744,6 +744,8 @@ en:
 
   regular_trainings:
     controller:
+      global: "[GLOBAL]"
+      owned: "[OWNED]"
       successfully_created: 'Regular training was successfully created.'
       successfully_updated: 'Regular training was successfully updated.'
       successfully_removed: 'Regular training was successfully removed.'
@@ -954,6 +956,8 @@ en:
       regular_training: *regular_training
       sign_in: *sign_in
       participating: Participating?
+      training: regular_training
+      state: *state
 
 
   training_realization:
@@ -965,6 +969,10 @@ en:
       scheduled: scheduled
       canceled: canceled
       done: done
+    calculation:
+      fixed_player_price: Fixed player price (FPP)
+      split_the_costs: Split the costs (STC)
+      fixed_player_price_or_split_the_costs: Higher from FPP and STC
     helper:
       remain_days:
         one: Remain only %{count} day

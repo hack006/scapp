@@ -67,7 +67,7 @@ vfs = [{name: '60 metrů - dráha', description: '', unit: 's', higher_is_better
       {name: '100 metrů - dráha', description: '', unit: 's', higher_is_better: false, is_numeric: true, is_global: true, vfc_key: :speed},
       {name: '200 metrů - dráha', description: '', unit: 's', higher_is_better: false, is_numeric: true, is_global: true, vfc_key: :speed},
       {name: 'Kliky', description: '', unit: '', higher_is_better: true, is_numeric: true, is_global: true, vfc_key: :strength},
-      {name: 'Klasický shyby', description: '', unit: 's', higher_is_better: false, is_numeric: true, is_global: true, vfc_key: :strength},
+      {name: 'Klasický shyby', description: '', unit: 's', higher_is_better: true, is_numeric: true, is_global: true, vfc_key: :strength},
       {name: 'Přeskoky přes švihadlo 1 min', description: '', unit: '', higher_is_better: true, is_numeric: true, is_global: true, vfc_key: :coordination},
 
       # tennis specific

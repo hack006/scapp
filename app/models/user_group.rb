@@ -7,7 +7,7 @@
 #   @option 'owner' Visible only to owner. Useful for internal organization
 
 class UserGroup < ActiveRecord::Base
-  GROUP_VISIBILITIES = ['public', 'registered', 'members', 'owner']
+  GROUP_VISIBILITIES = [:public, :registered, :members, :owner]
 
   has_and_belongs_to_many :users
   belongs_to :owner, class_name: User, foreign_key: 'user_id'
@@ -20,6 +20,16 @@ class UserGroup < ActiveRecord::Base
   scope :global, -> { where('user_groups.is_global = 1') }
   scope :with_visibility, -> (visibilities) { where('visibility IN (?)', visibilities.to_a) }
   scope :global_or_owned_by, -> (user) { where('user_groups.user_id = ? OR user_groups.is_global = 1', user.id) }
+
+  # =================== GETTERS / SETTERS ============================
+  def visibility()
+    read_attribute(:visibility).to_sym unless read_attribute(:visibility).nil?
+  end
+
+  def visibility=(visibility)
+    write_attribute(:visibility, visibility.to_s)
+  end
+
 
   # Test if user belongs to group
   #

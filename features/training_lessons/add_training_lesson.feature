@@ -24,8 +24,8 @@ Feature: Add new training lesson to existing regular training
     When I click "Add new training lesson"
     Then I should see "heading" containing "New training lesson"
     When I fill in all necessary training lesson fields
-      | day   | odd | even  | from    | until   | player_price_wt | group_price_wt  | training_vat  | currency  | rental_price_wt | rental_vat  | calculation           |
-      | mon   | true| true  | 10:00   | 12:00   | 20              |                 | Basic         | Euro      | 10              | Basic       | fixed_player_price    |
+      | day   | odd | even  | from    | until   | player_price_wt | group_price_wt  | training_vat  | currency  | rental_price_wt | rental_vat  | calculation               |
+      | Monday| true| true  | 10:00   | 12:00   | 20              |                 | Basic         | Euro      | 10              | Basic       | Fixed player price (FPP)  |
       And I click "Create training lesson"
     Then I should see "Regular training lesson was successfully created." message
 
@@ -51,11 +51,11 @@ Feature: Add new training lesson to existing regular training
         |name   | value | is_time_limited | start_of_validity | end_of_validity |
         | Basic | 21    | false           |                   |                 |
       And Following regular training lessons exist in the system
-        | day   | odd | even  | from    | until   | regular_training  | player_price_wt | group_price_wt  | training_vat  | currency  | rental_price_wt | rental_vat  | calculation           |
-        | mon   | true| true  | 10:00   | 12:00   | private1          | 20              |                 | basic         | euro      | 10              | basic       | fixed_player_price    |
+        | day   | odd | even  | from    | until   | regular_training  | player_price_wt | group_price_wt  | training_vat  | currency  | rental_price_wt | rental_vat  | calculation               |
+        | Monday| true| true  | 10:00   | 12:00   | private1          | 20              |                 | basic         | euro      | 10              | basic       | Fixed player price (FPP)  |
     And I am at the "/regular_trainings/private1/training_lessons/new" page
     When I fill in all necessary training lesson fields
-      | day   | odd | even  | from    | until   | player_price_wt | group_price_wt  | training_vat  | currency  | rental_price_wt | rental_vat  | calculation           |
-      | mon   | true| true  | 11:00   | 13:00   | 20              |                 | Basic         | Euro      | 10              | Basic       | fixed_player_price    |
+      | day   | odd | even  | from    | until   | player_price_wt | group_price_wt  | training_vat  | currency  | rental_price_wt | rental_vat  | calculation               |
+      | Monday| true| true  | 11:00   | 13:00   | 20              |                 | Basic         | Euro      | 10              | Basic       | Fixed player price (FPP)  |
     And I click "Create training lesson"
     Then I should see "In the specified time interval another training lesson already exist!" message

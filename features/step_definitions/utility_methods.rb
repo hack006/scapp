@@ -16,7 +16,7 @@ def create_unconfirmed_user(id)
   create_visitor(id)
   delete_user(id)
   sign_up(id)
-  visit '/signout'
+  visit '/sign_out'
 end
 
 def create_user(id)
@@ -38,7 +38,7 @@ end
 
 def sign_up(id)
   delete_user(id)
-  visit '/signup'
+  visit '/sign_up'
   fill_in "Name", :with => @visitor[id][:name]
   fill_in "Email", :with => @visitor[id][:email]
   fill_in "user_password", :with => @visitor[id][:password]
@@ -48,7 +48,7 @@ def sign_up(id)
 end
 
 def sign_in(id)
-  visit '/signin'
+  visit '/sign_in'
   fill_in "Email", :with => @visitor[id][:email]
   fill_in "Password", :with => @visitor[id][:password]
   click_button "Sign me in"

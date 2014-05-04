@@ -11,6 +11,7 @@ gem 'jquery-rails', '~>3.1.0'
 gem 'jquery-scrollto-rails'
 # page speedup loader - replacing only document body and changed assets
 gem 'turbolinks'
+gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 1.2'
 # twitter bootstrap tem,plate framework
 gem 'bootstrap-sass', '>= 3.0.0.0'

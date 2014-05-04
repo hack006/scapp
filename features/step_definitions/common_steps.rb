@@ -60,3 +60,12 @@ end
 Then(/^I shouldn't see "([^"]*)" for "([^"]*)" in the table row$/) do |action, row_text|
   find(:xpath, "//tr[td[contains(.,'#{row_text}')]]").should_not have_content action
 end
+
+Then(/^I shouldn't see "([^"]*)" in actionbox$/) do |action_name|
+  begin
+    find('#action-box')
+    find('#action-box').should_not have_content action_name
+  rescue
+
+  end
+end

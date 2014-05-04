@@ -4,27 +4,15 @@ And(/^I have "([^"]*)" relation with user "([^"]*)"$/) do |relation, user_name|
 end
 
 And(/^I should see coach with name "([^"]*)"$/) do |coach_name|
-  found = false
-  all(:css, '.box.coach h3.box-title').each do |c|
-    if c.has_text? coach_name
-      found = true
-      break
-    end
+  within find("#connected-coaches table") do
+    page.should have_content coach_name
   end
-
-  found.should be_true
 end
 
 And(/^I shouldn't see coach with name "([^"]*)"$/) do |coach_name|
-  found = false
-  all(:css, '.box.coach h3.box-title').each do |c|
-    if c.has_text? coach_name
-      found = true
-      break
-    end
+  within find("#connected-coaches table") do
+    page.should_not have_content coach_name
   end
-
-  found.should be_false
 end
 
 And(/^"([^"]*)" has "([^"]*)" relation with user "([^"]*)"$/) do |user_from, relation, user_to|
