@@ -133,6 +133,10 @@ cs:
           fri: Pátek
           sat: Sobota
           sun: Neděle
+        calculation:
+          fixed_player_price: "Fixní cena za hráče (FCH)"
+          split_the_costs: "Dělba nákladů mezi hráče (DNH)"
+          fixed_player_price_or_split_the_costs: "Vyšší částka z FCH a DNH"
     hints:
       defaults:
         username: "Uživatelské jméno pro přihlášení."

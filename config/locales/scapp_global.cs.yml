@@ -209,7 +209,7 @@ cs:
     not_authorized: "Nemáte požadovaná oprávnění pro tuto akci."
   breadcrumbs:
     you_are_here: "Nacházíte se"
-    home: Domů
+    home: Nástěnka
     variable_fields: Metriky
     variable_field: Metrika
     variable_field_detail: "Detail metriky"
@@ -724,6 +724,8 @@ cs:
       edit_relation: "Upravit vztah"
   regular_trainings:
     controller:
+      global: "[GLOBÁLNÍ]"
+      owned: "[VLASTNĚNO]"
       successfully_created: "Pravidelný trénink byl úspěšně vytvořen."
       successfully_updated: "Pravidelný trénink byl úspěšně aktualizován."
       successfully_removed: "Pravidelný trénink byl úspěšně odstraněn."
@@ -927,6 +929,8 @@ cs:
       open_trainings: "Vypsané tréninky, kterých se mohu účastnit"
       sign_in: "Přihlásit se"
       participating: "Účastním se?"
+      training: "Pravidelný trénink"
+      state: Stav
   training_realization:
     role:
       coach: trenér
@@ -936,6 +940,10 @@ cs:
       scheduled: naplánováno
       canceled: zrušeno
       done: hotovo
+    calculation:
+      fixed_player_price: "Fixní cena za hráče (FCH)"
+      split_the_costs: "Dělba nákladů mezi hráče (DNH)"
+      fixed_player_price_or_split_the_costs: "Vyšší částka z FCH a DNH"
     helper:
       remain_days:
         one: "Zbývá pouze 1 den"
