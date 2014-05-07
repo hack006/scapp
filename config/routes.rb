@@ -1,5 +1,4 @@
 Scapp::Application.routes.draw do
-
   root :to => "home#index"
   get '/dashboard' => 'home#dashboard', as: :dashboard
 

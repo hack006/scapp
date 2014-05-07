@@ -6,11 +6,22 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :build_menu
 
+  # Set default url options for url_helpers
+  #   - can be overridden by passing params to link_to or form_for
+  def default_url_options
+    { :host => ENV['URL'] }
+  end
+
   rescue_from CanCan::AccessDenied do |exception|
-    unless request.path == dashboard_path
-      redirect_to dashboard_path, :alert => 'You don\'t have required permissions!'
+    # user without role would cause redirect loop
+    if current_user && current_user.roles.where(name: User::USER_ROLES).count.zero?
+      redirect_to root_path
     else
-      redirect_to new_user_session_path, :alert => 'Please, sign in!'
+      unless request.path == dashboard_path
+        redirect_to dashboard_path, :alert => 'You don\'t have required permissions!'
+      else
+        redirect_to new_user_session_path, :alert => 'Please, sign in!'
+      end
     end
   end
 
@@ -73,11 +84,5 @@ class ApplicationController < ActionController::Base
 
   def build_menu
     @menu = AdvancedMenu::Menu.new()
-  end
-
-  # Set default url options for url_helpers
-  #   - can be overridden by passing params to link_to or form_for
-  def default_url_options
-    { host: ENV['URL'] }
   end
 end
