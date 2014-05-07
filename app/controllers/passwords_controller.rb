@@ -19,7 +19,7 @@ class PasswordsController < Devise::PasswordsController
   # Set default url options for url_helpers
   #   - can be overridden by passing params to link_to or form_for
   def default_url_options
-    { host: ENV['URL'], locale: ENV['DEFAULT_LOCALE'] }
+    { :host => Settings.app.host, :port => Settings.app.port }
   end
 
 end

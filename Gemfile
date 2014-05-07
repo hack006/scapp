@@ -46,6 +46,8 @@ gem 'rmagick'
 # handling foreign keys
 gem 'foreigner', '~>1.4.2'
 gem 'immigrant'
+# configuration
+gem 'settingslogic'
 
 group :development do
   gem 'better_errors'

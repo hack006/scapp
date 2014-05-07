@@ -1,0 +1,19 @@
+defaults: &defaults
+  app:
+    name: 'Your app name'
+    host: 'example.com'
+    port: 80
+    default_locale: 'en'
+    email:
+      default: 'club@example.com'
+      registration: 'register@example.com'
+      no_reply: 'no_reply@example.com'
+
+test:
+  <<: *defaults
+
+development:
+  <<: *defaults
+
+production:
+  <<: *defaults

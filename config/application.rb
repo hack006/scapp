@@ -15,6 +15,8 @@ Bundler.require(:default, Rails.env)
 
 module Scapp
   class Application < Rails::Application
+    # set default encoding
+    config.encoding = "UTF-8"
 
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
