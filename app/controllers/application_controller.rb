@@ -9,7 +9,11 @@ class ApplicationController < ActionController::Base
   # Set default url options for url_helpers
   #   - can be overridden by passing params to link_to or form_for
   def default_url_options
-    { :host => Settings.app.host, :port => Settings.app.port }
+    unless Rails.env.test?
+      { :host => Settings.app.host, :port => Settings.app.port }
+    else
+      {}
+    end
   end
 
   rescue_from CanCan::AccessDenied do |exception|

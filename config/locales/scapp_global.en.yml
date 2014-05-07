@@ -835,8 +835,11 @@ en:
       edit_vat: *edit_vat
   currency:
     controller:
+      successfully_created: 'Currency was successfully created.'
+      successfully_updated: 'Currency was successfully updated.'
       dependent_exists: Can not delete. Currency is already in use!
       successfully_removed: Currency was succesfully removed.
+      already_in_use: 'Can not delete. Currency is already in use!'
     index:
       name: *name
       code: *code
@@ -1068,6 +1071,10 @@ en:
       time_until_start: *time_until_start
 
   present_coach:
+    controller:
+      successfully_added: 'Present coach was successfully added.'
+      successfully_updated: 'Present coach was successfully updated.'
+      successfully_removed: 'Present coach was successfully removed.'
     validation:
       user_already_added: User with this email already added for this training lesson.
       no_user_found: No user with this email found.

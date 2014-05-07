@@ -162,7 +162,7 @@ class Ability
 
     # @2.2
     can [:show], UserGroup do |g|
-      g.owner == @user || ['registered', 'public'].include?(g.visibility) || ( g.visibility == 'members' && g.user_is_in?(@user) )
+      g.owner == @user || [:registered, :public].include?(g.visibility) || ( g.visibility == :members && g.user_is_in?(@user) )
     end
 
     # @2.3

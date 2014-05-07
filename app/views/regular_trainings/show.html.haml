@@ -19,7 +19,7 @@
       %i.fa-plus.fa
       = t('regular_trainings.show.add_new_training_lesson')
 
-.box.box-info
+#rt-detail.box.box-info
   .box-header
     %h2.box-title= t('regular_trainings.show.detail')
   .box-body
@@ -49,7 +49,7 @@
           %th= t('regular_trainings.show.lessons_per_week') + ' - ' + t('dictionary.even_week')
           %td= @regular_training.lessons_per_week[:even]
 
-.box.box-default
+#rt-description.box.box-default
   .box-header
     %h2.box-title= t('regular_trainings.show.description')
   .box-body= sanitize @regular_training.description
@@ -58,10 +58,11 @@
   .box-header
     %h2.box-title= t('regular_trainings.show.closest_training_lessons')
   .box-body
-    - if is_admin? || @regular_training.user == current_user
+    - if is_admin? || @regular_training.user == current_user || @regular_training.has_coach?(current_user, 'head_coach') || @regular_training.has_coach?(current_user, 'coach')
       = link_to regular_training_training_lesson_realizations_path(@regular_training), class: 'btn btn-info' do
         %i.fa.fa-calendar-o
         = t('regular_trainings.show.list_scheduled_lessons')
+    - if is_admin? || @regular_training.user == current_user || @regular_training.has_coach?(current_user, 'head_coach')
       = link_to schedule_trainings_regular_training_path(@regular_training), class: 'btn btn-info' do
         %i.fa.fa-calendar
         = t('regular_trainings.show.schedule_trainings')

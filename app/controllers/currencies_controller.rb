@@ -32,7 +32,7 @@ class CurrenciesController < ApplicationController
 
     respond_to do |format|
       if @currency.save
-        format.html { redirect_to currencies_path, notice: 'Currency was successfully created.' }
+        format.html { redirect_to currencies_path, notice: t('currency.controller.successfully_created') }
         format.json { render action: 'show', status: :created, location: @currency }
       else
         format.html { render action: 'new' }
@@ -46,7 +46,7 @@ class CurrenciesController < ApplicationController
   def update
     respond_to do |format|
       if @currency.update(currency_params)
-        format.html { redirect_to @currency, notice: 'Currency was successfully updated.' }
+        format.html { redirect_to @currency, notice: t('currency.controller.successfully_updated') }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -65,7 +65,7 @@ class CurrenciesController < ApplicationController
         format.json { head :no_content }
       rescue ActiveRecord::DeleteRestrictionError => e
         format.html { redirect_to currencies_url, alert: t('currency.controller.dependent_exists') }
-        format.json { render json: { error: 'Can not delete. Currency is already in use!' }.to_json, status: :unprocessable_entity }
+        format.json { render json: { error: t('currency.controller.already_in_use') }.to_json, status: :unprocessable_entity }
       end
 
     end

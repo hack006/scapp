@@ -312,9 +312,9 @@ crumb :regular_training_lesson_realizations do |regular_training|
   parent :regular_trainings_detail, regular_training
 end
 
-crumb :regular_training_lesson_realizations_detail do |regular_training_lesson|
-  link t('breadcrumbs.regular_training_lesson_detail'), [regular_training_lesson.regular_training, regular_training_lesson]
-  parent :training_lessons_detail, regular_training_lesson
+crumb :regular_training_lesson_realizations_detail do |regular_training_realization|
+  link t('breadcrumbs.regular_training_lesson_detail'), regular_training_realization
+  parent :training_lessons_detail, regular_training_realization.training_lesson
 end
 
 crumb :individual_training_lesson_realizations_detail do |individual_training_lesson|
@@ -338,7 +338,7 @@ end
 crumb :present_coaches do |training_lesson_realization|
   if training_lesson_realization.is_regular?
     link t('nav.present_coaches'), regular_training_lesson_realization_present_coaches_path(training_lesson_realization)
-    parent :regular_training_lesson_realizations_detail, training_lesson_realization.training_lesson
+    parent :regular_training_lesson_realizations_detail, training_lesson_realization
   elsif training_lesson_realization.is_individual?
     link t('nav.present_coaches')
     parent :individual_training_lesson_realizations_detail, training_lesson_realization
@@ -366,7 +366,7 @@ end
 crumb :attendances do |training_lesson_realization|
   if training_lesson_realization.is_regular?
     link t('breadcrumbs.attendence'), regular_training_attendances_path(training_lesson_realization.training_lesson.regular_training)
-    parent :regular_training_lesson_realizations_detail, training_lesson_realization.training_lesson
+    parent :regular_training_lesson_realizations_detail, training_lesson_realization
   elsif training_lesson_realization.is_individual?
     link t('breadcrumbs.attendence')
     parent :individual_training_lesson_realizations_detail, training_lesson_realization

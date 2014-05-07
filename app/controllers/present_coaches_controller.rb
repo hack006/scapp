@@ -37,7 +37,7 @@ class PresentCoachesController < ApplicationController
 
     respond_to do |format|
       if @present_coach.save
-        format.html { redirect_to [@training_lesson_realization,@present_coach], notice: 'Present coach was successfully created.' }
+        format.html { redirect_to @training_lesson_realization, notice: t('present_coach.controller.successfully_added') }
         format.json { render action: 'show', status: :created, location: @present_coach }
       else
         format.html { render action: 'new' }
@@ -51,7 +51,7 @@ class PresentCoachesController < ApplicationController
   def update
     respond_to do |format|
       if @present_coach.update(present_coach_params)
-        format.html { redirect_to @present_coach, notice: 'Present coach was successfully updated.' }
+        format.html { redirect_to @training_lesson_realization, notice: t('present_coach.controller.successfully_updated') }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -65,11 +65,7 @@ class PresentCoachesController < ApplicationController
   def destroy
     @present_coach.destroy
     respond_to do |format|
-      if @training_lesson_realization.is_regular?
-        format.html { redirect_to regular_training_lesson_realization_present_coaches_path(@training_lesson_realization) }
-      elsif @training_lesson_realization.is_individual?
-        format.html { redirect_to individual_training_lesson_realization_present_coaches_path(@training_lesson_realization) }
-      end
+      format.html { redirect_to @training_lesson_realization, notice: t('present_coach.controller.successfully_removed')}
       format.json { head :no_content }
     end
   end

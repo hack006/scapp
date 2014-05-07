@@ -1,7 +1,7 @@
 class RegularTrainingsController < ApplicationController
   before_action :set_regular_training, only: [:show, :edit, :update, :destroy, :schedule_trainings, :save_scheduled_trainings]
 
-  load_and_authorize_resource except: [:create, :schedule_trainings, :save_scheduled_trainings]
+  authorize_resource except: [:create, :schedule_trainings, :save_scheduled_trainings]
 
   # GET /regular_trainings
   # GET /regular_trainings.json
