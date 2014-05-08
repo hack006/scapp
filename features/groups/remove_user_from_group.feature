@@ -29,7 +29,7 @@ Feature: Remove user from group
       And User "test1" is in group "group2"
       And I am at the "/user_groups" page
     When I click "Show" for "group2" in table row
-    Then I should see "heading" containing "Group detail"
+    Then I should see "heading" containing "Group detail - group2"
       And I should see "test1" in user group members table
       And I should see "test3" in user group members table
       And I shouldn't see "Delete" in user group members table

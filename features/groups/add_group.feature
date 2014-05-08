@@ -12,7 +12,7 @@ Feature: Add group
     When I fill in all necessary user group fields
       | name        | description         | long desc     | owner       | visibility  |
       | group1      | group1 desc         |               | test1       | owner       |
-      And I click "Create User group"
+      And I click "Create user group"
     Then I should see "User group was successfully created." message
       And I should see "group1" in the table
       And I should see "test1" in the table

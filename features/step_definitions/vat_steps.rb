@@ -11,7 +11,7 @@ And(/^I fill in all necessary VATs fields$/) do |table|
   f = table.hashes.first
   fill_in 'vat_name', with: f[:name]
   fill_in 'Percentage value', with: f[:value]
-  check 'Is time limited' if f[:is_time_limited] == 'true'
+  check 'Limited to time period?' if f[:is_time_limited] == 'true'
   fill_in 'Start of validity', with: f[:start_of_validity]
   fill_in 'End of validity', with: f[:end_of_validity]
 end
@@ -21,7 +21,7 @@ And(/^I fill in all fields to change VATs fields$/) do |table|
   f = table.hashes.first
   fill_in 'vat_name', with: f[:name] if f[:name]
   fill_in 'Percentage value', with: f[:value] if f[:value]
-  check 'Is time limited' if f[:is_time_limited] && f[:is_time_limited] == 'true'
+  check 'Limited to time period?' if f[:is_time_limited] && f[:is_time_limited] == 'true'
   fill_in 'Start of validity', with: f[:start_of_validity] if f[:start_of_validity]
   fill_in 'End of validity', with: f[:end_of_validity] if f[:end_of_validity]
 end

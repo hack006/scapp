@@ -19,7 +19,7 @@ Feature: Request new relation
     When I fill in all necessary relation fields
       | to_user_mail          | relation_type |
       | example2@example.com  | friend        |
-      And I click button "Create User relation"
+      And I click button "Create user relation"
     Then I should see "Relation was successfully created." message
       And I should see "test2" in table "active_relations"
 
@@ -36,5 +36,5 @@ Feature: Request new relation
     When I fill in all necessary relation fields
       | to_user_mail          | relation_type |
       | example2@example.com  | friend        |
-    And I click button "Create User relation"
+    And I click button "Create user relation"
     Then I should see "Relation of type friend between you and test2 already exists. Can not create new one!" message

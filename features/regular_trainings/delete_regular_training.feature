@@ -18,7 +18,7 @@ Feature: Remove regular training
   Scenario: I want to remove my training
     Given I have "coach" role
       And I am at the "/regular_trainings" page
-    When I click "Destroy" for "public1" in table row
+    When I click "Delete" for "public1" in table row
       And I confirm popup
     Then I should see "Regular training was successfully removed." message
       And I shouldn't see "public1" in the table
@@ -27,7 +27,7 @@ Feature: Remove regular training
   Scenario: I want to remove any training as admin
     Given I have "admin" role
     And I am at the "/regular_trainings" page
-    When I click "Destroy" for "private1" in table row
+    When I click "Delete" for "private1" in table row
     And I confirm popup
     Then I should see "Regular training was successfully removed." message
     And I shouldn't see "private1" in the table

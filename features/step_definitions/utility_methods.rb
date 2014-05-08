@@ -4,7 +4,7 @@
 def create_visitor(id)
   @visitor ||= Array.new
   @visitor[id] ||= { :name => "test#{id}", :email => "example#{id}@example.com",
-                 :password => "changeme", :password_confirmation => "changeme" }
+                 :password => "changeme123", :password_confirmation => "changeme123" }
 end
 
 def find_user(id)
@@ -25,7 +25,8 @@ def create_user(id)
   if @user[id].nil?
     create_visitor(id)
     delete_user(id)
-    @user[id] = FactoryGirl.create(:player, email: @visitor[id][:email], name: @visitor[id][:name])
+    @user[id] = FactoryGirl.create(:player, email: @visitor[id][:email], name: @visitor[id][:name],
+                                   password:  @visitor[id][:password], password_confirmation:  @visitor[id][:password])
   end
 end
 
@@ -40,10 +41,10 @@ def sign_up(id)
   delete_user(id)
   visit '/sign_up'
   fill_in "Name", :with => @visitor[id][:name]
-  fill_in "Email", :with => @visitor[id][:email]
+  fill_in "E-mail to sign in", :with => @visitor[id][:email]
   fill_in "user_password", :with => @visitor[id][:password]
   fill_in "user_password_confirmation", :with => @visitor[id][:password_confirmation]
-  click_button "Sign up"
+  click_button "Sign me up"
   find_user(id)
 end
 

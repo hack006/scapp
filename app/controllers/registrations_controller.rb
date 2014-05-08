@@ -19,4 +19,10 @@ class RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.for(:account_update) {|u| u.permit(:name, :email, :password, :password_confirmation, :current_password)}
   end
 
+  # Override to add extend with locale
+  def sign_up_params
+    default_locale = Locale.where(code: Settings.app.default_locale).first
+    devise_parameter_sanitizer.sanitize(:sign_up).merge(locale_id: default_locale.id)
+  end
+
 end

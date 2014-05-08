@@ -29,7 +29,6 @@ Feature: List relations
     When I visit page "/users/test2/relations"
     Then I should see "You don't have required permissions!" message
 
-  @javascript
   Scenario: As a coach I want to be able to see relations of my players
     Given I have "coach" role
       And I have "coach" relation with user "test3"
@@ -45,7 +44,6 @@ Feature: List relations
     When I visit page "/users/test4"
       Then I should see "You don't have required permissions!" message
 
-  @javascript
   Scenario: As admin I want to see relations of all people
     Given I have "admin" role
       And "test3" has "friend" relation with me

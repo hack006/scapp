@@ -13,8 +13,8 @@ Feature: Edit variable field
   Scenario: Edit so far unused variable for measurements
     Given category "intelligence" exists
       And variable_fields exists
-        | variable_field_name    | owner     | category      |
-        | IQ                     | test1     | intelligence  |
+        | variable_field_name    | owner     | category      | is_numeric | higher_is_better  |
+        | IQ                     | test1     | intelligence  | true       | true              |
       And I am at the "/variable_fields" page
     When I click "Edit" for "IQ" in table row
     Then I should see "heading" containing "Edit variable field"
@@ -25,11 +25,11 @@ Feature: Edit variable field
   Scenario: Edit already used variable for measurements
     Given category "intelligence" exists
     And variable_fields exists
-      | variable_field_name    | owner     | category      |
-      | IQ                     | test1     | intelligence  |
+      | variable_field_name    | owner     | category      | is_numeric | higher_is_better  |
+      | IQ                     | test1     | intelligence  | true       | true              |
     And variable_field_measurements exists for "IQ" of owner "test1"
-      | variable_field_name  |owner   | int_value     |
-      | IQ                   |test1   | 120           |
+      | variable_field_name  |owner   | int_value     | string_value  |
+      | IQ                   |test1   | 120           |               |
     And I am at the "/variable_fields" page
     When I click "Edit" for "IQ" in table row
     Then I should see "heading" containing "Edit variable field"

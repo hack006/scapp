@@ -38,7 +38,7 @@ Feature: Show coach obligation
 
   Scenario: I can not view coach obligation detail of another coach unless I am regular training owner or admin
     Given I am at the "/regular_trainings/public1" page
-    Then I shouldn't see "Show" for "head_coach" in the table row
+    Then I shouldn't see "Show" for "Head coach" in the table row
 
   Scenario: I can view any coach obligation detail of regular training owned by me
     Given I have "coach" role

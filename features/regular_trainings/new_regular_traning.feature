@@ -22,5 +22,5 @@ Feature: Add new regular training
     When I fill all required fields for regular training
       | name    | description   | public    | for_group   |
       | test1   | test1 desc    | false     | group1      |
-      And I click "Create Regular training"
+      And I click "Create regular training"
     Then I should see "Regular training was successfully created." message

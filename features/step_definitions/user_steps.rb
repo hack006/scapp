@@ -2,7 +2,7 @@ require_relative 'utility_methods'
 
 ### GIVEN ###
 Given /^I am not logged in$/ do
-  visit '/signout'
+  visit '/sign_out'
 end
 
 Given /^I am logged in$/ do
@@ -30,7 +30,7 @@ When /^I sign in with valid credentials$/ do
 end
 
 When /^I sign out$/ do
-  visit '/signout'
+  visit '/sign_out'
 end
 
 When /^I sign up with valid user data$/ do
@@ -58,12 +58,12 @@ end
 
 When /^I sign up with a mismatched password confirmation$/ do
   create_visitor(1)
-  @visitor[1] = @visitor[1].merge(:password_confirmation => "changeme123")
+  @visitor[1] = @visitor[1].merge(:password_confirmation => "changeme123notmatch")
   sign_up(1)
 end
 
 When /^I return to the site$/ do
-  visit '/'
+  visit '/dashboard'
 end
 
 When /^I sign in with a wrong email$/ do
@@ -77,7 +77,7 @@ When /^I sign in with a wrong password$/ do
 end
 
 When /^I edit my account details$/ do
-  visit '/edit_profile'
+  visit '/users/test1/edit'
   fill_in "Name", :with => "newname"
   fill_in "user_current_password", :with => @visitor[1][:password]
   click_button "Update"
@@ -113,7 +113,7 @@ Then /^I should see a successful sign up message$/ do
 end
 
 Then /^I should see an invalid email message$/ do
-  page.should have_content "Emailis invalid"
+  page.should have_content "is invalid"
 end
 
 Then /^I should see a missing password message$/ do
@@ -121,15 +121,15 @@ Then /^I should see a missing password message$/ do
 end
 
 Then /^I should see a missing password confirmation message$/ do
-  page.should have_content "Password confirmationdoesn't match"
+  page.should have_content "doesn't match"
 end
 
 Then /^I should see a mismatched password message$/ do
-  page.should have_content "Password confirmationdoesn't match"
+  page.should have_content "doesn't match"
 end
 
 Then /^I should see a signed out message$/ do
-  page.should have_content "Please, sign in!"
+  page.should have_content "Signed out successfully."
 end
 
 Then /^I see an invalid login message$/ do
@@ -137,7 +137,7 @@ Then /^I see an invalid login message$/ do
 end
 
 Then /^I should see an account edited message$/ do
-  page.should have_content "You updated your account successfully."
+  page.should have_content "User profile successfully updated."
 end
 
 Then /^I should see my name$/ do

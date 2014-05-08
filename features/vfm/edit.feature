@@ -23,7 +23,7 @@ Feature: Edit user variable fields I have access to
     When I click "Edit" for "100" in table row
     Then I should see "heading" containing "Edit variable field measurement"
     When I change numeric value for variable field measurement to "111"
-      And I click button "Update Variable field measurement"
+      And I click button "Save changes"
     Then I should see "Variable field measurement changes were successfully saved." message
       And I should see "111" in the table
 
@@ -34,7 +34,7 @@ Feature: Edit user variable fields I have access to
     When I click "Edit" for "200" in table row
     Then I should see "heading" containing "Edit variable field measurement"
     When I change numeric value for variable field measurement to "222"
-      And I click button "Update Variable field measurement"
+      And I click button "Save changes"
     Then I should see "Variable field measurement changes were successfully saved." message
       And I should see "222" in the table
 
@@ -44,6 +44,6 @@ Feature: Edit user variable fields I have access to
     When I click "Edit" for "200" in table row
     Then I should see "heading" containing "Edit variable field measurement"
     When I change numeric value for variable field measurement to "222"
-      And I click button "Update Variable field measurement"
+      And I click button "Save changes"
     Then I should see "Variable field measurement changes were successfully saved." message
       And I should see "222" in the table

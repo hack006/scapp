@@ -34,7 +34,7 @@ Feature: Edit coach obligation
       | 15                | Basic   | Euro        | head_coach  |
       And I click "Save changes"
     Then I should see "Coach obligation was successfully updated." message
-      And I should see "head_coach" for "test2" in the table row
+      And I should see "Head coach" for "test2" in the table row
       And I should see "15" for "test2" in the table row
 
   Scenario: Edit any coach obligation as admin

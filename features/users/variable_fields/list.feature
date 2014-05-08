@@ -44,7 +44,6 @@ Feature: List all user variable fields with latest measurements
     When I visit variable_field view results page of "test2"
     Then I should see "You don't have required permissions!" message
 
-  @javascript
   Scenario: I want to view player VFs as :coach
     Given I have "coach" role
       And I have "coach" relation with user "test2"

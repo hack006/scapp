@@ -19,7 +19,7 @@ Feature: Edit existing regular training lesson
       | Basic | 21    | false           |                   |                 |
     And Following regular training lessons exist in the system
       | day   | odd | even  | from    | until   | regular_training  | player_price_wt | group_price_wt  | training_vat  | currency  | rental_price_wt | rental_vat  | calculation           |
-      | Monday| true| true  | 10:00   | 12:00   | private           | 20              |                 | basic         | euro      | 10              | basic       | fixed_player_price    |
+      | mon   | true| true  | 10:00   | 12:00   | private           | 20              |                 | basic         | euro      | 10              | basic       | fixed_player_price    |
 
   Scenario: As regular training lesson owner I edit it
     Given I have "coach" role
@@ -28,12 +28,12 @@ Feature: Edit existing regular training lesson
     When  I click "Edit" for "mon" in table row
       And I fill in all necessary training lesson fields
         | day   | odd | even  | from    | until   | player_price_wt | group_price_wt  | training_vat  | currency  | rental_price_wt | rental_vat  | calculation           |
-        | Monday| true| true  | 11:00   | 13:00   | 25              |                 | Basic         | Euro      | 15              | Basic       | fixed_player_price    |
+        | Monday| true| true  | 11:00   | 13:00   | 25              |                 | Basic         | Euro      | 15              | Basic       | Fixed player price (FPP)    |
       And I click "Save changes"
     Then I should see "Regular training lesson was successfully updated." message
       And I should see "11:00" in the date & time table
       And I should see "13:00" in the date & time table
-      And I should see "30" in the finance table
-      And I should see "36.3" in the finance table
-      And I should see "50" in the finance table
-      And I should see "60.5" in the finance table
+      And I should see "15" in the finance table
+      And I should see "18.15" in the finance table
+      And I should see "25" in the finance table
+      And I should see "30.25" in the finance table

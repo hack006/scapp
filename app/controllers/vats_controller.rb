@@ -1,7 +1,7 @@
 class VatsController < ApplicationController
-  before_action :set_vat, only: [ :edit, :update, :destroy]
+  before_action :set_vat, only: [ :show, :edit, :update, :destroy]
 
-  load_and_authorize_resource except: [:create]
+  authorize_resource except: [:create]
 
   # GET /vats
   # GET /vats.json

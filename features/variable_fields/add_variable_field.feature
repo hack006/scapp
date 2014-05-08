@@ -7,7 +7,7 @@ Feature: Add variable field
 
   Background:
     Given I am logged in
-      And I have ":coach" role
+      And I have "coach" role
 
   Scenario: Add new variable field with selected category from list
     Given category "intelligence" exists

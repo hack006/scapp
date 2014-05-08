@@ -24,11 +24,11 @@ Feature: Delete variable field
   Scenario: Remove already used variable
     Given category "intelligence" exists
     And variable_fields exists
-      | variable_field_name    | owner     | category      |
-      | IQ                     | test1     | intelligence  |
+      | variable_field_name    | owner     | category      | is_numeric | higher_is_better  |
+      | IQ                     | test1     | intelligence  | true       | true              |
     And variable_field_measurements exists for "IQ" of owner "test1"
-      | variable_field_name  |owner   | int_value     |
-      | IQ                   |test1   | 120           |
+      | variable_field_name  |owner   | int_value     | string_value    |
+      | IQ                   |test1   | 120           |                 |
     And I am at the "/variable_fields" page
     When I click "Delete" for "IQ" in table row
     And confirm dialog

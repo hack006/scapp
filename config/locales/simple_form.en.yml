@@ -52,9 +52,9 @@ en:
         street: Street
         post_code: Post code
         new:
-          email: 'E-mail to sign in.'
+          email: 'E-mail to sign in'
         edit:
-          email: 'E-mail.'
+          email: 'E-mail'
 
       variable_field:
         higher_is_better: 'Higher value is better'
@@ -115,7 +115,7 @@ en:
       coach_obligation:
         hourly_wage_without_vat: Hour wage without VAT
         vat: VAT
-        role: role
+        role: Role
         coach_email: Coach email
 
       attendance:

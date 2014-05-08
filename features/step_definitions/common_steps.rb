@@ -1,5 +1,5 @@
 Then(/^I should see "([^"]*)" message$/) do |message|
-  find('.alert #flash_notice, .alert #flash_alert').should have_content message
+  find('.alert #flash_notice, .alert #flash_alert, .alert #flash_error').should have_content message
 end
 
 And(/^I should have "([^"]*)" actions available for table row "([^"]*)"$/) do |actions, name|

@@ -13,7 +13,7 @@ Feature: View group detail
         | group2      | group2 desc         | group 2 LD    | test2       | members     |
         | group3_pub  | public group desc   |               | test3       | public      |
         | group4      | group4 desc         | group 4 LD    | test3       | registered  |
-  
+
   Scenario: I can view public group with any permission
     Given I have "player" role
       And User "test2" is in group "group3_pub"

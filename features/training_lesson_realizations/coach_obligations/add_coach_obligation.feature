@@ -29,7 +29,7 @@ Feature: Add coach obligation
       | example1@example.com  | 10                | Basic   | Euro        | coach       |
       And I click "Create coach obligation"
     Then I should see "Coach obligation was successfully created." message
-      And I should see "test1" for "coach" in the table row
+      And I should see "test1" for "Coach" in the table row
 
   Scenario: As admin I can add new coach obligation
     Given I have "admin" role
@@ -41,4 +41,4 @@ Feature: Add coach obligation
       | example1@example.com  | 10                | Basic   | Euro        | coach       |
         And I click "Create coach obligation"
     Then I should see "Coach obligation was successfully created." message
-      And I should see "test1" for "coach" in the table row
+      And I should see "test1" for "Coach" in the table row

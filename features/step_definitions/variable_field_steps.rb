@@ -169,13 +169,13 @@ When(/^I click "([^"]*)" for "([^"]*)" in table row$/) do |action_text, name|
   find(:xpath, "//tr[td[contains(.,'#{name}')]]/td/a", :text => action_text).click
 end
 When(/^variable_fields exists$/) do |table|
-  # table is a | IQ                | test1     | intelligence  |
+  # | variable_field_name    | owner     | category      | is_numeric | higher_is_better  |
 
   # We assume that user and category exist
   table.hashes.each do |r|
     u = User.where(name: r[:owner]).first
     c = VariableFieldCategory.where(name: r[:category]).first
-    vf = VariableField.new(name: r[:variable_field_name])
+    vf = VariableField.new(name: r[:variable_field_name], is_numeric: r[:is_numeric], higher_is_better: r[:higher_is_better])
     vf.user = u
     vf.variable_field_category = c
     vf.save
@@ -188,9 +188,10 @@ When(/^variable_field_measurements exists for "([^"]*)" of owner "([^"]*)"$/) do
   table.hashes.each do |r|
     u = User.where(name: r[:owner]).first
     vf = VariableField.where(name: name).first
-    vfm = VariableFieldMeasurement.new(int_value: r[:int_value])
+    vfm = VariableFieldMeasurement.new(int_value: r[:int_value], string_value: r[:string_value])
     vfm.measured_by = u
     vfm.measured_for = u
+    vfm.measured_at = DateTime.current
     vfm.variable_field = vf
     vfm.save
   end

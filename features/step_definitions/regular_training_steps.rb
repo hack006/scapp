@@ -16,7 +16,7 @@ When(/^I fill all required fields for regular training$/) do |table|
   fill_in 'Name', with: f[:name]
   fill_in 'Description', with: f[:description]
   if f[:public] == "true"
-    check 'Public'
+    check 'Is visible to public?'
   end
   find(:xpath, "//select/option[contains(text(), '#{f[:for_group]}')]").select_option
 end
@@ -36,5 +36,11 @@ And(/^Following training obligations exist$/) do |table|
 
     CoachObligation.create(user: @user[1], regular_training: regular_training, currency: currency, vat: vat,
                            role: o[:role], hourly_wage_without_vat: o[:hourly_wage_wt], coach_email: @user[1].email)
+  end
+end
+
+And(/^I should see "([^"]*)" in the regular training details$/) do |text|
+  within find('#rt-detail table') do
+    page.should have_content text
   end
 end

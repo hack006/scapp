@@ -52,7 +52,7 @@ Feature: Add new training lesson to existing regular training
         | Basic | 21    | false           |                   |                 |
       And Following regular training lessons exist in the system
         | day   | odd | even  | from    | until   | regular_training  | player_price_wt | group_price_wt  | training_vat  | currency  | rental_price_wt | rental_vat  | calculation               |
-        | Monday| true| true  | 10:00   | 12:00   | private1          | 20              |                 | basic         | euro      | 10              | basic       | Fixed player price (FPP)  |
+        | mon   | true| true  | 10:00   | 12:00   | private1          | 20              |                 | basic         | euro      | 10              | basic       | fixed_player_price        |
     And I am at the "/regular_trainings/private1/training_lessons/new" page
     When I fill in all necessary training lesson fields
       | day   | odd | even  | from    | until   | player_price_wt | group_price_wt  | training_vat  | currency  | rental_price_wt | rental_vat  | calculation               |

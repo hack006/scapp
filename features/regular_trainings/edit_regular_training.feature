@@ -31,9 +31,9 @@ Feature: Edit regular training
     When I fill all required fields for regular training
       | name    | description           | public    |
       | public1 | test1 changed desc    | true      |
-      And I click "Update Regular training"
+      And I click "Save changes"
     Then I should see "Regular training was successfully updated." message
-      And I should see "✓" in the table
+      And I should see "✓" in the regular training details
 
   Scenario: I edit any training as admin
     Given I have "admin" role
@@ -43,6 +43,6 @@ Feature: Edit regular training
     When I fill all required fields for regular training
       | name      | description                 | public    |
       | private1  | private1 changed to public  | true      |
-    And I click "Update Regular training"
+    And I click "Save changes"
     Then I should see "Regular training was successfully updated." message
-    And I should see "✓" in the table
+      And I should see "✓" in the regular training details

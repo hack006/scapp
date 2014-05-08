@@ -21,7 +21,7 @@ Feature: Add new measurement for VF I have access to
       And I am at the "/variable_fields" page
     When I click "Add measurement" for "IQ1" in table row
       And I fill all required fields for variable field measurement for :player
-      And I click button "Create Variable field measurement"
+      And I click button "Save measurement"
     Then I should see "Variable field measurement was successfully created." message
 
   Scenario: As a coach I can add measurement to my player
@@ -31,7 +31,7 @@ Feature: Add new measurement for VF I have access to
     When I click "Add measurement" for "IQ1" in table row
       And I fill all required fields for variable field measurement for :player
       And I set measurement_for to user test2
-      And I click button "Create Variable field measurement"
+      And I click button "Save measurement"
     Then I should see "Variable field measurement was successfully created." message
 
   Scenario: As an admin I can add measurement to any user
@@ -40,6 +40,6 @@ Feature: Add new measurement for VF I have access to
     When I click "Add measurement" for "IQ1" in table row
       And I fill all required fields for variable field measurement for :player
       And I set measurement_for to user test2
-    And I click button "Create Variable field measurement"
+    And I click button "Save measurement"
     Then I should see "Variable field measurement was successfully created." message
     

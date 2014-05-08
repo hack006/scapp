@@ -48,7 +48,7 @@ class TrainingLessonsController < ApplicationController
 
     # time needn't overlap existing one!!
     overlapping = !@regular_training.training_lessons.
-        where('((`from` < :from AND until > :from) OR (`from` < :until AND until > :until)) AND day = :day',
+        where('((`from` < :from AND `until` > :from) OR (`from` < :until AND `until` > :until)) AND day = :day',
               from: @training_lesson.from.short, until: @training_lesson.until.short, day: @training_lesson.day).empty?
 
     respond_to do |format|
