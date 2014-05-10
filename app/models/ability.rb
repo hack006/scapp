@@ -15,7 +15,7 @@ class Ability
 
     # set role based permissions
     @user.roles.each do |role|
-      send role.name if ['player', 'coach', 'admin'].include? role.name
+      send role.name if ['watcher', 'player', 'coach', 'admin'].include? role.name
     end
 
     if @user.roles.size == 0
@@ -73,10 +73,35 @@ class Ability
   end
 
   # ===========================================
+  # WATCHER PERMISSIONS
+  # ===========================================
+  def watcher
+    # =============
+    # Training lesson realization
+    # =============
+    # @11.1
+    can [:list_training_lesson_realizations], RegularTraining do |rt|
+      rt.public?
+    end
+
+    # @11.2
+    can [:show], TrainingLessonRealization do |tlr|
+      tlr.is_open? || (tlr.is_regular? && tlr.training_lesson.regular_training.public?) || tlr.has_watcher?(@user)
+    end
+  end
+
+  # ===========================================
   # PLAYER PERMISSIONS
   # ===========================================
   def player
+    # INHERIT from :watcher
+    watcher() unless @user.has_role? :watcher
+
+    # =============
+    # Home
+    # =============
     can [:dashboard], HomeController
+
     # =============
     # 4) VariableField
     # =============
@@ -196,7 +221,7 @@ class Ability
     end
 
     # =============
-    # Training lesson realization
+    # 11) Training lesson realization
     # =============
     # @11.1
     can [:list_training_lesson_realizations], RegularTraining do |rt|
@@ -205,7 +230,7 @@ class Ability
 
     # @11.2
     can [:show], TrainingLessonRealization do |tlr|
-      tlr.is_open? || (tlr.is_regular? && tlr.training_lesson.regular_training.public?) || tlr.has_player?(@user) || tlr.has_watcher?(@user)# TODO move watcher to back
+      tlr.has_player?(@user)
     end
 
     # @11.9, @11.10
@@ -219,7 +244,7 @@ class Ability
     end
 
     # =============
-    # Attendance
+    # 12) Attendance
     # =============
     # @12.2
     if @request.params[:controller] == 'attendances' && @request.params[:action] == 'player_attendance'
@@ -235,7 +260,7 @@ class Ability
     end
 
     # ===========
-    # Help
+    # 13) Help
     # ===========
     # @13.1, @13.2, @13.3
     can [:index, :show, :show_ajax], HelpsController
@@ -311,7 +336,7 @@ class Ability
     end
 
     # =============
-    # Training lesson realization
+    # 11) Training lesson realization
     # =============
     # @11.1
     can [:list_training_lesson_realizations], RegularTraining do |rt|
@@ -346,7 +371,7 @@ class Ability
     end
 
     # ============
-    # Attendance
+    # 12) Attendance
     # ============
     # @12.1
     if @request.params[:controller] == 'attendances' && @request.params[:action] == 'index'

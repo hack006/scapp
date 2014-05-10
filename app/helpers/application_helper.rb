@@ -90,7 +90,8 @@ module ApplicationHelper
   # @param [Float] value Numeric value determining result color
   # @return [String] Colorized text wrapped in span
   def self.colorize_negative_positive(text, value)
-    raise StandardError, 'Numeric value is required!' unless value.kind_of?(Float) || value.kind_of?(Integer) || (value.kind_of?(String) && value.is_number?)
+    value = 0 if value.nil?
+    raise StandardError, 'Numeric value is required!' unless value.kind_of?(Float) || value.kind_of?(Integer) ||value.kind_of?(BigDecimal) || (value.kind_of?(String) && value.is_number?)
 
     out = "<span class=\"#{value < 0 ? 'negative' : ''}#{value == 0 ? 'neutral' : ''}#{value > 0 ? 'positive' : ''}\">"
     out += "<i class=\"fa fa-long-arrow-down\"></i>" if value < 0

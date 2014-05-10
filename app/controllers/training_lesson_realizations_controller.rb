@@ -98,9 +98,14 @@ class TrainingLessonRealizationsController < ApplicationController
   # DELETE /training_lesson_realizations/1
   # DELETE /training_lesson_realizations/1.json
   def destroy
+    @regular_training = @training_lesson_realization.training_lesson.regular_training
     @training_lesson_realization.destroy
     respond_to do |format|
-      format.html { redirect_to training_lesson_realizations_url, t('training_realization.controller.successfully_deleted') }
+      if @training_lesson_realization.is_regular?
+        format.html { redirect_to regular_training_training_lesson_realizations_path(@regular_training), t('training_realization.controller.successfully_deleted') }
+      else
+        format.html { redirect_to user_trainings_path(current_user), t('training_realization.controller.successfully_deleted') }
+      end
       format.json { head :no_content }
     end
   end

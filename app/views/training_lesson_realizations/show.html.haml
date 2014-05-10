@@ -11,25 +11,30 @@
   - breadcrumb :individual_training_lesson_realizations_detail, @training_lesson_realization
 
 - # TODO some action may be done by coaches
-- if is_admin? || @training_lesson_realization.is_owned_by?(current_user) || @training_lesson_realization.has_coach?(current_user, supplementation: true) || @training_lesson_realization.has_coach?(current_user, role: 'head_coach')
+- if is_admin? || @training_lesson_realization.is_owned_by?(current_user) || @training_lesson_realization.has_coach?(current_user, supplementation: true) || @training_lesson_realization.has_coach?(current_user)
   #action-box
     - if @training_lesson_realization.not_closed?
-      = link_to edit_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-info' do
-        %i.fa.fa-pencil
-        = t('training_realization.show.edit_training_lesson')
-      = link_to t('training_realization.show.fill_attendance'), fill_training_lesson_realization_attendances_path(@training_lesson_realization), class: 'btn btn-info'
-      = link_to close_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-warning' do
-        %i.fa.fa-check
-        = t('training_realization.show.close_lesson')
-      = link_to cancel_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-warning' do
-        %i.fa.fa-times
-        = t('training_realization.show.cancel_lesson')
+      -# ordinary coach is only allowed to measure metrics
+      - unless @training_lesson_realization.has_coach?(current_user, role: 'coach')
+        = link_to edit_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-info' do
+          %i.fa.fa-pencil
+          = t('training_realization.show.edit_training_lesson')
+        = link_to t('training_realization.show.fill_attendance'), fill_training_lesson_realization_attendances_path(@training_lesson_realization), class: 'btn btn-info'
+        = link_to close_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-warning' do
+          %i.fa.fa-check
+          = t('training_realization.show.close_lesson')
+        = link_to cancel_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-warning' do
+          %i.fa.fa-times
+          = t('training_realization.show.cancel_lesson')
       = link_to new_measurement_vf_select_training_lesson_realization_variable_field_index_path(@training_lesson_realization), class: 'btn btn-success' do
         = t('training_realization.show.new_lesson_measurement')
+
     - elsif @training_lesson_realization.closed?
-      = link_to reopen_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-danger' do
-        %i.fa.fa-exclamation-circle
-        = t('training_realization.show.reopen_lesson')
+      - # ordinary coach is not allowed to do it
+      - unless @training_lesson_realization.has_coach?(current_user, role: 'coach')
+        = link_to reopen_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-danger' do
+          %i.fa.fa-exclamation-circle
+          = t('training_realization.show.reopen_lesson')
 - else
   #action-box
     - unless @training_lesson_realization.attendances.where(user: current_user, participation: [:invited, :signed, :unexcused]).any?
@@ -38,7 +43,7 @@
       = link_to t('training_realization.show.excuse'), excuse_training_lesson_realization_path, class: 'btn btn-warning'
 
 
-.box.box-info
+#tlr-detail.box.box-info
   .box-header
     %h2.box-title= t('training_realization.show.detail')
   .box-body
@@ -113,13 +118,13 @@
                 \-
 
 - unless @training_lesson_realization.note.blank?
-  .box.box-default
+  #tlr-note.box.box-default
     .box-header
       %h2.box-title= t('training_realization.show.note')
     .box-body
       = sanitize @training_lesson_realization.note
 
-.box.box-success
+#tlr-players.box.box-success
   .box-header
     %i.fa.fa-users
     %h2.box-title= t('training_realization.show.registered_players')
@@ -169,7 +174,7 @@
             - else
               %td
 
-.box.box-success
+#tlr-coaches.box.box-success
   .box-header
     %i.fa.fa-user
     %h2.box-title= t('training_realization.show.registered_coaches')
@@ -217,7 +222,7 @@
             - else
               %td{colspan: 2}
 
-.nav-tabs-custom
+#tlr-custom.nav-tabs-custom
   %ul.nav.nav-tabs.pull-right
     %li
       %a{href: "#lesson-realization-measurements", 'data-toggle' => 'tab'}

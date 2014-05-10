@@ -1,6 +1,12 @@
 # Sport coach app - (ScApp)
-Web based, _Ruby on Rails_ driven, application for creating and managing people and sport trainings especially
-designed for sport clubs and gyms.
+Web based, _Ruby on Rails_ driven, application for managing sport trainings and people inside a club. Especially
+designed for smaller sport clubs and gyms. Main goal is to simplify administration and interconnect coaches,
+players and another stuff inside a sport organization.
+
+![Preview of ScApp dashboard](/doc/images/dashboard.png)
+
+## About
+This application has been created as final Bachelor's thesis on CTU in Prague.
 
 ## Usage
 Application can be used for a lot of basic stuff done inside sport club
@@ -13,9 +19,38 @@ Application can be used for a lot of basic stuff done inside sport club
         * **parents**, **sponsor**
     * connections between players supported ( **player** <-- _trained-by_ --> **coach** )
     * organization into groups
-* registering and visualisation of **player** efficiency
+    * store important **personal information**
+
+* management of trainings
+    * create regular trainings or just one time individual lesson
+    * configure **regular training lessons**
+        * set rental prices
+        * set calculation type of player price
+        * set signin and excuse time deadlines
+    * assign **regular training coaches** and set their wage
+    * assign **regular training players**
+    * schedule lessons
+    * fill **attendance**
+    * measure metrics on training lessons and immediately **analyze current performance**
+    * take notes for whole training or for specific player
+    * show **training statistics**
+
+* registering and visualisation of **player efficiency**
     * simple statistics (best value, worst value, trend based on _linear regression line_)
     * **configurable chart**
+
+* others
+    * fully localized!
+    * multiple **VATs** supported
+    * multiple **currencies** supported
+
+### Screenshots
+Look at some choosen screenshots from example application run - [HERE](/doc/choosen_functionality).
+
+
+## Future
+In the close future we want to extend **ScApp** with the following features. Priority is given from the up to the bottom.
+
 * creating **individual training plans**
     * division into parts supported
         * **macrocycle**
@@ -27,9 +62,6 @@ Application can be used for a lot of basic stuff done inside sport club
     configure _weight_, _repetitions_, _speed_ and _pause_)
     * training lessons can be reused
     * output training lesson with time schedule
-
-## About
-This application has been created as final Bachelor's thesis on CTU in Prague.
 
 ## Installation
 
@@ -352,16 +384,19 @@ Do not forget to add _bootstrap-datetime_ require for specified language!
 ```
 
 ## Contributing
-TODO
+Any type of contribution is greatly appreciated. Just let me know :) - o[dot]janata[at]gmail[dot]com
 
 ### Translation
 Currently only _Czech_ and _English_ is supported. If you want to correct translations or add the new one you are welcome.
 Translations are held here: [https://webtranslateit.com/en/projects/8960-SCApp](https://webtranslateit.com/en/projects/8960-SCApp).
 
- Many thanks to [webtranslate.it](http://webtranslate.it/) for providing free plan.
+Many thanks to [webtranslate.it](http://webtranslate.it/) for providing free plan.
 
 ## Thanks
-I would like to thank my supervisor Ing. Ondřej Macek for leading this work.
+I would like to thank my supervisor **Ing. Ondřej Macek** for leading this work. I would like to thanks to excellent
+sport coach **Bc. Miloš Péca** for his great assistance at the time of **ScApp** design. I would like to thanks to my
+father **Ladislav Janata** to supporting me by testing ScApp for scheduling tennis training lessons in the tennis school.
+And finally I would like to thanks rest of my family and everybody else who has supported me at the time of development.
 
 ## License
 This work is distributed under GPLv3.

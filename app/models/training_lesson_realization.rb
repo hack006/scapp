@@ -317,12 +317,16 @@ class TrainingLessonRealization < ActiveRecord::Base
   # @param [User] user
   # @param [Hash] options
   #   @option [Boolean] :supplementation
-  #   @option [String] :role Can be coach or head_coach, only available for regular trainings
+  #   @option [String] :role Can be coach or head_coach, if not specified then both are possible. Only available for regular trainings.
   # @return TRUE if training realization has user as a coach, FALSE otherwise
   def has_coach?(user, options = {})
-    if self.is_regular? && options.has_key?(:role)
-      head_coaches_ids = self.training_lesson.regular_training.coach_obligations.where(role: options[:role]).map { |c| c.user_id }
-      return true if head_coaches_ids.include?(user.id)
+    if self.is_regular?
+      opt_roles = options[:role]
+      opt_roles ||= ['coach', 'head_coach']
+      head_coaches_ids = self.training_lesson.regular_training.coach_obligations.where(role: opt_roles).map { |c| c.user_id }
+
+
+      return head_coaches_ids.include?(user.id) unless options[:role].nil?
     end
 
     coach = self.present_coaches.where(user: user)
