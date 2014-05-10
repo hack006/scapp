@@ -45,7 +45,7 @@ Application can be used for a lot of basic stuff done inside sport club
     * multiple **currencies** supported
 
 ### Screenshots
-Look at some choosen screenshots from example application run - [HERE](/doc/choosen_functionality).
+Look at some choosen screenshots from example application run - [HERE](/doc/choosen_functionality.md).
 
 
 ## Future
