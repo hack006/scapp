@@ -352,7 +352,7 @@ class Ability
     can [:create], TrainingLessonRealization
 
     # @11.4, @11.6, @11.7, @11.8
-    can [:edit, :close, :cancel, :reopen], TrainingLessonRealization do |tlr|
+    can [:update, :close, :cancel, :reopen], TrainingLessonRealization do |tlr|
       if tlr.is_individual?
         tlr.user == @user
       else

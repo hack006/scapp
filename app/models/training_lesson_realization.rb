@@ -326,7 +326,10 @@ class TrainingLessonRealization < ActiveRecord::Base
       head_coaches_ids = self.training_lesson.regular_training.coach_obligations.where(role: opt_roles).map { |c| c.user_id }
 
 
-      return head_coaches_ids.include?(user.id) unless options[:role].nil?
+      return true if head_coaches_ids.include?(user.id)
+
+      # we have to end here if we are interested only in coaches with specified role
+      return false if options.has_key?(:role)
     end
 
     coach = self.present_coaches.where(user: user)

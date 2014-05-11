@@ -126,6 +126,7 @@ class TrainingLessonRealizationsController < ApplicationController
 
       redirect_to @training_lesson_realization, notice: t('training_realization.controller.successfully_closed')
     else
+      errors = t('training_realization.controller.closing_error_msg')
       redirect_to @training_lesson_realization, notice: t('training_realization.controller.closing_failed', errors: errors)
     end
   end
