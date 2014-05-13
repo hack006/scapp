@@ -47,9 +47,9 @@ cs:
         street: Ulice
         post_code: "Poštovní směrovací číslo"
         new:
-          email: "E-mail k přihlášení"
+          email: "E-mail pro přihlášení"
         edit:
-          email: E-mailu.
+          email: E-mail
       variable_field:
         higher_is_better: "Vyšší hodnota je lepší"
         is_numeric: "Slouží k uložení číselných hodnot"
@@ -99,7 +99,7 @@ cs:
       coach_obligation:
         hourly_wage_without_vat: "Hodinová mzda bez DPH"
         vat: DPH
-        role: role
+        role: Role
         coach_email: "Email trenéra"
       attendance:
         participation: Účast
@@ -137,6 +137,22 @@ cs:
           fixed_player_price: "Fixní cena za hráče (FCH)"
           split_the_costs: "Dělba nákladů mezi hráče (DNH)"
           fixed_player_price_or_split_the_costs: "Vyšší částka z FCH a DNH"
+      individual_training_lesson_realization:
+        calculation:
+          fixed_player_price: "Fixní cena za hráče (FCH)"
+          split_the_costs: "Dělba nákladů mezi hráče (DNH)"
+          fixed_player_price_or_split_the_costs: "Vyšší částka z FCH a DNH"
+      regular_training_lesson_realization:
+        calculation:
+          fixed_player_price: "Fixní cena za hráče (FCH)"
+          split_the_costs: "Dělba nákladů mezi hráče (DNH)"
+          fixed_player_price_or_split_the_costs: "Vyšší částka z FCH a DNH"
+      user_group:
+        visibility:
+          public: Veřejné
+          registered: "Registrovaní uživatelé"
+          members: "Členové skupiny"
+          owner: "Pouze vlastník"
     hints:
       defaults:
         username: "Uživatelské jméno pro přihlášení."

@@ -42,14 +42,16 @@ class Attendance < ActiveRecord::Base
   #
   # @return [Boolean] TRUE if user can excuse, FALSE otherwise
   def can_excuse?
-    if [:done, :canceled].include?(self.training_lesson_realization.status) ||
-        ( !self.training_lesson_realization.excuse_time.nil? && ((self.training_lesson_realization.excuse_time.to_i - Time.current.to_i) < 0)) ||
-        ( (DateTime.from_date_and_time(self.training_lesson_realization.date, self.training_lesson_realization.from).to_i - Time.current.to_i) < 0)
-
-      return false
-    else
-      return true
+    errors = []
+    if [:done, :canceled].include?(self.training_lesson_realization.status)
+      errors << I18n.t('attendance.model.can_not_excuse_training_already_closed')
     end
+
+    if ((self.training_lesson_realization.excuse_time.to_i - Time.current.to_i) < 0)
+      errors << I18n.t('attendance.model.can_not_excuse_training_excuse_time_reached')
+    end
+
+    return errors.empty?, errors.join(' ')
   end
 
   # Check if attendance can be signed in by player

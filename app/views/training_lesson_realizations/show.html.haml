@@ -37,7 +37,7 @@
           = t('training_realization.show.reopen_lesson')
 - else
   #action-box
-    - unless @training_lesson_realization.attendances.where(user: current_user, participation: [:invited, :signed, :unexcused]).any?
+    - unless @training_lesson_realization.attendances.where(user: current_user, participation: [:signed, :unexcused]).any?
       = link_to t('training_realization.show.sign_in'), sign_in_training_lesson_realization_path, class: 'btn btn-success'
     - unless @training_lesson_realization.attendances.where(user: current_user, participation: :excused).any?
       = link_to t('training_realization.show.excuse'), excuse_training_lesson_realization_path, class: 'btn btn-warning'

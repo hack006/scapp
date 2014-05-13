@@ -186,6 +186,7 @@ class TrainingLessonRealizationsController < ApplicationController
     authorize! :sign_in, @training_lesson_realization
 
     # find attendance entry, if user specified then we sign in another user
+    # @TODO add another user sign in support
     if params[:user_id]
       player = User.friendly.find(params[:user_id])
       attendance = @training_lesson_realization.attendances.where(user: player).first
@@ -198,7 +199,26 @@ class TrainingLessonRealizationsController < ApplicationController
       attendance = @training_lesson_realization.attendances.where(user: current_user).first
     end
 
-    if attendance && attendance.participation != :signed
+    # different check are needed for individual X regular lessons
+    #   * individual lesson can be signed in by players -> its needed to create new attendance
+    #   * regular trainings are checked against attendance entry (players are invited by coach)
+    if attendance.nil?
+      if @training_lesson_realization.is_individual?
+        can_sign, err = @training_lesson_realization.can_sign_in?
+        if can_sign
+          if Attendance.create(participation: :signed, price_without_tax: 0, training_lesson_realization: @training_lesson_realization, user: current_user, user_email: current_user.email)
+            redirect_to @training_lesson_realization, notice: t('training_realization.controller.sign_in_success')
+          else
+            redirect_to @training_lesson_realization, notice: t('training_realization.controller.something_went_wrong')
+          end
+        else
+         redirect_to @training_lesson_realization, alert: t('dictionary.following_errors_occured', errors: err)
+        end
+      else
+        redirect_to @training_lesson_realization, alert: t('training_realization.controller.you_are_not_invited_to_this_lesson')
+      end
+      return
+    elsif (attendance && attendance.participation != :signed)
       unless attendance.can_sign_in?
         redirect_to @training_lesson_realization, alert: t('training_realization.controller.sign_in_not_possible')
         return
@@ -225,14 +245,16 @@ class TrainingLessonRealizationsController < ApplicationController
     # find attendance entry
     attendance = @training_lesson_realization.attendances.where(user: current_user).first
     if attendance
-      unless attendance.can_excuse?
-        redirect_to @training_lesson_realization, alert: t('training_realization.controller.excuse_not_possible')
-        return
+      can_excuse, err = attendance.can_excuse?
+      if can_excuse
+         attendance.update_attribute(:participation, :excused)
+
+         redirect_to @training_lesson_realization, notice: t('training_realization.controller.excuse_success')
+      else
+          redirect_to @training_lesson_realization, alert: t('dictionary.following_errors_occured', errors: err)
       end
 
-      attendance.update_attribute(:participation, :excused)
-
-      redirect_to @training_lesson_realization, notice: t('training_realization.controller.excuse_success')
+      return
     else
       redirect_to @training_lesson_realization, notice: t('training_realization.controller.excuse_you_are_not_signed_player')
     end

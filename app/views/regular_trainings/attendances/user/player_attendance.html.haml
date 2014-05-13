@@ -24,7 +24,7 @@
                 %i.fa.fa-calendar{'data-date-icon' => "fa fa-calendar", 'data-time-icon' => "fa fa-clock-o"}
       = submit_tag t('attendance.player_attendance.change_date_range'), class: 'btn btn-default'
 
-.box.box-info
+#rt-player-attendance-summary.box.box-info
   .box-header
     %h2.box-title= t('attendance.player_attendance.summary')
   .box-body
@@ -66,7 +66,7 @@
 
     = paginate @paged_attendances, theme: 'twitter-bootstrap-3'
 
-.box.box-primary
+#rt-player-attendance-stats.box.box-primary
   .box-header
     %h2.box-title= t('attendance.player_attendance.statistics')
   .box-body

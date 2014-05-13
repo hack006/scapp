@@ -8,7 +8,7 @@
     = link_to t('trainings.user_overview.new_regular_training'), new_regular_training_path, class: 'btn btn-success'
     = link_to t('trainings.user_overview.schedule_new_lesson'), new_individual_training_lesson_realization_path, class: 'btn btn-success'
 
-.box.box-primary
+#trainings-close.box.box-primary
   .box-header
     %h2.box-title= t('trainings.user_overview.close_trainings')
   .box-body
@@ -47,7 +47,7 @@
             %td!= TrainingLessonRealizationsHelper.days_until_start(l.date)
             %td= link_to t('dictionary.show'), l
 
-.box.box-success
+#trainings-open.box.box-success
   .box-header
     %h2.box-title= t('trainings.user_overview.open_trainings')
   .box-body
@@ -70,7 +70,7 @@
             %td= link_to t('dictionary.show'), l
             %td= link_to t('trainings.user_overview.sign_in'), sign_in_training_lesson_realization_path(l)
 
-.box.box-info
+#trainings-user-in.box.box-info
   .box-header
     %h2.box-title= t('trainings.user_overview.regular_trainings_in')
   .box-body

@@ -211,7 +211,8 @@ en:
     max: &max Maximum
     mean: &mean Mean
     count: &count Count
-    listing: &listing
+    listing: &listing Listing
+    following_errors_occured: 'Following errors occurred: %{errors}'
 
   alerts:
     not_authorized: 'You do not have required permissions for this action.'
@@ -800,6 +801,7 @@ en:
       detail: *detail
       player_attendance: Player attendance
       show_attendance: Show attendance
+      show_my_attendance: Show my training attendance
 
     schedule_trainings:
       from: *from
@@ -863,6 +865,7 @@ en:
     form:
       date_and_time: *date_and_time
       finance: *finance
+      warning_can_not_change_some_attributes: 'Warning! Scheduled lessons already exists so some fields can not be changed (date, from, until, currency). Please, if you need to change one of them then you will have to create new lesson and set "From date" and "Until date" to the current one.'
       new_currency: *new_currency
       new_vat: *new_vat
       are_you_sure_new_currency: Are you sure that you want to leave this page and show form for adding new currency? All unsaved data will be lost.
@@ -985,14 +988,20 @@ en:
     model:
       can_not_check_calculation_different_currencies: Can not check if training is gainful because there exist different currencies.
       lesson_not_gainful: "WARNING! Training lesson is not gainful. Calculated lost is: %{amount} %{currency}"
+      signed_in_player_limit_reached: &signed_in_player_limit_reached 'Training player limit has been reached. You can not sign in! Try to contact your coach to add you.'
+      sign_in_time_limit_reached: &sign_in_time_limit_reached 'Scheduled lesson sign in time limit has been reached!'
+      sign_in_not_possible_not_open_lesson: '&sign_in_not_possible_not_open_lesson, Scheduled lesson on which you are tring to sign in is not open!'
     controller:
       successfully_closed: Scheduled lesson was successfully closed.
+      closing_error_msg: "Some player has signed status or training lesson is already closed or canceled!"
       closing_failed: "Following errors occured while closing scheduled lesson: %{errors}"
       sign_in_success: You were successfully signed in scheduled training lesson.
       sign_in_not_possible: You can not sign in. Scheduled lesson is already closed or sign in time limit has been reached!
       signed_in_already_signed: You are already signed in!
       player_not_registered_as_training_player: Player is not registered to this training lesson. Can not be sign in!
-      signed_in_player_limit_reached: Training player limit has been reached. You can not sign in! Try to contact your coach to add you.
+      signed_in_player_limit_reached: *signed_in_player_limit_reached
+      you_are_not_invited_to_this_lesson: You can not sign in to this lesson. You have not been added and training is not opened to public.
+      something_went_wrong: Signing in failed! Something went wrong.
       excuse_success: You were successfully excused from scheduled training lesson.
       excuse_not_possible: You can not excuse. Scheduled lesson is already closed or excuse time limit has been reached!
       excuse_you_are_not_signed_player: You are not signed to this scheduled training lesson. Excusing is not possible!
@@ -1037,7 +1046,7 @@ en:
       add_present_player: &add_present_player Add present player
       sign_in: *sign_in
       excuse: *excuse
-      is_open: Is open tu public
+      is_open: Is open to public
       max_player_count: Max. number of players
       new_lesson_measurement: New measurement
       vf_measured_on_this_leson: Lesson measurements
@@ -1104,6 +1113,10 @@ en:
        successfully_created: Attendance entry was successfully created.
        successfully_updated: Attendance entry was successfully updated.
        successfully_deleted: Attendance entry was successfully deleted.
+       not_all_entries_filled: You have not filled all attendance entries!
+    model:
+      can_not_excuse_training_already_closed: You can not excuse! Training has been already closed.
+      can_not_excuse_training_excuse_time_reached: You can not excuse! Time limit for excusing has been reached.
     show:
       price: *price
       player_state_change: Player state change

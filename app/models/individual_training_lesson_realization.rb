@@ -28,5 +28,27 @@ class IndividualTrainingLessonRealization < TrainingLessonRealization
   # =================== GETTERS / SETTERS ============================
 
   # =================== METHODS ======================================
+  # Get information if we can sign in to training
+  #   * signed players < limit
+  #   * deadline not reached
+  # @return [Boolean, String] true if sign in is possible, false otherwise + error messages
+  def can_sign_in?
+    errors = []
+
+    unless self.is_open?
+      errors << I18n.t('training_realization.model.sign_in_not_possible_not_open_lesson')
+    end
+
+    signed_players_count = self.attendances.where(participation: :signed).count
+    if self.player_count_limit <= signed_players_count
+      errors << I18n.t('training_realization.model.signed_in_player_limit_reached')
+    end
+
+    if (DateTime.current > self.sign_in_time)
+      errors << I18n.t('training_realization.model.sign_in_time_limit_reached')
+    end
+
+    return errors.empty?, errors.join(' ')
+  end
 
 end

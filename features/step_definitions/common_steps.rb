@@ -1,5 +1,5 @@
 Then(/^I should see "([^"]*)" message$/) do |message|
-  find('.alert #flash_notice, .alert #flash_alert, .alert #flash_error').should have_content message
+  find('.alert #flash_notice, .alert #flash_alert, .alert #flash_error, .alert.alert-danger').should have_content message
 end
 
 And(/^I should have "([^"]*)" actions available for table row "([^"]*)"$/) do |actions, name|
@@ -68,4 +68,8 @@ Then(/^I shouldn't see "([^"]*)" in actionbox$/) do |action_name|
   rescue
 
   end
+end
+
+And(/^I should see "([^"]*)" action button$/) do |action|
+  page.should have_link(action)
 end

@@ -6,7 +6,7 @@
 .alert.alert-info
   = simple_format t('attendance.calc_payment.hint')
 = form_tag do
-  %table.table.attendance-payments
+  %table#attendance-player-payments.table.attendance-payments
     %thead
       %tr
         %th= t('attendance.calc_payment.name')

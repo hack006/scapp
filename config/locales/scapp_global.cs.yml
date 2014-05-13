@@ -205,6 +205,7 @@ cs:
     mean: Průměr
     count: Počet
     listing: Výpis
+    following_errors_occured: "Vyskytly se následující chyby: %{errors}"
   alerts:
     not_authorized: "Nemáte požadovaná oprávnění pro tuto akci."
   breadcrumbs:
@@ -779,6 +780,7 @@ cs:
       detail: Detail
       player_attendance: "Zobrazit docházku hráče"
       show_attendance: "Zobrazit docházku"
+      show_my_attendance: "Zobrazit moji docházku"
     schedule_trainings:
       from: Od
       until: Do
@@ -812,8 +814,11 @@ cs:
       edit_vat: "Úprava DPH"
   currency:
     controller:
+      successfully_created: "Měna byla úspěšně vytvořena."
+      successfully_updated: "Měna byla úspěšně aktualizována."
       dependent_exists: "Nelze odstranit. Měna je již používána!"
       successfully_removed: "Měna byla úspěšně odstraněna."
+      already_in_use: "Nelze odstranit. Měna je již používána!"
     index:
       name: Jméno
       code: Kód
@@ -836,6 +841,7 @@ cs:
     form:
       date_and_time: "Datum & čas"
       finance: Finance
+      warning_can_not_change_some_attributes: "Pozor! Pro tuto tréninkovou hodinu již existují naplánované hodiny proto některá pole není možné měnit (datum, čas, měna). Pokud potřebujete nutně provést úpravy, tak je nutné vytvořit novou tréninkovou hodinu a současné nastavit časovou platnost (pole \"Do data\", popř. \"Od data\")."
       new_currency: "Nová měna"
       new_vat: "Nová DPH"
       are_you_sure_new_currency: "Jste si jisti, že chcete opustit tuto stránku a zobrazit formulář pro přidání nové měny? Všechna neuložená data budou ztracena."
@@ -954,14 +960,20 @@ cs:
     model:
       can_not_check_calculation_different_currencies: "Nelze zkontrolovat, zda trénink je výdělečný, protože v kalkulaci existují různé měny. Automatický přepočet není prozatím podporován."
       lesson_not_gainful: "VAROVÁNÍ! Tréninková hodina není výdělečná. Vypočtená ztráta je: %{amount} %{currency}"
+      signed_in_player_limit_reached: "Již se nelze přihlásit! Bylo dosaženo maximálního počtu hráčů. Zkuste kontaktovat svého trenéra, který Vás může na trénink dodatečně přihlásit."
+      sign_in_time_limit_reached: "Již se nelze přihlásit! Tréninková hodina byla již uzavřena a nebo byl překročen časový limit pro přihlášení! Případně zkuste kontaktovat svého trenéra, který Vás může na trénink dodatečně přihlásit."
+      sign_in_not_possible_not_open_lesson: "Tréninková hodina, na kterou se snažíte přihlásit, není otevřená pro přihlašování!"
     controller:
       successfully_closed: "Tréninková hodina byla úspěšně uzavřena."
+      closing_error_msg: "Některý hráč má status \"přihlášen\" a nebo trénink byl již uzavřen!"
       closing_failed: "Během pokusu o uzavření tréninkové hodiny došlo k následujícím chybám: %{errors}"
       sign_in_success: "Přihlášení na tréninkovou hodinu bylo úspěšné."
       sign_in_not_possible: "Již se nelze přihlásit! Tréninková hodina byla již uzavřena a nebo byl překročen časový limit pro přihlášení! Případně zkuste kontaktovat svého trenéra, který Vás může na trénink dodatečně přihlásit."
       signed_in_already_signed: "Jste již přihlášeni!"
       player_not_registered_as_training_player: "Nelze přihlásit! Hráč není veden na seznamu tréninku."
       signed_in_player_limit_reached: "Již se nelze přihlásit! Bylo dosaženo maximálního počtu hráčů. Zkuste kontaktovat svého trenéra, který Vás může na trénink dodatečně přihlásit."
+      you_are_not_invited_to_this_lesson: "Nemůžete se přihlásit. Nebyl jste přiřazen k tréninkové hodině nebo trénink není otevřený k volnému přihlašování."
+      something_went_wrong: "Přihlášení se nezdařilo. Něco se pokazilo."
       excuse_success: "Omluvení tz tréninku proběhlo úspěšně. Děkujeme, že jste nám dali včas vědět."
       excuse_not_possible: "Již se nelze omluvit! Byl překročen časový limit pro omluvu z tréninku. Zkuste kontaktovat svého trenéra, který Vás může z tréninku dodatečně odhlásit."
       excuse_you_are_not_signed_player: "Nejste přihlášeni na tuto tréninkovou hodinu, omluvení není tudíž možné!"
@@ -1036,6 +1048,10 @@ cs:
       status: Stav
       time_until_start: "Doba do zahájení"
   present_coach:
+    controller:
+      successfully_added: "Přítomný trenér byl úspěšně přidán."
+      successfully_updated: "Přítomný trenér byl úspěšně aktualizován."
+      successfully_removed: "Přítomný trenér byl úspěšně odebrán."
     validation:
       user_already_added: "Uživatel s tímto e-mailem již byl přidán do tréninkové hodiny."
       no_user_found: "Uživatel se zadaným emailem nebyl nalezen."
@@ -1065,6 +1081,10 @@ cs:
       successfully_created: "Záznam do docházky byl úspěšně přidán."
       successfully_updated: "Záznam v docházce byl úspěšně změněn."
       successfully_deleted: "Záznam docházky byl úspěšně odstraněn."
+      not_all_entries_filled: "Nevyplnili jste všechny záznamy docházky!"
+    model:
+      can_not_excuse_training_already_closed: "Již se nelze omluvit! Tréninková hodina byl již uzavřena."
+      can_not_excuse_training_excuse_time_reached: "Již se nelze omluvit! Časový limit pro omluvení byl překročen."
     show:
       price: Cena
       player_state_change: "Změna stavu hráče"

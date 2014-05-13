@@ -7,7 +7,11 @@
   = link_to regular_training_training_lessons_path(@regular_training), class: 'btn btn-info' do
     %i.fa.fa-bars
     = t('regular_trainings.show.list_training_lessons')
-  - if is_admin? || @regular_training.user == current_user || @regular_training.has_coach?(current_user, 'head_coach')
+  - if @regular_training.has_player? current_user
+    = link_to player_regular_training_attendances_path(@regular_training, current_user), class: 'btn btn-info' do
+      %i.fa.fa-calendar
+      = t('regular_trainings.show.show_my_attendance')
+  - if is_admin? || @regular_training.user == current_user || @regular_training.has_coach?(current_user, 'coach')
     = link_to regular_training_attendances_path(@regular_training), class: 'btn btn-info' do
       %i.fa.fa-calendar
       = t('regular_trainings.show.show_attendance')

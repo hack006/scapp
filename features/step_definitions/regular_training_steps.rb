@@ -33,9 +33,10 @@ And(/^Following training obligations exist$/) do |table|
     regular_training = RegularTraining.friendly.find(o[:regular_training])
     currency = Currency.friendly.find(o[:currency])
     vat = Vat.friendly.find(o[:vat])
+    user = User.friendly.find(o[:user])
 
-    CoachObligation.create(user: @user[1], regular_training: regular_training, currency: currency, vat: vat,
-                           role: o[:role], hourly_wage_without_vat: o[:hourly_wage_wt], coach_email: @user[1].email)
+    CoachObligation.create(user: user, regular_training: regular_training, currency: currency, vat: vat,
+                           role: o[:role], hourly_wage_without_vat: o[:hourly_wage_wt], coach_email: user.email)
   end
 end
 

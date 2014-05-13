@@ -1,5 +1,9 @@
 = simple_form_for([@regular_training, @training_lesson]) do |f|
   = f.error_notification
+  - unless @training_lesson.regular_training_lesson_realizations.empty?
+    .alert.alert-warning
+      %i.fa.fa-exclamation
+      = t('training_lesson.form.warning_can_not_change_some_attributes')
 
   .form-inputs
     = f.input :description, input_html: { class: 'textarea' }
@@ -10,7 +14,7 @@
       .box-body
         .row
           .col-sm-6
-            = f.input :day, as: :select, collection: TrainingLesson::DAYS
+            = f.input :day, as: :select, collection: TrainingLesson::DAYS, disabled: (@training_lesson.regular_training_lesson_realizations.empty?) ? false : true
           .col-sm-3
             = f.input :odd_week,
               label: "#{t('training_lesson.form.odd_week')} #{ApplicationHelper.link_modal_help('trainings', 'odd_week', locale)}"
@@ -19,9 +23,9 @@
               label: "#{t('training_lesson.form.even_week')} #{ApplicationHelper.link_modal_help('trainings', 'even_week', locale)}"
         .row
           .col-sm-6
-            = f.input :from, as: :time_picker, placeholder: t('dictionary.time_mask')
+            = f.input :from, as: :time_picker, placeholder: t('dictionary.time_mask'), disabled: (@training_lesson.regular_training_lesson_realizations.empty?) ? false : true
           .col-sm-6
-            = f.input :until, as: :time_picker, placeholder: t('dictionary.time_mask')
+            = f.input :until, as: :time_picker, placeholder: t('dictionary.time_mask'), disabled: (@training_lesson.regular_training_lesson_realizations.empty?) ? false : true
 
         .row
           .col-sm-6
@@ -55,7 +59,7 @@
             = f.input :group_price_without_tax
         .row
           .col-sm-6
-            = f.association :currency
+            = f.association :currency, disabled: (@training_lesson.regular_training_lesson_realizations.empty?) ? false : true
           .col-sm-6
             = f.association :training_vat
         .row

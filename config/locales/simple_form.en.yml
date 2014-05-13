@@ -155,14 +155,19 @@ en:
           sat: Saturday
           sun: Sunday
         calculation:
-          fixed_player_price: Fixed player price (FPP)
-          split_the_costs: Split the costs (STC)
-          fixed_player_price_or_split_the_costs: Higher one from FPP and STC
+          fixed_player_price: &calc_fpp Fixed player price (FPP)
+          split_the_costs: &calc_stc Split the costs (STC)
+          fixed_player_price_or_split_the_costs: &calc_fpp_or_stc Higher one from FPP and STC
       individual_training_lesson_realization:
         calculation:
-          fixed_player_price: Fixed player price (FPP)
-          split_the_costs: Split the costs (STC)
-          fixed_player_price_or_split_the_costs: Higher one from FPP and STC
+          fixed_player_price: *calc_fpp
+          split_the_costs: *calc_stc
+          fixed_player_price_or_split_the_costs: *calc_fpp_or_stc
+      regular_training_lesson_realization:
+        calculation:
+          fixed_player_price: *calc_fpp
+          split_the_costs: *calc_stc
+          fixed_player_price_or_split_the_costs: *calc_fpp_or_stc
       user_group:
         visibility:
           public: Public

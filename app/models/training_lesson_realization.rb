@@ -44,6 +44,26 @@ class TrainingLessonRealization < ActiveRecord::Base
     write_attribute(:calculation, calculation.to_s)
   end
 
+  def sign_in_time
+    t = read_attribute(:sign_in_time)
+    if t.nil?
+      # use start time of lesson
+      DateTime.from_date_and_time(self.date, self.from)
+    else
+      t
+    end
+  end
+
+  def excuse_time
+    t = read_attribute(:excuse_time)
+    if t.nil?
+      # use start time of lesson
+      DateTime.from_date_and_time(self.date, self.from)
+    else
+      t
+    end
+  end
+
   # =================== METHODS ======================================
   # Get player hourly fee include VAT
   #

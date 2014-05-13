@@ -154,22 +154,31 @@ class AttendancesController < ApplicationController
 
   # GET /scheduled_lessons/public-9-4-2014-16-00-17-30/attendances/fill
   def fill
-    @attendances = @training_lesson_realization.attendances
+    @attendances = @training_lesson_realization.attendances.where(participation: Attendance::PARTICIPATION_STATES - [:invited])
   end
 
   # POST /scheduled_lessons/public-9-4-2014-16-00-17-30/attendances/fill
   def save_fill
-
     errors = []
-    params[:attendances].each do |attendance_id, a|
-      # we only can manipulate with attendance for current scheduled lesson!
-      begin
-        attendance = @training_lesson_realization.attendances.find(attendance_id)
 
-        attendance.participation = a[:status].to_sym if !attendance.nil? && Attendance::PARTICIPATION_STATES.include?(a[:status].to_sym)
-        attendance.save!
-      rescue Exception => e
-        errors << "'User[#{(attendance && attendance.user) ? attendance.user.name : '?'}] - #{e.message}'"
+    # check if filled all entries
+    attendance_entry_count_params = (params[:attendances].nil?) ? 0 : params[:attendances].count
+    attendance_entry_count_db = @training_lesson_realization.attendances.where(participation: Attendance::PARTICIPATION_STATES - [:invited]).count
+    unless(attendance_entry_count_db == attendance_entry_count_params)
+      errors << t('attendance.controller.not_all_entries_filled')
+    end
+
+    unless params[:attendances].nil?
+      params[:attendances].each do |attendance_id, a|
+        # we only can manipulate with attendance for current scheduled lesson!
+        begin
+          attendance = @training_lesson_realization.attendances.find(attendance_id)
+
+          attendance.participation = a[:status].to_sym if !attendance.nil? && Attendance::PARTICIPATION_STATES.include?(a[:status].to_sym)
+          attendance.save!
+        rescue Exception => e
+          errors << "'User[#{(attendance && attendance.user) ? attendance.user.name : '?'}] - #{e.message}'"
+        end
       end
     end
 
