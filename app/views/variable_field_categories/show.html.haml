@@ -15,6 +15,9 @@
       %th= t('vfc.show.description')
       %td= @variable_field_category.description
     %tr
+      %th= t('vfc.show.global')
+      %td!= ApplicationHelper.labelize_boolean(@variable_field_category.is_global)
+    %tr
       %th= t('vfc.show.user')
       %td
         - unless @variable_field_category.user.nil?

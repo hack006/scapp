@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140429124949) do
+ActiveRecord::Schema.define(version: 20140515123627) do
 
   create_table "attendances", force: true do |t|
     t.string   "participation",                  limit: 9
@@ -288,7 +288,7 @@ ActiveRecord::Schema.define(version: 20140429124949) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_global"
+    t.boolean  "is_global",   default: false
   end
 
   add_index "variable_field_categories", ["user_id"], name: "index_variable_field_categories_on_user_id", using: :btree
@@ -421,6 +421,6 @@ ActiveRecord::Schema.define(version: 20140429124949) do
   add_foreign_key "variable_field_optimal_values", "variable_fields", :name => "variable_field_optimal_values_variable_field_id_fk", :dependent => :delete
 
   add_foreign_key "variable_fields", "users", :name => "variable_fields_owner_user_id_fk"
-  add_foreign_key "variable_fields", "variable_field_categories", :name => "variable_fields_belongs_to_variable_field_category_id_fk", :dependent => :nullify
+  add_foreign_key "variable_fields", "variable_field_categories", :name => "variable_fields_belongs_to_variable_field_category_id_fk"
 
 end

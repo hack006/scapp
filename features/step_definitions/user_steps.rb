@@ -167,3 +167,20 @@ When(/^I click New user button$/) do
     click_link 'New user'
   end
 end
+
+And(/^User "([^"]*)" has "([^"]*)" role$/) do |user_name, role|
+  user = User.friendly.find(user_name)
+  user.add_role(role.to_sym)
+end
+
+When(/^I select following roles "([^"]*)"$/) do |roles|
+  roles.split(',').each do |r|
+    role = r.strip
+
+    select role, from: 'Roles'
+  end
+end
+
+And(/^Global role "([^"]*)" exist in the system$/) do |role|
+  Role.find_or_create_by(name: role)
+end

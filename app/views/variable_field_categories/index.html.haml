@@ -3,32 +3,34 @@
 
 - breadcrumb :variable_field_categories
 
--if is_coach? || is_admin?
-  #action-box
-    %a.btn.btn-success{href: new_variable_field_category_path}= t('vfc.index.new')
+#action-box
+  %a.btn.btn-success{href: new_variable_field_category_path}= t('vfc.index.new')
 
 %table.table.table-striped
-  %tr
-    %th= t('vfc.index.name')
-    %th= t('vfc.index.rgb')
-    %th= t('vfc.index.description')
-    %th= t('vf.index.user')
-    %th
-    %th
-    %th
-
-  - @variable_field_categories.each do |variable_field_category|
+  %thead
     %tr
-      %td= variable_field_category.name
-      %td= variable_field_category.rgb
-      %td= variable_field_category.description
-      %td
-        - unless variable_field_category.user.blank?
-          = link_to variable_field_category.user.name, variable_field_category.user
-        - else
-          \-
-      %td= link_to 'Show', variable_field_category
-      %td= link_to 'Edit', edit_variable_field_category_path(variable_field_category)
-      %td= link_to 'Destroy', variable_field_category, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %th= t('vfc.index.name')
+      %th= t('vfc.index.rgb')
+      %th= t('vfc.index.description')
+      %th= t('vfc.index.global')
+      %th= t('vf.index.user')
+      %th
+      %th
+      %th
+  %tbody
+    - @variable_field_categories.each do |variable_field_category|
+      %tr
+        %td= variable_field_category.name
+        %td= variable_field_category.rgb
+        %td= variable_field_category.description
+        %td!= ApplicationHelper.labelize_boolean variable_field_category.is_global
+        %td
+          - unless variable_field_category.user.blank?
+            = link_to variable_field_category.user.name, variable_field_category.user
+          - else
+            \-
+        %td= link_to t('dictionary.show'), variable_field_category
+        %td= link_to t('dictionary.edit'), edit_variable_field_category_path(variable_field_category)
+        %td= link_to t('dictionary.delete'), variable_field_category, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 =paginate @variable_field_categories, theme: 'twitter-bootstrap-3'

@@ -20,6 +20,8 @@ Scapp::Application.routes.draw do
       end
     end
 
+    resources :present_coaches
+
     resources :variable_field, only: [], path: 'vf' do
       member do
         get 'fill_measurements' => 'variable_fields#scheduled_lesson_vfm_fill'
@@ -44,12 +46,15 @@ Scapp::Application.routes.draw do
 
   resources :regular_training_lesson_realization ,controller: 'training_lesson_realizations', path: 'scheduled_lessons' do
     resource :attendances, only: [:show, :create, :update]
+
     resources :present_coaches
   end
 
   resources :individual_training_lesson_realization, controller: 'training_lesson_realizations', path: 'scheduled_lessons' do
     resource :attendances, only: [:show, :create, :update]
+
     resources :present_coaches
+
     collection do
       post '/' => 'training_lesson_realizations#create', as: ''
     end

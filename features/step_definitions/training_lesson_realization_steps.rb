@@ -63,6 +63,12 @@ And(/^I should see "([^"]*)" in registered coaches$/) do |coach|
   end
 end
 
+And(/^I shouldn't see "([^"]*)" in registered coaches$/) do |coach|
+  within find('#tlr-coaches table') do
+    page.should_not have_content(coach)
+  end
+end
+
 When(/^I fill all all required fields for regular training lesson realization$/) do |table|
   # table is a table.hashes.keys # => [:sign_in_limit, :excuse_limit, :calculation, :player_price_without_vat, :group_price_without_vat, :training_vat, :rental_price_without_vat, :rental_vat, :note]
   tl = table.hashes.first
@@ -127,5 +133,11 @@ end
 And(/^I should see calculated price without vat "([^"]*)" for player "([^"]*)" in registered players table$/) do |price_wt, player|
   within find('#tlr-players table') do
     find(:xpath, "//tr[td[contains(., '#{player}')]]").text.should have_content price_wt
+  end
+end
+
+And(/^I shouldn't see player "([^"]*)" in the registered players listing$/) do |player|
+  within find('#tlr-players table') do
+    page.should_not have_content player
   end
 end

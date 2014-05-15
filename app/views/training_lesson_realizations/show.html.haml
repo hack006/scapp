@@ -129,7 +129,7 @@
     %i.fa.fa-users
     %h2.box-title= t('training_realization.show.registered_players')
   .box-body
-    - if @training_lesson_realization.not_closed? && (is_admin? || @training_lesson_realization.is_owned_by?(current_user)) || @training_lesson_realization.has_coach?(current_user, role: 'head_coach')
+    - if @training_lesson_realization.not_closed? && (is_admin? || @training_lesson_realization.is_owned_by?(current_user)) || @training_lesson_realization.has_coach?(current_user, role: 'head_coach') || @training_lesson_realization.has_coach?(current_user, supplementation: true)
       - if @training_lesson_realization.is_regular?
         = link_to t('training_realization.show.add_present_player'), new_training_lesson_realization_attendance_path(@training_lesson_realization), class: 'btn btn-success'
       - elsif @training_lesson_realization.is_individual?
@@ -157,7 +157,7 @@
             - else
               %td{colspan: 3}
 
-            - if @training_lesson_realization.not_closed? && (is_admin? || @training_lesson_realization.is_owned_by?(current_user)) || @training_lesson_realization.has_coach?(current_user, role: 'head_coach')
+            - if @training_lesson_realization.not_closed? && (is_admin? || @training_lesson_realization.is_owned_by?(current_user)) || @training_lesson_realization.has_coach?(current_user, role: 'head_coach') || @training_lesson_realization.has_coach?(current_user, supplementation: true)
               - if @training_lesson_realization.is_regular?
                 %td
                   = link_to t('dictionary.delete'), training_lesson_realization_attendance_path(@training_lesson_realization, a), method: :delete, :data => { :confirm => t('dictionary.are_you_sure') }

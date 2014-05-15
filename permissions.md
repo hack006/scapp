@@ -55,6 +55,17 @@
 | 4.9   | Delete [global]               | Y             | -         | -         | -         | -         | -             | -         | -         | -         | Y         |
 | 4.10  | Delete [own]                  | Y             | Y         | -         | -         | -         | -             | -         | -         | -         | Y         |
 
+# Variable field categories
+
+| ID    | Action                        | implemented?  | is_global? | owner    | friend[R] | coach[R]  | player[R] | watcher[R]| :watcher  | :player   | :coach    | :admin    | note  |
+| ----- | ----------------------------- | ------------- | ---------- | -------- | --------- | --------- | --------- | --------- | --------- | --------- | --------- | --------- | ----- |
+| 15.1  | List VF categories            | Y             | -          | -        | -         | -         | -         | -         | Y (*1)    | Y (*1)    | Y (*1)    | Y         | *1 - Can see only owned or global entries
+| 15.2  | Show VF category              | Y             | Y          | Y        | Y         | Y         | Y         | Y         | -         | -         | -         | -         |
+| 15.3  | Create VF category            | Y             | -          | -        | -         | -         | -         | -         | -         | Y         | Y         | Y         |
+| 15.4  | Edit VF category              | Y             | -          | Y        | -         | -         | -         | -         | -         | -         | -         | Y         |
+| 15.5  | Delete VF category            | Y             | -          | Y        | -         | -         | -         | -         | -         | -         | -         | Y         |
+
+
 # Variable field measurements
 
 | ID    | Action                        | implemented?  | owner     | training_owner [R]    | training_coach[R] | training_player[R]    | suplementation    | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
@@ -166,10 +177,20 @@
 | 12.7  | Fill scheduled lesson attendance      | Y             | -         | Y                     | Y *1              | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
 | 12.8  | Calc scheduled lesson payment         | Y             | -         | Y                     | Y *1              | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
 
+# Present coaches
+
+| ID    | Action                                | implemented?  | owner     | training_owner [R]    | training_coach[R] | training_player[R]    | suplementation    | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
+| ----- | ------------------------------------- | ------------- | --------- | --------------------- | ----------------- | --------------------- | ----------------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
+| 13.1  | List present coaches                  | Y             | -         | Y                     | Y *1              | -                     | Y                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 13.2  | Show present coaches                  | Y             | Y         | Y                     | Y *1              | -                     | -                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 13.3  | Add present coach                     | Y             | -         | Y                     | Y *1              | -                     | -                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 13.4  | Edit present coach                    | Y             | -         | Y                     | Y *1              | -                     | -                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+| 13.5  | Remove present coach                  | Y             | -         | Y                     | Y *1              | -                     | -                 | -         | -         | -         | -             | -         | -         | -         | Y         | *1 - only head_coach
+
 # Help
 
 | ID    | Action                            | implemented?  | :player   | :coach    | :admin    | note  |
 | ----- | --------------------------------- | ------------- | ----------| --------- | --------- | ----- |
-| 13.1  | List help themes in spec. locale  | Y             | Y         | Y         | Y         |
-| 13.2  | Show help                         | Y             | Y         | Y         | Y         |
-| 13.3  | Show modal help                   | Y             | Y         | Y         | Y         |
+| 14.1  | List help themes in spec. locale  | Y             | Y         | Y         | Y         |
+| 14.2  | Show help                         | Y             | Y         | Y         | Y         |
+| 14.3  | Show modal help                   | Y             | Y         | Y         | Y         |

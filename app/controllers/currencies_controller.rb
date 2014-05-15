@@ -46,7 +46,7 @@ class CurrenciesController < ApplicationController
   def update
     respond_to do |format|
       if @currency.update(currency_params)
-        format.html { redirect_to @currency, notice: t('currency.controller.successfully_updated') }
+        format.html { redirect_to currencies_path, notice: t('currency.controller.successfully_updated') }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -61,7 +61,7 @@ class CurrenciesController < ApplicationController
     respond_to do |format|
       begin
         @currency.destroy
-        format.html { redirect_to currencies_url, notice: t('currency.controller.successfully_removed') }
+        format.html { redirect_to currencies_path, notice: t('currency.controller.successfully_removed') }
         format.json { head :no_content }
       rescue ActiveRecord::DeleteRestrictionError => e
         format.html { redirect_to currencies_url, alert: t('currency.controller.dependent_exists') }

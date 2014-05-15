@@ -49,3 +49,7 @@ And(/^I should see following training states "([^"]*)" for user "([^"]*)"$/) do 
     end
   end
 end
+
+When(/^I fill in "([^"]*)" user email field into attendance from$/) do |email|
+  fill_in 'attendance_user_email', with: email
+end

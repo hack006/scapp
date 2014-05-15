@@ -185,7 +185,8 @@ en:
         long_description: 'Long description is visible to users who has the permission to view group detail.'
         is_global: 'If marked global then every coach can use group for trainings. Keep in mind that :owner and :members visibility is not preserved because users participating in the training can see other members of the group in the training detail!'
       variable_field_category:
-        user: 'Only owner can see it and use it. Leave blank to create globally usable category.'
+        user: 'As administrator you can assign ownership of the category to any user.'
+        rgb: 'Rgb color in the format: xxxxxx, where x = [0, 1, ... , 9, A, B, ... , F]. Example: 223344, FAFAFA, ...'
       regular_training:
         public: 'If training is public then everyone can see it. Otherwise only owner, coaches and players can see the training.'
       individual_training_lesson_realization:
@@ -207,6 +208,12 @@ en:
     save_changes: &save_changes Save changes
 
     submit:
+      variable_field:
+        create: Save
+        update: Save changes
+      variable_field_category:
+        create: Create VF category
+        update: Save changes
       variable_field_measurement:
         create: Save measurement
         update: *save_changes

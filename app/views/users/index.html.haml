@@ -44,7 +44,7 @@
               %span.label.label-primary= r
         - if is_admin?
           %td= link_to t('user.index.edit'), edit_user_path(user)
-          %td= link_to 'change role', set_roles_user_path(user)
+          %td= link_to t('user.index.change_roles'), set_roles_user_path(user)
           %td= link_to t('user.index.delete'), user_path(user), :data => { :confirm => t('dictionary.are_you_sure') },
           :method => :delete, class: 'btn btn-danger' unless user == current_user
 

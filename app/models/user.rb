@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  USER_ROLES = ['watcher', 'player', 'coach', 'admin']
+  USER_ROLES = [:watcher, :player, :coach, :admin]
   HANDEDNESS = [:left_handed, :right_handed, :universal]
   SEX = [:male, :female]
 
@@ -67,10 +67,10 @@ class User < ActiveRecord::Base
   # Test if specified relation exists between users
   #
   # @param [User] to_user
-  # @param [String] relation_type
-  #   @option [String] :friend
-  #   @option [String] :coach _user_ is coach of _to_user_
-  #   @option [String] :watcher _user_ is watcher of _to_user_
+  # @param [Symbol] relation_type
+  #   @option [Symbol] :friend
+  #   @option [Symbol] :coach _user_ is coach of _to_user_
+  #   @option [Symbol] :watcher _user_ is watcher of _to_user_
   def in_relation?(to_user, relation_type)
     UserRelation.in_relation? self, to_user, relation_type
   end

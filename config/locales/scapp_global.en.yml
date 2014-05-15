@@ -351,6 +351,7 @@ en:
     finance: *finance
     currencies: *currencies
     new_currency: *new_currency
+    edit_currency: *edit_currency
     regular_training_lesson_detail: *regular_training_lesson_detail
     individual_training_lesson_detail: *individual_training_lesson_detail
     regular_training_lesson_edit: *regular_training_lesson_edit
@@ -577,12 +578,18 @@ en:
     new:
       new_vf_measurement: *new_vf_measurement
   vfc:
+    controller:
+      successfully_created: 'Variable field category was successfully created.'
+      successfully_removed: 'Variable field category was successfully removed.'
+      successfully_updated: 'Variable field category was successfully updated.'
+      can_not_delete_dependent_vf_exists: 'Can not be deleted! Dependent variable fields exist for this VF category.'
     index:
       variable_field_categories: 'Listing variable field categories'
       new: *new
       name: *name
       rgb: 'Color'
       description: *description
+      global: *global
       user: 'Owner of category'
     new:
       new_variable_field_category: 'New variable field category'
@@ -590,6 +597,7 @@ en:
       name: *name
       rgb: *rgb
       description: *description
+      global: *global
       user: *user
   vful:
     index:
@@ -616,7 +624,7 @@ en:
       user_create_success: 'User has been successfully created'
       update_succeed: 'User profile successfully updated.'
       update_failed: 'Unable to update user profile.'
-      roles_successfully_changed: 'User roles was successfully updated.'
+      roles_successfully_changed: 'User roles were successfully updated.'
       roles_change_failed: Something went wrong while trying to change user roles!
     form:
       additional_information: Additional personal information
@@ -651,6 +659,7 @@ en:
       change_role: 'Change role'
       delete: *delete
       edit: *edit
+      change_roles: Change roles
       show: 'View profile'
       relations: 'Relations with user'
       new_user: *new_user

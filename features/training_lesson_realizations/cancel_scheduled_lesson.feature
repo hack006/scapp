@@ -62,7 +62,7 @@ Feature: Cancel cheduled lesson
         | test1   | 15              | basic     | euro        | head_coach  | training2         |
       And I am at the "/scheduled_lessons/training2-1-5-2014-15-00-16-00" page
     When I click "CANCEL lesson"
-    Then I should see "Scheduled lesson was successfully canceled." message
+    Then I should see "Scheduled training lesson successfully canceled." message
       And I should see "REOPEN lesson" action button
       And I should see "0.0" for "test2" in the table row
 
@@ -76,7 +76,7 @@ Feature: Cancel cheduled lesson
         | training2-1-5-2014-15-00-16-00  | test1   | basic | euro        | 10                    | true            |
       And I am at the "/scheduled_lessons/training2-1-5-2014-15-00-16-00" page
     When I click "CANCEL lesson"
-    Then I should see "Scheduled lesson was successfully canceled." message
+    Then I should see "Scheduled training lesson successfully canceled." message
       And I should see "REOPEN lesson" action button
       And I should see "0.0" for "test2" in the table row
 
@@ -84,5 +84,5 @@ Feature: Cancel cheduled lesson
     Given I have "admin" role
     And I am at the "/scheduled_lessons/training2-1-5-2014-15-00-16-00" page
     When I click "CANCEL lesson"
-    Then I should see "Scheduled lesson was successfully closed." message
+    Then I should see "Scheduled training lesson successfully canceled." message
       And I should see "REOPEN lesson" action button

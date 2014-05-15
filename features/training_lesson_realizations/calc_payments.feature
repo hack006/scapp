@@ -106,5 +106,5 @@ Feature: Calculate payments for scheduled lesson players
         | training_lesson_realization     | user      | vat     | currency    | salary_without_tax  | supplementation   |
         | training1-5-5-2050-10-00-12-00  | test2     | basic   | euro        | 100                 | false             |
     When I visit page "/scheduled_lessons/training1-5-5-2050-10-00-12-00/attendances/calc_payment"
-    Then I should see "WARNING! Training lesson is not gainful. Calculated lost is: 70" message
+    Then I should see "WARNING! Training lesson is not gainful. Calculated lost is: 70" basic alert message
 

@@ -70,6 +70,14 @@ class Ability
       tl.regular_training.user == @user
     end
 
+    # =============
+    # 13) Present coach
+    # =============
+    # @13.2
+    can :show, PresentCoach do |pc|
+      pc.user == @user
+    end
+
   end
 
   # ===========================================
@@ -77,7 +85,7 @@ class Ability
   # ===========================================
   def watcher
     # =============
-    # Training lesson realization
+    # 11) Training lesson realization
     # =============
     # @11.1
     can [:list_training_lesson_realizations], RegularTraining do |rt|
@@ -88,6 +96,12 @@ class Ability
     can [:show], TrainingLessonRealization do |tlr|
       tlr.is_open? || (tlr.is_regular? && tlr.training_lesson.regular_training.public?) || tlr.has_watcher?(@user)
     end
+
+    # =============
+    # 15) Variable field category
+    # =============
+    # @15.1
+    can [:index], VariableFieldCategory
   end
 
   # ===========================================
@@ -260,10 +274,31 @@ class Ability
     end
 
     # ===========
-    # 13) Help
+    # 14) Help
     # ===========
-    # @13.1, @13.2, @13.3
+    # @14.1, @14.2, @14.3
     can [:index, :show, :show_ajax], HelpsController
+
+    # =============
+    # 15) Variable field category
+    # =============
+    # @15.3
+    can [:create], VariableFieldCategory
+
+    # @15.2,
+    can [:show], VariableFieldCategory do |vfc|
+      vfc.user == @user ||
+          ( !vfc.user.nil? && (vfc.user.in_relation?(@user, :coach) ||
+              @user.in_relation?(vfc.user, :coach) ||
+              vfc.user.in_relation?(@user, :friend) ||
+              @user.in_relation?(vfc.user, :watcher))
+          )
+    end
+
+    # @15.4, @15.5
+    can [:update, :destroy], VariableFieldCategory do |vfc|
+      vfc.user == @user
+    end
 
   end
 
@@ -404,28 +439,31 @@ class Ability
     # @12.4
     if @request.params[:controller] == 'attendances' && ['new', 'create'].include?(@request.params[:action])
       tlr = TrainingLessonRealization.friendly.find(@request.params[:training_lesson_realization_id])
+      unless [:done, :canceled].include?(tlr.status)  # can not modify closed lesson, reopening must be done first
+        if tlr.is_regular?
+          training = tlr.training_lesson.regular_training
 
-      if tlr.is_regular?
-        training = tlr.training_lesson.regular_training
-
-        if training.user == @user || training.has_coach?(@user, :head_coach) || tlr.has_coach?(@user, supplementation: true)
-          can [:create], Attendance
-        end
-      else
-        if tlr.user == @user || tlr.has_coach?(@user, supplementation: true)
-          can [:create], Attendance
+          if training.user == @user || training.has_coach?(@user, :head_coach) || tlr.has_coach?(@user, supplementation: true)
+            can [:create], Attendance
+          end
+        else
+          if tlr.user == @user || tlr.has_coach?(@user, supplementation: true)
+            can [:create], Attendance
+          end
         end
       end
     end
 
     # @12.5, @12.6
     can [:edit, :destroy], Attendance do |a|
-      if a.training_lesson_realization.is_regular?
-        a.training_lesson_realization.has_owner?(@user) ||
-            a.training_lesson_realization.training_lesson.regular_training.has_coach?(@user, :head_coach) ||
-            a.training_lesson_realization.has_coach?(@user, supplementation: true)
-      else
-        a.training_lesson_realization.has_owner?(@user) || a.training_lesson_realization.has_coach?(@user, supplementation: true)
+      unless [:done, :canceled].include?(a.training_lesson_realization.status)
+        if a.training_lesson_realization.is_regular?
+          a.training_lesson_realization.has_owner?(@user) ||
+              a.training_lesson_realization.training_lesson.regular_training.has_coach?(@user, :head_coach) ||
+              a.training_lesson_realization.has_coach?(@user, supplementation: true)
+        else
+          a.training_lesson_realization.has_owner?(@user) || a.training_lesson_realization.has_coach?(@user, supplementation: true)
+        end
       end
     end
 
@@ -444,7 +482,59 @@ class Ability
       end
     end
 
-  end
+    # =============
+    # 13) PresentCoach
+    # =============
+    # @13.1
+    if @request.params[:controller] == 'present_coaches' && ['index'].include?(@request.params[:action])
+      tlr = TrainingLessonRealization.friendly.find(@request.params[:training_lesson_realization_id])
+
+      if tlr.is_regular?
+        if tlr.has_owner?(@user) || tlr.training_lesson.regular_training.has_coach?(@user, :head_coach) || tlr.has_coach?(@user, supplementation: true)
+          can [:index], PresentCoach
+        end
+      else
+        if tlr.has_owner?(@user) || tlr.has_coach?(@user, supplementation: true)
+          can [:index], PresentCoach
+        end
+      end
+    end
+
+    # @13.2, @13.4, @13.5
+    can [:show, :update, :destroy], PresentCoach do |pc|
+      tlr = pc.training_lesson_realization
+
+      if tlr.is_regular?
+        if tlr.has_owner?(@user) || tlr.training_lesson.regular_training.has_coach?(@user, :head_coach)
+          can [:index], PresentCoach
+        end
+      else
+        if tlr.has_owner?(@user)
+          can [:index], PresentCoach
+        end
+      end
+    end
+
+    # @13.3
+    if @request.params[:controller] == 'present_coaches' && ['new', 'create'].include?(@request.params[:action])
+      tlr = TrainingLessonRealization.friendly.find(@request.params[:training_lesson_realization_id])
+
+      if tlr.is_regular?
+        if tlr.has_owner?(@user) || tlr.training_lesson.regular_training.has_coach?(@user, :head_coach)
+          can [:create], PresentCoach
+        end
+      else
+        if tlr.has_owner?(@user)
+          can [:create], PresentCoach
+        end
+      end
+    end
+
+
+
+
+
+    end
 
   # ===========================================
   # ADMIN PERMISSIONS

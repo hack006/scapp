@@ -2,6 +2,8 @@ class PresentCoachesController < ApplicationController
   before_action :set_present_coach, only: [:show, :edit, :update, :destroy]
   before_action :set_training_lesson_realization
 
+  authorize_resource
+
   # GET /present_coaches
   # GET /present_coaches.json
   def index
@@ -77,7 +79,9 @@ class PresentCoachesController < ApplicationController
     end
 
     def set_training_lesson_realization
-      if params[:regular_training_lesson_realization_id]
+      if params[:training_lesson_realization_id]
+        @training_lesson_realization = TrainingLessonRealization.friendly.find(params[:training_lesson_realization_id])
+      elsif params[:regular_training_lesson_realization_id]
         @training_lesson_realization = TrainingLessonRealization.friendly.find(params[:regular_training_lesson_realization_id])
       elsif params[:individual_regular_training_lesson_realization_id]
         @training_lesson_realization = TrainingLessonRealization.friendly.find(params[:individual_training_lesson_realization_id])

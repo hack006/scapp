@@ -46,7 +46,13 @@ class TrainingLessonRealization < ActiveRecord::Base
 
   def sign_in_time
     t = read_attribute(:sign_in_time)
+
     if t.nil?
+      # if no date available we can not try to use it
+      if self.date.nil?
+        return nil
+      end
+
       # use start time of lesson
       DateTime.from_date_and_time(self.date, self.from)
     else
@@ -56,7 +62,13 @@ class TrainingLessonRealization < ActiveRecord::Base
 
   def excuse_time
     t = read_attribute(:excuse_time)
+
     if t.nil?
+      # if no date available we can not try to use it
+      if self.date.nil?
+        return nil
+      end
+
       # use start time of lesson
       DateTime.from_date_and_time(self.date, self.from)
     else

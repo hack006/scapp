@@ -10,7 +10,9 @@ Feature: Add variable field
       And I have "coach" role
 
   Scenario: Add new variable field with selected category from list
-    Given category "intelligence" exists
+    Given Following VF categories exist in the system
+      | user    | name          | description       | RGB     | is_global     |
+      | test1   | intelligence  | intelligence desc | 111111  | true          |
       And I am on the variable_field add new page
     When I fill in all necessary fields
       | name    | description           | unit  | higher_is_better  | is_numeric  |
@@ -38,9 +40,9 @@ Feature: Add variable field
   Scenario: I can only see my and public categories
     Given User test2 exists
       And following categories are available in the system
-        | name      | description   | user      |
-        | Strength  | Strength desc |           |
-        | Health    | Health desc   | test1     |
-        | Dimensions| Dim. desc.    | test2     |
+        | name      | description   | user      | is_global |
+        | Strength  | Strength desc |           | true      |
+        | Health    | Health desc   | test1     |           |
+        | Dimensions| Dim. desc.    | test2     |           |
       And I am on the variable_field add new page
     Then As user with username "test1" I should see "Strength" and "Health" but not "Dimensions"

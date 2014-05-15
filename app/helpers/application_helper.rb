@@ -30,7 +30,7 @@ module ApplicationHelper
     case label
       when true
         return '<span class="label label-success">✓</span>'
-      when false
+      when false, nil
         return '<span class="label label-danger">✗</span>'
     end
   end

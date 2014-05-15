@@ -5,7 +5,9 @@
     = f.input :name
     = f.input :rgb
     = f.input :description
-    = f.association :user
+    - if is_admin?
+      = f.input :is_global
+      = f.association :user
 
   .form-actions
     = f.button :submit, class: 'btn btn-primary'
