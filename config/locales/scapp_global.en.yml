@@ -418,11 +418,14 @@ en:
 
     dashboard:
       my_closests_trainings: 'My closest trainings'
+      closest_trainings_watched_by_me: 'Closest trainings watched by me'
       closests_trainigs_trained_by_me: 'Closest trainings trained by me'
       my_latest_measurements: 'My latest measurements'
       latest_measurement_of_my_players: 'Latest measurements of my players'
+      latest_measurement_of_my_wards: 'Latest measurements of players I watch'
       players_count: Players count
       my_coaches: 'My connected coaches'
+      my_watched_players: 'Players I am watching'
       location: *location
       date: *date
       variable_field: *variable_field
@@ -435,6 +438,7 @@ en:
         refused: 'Rejected by other side'
       date: *date
       time: *time
+      user: *user
       training: *training
       type: *type
       role: *role
@@ -955,6 +959,7 @@ en:
       trainings_overview: *trainings_overview
       no_trainings: No trainings you are assigned in.
       close_trainings: Close trainings
+      close_trainings_of_my_watched_players: Close trainings of players watched by me
       regular_trainings_in: Regular trainings I am in
       regular_trainings_coaching: Regular trainings I coach
       regular_training: *regular_training
@@ -963,6 +968,7 @@ en:
       date: *date
       time_until_start: *time_until_start
       time: *time
+      user: *user
       role: *role
       new_regular_training: New regular training
       schedule_new_lesson: Schedule new lesson

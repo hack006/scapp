@@ -32,6 +32,20 @@ class VariableFieldMeasurement < ActiveRecord::Base
         limit(limit)
   end
 
+  # Obtain most recent measurements for players of specified watcher user
+  #
+  # @param [User] user Watcher
+  # @param [Integer] limit Maximal number of measurements to obtain
+  # @return [ActiveRecord::Relation] latest measurements
+  def self.latest_for_watched_players_by(user, limit)
+    watched_players_ids = user.get_my_relations_with_statuses('accepted', :my_wards, 'accepted').map{ |w| w.user_to_id }
+
+    VariableFieldMeasurement.
+        where(measured_for_id: watched_players_ids).
+        order('measured_at DESC').
+        limit(limit)
+  end
+
   # Find out statistics with comparison to historical measurements
   #
   # @param [DateTime] from_datetime

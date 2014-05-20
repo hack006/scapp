@@ -1,6 +1,17 @@
 // import the CSS framework
 @import "bootstrap";
 
+.skin-blue #footer{
+  padding: 0.3em 0.5em;
+  border-top: solid 3px #357ca5;
+  background-color: #3c8dbc;
+  color: #dbf3ff;
+  a{
+    color: #EDFCFF;
+    font-weight: 800;
+  }
+}
+
 .bigger{
   font-size: 1.5em;
 }

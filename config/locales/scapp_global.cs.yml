@@ -342,6 +342,7 @@ cs:
     finance: Finance
     currencies: Měny
     new_currency: "Nová měna"
+    edit_currency: "Upravit měnu"
     regular_training_lesson_detail: "Detail tréninkové hodiny"
     individual_training_lesson_detail: "Detail individuální tréninkové hodiny"
     regular_training_lesson_edit: "Upravit tréninkovou hodinu"
@@ -407,11 +408,14 @@ cs:
       about_us: "O nás"
     dashboard:
       my_closests_trainings: "Moje nejbližší tréninky"
+      closest_trainings_watched_by_me: "Nejbližší tréninky sledovaných hráčů"
       closests_trainigs_trained_by_me: "Nejbližší tréninky, které trénuji"
       my_latest_measurements: "Moje nejnovější měření"
       latest_measurement_of_my_players: "Nejnovější měření mých hráčů"
+      latest_measurement_of_my_wards: "Poslední měření sledovaných hráčů"
       players_count: "Počet hráčů"
       my_coaches: "Moji trenéři"
+      my_watched_players: "Hráči, které pozoruji"
       location: Umístění
       date: Datum
       variable_field: Metrika
@@ -423,6 +427,7 @@ cs:
         accepted: Připojeno
         refused: "Odmítnuto druhou stranou"
       time: Čas
+      user: Uživatel
       training: Trénink
       type: Typ
       role: Role
@@ -561,12 +566,18 @@ cs:
     new:
       new_vf_measurement: "Nové měření metriky"
   vfc:
+    controller:
+      successfully_created: "Kategorie metriky byla úspěšně vytvořena."
+      successfully_removed: "Kategorie metriky byla úspěšně odstraněna."
+      successfully_updated: "Kategorie metriky byla úspěšně aktualizována."
+      can_not_delete_dependent_vf_exists: "Kategorii nelze odstranit! Jsou v ní již zařazeny metriky."
     index:
       variable_field_categories: "Výpis kategorií metrik"
       new: Nový
       name: Jméno
       rgb: Barva
       description: Popis
+      global: Globální
       user: "Vlastník kategorie"
     new:
       new_variable_field_category: "Nová kategorie metriky"
@@ -574,6 +585,7 @@ cs:
       name: Jméno
       rgb: RGB
       description: Popis
+      global: Globální
       user: Uživatel
   vful:
     index:
@@ -600,7 +612,7 @@ cs:
       user_create_success: "Uživatel byl úspěšně vytvořen"
       update_succeed: "Profil uživatele byly úspěšně aktualizovány."
       update_failed: "Nelze aktualizovat Profil uživatele."
-      roles_successfully_changed: "Uživatelské role byla úspěšně aktualizována."
+      roles_successfully_changed: "Uživatelské role byly úspěšně aktualizovány."
       roles_change_failed: "Došlo k neočekávané chybě během pokusu o změnu uživatelské role!"
     form:
       additional_information: "Další osobní údaje"
@@ -634,6 +646,7 @@ cs:
       change_role: "Změna role"
       delete: Odstranit
       edit: Upravit
+      change_roles: "Změnit role"
       show: "Zobrazit profil"
       relations: "Vztahy s uživateli"
       new_user: "Nový uživatel"
@@ -920,6 +933,7 @@ cs:
       trainings_overview: "Přehled tréninků"
       no_trainings: "Aktuálně nejste zařazeni v žádném tréninku."
       close_trainings: "Nejbližší tréninky"
+      close_trainings_of_my_watched_players: "Nejbližší tréninky sledovaných hráčů"
       regular_trainings_in: "Pravidelné tréninky, kterých se účastním"
       regular_trainings_coaching: "Pravidelné tréninky, které trénuji"
       regular_training: "Pravidelný trénink"
@@ -928,6 +942,7 @@ cs:
       date: Datum
       time_until_start: "Čas do zahájení"
       time: Čas
+      user: Uživatel
       role: Role
       new_regular_training: "Nový pravidelný trénink"
       schedule_new_lesson: "Naplánovat novou tréninkovou hodinu"

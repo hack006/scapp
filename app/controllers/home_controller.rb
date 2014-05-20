@@ -16,6 +16,18 @@ class HomeController < ApplicationController
     @closest_training_lessons = TrainingLessonRealization.closest_lesson_realizations(current_user)
     @closest_training_lessons = @closest_training_lessons.includes(:attendances)
 
+    # WATCHER SPECIFIC ############
+    # close trainings of watched players
+    if is_watcher?
+      @closest_training_lessons_watched = TrainingLessonRealization.closest_watched_lesson_realizations(current_user)
+
+      # get connected players I watch
+      @my_connected_wards = current_user.get_my_relations_with_statuses 'accepted', :my_wards
+
+      # get latest measurements of my wards
+      @latest_measurements_of_my_wards = VariableFieldMeasurement.latest_for_watched_players_by(current_user, 10)
+    end
+
     # PLAYER SPECIFIC ##############
     if is_player?
       @my_latest_vf_measurements = VariableFieldMeasurement.latest_for_user(current_user, 5)

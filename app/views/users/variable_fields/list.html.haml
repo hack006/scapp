@@ -7,7 +7,7 @@
 
 - @variable_fields.each do |k, vfc|
 
-  %h2= vfc[:detail].name
+  %h2= (vfc[:detail].nil?) ? '-' : vfc[:detail].name
   - vfc[:items].each do |vf|
     .nav-tabs-custom{id: "vf-#{vf[:field].id}", class: "vf-name-#{vf[:field].name}"}
       / Tabs within a box

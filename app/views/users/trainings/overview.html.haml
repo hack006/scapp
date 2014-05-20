@@ -8,88 +8,6 @@
     = link_to t('trainings.user_overview.new_regular_training'), new_regular_training_path, class: 'btn btn-success'
     = link_to t('trainings.user_overview.schedule_new_lesson'), new_individual_training_lesson_realization_path, class: 'btn btn-success'
 
-#trainings-close.box.box-primary
-  .box-header
-    %h2.box-title= t('trainings.user_overview.close_trainings')
-  .box-body
-    %table.table.table-striped
-      %thead
-        %tr
-          %th= t('trainings.user_overview.date')
-          %th= t('trainings.user_overview.time')
-          %th= t('trainings.user_overview.training')
-          %th= t('trainings.user_overview.type')
-          %th= t('trainings.user_overview.role')
-          %th= t('trainings.user_overview.state')
-          %th= t('trainings.user_overview.time_until_start')
-          %th
-      %tbody
-        - @closest_training_lessons.each do |l|
-          %tr
-            %td= l.date.short(locale)
-            %td #{l.from.short} - #{l.until.short}
-            - if l.is_regular?
-              %td= link_to l.training_lesson.regular_training.name, l.training_lesson.regular_training
-              %td
-                %span.label.label-grey regular
-              %td!= TrainingLessonRealizationsHelper.get_regular_lesson_role(l.training_lesson, @user)
-            - if l.is_individual?
-              %td -
-              %td
-                %span.label.label-light-grey individual
-              %td!= TrainingLessonRealizationsHelper.get_individual_lesson_role(l, @user)
-
-            %td
-              - if l.attendances.where(user: @user).any?
-                != AttendancesHelper.labelize_participation_state l.attendances.where(user: @user).first.participation
-              - else
-                \-
-            %td!= TrainingLessonRealizationsHelper.days_until_start(l.date)
-            %td= link_to t('dictionary.show'), l
-
-#trainings-open.box.box-success
-  .box-header
-    %h2.box-title= t('trainings.user_overview.open_trainings')
-  .box-body
-    %table.table.table-striped
-      %thead
-        %tr
-          %th= t('trainings.user_overview.date')
-          %th= t('trainings.user_overview.time')
-          %th= t('trainings.user_overview.time_until_start')
-          %th= t('trainings.user_overview.participating')
-          %th
-          %th
-      %tbody
-        - @closest_open_training_lessons.each do |l|
-          %tr
-            %td= l.date.short(locale)
-            %td #{l.from.short} - #{l.until.short}
-            %td!= TrainingLessonRealizationsHelper.days_until_start(l.date)
-            %td!= ApplicationHelper.labelize_boolean l.attendances.where(user: current_user, participation: [:signed, :present]).any?
-            %td= link_to t('dictionary.show'), l
-            %td= link_to t('trainings.user_overview.sign_in'), sign_in_training_lesson_realization_path(l)
-
-#trainings-user-in.box.box-info
-  .box-header
-    %h2.box-title= t('trainings.user_overview.regular_trainings_in')
-  .box-body
-    - unless @regular_trainings_as_player.empty?
-      %table.table.table-striped
-        %thead
-          %tr
-            %th= t('trainings.user_overview.regular_training')
-            %th= t('trainings.user_overview.user_group')
-            %th= t('trainings.user_overview.days').to_s.capitalize
-        %tbody
-        - @regular_trainings_as_player.each do |t|
-          %tr
-            %td= link_to t.name, t
-            %td= link_to t.user_group.name, t.user_group
-            %td!= RegularTrainingsHelper.visualize_training_days(t)
-    - else
-      = t('trainings.user_overview.no_trainings')
-
 - if @user.is_admin? || @user.is_coach?
   .box.box-info
     .box-header
@@ -110,3 +28,128 @@
               %td!= RegularTrainingsHelper.visualize_training_days(t)
       - else
         = t('trainings.user_overview.no_trainings')
+
+- if is_admin? || is_coach? || is_player?
+  #trainings-close.box.box-primary
+    .box-header
+      %h2.box-title= t('trainings.user_overview.close_trainings')
+    .box-body
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= t('trainings.user_overview.date')
+            %th= t('trainings.user_overview.time')
+            %th= t('trainings.user_overview.training')
+            %th= t('trainings.user_overview.type')
+            %th= t('trainings.user_overview.role')
+            %th= t('trainings.user_overview.state')
+            %th= t('trainings.user_overview.time_until_start')
+            %th
+        %tbody
+          - @closest_training_lessons.each do |l|
+            %tr
+              %td= l.date.short(locale)
+              %td #{l.from.short} - #{l.until.short}
+              - if l.is_regular?
+                %td= link_to l.training_lesson.regular_training.name, l.training_lesson.regular_training
+                %td
+                  %span.label.label-grey regular
+                %td!= TrainingLessonRealizationsHelper.get_regular_lesson_role(l.training_lesson, @user)
+              - if l.is_individual?
+                %td -
+                %td
+                  %span.label.label-light-grey individual
+                %td!= TrainingLessonRealizationsHelper.get_individual_lesson_role(l, @user)
+
+              %td
+                - if l.attendances.where(user: @user).any?
+                  != AttendancesHelper.labelize_participation_state l.attendances.where(user: @user).first.participation
+                - else
+                  \-
+              %td!= TrainingLessonRealizationsHelper.days_until_start(l.date)
+              %td= link_to t('dictionary.show'), l
+
+  #trainings-open.box.box-success
+    .box-header
+      %h2.box-title= t('trainings.user_overview.open_trainings')
+    .box-body
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= t('trainings.user_overview.date')
+            %th= t('trainings.user_overview.time')
+            %th= t('trainings.user_overview.time_until_start')
+            %th= t('trainings.user_overview.participating')
+            %th
+            %th
+        %tbody
+          - @closest_open_training_lessons.each do |l|
+            %tr
+              %td= l.date.short(locale)
+              %td #{l.from.short} - #{l.until.short}
+              %td!= TrainingLessonRealizationsHelper.days_until_start(l.date)
+              %td!= ApplicationHelper.labelize_boolean l.attendances.where(user: current_user, participation: [:signed, :present]).any?
+              %td= link_to t('dictionary.show'), l
+              %td= link_to t('trainings.user_overview.sign_in'), sign_in_training_lesson_realization_path(l)
+
+  #trainings-user-in.box.box-info
+    .box-header
+      %h2.box-title= t('trainings.user_overview.regular_trainings_in')
+    .box-body
+      - unless @regular_trainings_as_player.empty?
+        %table.table.table-striped
+          %thead
+            %tr
+              %th= t('trainings.user_overview.regular_training')
+              %th= t('trainings.user_overview.user_group')
+              %th= t('trainings.user_overview.days').to_s.capitalize
+          %tbody
+          - @regular_trainings_as_player.each do |t|
+            %tr
+              %td= link_to t.name, t
+              %td= link_to t.user_group.name, t.user_group
+              %td!= RegularTrainingsHelper.visualize_training_days(t)
+      - else
+        = t('trainings.user_overview.no_trainings')
+
+#trainings-close.box.box-primary
+  .box-header
+    %h2.box-title= t('trainings.user_overview.close_trainings_of_my_watched_players')
+  .box-body
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= t('trainings.user_overview.date')
+          %th= t('trainings.user_overview.time')
+          %th= t('trainings.user_overview.user')
+          %th= t('trainings.user_overview.training')
+          %th= t('trainings.user_overview.type')
+          %th= t('trainings.user_overview.role')
+          %th= t('trainings.user_overview.state')
+          %th= t('trainings.user_overview.time_until_start')
+          %th
+      %tbody
+        - @closest_training_lessons_watched.each do |l|
+          - l.attendances.each do |a|
+            %tr
+              %td= l.date.short(locale)
+              %td #{l.from.short} - #{l.until.short}
+              %td= link_to a.user.name, a.user
+              - if l.is_regular?
+                %td= link_to l.training_lesson.regular_training.name, l.training_lesson.regular_training
+                %td
+                  %span.label.label-grey regular
+                %td!= TrainingLessonRealizationsHelper.get_regular_lesson_role(l.training_lesson, @user)
+              - if l.is_individual?
+                %td -
+                %td
+                  %span.label.label-light-grey individual
+                %td!= TrainingLessonRealizationsHelper.get_individual_lesson_role(l, @user)
+
+              %td
+                - if l.attendances.where(user: @user).any?
+                  != AttendancesHelper.labelize_participation_state l.attendances.where(user: @user).first.participation
+                - else
+                  \-
+              %td!= TrainingLessonRealizationsHelper.days_until_start(l.date)
+              %td= link_to t('dictionary.show'), l

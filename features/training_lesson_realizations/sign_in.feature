@@ -58,9 +58,12 @@ Feature: Sign in to the scheduled training
     Given Following individual training lesson realizations exist
       | owner   | date          | from    | until     | calculation         | player_price_wt | group_price_wt    | training_vat    | currency    | rental_price_wt   | rental_vat  | status    | note    | sign_in_time    | excuse_time    | is_open    | player_count_limit  |
       | test2   | 20/5/2010     | 10:00   | 12:00     | fixed_player_price  | 10              |                   | basic           | euro        | 5                 | basic       | scheduled | none    |                 |                | true       | 2                   |
+      And Following attendance entries exists
+        | user      | training_realization              | participation | price_without_tax | note    | excuse_reason   |
+        | test1     | test2-20-5-2010-10-00-12-00       | excused       | 10                |         |                 |
       And I am at the "/scheduled_lessons/test2-20-5-2010-10-00-12-00" page
     When I click "Sign in"
-    Then I should see "Following errors occurred: Scheduled lesson sign in time limit has been reached!" message
+    Then I should see "Scheduled lesson is already closed or sign in time limit has been reached!" message
 
   Scenario: I can sign in to lesson with free places before reaching sign in limit
     Given Following individual training lesson realizations exist

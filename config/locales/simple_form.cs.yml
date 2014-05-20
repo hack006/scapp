@@ -164,7 +164,8 @@ cs:
         long_description: "Dlouhý popis je viditelný pouze uživatelům, kteří mají oprávnění prohlížet detail skupiny."
         is_global: "Je-li označen jako globální, pak každý trenér může použít skupinu pro trénink. Upozorňujeme, že nastavená viditelnost skupiny :owner a :members nebude zcela zachována, protože uživatelé účastnící se tréninku uvidí zbylé členy skupiny!"
       variable_field_category:
-        user: "Pouze vlastník ji může vidět a používat. Nevyplňujte pro vytvoření globální skupiny."
+        user: "Jako administrátor můžete nastavit vlastnictví kategorie kterémukoliv uživateli."
+        rgb: "RGB barva v zápise: xxxxxx, kde x = [0, 1, ... , 9, A, B, ... , F]. Například: 223344, FAFAFA, ..."
       regular_training:
         public: "Je-li trénink označen jako veřejný, pak bude viditelný komukoliv, včetně nepřihlášených uživatelů. Taktéž bude zobrazen na hlavní stránce ve výpisu volně přístupných tréninků. V opačném případě je trénink viditelný pouze vlastníkovi, tréninkovým trenérům, tréninkovým hráčům a jejich pozorovatelům."
       individual_training_lesson_realization:
@@ -185,6 +186,12 @@ cs:
   helpers:
     save_changes: "Uložit změny"
     submit:
+      variable_field:
+        create: Uložit
+        update: "Uložit změny"
+      variable_field_category:
+        create: "Vytvořit kategorii metriky"
+        update: "Uložit změny"
       variable_field_measurement:
         create: "Uložit měření metriky"
         update: "Uložit změny"

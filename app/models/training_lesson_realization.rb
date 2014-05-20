@@ -158,6 +158,22 @@ class TrainingLessonRealization < ActiveRecord::Base
         limit(limit).uniq
   end
 
+  # Get closest training realizations watched by specified user
+  #
+  # @param [User] user user acting as watcher
+  # @param [Integer] limit maximum number of scheduled lessons to obtain
+  def self.closest_watched_lesson_realizations(user, limit = 10)
+    watched_user_ids = UserRelation.get_my_relations_with_statuses(user, ['accepted'], :my_wards, ['accepted']).
+        map{ |u| u.user_to_id }
+
+    TrainingLessonRealization.
+        joins(:attendances).
+        includes(:attendances).
+        where('attendances.user_id IN (?)', watched_user_ids).
+        order(date: :asc).
+        limit(limit).uniq
+  end
+
   # Get closest open training realizations
   #
   # @param [Integer] limit maximum number of lessons to obtain

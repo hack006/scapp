@@ -63,6 +63,10 @@ In the close future we want to extend **ScApp** with the following features. Pri
     * training lessons can be reused
     * output training lesson with time schedule
 
+## Tests
+We use **BDD** for development. **Cucumber** is used for handling written documentation and for creating acceptance tests.
+Generated documentation is hosted on **Relish** and available [HERE](https://www.relishapp.com/hack006/scapp/docs).
+
 ## Installation
 
 Currently we provide only one install guide for Debian 7.5. In most cases you

@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     # TODO optimize select
     if is_admin?
       @users = User.all.page(params[:page])
-    elsif is_coach? || is_player?
+    elsif is_coach? || is_player? || is_watcher?
       user_relations = current_user.get_my_relations_with_statuses([:new, :accepted, :refused], :all)
       user_ids = user_relations.map do |r|
         if current_user.id ==  r.user_from_id

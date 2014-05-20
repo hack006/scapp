@@ -41,6 +41,14 @@ class Ability
     can [:index], HomeController
 
     # =============
+    # 1) User
+    # =============
+    #  @1.4
+    can [:edit, :update], User do |user|
+      user.id == @user.id
+    end
+
+    # =============
     # 4) VariableField
     #==============
 
@@ -50,6 +58,87 @@ class Ability
     # can manage only own VF - @4.2, @4.7, @4.8, @4.9, @4.10
     can [:show, :edit, :update, :destroy], VariableField do |vf|
       vf.user_id ==  @user.id
+    end
+
+    # =============
+    # 8) Training lesson
+    # =============
+
+    # @8.3, @8.4, @8.5
+    can [:create, :update, :destroy], TrainingLesson do |tl|
+      tl.regular_training.user == @user
+    end
+
+    # =============
+    # 13) Present coach
+    # =============
+    # @13.2
+    can :show, PresentCoach do |pc|
+      pc.user == @user
+    end
+
+    # ===========
+    # 14) Help
+    # ===========
+    # @14.1, @14.2, @14.3
+    can [:index, :show, :show_ajax], HelpsController
+
+  end
+
+  # ===========================================
+  # WATCHER PERMISSIONS
+  # ===========================================
+  def watcher
+    # =============
+    # Home
+    # =============
+    can [:dashboard], HomeController
+
+    # =============
+    # 1) User
+    # =============
+    # @1.8
+    can [:index], User
+
+    # @1.3
+    can [:show], User do |user|
+      (user.id == @user.id) || @user.in_relation?(user, :friend) || @user.in_relation?(user, :coach) || @user.in_relation?(user, :watcher)
+    end
+
+    # =============
+    # 3) UserRelations
+    # =============
+    # @3.1
+    if @request.params[:controller] == 'user_relations' && @request.params[:action] == 'user_has'
+      for_user = User.friendly.find(@request.params[:user_id])
+      if for_user == @user || @user.in_relation?(for_user, :watcher) || @user.in_relation?(for_user, :friend) || @user.in_relation?(for_user, :coach)
+        can :user_has, UserRelation
+      end
+    end
+
+    # @3.3
+    can [:new_request, :create_request], UserRelation
+
+    # @3.4
+    can [:change_status], UserRelation do |r|
+      r.from == @user || r.to == @user
+    end
+
+    # =============
+    # 4) VariableField
+    #==============
+
+    # @4.3 - can only view VF page of watched player
+    if @request.params[:controller] == 'variable_fields' && ['user_variable_fields'].include?(@request.params[:action])
+      can [:user_variable_fields], VariableFieldsController if  @user.in_relation?(User.friendly.find(@request.params[:user_id]), :watcher)
+    end
+
+    # =============
+    # 7) RegularTraining
+    # =============
+    # @7.2
+    can [:show], RegularTraining do |t|
+      t.public? || t.user == @user || t.has_player?(@user) || t.has_coach?(@user) || t.has_watcher?(@user)
     end
 
     # =============
@@ -65,25 +154,6 @@ class Ability
       end
     end
 
-    # @8.3, @8.4, @8.5
-    can [:create, :update, :destroy], TrainingLesson do |tl|
-      tl.regular_training.user == @user
-    end
-
-    # =============
-    # 13) Present coach
-    # =============
-    # @13.2
-    can :show, PresentCoach do |pc|
-      pc.user == @user
-    end
-
-  end
-
-  # ===========================================
-  # WATCHER PERMISSIONS
-  # ===========================================
-  def watcher
     # =============
     # 11) Training lesson realization
     # =============
@@ -95,6 +165,22 @@ class Ability
     # @11.2
     can [:show], TrainingLessonRealization do |tlr|
       tlr.is_open? || (tlr.is_regular? && tlr.training_lesson.regular_training.public?) || tlr.has_watcher?(@user)
+    end
+
+    # =============
+    # 12) Attendance
+    # =============
+    # @12.2
+    if @request.params[:controller] == 'attendances' && @request.params[:action] == 'player_attendance'
+      player = User.friendly.find(@request.params[:user_id])
+      regular_training = RegularTraining.friendly.find(@request.params[:regular_training_id])
+
+      can :player_attendance, Attendance if player == @user || @user.in_relation?(player, :watcher)
+    end
+
+    # @12.3
+    can [:show], Attendance do |a|
+      a.user == @user || @user.in_relation?(a.user, :watcher)
     end
 
     # =============
@@ -112,14 +198,47 @@ class Ability
     watcher() unless @user.has_role? :watcher
 
     # =============
-    # Home
+    # 1) User
     # =============
-    can [:dashboard], HomeController
+
+    # =============
+    # 2) UserGroups
+    # =============
+    # @2.1
+    can [:index], UserGroup
+
+    # @2.2
+    can [:show], UserGroup do |g|
+      g.owner == @user || [:registered, :public].include?(g.visibility) || ( g.visibility == :members && g.user_is_in?(@user) )
+    end
+
+    # @2.3
+    if @request.params[:controller] == 'user_groups' && @request.params[:action] == 'user_in'
+      for_user = User.friendly.find(@request.params[:user_id])
+      if for_user == @user || @user.in_relation?(for_user, :coach) || @user.in_relation?(for_user, :watcher)
+        can [:user_in], UserGroup
+      end
+    end
+
+    # @2.5, @2.6, @2.8
+    can [:edit, :update, :destroy, :remove_user], UserGroup, user_id: @user.id
+
+    # @2.7
+    can [:add_user], UserGroup do |g|
+      user_to_add = User.where(email: @request.params[:user_group_user][:email]).first
+
+      g.owner == @user && ( @user.in_relation?(user_to_add, :friend) || @user.in_relation?(user_to_add, :coach) ||
+          @user.in_relation?(user_to_add, :watcher) )
+    end
+
+    # =============
+    # 3) UserRelations
+    # =============
+
 
     # =============
     # 4) VariableField
     # =============
-
     # @4.1, @4.2, @4.5 - must be controlled in controller, @4.6
     can [:index, :new, :create, :show], VariableField
 
@@ -159,80 +278,10 @@ class Ability
     end
 
     # =============
-    # 1) User
-    # =============
-    # @1.8
-    can [:index], User
-
-    #  @1.4
-    can [:edit, :update], User do |user|
-      user.id == @user.id
-    end
-
-    # @1.3
-    can [:show], User do |user|
-      (user.id == @user.id) || @user.in_relation?(user, :friend) || @user.in_relation?(user, :coach) || @user.in_relation?(user, :watcher)
-    end
-
-    # =============
-    # 3) UserRelations
-    # =============
-    # @3.1
-    if @request.params[:controller] == 'user_relations' && @request.params[:action] == 'user_has'
-      for_user = User.friendly.find(@request.params[:user_id])
-      if for_user == @user || @user.in_relation?(for_user, :watcher) || @user.in_relation?(for_user, :friend) || @user.in_relation?(for_user, :coach)
-        can :user_has, UserRelation
-      end
-    end
-
-    # @3.3
-    can [:new_request, :create_request], UserRelation
-
-    # @3.4
-    can [:change_status], UserRelation do |r|
-      r.from == @user || r.to == @user
-    end
-
-    # =============
-    # 2) UserGroups
-    # =============
-    # @2.1
-    can [:index], UserGroup
-
-    # @2.2
-    can [:show], UserGroup do |g|
-      g.owner == @user || [:registered, :public].include?(g.visibility) || ( g.visibility == :members && g.user_is_in?(@user) )
-    end
-
-    # @2.3
-    if @request.params[:controller] == 'user_groups' && @request.params[:action] == 'user_in'
-      for_user = User.friendly.find(@request.params[:user_id])
-      if for_user == @user || @user.in_relation?(for_user, :coach) || @user.in_relation?(for_user, :watcher)
-        can [:user_in], UserGroup
-      end
-    end
-
-    # @2.5, @2.6, @2.8
-    can [:edit, :update, :destroy, :remove_user], UserGroup, user_id: @user.id
-
-    # @2.7
-    can [:add_user], UserGroup do |g|
-      user_to_add = User.where(email: @request.params[:user_group_user][:email]).first
-
-      g.owner == @user && ( @user.in_relation?(user_to_add, :friend) || @user.in_relation?(user_to_add, :coach) ||
-                            @user.in_relation?(user_to_add, :watcher) )
-    end
-
-    # =============
     # 7) RegularTraining
     # =============
     # @7.1
     can [:index], RegularTraining
-
-    # @7.2
-    can [:show], RegularTraining do |t|
-      t.public? || t.user == @user || t.has_player?(@user) || t.has_coach?(@user) || t.has_watcher?(@user)
-    end
 
     # =============
     # 11) Training lesson realization
@@ -260,24 +309,6 @@ class Ability
     # =============
     # 12) Attendance
     # =============
-    # @12.2
-    if @request.params[:controller] == 'attendances' && @request.params[:action] == 'player_attendance'
-      player = User.friendly.find(@request.params[:user_id])
-      regular_training = RegularTraining.friendly.find(@request.params[:regular_training_id])
-
-      can :player_attendance, Attendance if player == @user || @user.in_relation?(player, 'watcher')
-    end
-
-    # @12.3
-    can [:show], Attendance do |a|
-        a.user == @user || @user.in_relation?(a.user, 'watcher')
-    end
-
-    # ===========
-    # 14) Help
-    # ===========
-    # @14.1, @14.2, @14.3
-    can [:index, :show, :show_ajax], HelpsController
 
     # =============
     # 15) Variable field category

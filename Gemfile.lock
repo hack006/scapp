@@ -32,6 +32,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
+    archive-tar-minitar (0.5.2)
     arel (4.0.1)
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
@@ -199,11 +200,17 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.1.0)
     ref (1.0.5)
+    relish (0.7)
+      archive-tar-minitar (>= 0.5.2)
+      json (>= 1.4.6)
+      rest-client (>= 1.6.1)
     reportbuilder (1.4.2)
       clbustos-rtf (~> 0.4.0)
       prawn (~> 0.8.4)
       prawn-svg (~> 0.9.1)
       text-table (~> 1.2)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rmagick (2.13.2)
     rolify (3.2.0)
     rserve-client (0.2.5)
@@ -320,6 +327,7 @@ DEPENDENCIES
   quiet_assets
   rails (= 4.0.1)
   rails_layout
+  relish (~> 0.7)
   rmagick
   rolify
   rspec-rails

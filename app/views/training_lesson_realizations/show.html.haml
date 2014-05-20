@@ -11,8 +11,9 @@
   - breadcrumb :individual_training_lesson_realizations_detail, @training_lesson_realization
 
 - # TODO some action may be done by coaches
-- if is_admin? || @training_lesson_realization.is_owned_by?(current_user) || @training_lesson_realization.has_coach?(current_user, supplementation: true) || @training_lesson_realization.has_coach?(current_user)
-  #action-box
+#action-box
+  - if is_admin? || @training_lesson_realization.is_owned_by?(current_user) || @training_lesson_realization.has_coach?(current_user, supplementation: true) || @training_lesson_realization.has_coach?(current_user)
+
     - if @training_lesson_realization.not_closed?
       -# ordinary coach is only allowed to measure metrics
       - unless @training_lesson_realization.has_coach?(current_user, role: 'coach')
@@ -35,8 +36,7 @@
         = link_to reopen_training_lesson_realization_path(@training_lesson_realization), class: 'btn btn-danger' do
           %i.fa.fa-exclamation-circle
           = t('training_realization.show.reopen_lesson')
-- else
-  #action-box
+  - if is_player? && @training_lesson_realization.has_player?(current_user)
     - unless @training_lesson_realization.attendances.where(user: current_user, participation: [:signed, :unexcused]).any?
       = link_to t('training_realization.show.sign_in'), sign_in_training_lesson_realization_path, class: 'btn btn-success'
     - unless @training_lesson_realization.attendances.where(user: current_user, participation: :excused).any?
@@ -146,7 +146,7 @@
         - @training_lesson_realization.attendances.each do |a|
           %tr
             %td= a.user.name
-            - if (is_admin? || @training_lesson_realization.is_owned_by?(current_user) || a.user == current_user || @training_lesson_realization.has_coach?(current_user, role: 'head_coach') || @training_lesson_realization.has_coach?(current_user, supplementation: true))
+            - if (is_admin? || @training_lesson_realization.is_owned_by?(current_user) || a.user == current_user || current_user.in_relation?(a.user, :watcher) || @training_lesson_realization.has_coach?(current_user, role: 'head_coach') || @training_lesson_realization.has_coach?(current_user, supplementation: true))
               %td!= AttendancesHelper.labelize_participation_state a.participation
               %td
                 #{a.price_without_tax} #{a.training_lesson_realization.currency.symbol}
@@ -256,7 +256,7 @@
             %th
         %tbody
           - @training_lesson_realization.variable_field_measurements.order(variable_field_id: :asc, measured_at: :desc, int_value: :desc).each do |m|
-            - if is_admin? || @training_lesson_realization.is_owned_by?(current_user) || @training_lesson_realization.has_coach?(current_user) || m.measured_for == current_user
+            - if is_admin? || @training_lesson_realization.is_owned_by?(current_user) || @training_lesson_realization.has_coach?(current_user) || m.measured_for == current_user || current_user.in_relation?(m.measured_for, :watcher)
               %tr
                 %td= m.measured_at.strftime('%H:%M')
                 %td= m.measured_by.name

@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
 
   # GLOBAL AVAILABLE HELPERS
   # =====>
-  helper_method :is_coach?, :is_player?, :is_admin?
+  helper_method :is_watcher?, :is_player?, :is_coach?, :is_admin?
 
   def is_coach?
     return false if current_user.blank?

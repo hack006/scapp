@@ -1,15 +1,15 @@
 # User
 
-| ID    | Action                        | implemented?  | owner     | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :player   | :coach    | :admin    | note  |
-| ----- | ----------------------------- | ------------- | --------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | ----- |
-| 1.1   | Create _user_                 | Y             | -         | -         | -         | -         | -             | -         | -         | -         | Y         |
-| 1.2   | Show _user_ dashboard         | -             | Y         | -         | -         | -         | -             | -         | -         | -         | -         |
-| 1.3   | Show detail                   | -             | Y         | Y         | Y         | Y         | Y             | -         | -         | -         | Y         |
-| 1.4   | Edit _user_ profile           | -             | Y         | -         | -         | -         | -             | -         | -         | -         | Y         |
-| 1.5   | Delete _user_                 | -             | -         | -         | -         | -         | -             | -         | -         | -         | -         |
-| 1.6   | Add _user_ role               | -             | -         | -         | -         | -         | -             | -         | -         | -         | Y         |
-| 1.7   | Remove _user_ role            | -             | -         | -         | -         | -         | -             | -         | -         | -         | Y         |
-| 1.8   | List users                    | -             | -         | -         | -         | -         | -             | -         | Y         | Y         | Y         |
+| ID    | Action                        | implemented?  | owner     | friend[R] | coach[R]  | player[R] | watcher[R]    | :guest    | :watcher  | :player   | :coach    | :admin    | note  |
+| ----- | ----------------------------- | ------------- | --------- | --------- | --------- | --------- |-------------- | --------- | --------- | --------- | --------- | --------- | ----- |
+| 1.1   | Create _user_                 | Y             | -         | -         | -         | -         | -             | -         | -         | -         | -         | Y         |
+| 1.2   | Show _user_ dashboard         | Y             | Y         | -         | -         | -         | -             | -         | -         | -         | -         | -         |
+| 1.3   | Show detail                   | Y             | Y         | Y         | Y         | Y         | Y             | -         | -         | -         | -         | Y         |
+| 1.4   | Edit _user_ profile           | Y             | Y         | -         | -         | -         | -             | -         | -         | -         | -         | Y         |
+| 1.5   | Delete _user_                 | Y             | -         | -         | -         | -         | -             | -         | -         | -         | -         | -         |
+| 1.6   | Add _user_ role               | Y             | -         | -         | -         | -         | -             | -         | -         | -         | -         | Y         |
+| 1.7   | Remove _user_ role            | Y             | -         | -         | -         | -         | -             | -         | -         | -         | -         | Y         |
+| 1.8   | List users                    | Y             | -         | -         | -         | -         | -             | -         | Y         | Y         | Y         | Y         |
 
 # User groups
 
@@ -103,7 +103,7 @@
 | 7.4   | Create training               | Y             | -         | -                     | -                     | -             | -         | -         | Y         | Y         |
 | 7.5   | Edit training                 | Y             | Y         | -                     | -                     | -             | -         | -         | -         | Y         |
 | 7.6   | Delete training               | Y             | Y         | -                     | -                     | -             | -         | -         | -         | Y         |
-| 7.7   | Show player attendance        | -             | Y         | Y                     | -                     | Y             | -         | -         | -         | Y         |
+| 7.7   | Show player attendance        | Y             | Y         | Y                     | -                     | Y             | -         | -         | -         | Y         |
 
 # Training lesson
 

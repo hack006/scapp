@@ -16,11 +16,14 @@ class TrainingsController < ApplicationController
     @closest_training_lessons = TrainingLessonRealization.closest_lesson_realizations(@user)
     @closest_training_lessons = @closest_training_lessons.includes(:attendances)
 
+    # close trainings of watched players
+    @closest_training_lessons_watched = TrainingLessonRealization.closest_watched_lesson_realizations(@user)
+
     # regular trainings I am in as player
     @regular_trainings_as_player = @user.regular_trainings_training_in
 
     # regular trainings I coach
-    @regular_trainings_as_coach = @user.regular_trainings_coaching
+    @regular_trainings_as_coach = @user.regular_trainings_coaching if is_admin? || is_coach?
 
     @closest_open_training_lessons = TrainingLessonRealization.closest_open_lesson_realizations
 

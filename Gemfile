@@ -55,6 +55,7 @@ group :development do
   gem 'html2haml'
   gem 'quiet_assets'
   gem 'rails_layout'
+  gem 'relish', '~>0.7'
 end
 group :development, :test do
   gem 'factory_girl_rails'

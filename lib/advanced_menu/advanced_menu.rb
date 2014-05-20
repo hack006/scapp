@@ -1,5 +1,5 @@
 module AdvancedMenu
-  ROLES = [:admin, :coach, :player]
+  ROLES = [:admin, :coach, :player, :watcher]
 
   class Menu
     attr_accessor :name

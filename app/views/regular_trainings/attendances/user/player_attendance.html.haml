@@ -47,14 +47,14 @@
             %td= link_to "##{a.training_lesson_realization.training_lesson_id}", [@regular_training, a.training_lesson_realization.training_lesson]
             %td!= AttendancesHelper.labelize_participation_state a.participation
             %td
-              - if is_admin? || @regular_training.user == current_user || @player == current_user || @regular_training.has_coach?(current_user, 'head_coach')
+              - if is_admin? || @regular_training.user == current_user || @player == current_user || @regular_training.has_coach?(current_user, 'head_coach') || current_user.in_relation?(@player, :watcher)
                 #{a.price_without_tax} #{a.training_lesson_realization.currency.symbol}
                 |
                 %strong #{a.price_with_tax} #{a.training_lesson_realization.currency.symbol} (#{t('dictionary.vat_included')})
               - else
                 NA
 
-      - if is_admin? || @regular_training.user == current_user || @player == current_user || @regular_training.has_coach?(current_user, 'head_coach')
+      - if is_admin? || @regular_training.user == current_user || @player == current_user || @regular_training.has_coach?(current_user, 'head_coach') || current_user.in_relation?(@player, :watcher)
         %tfoot
           %tr
             %td{colspan: 5}= t('attendance.player_attendance.sum')
