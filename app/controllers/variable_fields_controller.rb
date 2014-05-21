@@ -182,7 +182,7 @@ class VariableFieldsController < ApplicationController
   def user_variable_field_detail
     # TODO authorize! :user_variable_field_detail, VariableFieldsController
     @user = User.friendly.find params[:user_id]
-
+    @vf_unit = (@variable_field.unit.blank?) ? '-' : @variable_field.unit
     # if date range filter active, then use it
     begin
       @from_date = params[:from_date].blank? ? nil : Date.strptime(params[:from_date], '%d/%m/%Y')
@@ -246,8 +246,9 @@ class VariableFieldsController < ApplicationController
   def user_variable_graph
     # TODO authorize! :user_variable_graph, VariableFieldsController
     user = User.friendly.find(params[:user_id])
+    vf = VariableField.find(params[:id])
     # get latest 20 measurements
-    @variable_field_measurements = VariableField.find(params[:id]).latest_measurements(1, 20, user).map do |vfm|
+    @variable_field_measurements = vf.latest_measurements(1, 20, user).map do |vfm|
       {measured_at: vfm.measured_at.strftime('%Y-%m-%d %H:%M'), location: vfm.locality, x: (vfm.measured_at.to_i * 1000), y: vfm.int_value}
     end
 
@@ -261,9 +262,12 @@ class VariableFieldsController < ApplicationController
     first_x = @variable_field_measurements.first[:x]
     last_x = @variable_field_measurements.last[:x]
     @regression_line_points = [[first_x, regress.y(first_x)], [last_x, regress.y(last_x)]]
+    unit = (vf.unit.blank?) ? '-' : vf.unit
+
     respond_to do |format|
       #format.js { render partial: 'variable_fields/ajax/summary_graph' }
       format.js { render json: {refresh_id: "chart-#{params[:id]}", data: {graph: @variable_field_measurements,
+                                                                           unit: unit,
                                                                            regression: @regression_line_points}}.to_json }
     end
   end

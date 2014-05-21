@@ -2,7 +2,6 @@ class RegularTrainingLessonRealization < TrainingLessonRealization
   # =================== ASSOCIATIONS =================================
   belongs_to :training_lesson
 
-
   # =================== VALIDATIONS ==================================
   validates :training_lesson_id, presence: true
   validates_uniqueness_of :date, scope: :training_lesson

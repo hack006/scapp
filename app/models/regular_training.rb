@@ -1,18 +1,24 @@
 class RegularTraining < ActiveRecord::Base
+  # =================== ASSOCIATIONS =================================
   belongs_to :user
   belongs_to :user_group
   has_many :training_lessons
   has_many :coach_obligations
 
+  # =================== VALIDATIONS ==================================
+  validates :name, presence: true
+  validates :name, uniqueness: true
+
+  # =================== EXTENSIONS ===================================
   # Add seo ids for training
   extend FriendlyId
   friendly_id :name, use: :slugged
 
-  validates :name, presence: true
-  validates :name, uniqueness: true
-
   scope :public, -> { where(public: true) }
 
+  # =================== GETTERS / SETTERS ============================
+
+  # =================== METHODS ======================================
   # Get training lessons count per week
   #
   # @param [Hash]

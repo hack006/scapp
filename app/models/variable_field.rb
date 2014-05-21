@@ -1,19 +1,24 @@
 class VariableField < ActiveRecord::Base
+  # =================== ASSOCIATIONS =================================
   belongs_to :user
   belongs_to :variable_field_category
   has_many :variable_field_measurements, dependent: :restrict_with_exception
   has_many :variable_field_optimal_values, dependent: :destroy
 
-  attr_accessor :modification_confirmation
-
+  # =================== VALIDATIONS ==================================
   validates :name, length: 1..64
   validates_uniqueness_of :name, scope: [:variable_field_category_id, :user_id]
   validates :variable_field_category, presence: true
 
+  # =================== EXTENSIONS ===================================
+  attr_accessor :modification_confirmation
   scope :global_or_owned_by, ->(user) { where("variable_fields.is_global = true or variable_fields.user_id = ?", user) }
   scope :with_measurements_for, ->(user) { joins(:variable_field_measurements).where(variable_field_measurements: {measured_for_id: user}) }
   scope :order_by_categories, -> { joins('LEFT JOIN variable_field_categories ON variable_fields.variable_field_category_id = variable_field_categories.id').order('variable_field_categories.name DESC') }
 
+  # =================== GETTERS / SETTERS ============================
+
+  # =================== METHODS ======================================
   def latest_measurement(user = nil)
     if user.kind_of? User
       lm = self.variable_field_measurements.order(measured_at: :desc).where(measured_for_id: user).first

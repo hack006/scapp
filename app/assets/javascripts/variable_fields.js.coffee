@@ -68,7 +68,7 @@ jQuery(document).ready( ->
       },
       yAxis: {
         title: {
-          text: 'Value'
+          text: "[#{data.data.unit}]"
         }
       },
       series: [{
@@ -137,7 +137,7 @@ jQuery(document).ready( ->
       },
       yAxis: {
         title: {
-          text: 'Value'
+          text: "[#{unit}]"
         }
       },
       series: [

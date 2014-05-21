@@ -16,6 +16,8 @@ class VariableFieldMeasurement < ActiveRecord::Base
   # =================== EXTENSIONS ===================================
   scope :latest_for_user, -> (user, limit) { where(measured_for_id: user).order('measured_at DESC').limit(limit) }
 
+  # =================== GETTERS / SETTERS ============================
+
   # =================== METHODS ======================================
 
   # Obtain most recent measurements for players of specified coach user

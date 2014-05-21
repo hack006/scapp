@@ -17,17 +17,21 @@ class UserRelation < ActiveRecord::Base
   RELATION_TYPES = ['friend', 'coach', 'watcher']
   RELATION_STATUSES = ['new', 'accepted', 'refused']
 
+  # =================== ASSOCIATIONS =================================
   belongs_to :from, class_name: User, foreign_key: 'user_from_id'
   belongs_to :to, class_name: User, foreign_key: 'user_to_id'
 
-  # accessors for "artificial" fields in form
-  attr_accessor :first_user, :second_user
-
+  # =================== VALIDATIONS ==================================
   #validates :relation, inclusion: { in: ['friend', 'coach', 'watcher'] }
   validates :from_user_status, inclusion: { in: ['new', 'accepted', 'refused'] }
   validates :to_user_status, inclusion: { in: ['new', 'accepted', 'refused'] }
   validates :relation, presence: true
 
+  # =================== EXTENSIONS ===================================
+  # accessors for "artificial" fields in form
+  attr_accessor :first_user, :second_user
+
+  # =================== GETTERS / SETTERS ============================
   # Relation getter
   #
   # @return [Symbol] relation type
@@ -50,6 +54,7 @@ class UserRelation < ActiveRecord::Base
     end
   end
 
+  # =================== METHODS ======================================
   # Test if specified relation exists between users
   #
   # @param [String] relation_type

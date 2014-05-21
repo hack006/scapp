@@ -9,13 +9,16 @@
 class UserGroup < ActiveRecord::Base
   GROUP_VISIBILITIES = [:public, :registered, :members, :owner]
 
+  # =================== ASSOCIATIONS =================================
   has_and_belongs_to_many :users
   belongs_to :owner, class_name: User, foreign_key: 'user_id'
   has_many :regular_trainings, dependent: :restrict_with_exception # can not be deleted if
 
+  # =================== VALIDATIONS ==================================
   validates :name, presence: true
   validates :visibility, inclusion: {in: GROUP_VISIBILITIES}
 
+  # =================== EXTENSIONS ===================================
   scope :owned_by, -> (user) { where('user_groups.user_id = ?', user.id) }
   scope :global, -> { where('user_groups.is_global = 1') }
   scope :with_visibility, -> (visibilities) { where('visibility IN (?)', visibilities.to_a) }
@@ -30,7 +33,7 @@ class UserGroup < ActiveRecord::Base
     write_attribute(:visibility, visibility.to_s)
   end
 
-
+  # =================== METHODS ======================================
   # Test if user belongs to group
   #
   # @param [User] user
