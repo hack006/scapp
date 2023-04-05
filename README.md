@@ -3,6 +3,8 @@ Web based, _Ruby on Rails_ driven, application for managing sport trainings and 
 designed for smaller sport clubs and gyms. Main goal is to simplify administration and interconnect coaches,
 players and another stuff inside a sport organization.
 
+*This project is no longer under active or maintenance development! Use with caution - obsolete libraries can contain a lot of vulnariabilities. Kept public mainly because of study purposes.*
+
 ![Preview of ScApp dashboard](/doc/images/dashboard.png)
 
 ## About
